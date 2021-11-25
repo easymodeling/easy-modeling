@@ -1,0 +1,17 @@
+plugins {
+    id 'java'
+}
+
+group 'xyz.v2my'
+version project.version
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+test {
+    useJUnitPlatform()
+}
