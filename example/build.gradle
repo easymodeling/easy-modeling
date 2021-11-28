@@ -1,9 +1,9 @@
 plugins {
-    id 'java-library'
+    id 'java'
 }
 
 group 'xyz.v2my'
-version project.version
+version '1.0-SNAPSHOT'
 
 java {
     toolchain {
@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation project(":core")
+    implementation project(':core')
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
