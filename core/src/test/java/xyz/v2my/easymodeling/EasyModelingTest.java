@@ -10,6 +10,6 @@ class EasyModelingTest {
     void should_do_test() {
         final String generated = EasyModeling.generate(String.class);
 
-        assertThat(generated).isNull();
+        assertThat(generated).isNotNull();
     }
 }

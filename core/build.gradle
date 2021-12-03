@@ -16,6 +16,8 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.jeasy:easy-random-core:4.3.0'
+
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     testImplementation 'org.assertj:assertj-core:3.21.0'
