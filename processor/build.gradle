@@ -17,6 +17,9 @@ repositories {
 
 dependencies {
     implementation project(":core")
+    implementation 'com.google.auto.service:auto-service:1.0'
+
+    annotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
