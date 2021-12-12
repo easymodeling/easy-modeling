@@ -1,5 +1,5 @@
 package xyz.v2my.easymodeling;
 
-@Builder(classes = {String.class})
+@Builder(classes = {Order.class})
 public class TestModels {
 }
