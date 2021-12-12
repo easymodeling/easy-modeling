@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -16,4 +17,6 @@ public class Order {
     private BigDecimal unitPrice;
 
     private long amount;
+
+    private Instant creationTime;
 }
