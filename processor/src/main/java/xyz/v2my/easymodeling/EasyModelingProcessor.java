@@ -16,7 +16,7 @@ import java.util.Set;
 @AutoService(Processor.class)
 public class EasyModelingProcessor extends AbstractProcessor {
 
-    private BuilderProcessor builderProcessor;
+    private Generator builderProcessor;
 
     private Messager messager;
 
@@ -24,7 +24,7 @@ public class EasyModelingProcessor extends AbstractProcessor {
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
         messager = processingEnv.getMessager();
-        builderProcessor = new BuilderProcessor(processingEnv.getElementUtils(), processingEnv.getFiler());
+        builderProcessor = new BuilderGenerator(processingEnv.getElementUtils(), processingEnv.getFiler());
     }
 
     @Override

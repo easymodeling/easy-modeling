@@ -23,18 +23,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BuilderProcessor {
+public class BuilderGenerator implements Generator {
 
     private final Elements elementUtils;
 
     private final Filer filer;
 
-    public BuilderProcessor(Elements elementUtils, Filer filer) {
+    public BuilderGenerator(Elements elementUtils, Filer filer) {
         this.elementUtils = elementUtils;
         this.filer = filer;
     }
 
-    void generate(Element easyModelingConfig) {
+    @Override
+    public void generate(Element easyModelingConfig) {
         final List<TypeElement> buildClasses = classOf(easyModelingConfig).stream().map(elementUtils::getTypeElement).collect(Collectors.toList());
 
         for (TypeElement buildClass : buildClasses) {
@@ -85,7 +86,7 @@ public class BuilderProcessor {
         }
     }
 
-    List<String> classOf(Element easyModelingConfig) {
+    private List<String> classOf(Element easyModelingConfig) {
         final Builder builder = easyModelingConfig.getAnnotation(Builder.class);
         try {
             return Arrays.stream(builder.classes()).map(Class::getCanonicalName).collect(Collectors.toList());
