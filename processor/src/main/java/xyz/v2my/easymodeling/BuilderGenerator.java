@@ -14,16 +14,12 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
-import javax.lang.model.type.DeclaredType;
-import javax.lang.model.type.MirroredTypesException;
-import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BuilderGenerator implements Generator {
+public class BuilderGenerator extends Generator {
 
     private final Elements elementUtils;
 
@@ -87,18 +83,4 @@ public class BuilderGenerator implements Generator {
         }
     }
 
-    private List<String> classOf(Element easyModelingConfig) {
-        final Builder builder = easyModelingConfig.getAnnotation(Builder.class);
-        try {
-            return Arrays.stream(builder.classes()).map(Class::getCanonicalName).collect(Collectors.toList());
-        } catch (MirroredTypesException mte) {
-            return mte.getTypeMirrors().stream().map(this::typeMirrorName).collect(Collectors.toList());
-        }
-    }
-
-    private String typeMirrorName(TypeMirror typeMirror) {
-        final DeclaredType declaredType = (DeclaredType) typeMirror;
-        final TypeElement typeElement = (TypeElement) declaredType.asElement();
-        return typeElement.getQualifiedName().toString();
-    }
 }
