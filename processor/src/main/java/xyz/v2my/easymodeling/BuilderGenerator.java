@@ -35,7 +35,7 @@ public class BuilderGenerator implements Generator {
     }
 
     @Override
-    public void generate(Element easyModelingConfig) {
+    public void generate(Element easyModelingConfig) throws ProcessingException {
         final List<TypeElement> buildClasses = classOf(easyModelingConfig).stream().map(elementUtils::getTypeElement).collect(Collectors.toList());
 
         for (TypeElement buildClass : buildClasses) {
@@ -81,7 +81,8 @@ public class BuilderGenerator implements Generator {
             try {
                 JavaFile.builder(pkg.toString(), builderBuilder.build()).build().writeTo(filer);
             } catch (IOException e) {
-                e.printStackTrace();
+                // TODO: 19.12.21 throw exceptions with elaborate messages
+                throw new ProcessingException("Error when generate builder");
             }
         }
     }
