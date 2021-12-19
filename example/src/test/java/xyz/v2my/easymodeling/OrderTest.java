@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class OrderTest {
 
@@ -12,9 +14,9 @@ class OrderTest {
     void should_generate_order() {
         final Order order = new EMOrderBuilder().id("some-id").unitPrice(BigDecimal.TEN).build();
 
-        assertThat(order).isNotNull();
-        assertThat(order.getUnitPrice()).isEqualTo(BigDecimal.TEN);
-        assertThat(order.getAmount()).isEqualTo(0L);
-        assertThat(order.getCreationTime()).isNull();
+        assertNotNull(order);
+        assertEquals(BigDecimal.TEN, order.getUnitPrice());
+        assertEquals(0L, order.getAmount());
+        assertNull(order.getCreationTime());
     }
 }

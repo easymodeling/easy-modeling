@@ -3,32 +3,37 @@ package xyz.v2my.easymodeling;
 import lombok.AllArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 
 @AllArgsConstructor
-public class Order {
+public class OrderLine {
 
     private String id;
 
+    private String sku;
+
     private BigDecimal unitPrice;
 
-    private long amount;
+    private BigDecimal amount;
 
-    private Instant creationTime;
+    private BigDecimal taxRate;
 
     public String getId() {
         return id;
+    }
+
+    public String getSku() {
+        return sku;
     }
 
     public BigDecimal getUnitPrice() {
         return unitPrice;
     }
 
-    public long getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public Instant getCreationTime() {
-        return creationTime;
+    public BigDecimal getTaxRate() {
+        return taxRate;
     }
 }
