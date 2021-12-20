@@ -17,13 +17,8 @@ import java.util.stream.Collectors;
 
 public class FactoryGenerator extends Generator {
 
-    private final Elements elementUtils;
-
-    private final Filer filer;
-
     public FactoryGenerator(Elements elementUtils, Filer filer) {
-        this.elementUtils = elementUtils;
-        this.filer = filer;
+        super(elementUtils, filer);
     }
 
     @Override

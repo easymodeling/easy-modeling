@@ -21,13 +21,8 @@ import java.util.stream.Collectors;
 
 public class BuilderGenerator extends Generator {
 
-    private final Elements elementUtils;
-
-    private final Filer filer;
-
     public BuilderGenerator(Elements elementUtils, Filer filer) {
-        this.elementUtils = elementUtils;
-        this.filer = filer;
+        super(elementUtils, filer);
     }
 
     @Override
