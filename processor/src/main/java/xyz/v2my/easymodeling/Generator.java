@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 public abstract class Generator {
 
+    public static final String BUILDER_TYPE_NAME_TEMPLATE = "EM%sBuilder";
+
     public abstract void generate(Element easyModelingConfig) throws ProcessingException;
 
     protected List<String> classOf(Element easyModelingConfig) {

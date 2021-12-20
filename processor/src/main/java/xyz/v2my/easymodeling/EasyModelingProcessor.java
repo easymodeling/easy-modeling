@@ -12,12 +12,14 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @AutoService(Processor.class)
 public class EasyModelingProcessor extends AbstractProcessor {
 
-    private Generator builderProcessor;
+    private final List<Generator> generators = new ArrayList<>();
 
     private Messager messager;
 
@@ -25,7 +27,8 @@ public class EasyModelingProcessor extends AbstractProcessor {
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
         messager = processingEnv.getMessager();
-        builderProcessor = new BuilderGenerator(processingEnv.getElementUtils(), processingEnv.getFiler());
+        generators.add(new BuilderGenerator(processingEnv.getElementUtils(), processingEnv.getFiler()));
+        generators.add(new FactoryGenerator(processingEnv.getElementUtils(), processingEnv.getFiler()));
     }
 
     @Override
@@ -44,8 +47,14 @@ public class EasyModelingProcessor extends AbstractProcessor {
     }
 
     private void process(RoundEnvironment roundEnv) throws ProcessingException {
+        for (Generator generator : generators) {
+            process(roundEnv, generator);
+        }
+    }
+
+    private void process(RoundEnvironment roundEnv, Generator generator) throws ProcessingException {
         for (Element easyModelingConfig : roundEnv.getElementsAnnotatedWith(Builder.class)) {
-            builderProcessor.generate(easyModelingConfig);
+            generator.generate(easyModelingConfig);
         }
     }
 
