@@ -8,11 +8,9 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
 import lombok.AllArgsConstructor;
 
-import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.VariableElement;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,16 +24,17 @@ public class BuilderGenerator {
         if (clazz.getAnnotation(AllArgsConstructor.class) == null) {
             throw new RuntimeException();
         }
-        final List<Element> nonStaticFields = clazz.getEnclosedElements().stream()
+        final List<BuilderField> nonStaticFields = clazz.getEnclosedElements().stream()
                 .filter(element -> element.getKind().equals(ElementKind.FIELD))
                 .filter(element -> !element.getModifiers().contains(Modifier.STATIC))
+                .map(BuilderField::new)
                 .collect(Collectors.toList());
 
         final List<ParameterSpec> constructorParameters = nonStaticFields.stream()
-                .map(field -> ParameterSpec.builder(ClassName.get(field.asType()), field.getSimpleName().toString()).build())
+                .map(BuilderField::constructorParameter)
                 .collect(Collectors.toList());
         final List<CodeBlock> constructorStatements = nonStaticFields.stream()
-                .map(field -> CodeBlock.of("this.$N = $N", field.getSimpleName(), field.getSimpleName()))
+                .map(BuilderField::constructorStatement)
                 .collect(Collectors.toList());
 
         final MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
@@ -46,7 +45,7 @@ public class BuilderGenerator {
         builder.addMethod(constructorBuilder.build());
 
         final String constructionParameters = nonStaticFields.stream()
-                .map(Element::getSimpleName)
+                .map(BuilderField::constructorVariable)
                 .collect(Collectors.joining(", "));
         final MethodSpec buildMethod = MethodSpec.methodBuilder("build")
                 .addModifiers(Modifier.PUBLIC)
@@ -55,24 +54,11 @@ public class BuilderGenerator {
                 .build();
         builder.addMethod(buildMethod);
 
-        for (Element enclosedElement : clazz.getEnclosedElements()) {
-            if (!enclosedElement.getKind().equals(ElementKind.FIELD) || enclosedElement.getModifiers().contains(Modifier.STATIC)) {
-                continue;
-            }
-            final VariableElement field = (VariableElement) enclosedElement;
-            final String fieldName = field.getSimpleName().toString();
-            final FieldSpec builderField = FieldSpec.builder(ClassName.get(field.asType()), fieldName, Modifier.PRIVATE).build();
-            final MethodSpec builderSetter = MethodSpec.methodBuilder(fieldName)
-                    .addModifiers(Modifier.PUBLIC)
-                    .returns(ClassName.get("", builderTypeName))
-                    .addParameter(ClassName.get(field.asType()), fieldName)
-                    .addStatement("this.$N = $N", fieldName, fieldName)
-                    .addStatement("return this")
-                    .build();
-            builder
-                    .addField(builderField)
-                    .addMethod(builderSetter);
-        }
+        final List<FieldSpec> builderFields = nonStaticFields.stream().map(BuilderField::builderField).collect(Collectors.toList());
+        builder.addFields(builderFields);
+        final List<MethodSpec> builderSetters = nonStaticFields.stream().map(field -> field.builderSetter(builderTypeName)).collect(Collectors.toList());
+        builder.addMethods(builderSetters);
+
         return builder.build();
     }
 }
