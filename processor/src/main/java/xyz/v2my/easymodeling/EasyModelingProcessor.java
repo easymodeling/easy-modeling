@@ -77,16 +77,16 @@ public class EasyModelingProcessor extends AbstractProcessor {
                 final String factoryTypeName = String.format("EM%sFactory", clazz.getSimpleName());
                 final TypeSpec.Builder factoryBuilder = TypeSpec.classBuilder(factoryTypeName).addModifiers(Modifier.PUBLIC);
 
-                final String builderTypeName = String.format("EM%sBuilder", clazz.getSimpleName());
+                final TypeSpec builderClass = builderGenerator.generate(clazz);
+                factoryBuilder.addType(builderClass);
+
+                final String builderTypeName = builderClass.name;
                 final MethodSpec builder = MethodSpec.methodBuilder("builder")
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                         .returns(ClassName.get("", builderTypeName))
                         .addStatement("return new $N()", builderTypeName)
                         .build();
                 factoryBuilder.addMethod(builder);
-
-                final TypeSpec builderClass = builderGenerator.generate(clazz);
-                factoryBuilder.addType(builderClass);
                 try {
                     final PackageElement pkg = elementUtils.getPackageOf(clazz);
                     JavaFile.builder(pkg.toString(), factoryBuilder.build()).build().writeTo(filer);
