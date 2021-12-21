@@ -47,12 +47,11 @@ public class EasyModelingProcessor extends AbstractProcessor {
         elementUtils = processingEnv.getElementUtils();
         filer = processingEnv.getFiler();
 
-        initGenerators(processingEnv);
+        initGenerators();
     }
 
-    private void initGenerators(ProcessingEnvironment processingEnv) {
-        final Elements elementUtils = processingEnv.getElementUtils();
-        builderGenerator = new BuilderGenerator(elementUtils);
+    private void initGenerators() {
+        builderGenerator = new BuilderGenerator();
     }
 
     @Override
@@ -80,11 +79,22 @@ public class EasyModelingProcessor extends AbstractProcessor {
                 final TypeSpec builderClass = builderGenerator.generate(clazz);
                 factoryBuilder.addType(builderClass);
 
+                final String constructorParameters = builderClass.fieldSpecs.stream()
+                        .map(field -> {
+                            switch (field.type.toString()) {
+                                case "int":
+                                case "long":
+                                    return "0";
+                                default:
+                                    return "null";
+                            }
+                        })
+                        .collect(Collectors.joining(","));
                 final String builderTypeName = builderClass.name;
                 final MethodSpec builder = MethodSpec.methodBuilder("builder")
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                         .returns(ClassName.get("", builderTypeName))
-                        .addStatement("return new $N()", builderTypeName)
+                        .addStatement("return new $N(" + constructorParameters + ")", builderTypeName)
                         .build();
                 factoryBuilder.addMethod(builder);
                 try {
