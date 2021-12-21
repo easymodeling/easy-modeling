@@ -14,13 +14,14 @@ import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.Elements;
 import java.util.stream.Collectors;
 
-public class BuilderGenerator extends Generator {
+public class BuilderGenerator {
+
+    protected final Elements elementUtils;
 
     public BuilderGenerator(Elements elementUtils) {
-        super(elementUtils);
+        this.elementUtils = elementUtils;
     }
 
-    @Override
     public void generate(TypeElement clazz, TypeSpec.Builder factoryBuilder) {
         final String builderTypeName = String.format("EM%sBuilder", clazz.getSimpleName());
         final TypeSpec.Builder builderBuilder = TypeSpec.classBuilder(builderTypeName)

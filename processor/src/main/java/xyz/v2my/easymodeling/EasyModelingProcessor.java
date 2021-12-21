@@ -2,7 +2,9 @@ package xyz.v2my.easymodeling;
 
 import com.google.auto.service.AutoService;
 import com.google.common.collect.Sets;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -22,7 +24,6 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -31,13 +32,13 @@ import java.util.stream.Collectors;
 @AutoService(Processor.class)
 public class EasyModelingProcessor extends AbstractProcessor {
 
-    private final List<Generator> generators = new ArrayList<>();
-
     private Elements elementUtils;
 
     private Filer filer;
 
     private Messager messager;
+
+    private BuilderGenerator builderGenerator;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -51,8 +52,7 @@ public class EasyModelingProcessor extends AbstractProcessor {
 
     private void initGenerators(ProcessingEnvironment processingEnv) {
         final Elements elementUtils = processingEnv.getElementUtils();
-        generators.add(new FactoryGenerator(elementUtils));
-        generators.add(new BuilderGenerator(elementUtils));
+        builderGenerator = new BuilderGenerator(elementUtils);
     }
 
     @Override
@@ -77,9 +77,15 @@ public class EasyModelingProcessor extends AbstractProcessor {
                 final String factoryTypeName = String.format("EM%sFactory", clazz.getSimpleName());
                 final TypeSpec.Builder factoryBuilder = TypeSpec.classBuilder(factoryTypeName).addModifiers(Modifier.PUBLIC);
 
-                for (Generator generator : generators) {
-                    generator.generate(clazz, factoryBuilder);
-                }
+                final String builderTypeName = String.format("EM%sBuilder", clazz.getSimpleName());
+                final MethodSpec builder = MethodSpec.methodBuilder("builder")
+                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                        .returns(ClassName.get("", builderTypeName))
+                        .addStatement("return new $N()", builderTypeName)
+                        .build();
+                factoryBuilder.addMethod(builder);
+
+                builderGenerator.generate(clazz, factoryBuilder);
                 try {
                     final PackageElement pkg = elementUtils.getPackageOf(clazz);
                     JavaFile.builder(pkg.toString(), factoryBuilder.build()).build().writeTo(filer);
