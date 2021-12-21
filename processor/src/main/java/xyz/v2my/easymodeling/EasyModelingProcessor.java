@@ -85,7 +85,8 @@ public class EasyModelingProcessor extends AbstractProcessor {
                         .build();
                 factoryBuilder.addMethod(builder);
 
-                builderGenerator.generate(clazz, factoryBuilder);
+                final TypeSpec builderClass = builderGenerator.generate(clazz);
+                factoryBuilder.addType(builderClass);
                 try {
                     final PackageElement pkg = elementUtils.getPackageOf(clazz);
                     JavaFile.builder(pkg.toString(), factoryBuilder.build()).build().writeTo(filer);

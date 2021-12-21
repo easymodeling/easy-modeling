@@ -22,7 +22,7 @@ public class BuilderGenerator {
         this.elementUtils = elementUtils;
     }
 
-    public void generate(TypeElement clazz, TypeSpec.Builder factoryBuilder) {
+    public TypeSpec generate(TypeElement clazz) {
         final String builderTypeName = String.format("EM%sBuilder", clazz.getSimpleName());
         final TypeSpec.Builder builderBuilder = TypeSpec.classBuilder(builderTypeName)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC);
@@ -62,6 +62,6 @@ public class BuilderGenerator {
                     .addField(builderField)
                     .addMethod(builderSetter);
         }
-        factoryBuilder.addType(builderBuilder.build());
+        return builderBuilder.build();
     }
 }
