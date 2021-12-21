@@ -2,24 +2,40 @@ package xyz.v2my.easymodeling;
 
 import com.google.auto.service.AutoService;
 import com.google.common.collect.Sets;
+import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.TypeSpec;
 
 import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.Filer;
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.Modifier;
+import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.MirroredTypesException;
+import javax.lang.model.type.TypeMirror;
+import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @AutoService(Processor.class)
 public class EasyModelingProcessor extends AbstractProcessor {
 
     private final List<Generator> generators = new ArrayList<>();
+
+    private Elements elementUtils;
+
+    private Filer filer;
 
     private Messager messager;
 
@@ -27,8 +43,16 @@ public class EasyModelingProcessor extends AbstractProcessor {
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
         messager = processingEnv.getMessager();
-        generators.add(new BuilderGenerator(processingEnv.getElementUtils(), processingEnv.getFiler()));
-        generators.add(new FactoryGenerator(processingEnv.getElementUtils(), processingEnv.getFiler()));
+        elementUtils = processingEnv.getElementUtils();
+        filer = processingEnv.getFiler();
+
+        initGenerators(processingEnv);
+    }
+
+    private void initGenerators(ProcessingEnvironment processingEnv) {
+        final Elements elementUtils = processingEnv.getElementUtils();
+        generators.add(new FactoryGenerator(elementUtils));
+        generators.add(new BuilderGenerator(elementUtils));
     }
 
     @Override
@@ -47,14 +71,23 @@ public class EasyModelingProcessor extends AbstractProcessor {
     }
 
     private void process(RoundEnvironment roundEnv) throws ProcessingException {
-        for (Generator generator : generators) {
-            process(roundEnv, generator);
-        }
-    }
-
-    private void process(RoundEnvironment roundEnv, Generator generator) throws ProcessingException {
         for (Element easyModelingConfig : roundEnv.getElementsAnnotatedWith(Builder.class)) {
-            generator.generate(easyModelingConfig);
+            final List<TypeElement> classes = classOf(easyModelingConfig).stream().map(elementUtils::getTypeElement).collect(Collectors.toList());
+            for (TypeElement clazz : classes) {
+                final String factoryTypeName = String.format("EM%sFactory", clazz.getSimpleName());
+                final TypeSpec.Builder factoryBuilder = TypeSpec.classBuilder(factoryTypeName).addModifiers(Modifier.PUBLIC);
+
+                for (Generator generator : generators) {
+                    generator.generate(clazz, factoryBuilder);
+                }
+                try {
+                    final PackageElement pkg = elementUtils.getPackageOf(clazz);
+                    JavaFile.builder(pkg.toString(), factoryBuilder.build()).build().writeTo(filer);
+                } catch (IOException e) {
+                    // TODO: 19.12.21 throw exceptions with elaborate messages
+                    throw new ProcessingException("Error when generate factory");
+                }
+            }
         }
     }
 
@@ -68,4 +101,18 @@ public class EasyModelingProcessor extends AbstractProcessor {
         return Sets.newHashSet(Builder.class.getCanonicalName());
     }
 
+    private List<String> classOf(Element easyModelingConfig) {
+        final Builder builder = easyModelingConfig.getAnnotation(Builder.class);
+        try {
+            return Arrays.stream(builder.classes()).map(Class::getCanonicalName).collect(Collectors.toList());
+        } catch (MirroredTypesException mte) {
+            return mte.getTypeMirrors().stream().map(this::typeMirrorName).collect(Collectors.toList());
+        }
+    }
+
+    private String typeMirrorName(TypeMirror typeMirror) {
+        final DeclaredType declaredType = (DeclaredType) typeMirror;
+        final TypeElement typeElement = (TypeElement) declaredType.asElement();
+        return typeElement.getQualifiedName().toString();
+    }
 }
