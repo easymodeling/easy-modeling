@@ -14,6 +14,8 @@ import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
@@ -36,12 +38,15 @@ public class EasyModelingProcessor extends AbstractProcessor {
 
     private Messager messager;
 
+    private BuilderFieldProvider builderFieldProvider;
+
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
         messager = processingEnv.getMessager();
         elementUtils = processingEnv.getElementUtils();
         filer = processingEnv.getFiler();
+        builderFieldProvider = new BuilderFieldProvider();
     }
 
     @Override
@@ -72,7 +77,7 @@ public class EasyModelingProcessor extends AbstractProcessor {
                 throw new RuntimeException();
             }
 
-            final FactoryType modelFactory = new FactoryType(clazz);
+            final FactoryType modelFactory = new FactoryType(clazz, initBuilderFields(clazz));
             final TypeSpec factory = modelFactory.createType();
             try {
                 final PackageElement pkg = elementUtils.getPackageOf(clazz);
@@ -92,6 +97,14 @@ public class EasyModelingProcessor extends AbstractProcessor {
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         return Sets.newHashSet(Builder.class.getCanonicalName());
+    }
+
+    private List<BuilderField> initBuilderFields(TypeElement clazz) {
+        return clazz.getEnclosedElements().stream()
+                .filter(element -> element.getKind().equals(ElementKind.FIELD))
+                .filter(element -> !element.getModifiers().contains(Modifier.STATIC))
+                .map(builderFieldProvider::provide)
+                .collect(Collectors.toList());
     }
 
     private List<String> classNamesOf(Element easyModelingConfig) {
