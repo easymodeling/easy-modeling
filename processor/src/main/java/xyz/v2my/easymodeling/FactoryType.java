@@ -3,6 +3,7 @@ package xyz.v2my.easymodeling;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
+import xyz.v2my.easymodeling.field.BuilderField;
 
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;

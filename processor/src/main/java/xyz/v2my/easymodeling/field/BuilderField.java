@@ -1,4 +1,4 @@
-package xyz.v2my.easymodeling;
+package xyz.v2my.easymodeling.field;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;

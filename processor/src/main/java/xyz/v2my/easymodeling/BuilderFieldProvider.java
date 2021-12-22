@@ -2,6 +2,9 @@ package xyz.v2my.easymodeling;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
+import xyz.v2my.easymodeling.field.BuilderField;
+import xyz.v2my.easymodeling.field.GenericBuilderField;
+import xyz.v2my.easymodeling.field.PrimitiveBuilderField;
 
 import javax.lang.model.element.Element;
 

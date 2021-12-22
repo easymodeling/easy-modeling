@@ -1,4 +1,4 @@
-package xyz.v2my.easymodeling;
+package xyz.v2my.easymodeling.field;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -7,7 +7,6 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 
-import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 
 public abstract class AbstractBuilderField implements BuilderField {
