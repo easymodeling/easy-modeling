@@ -2,10 +2,9 @@ package xyz.v2my.easymodeling;
 
 import com.google.auto.service.AutoService;
 import com.google.common.collect.Sets;
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
+import lombok.AllArgsConstructor;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
@@ -15,7 +14,6 @@ import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
-import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
@@ -38,20 +36,12 @@ public class EasyModelingProcessor extends AbstractProcessor {
 
     private Messager messager;
 
-    private BuilderGenerator builderGenerator;
-
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
         messager = processingEnv.getMessager();
         elementUtils = processingEnv.getElementUtils();
         filer = processingEnv.getFiler();
-
-        initGenerators();
-    }
-
-    private void initGenerators() {
-        builderGenerator = new BuilderGenerator();
     }
 
     @Override
@@ -70,40 +60,26 @@ public class EasyModelingProcessor extends AbstractProcessor {
     }
 
     private void process(RoundEnvironment roundEnv) throws ProcessingException {
-        for (Element easyModelingConfig : roundEnv.getElementsAnnotatedWith(Builder.class)) {
-            final List<TypeElement> classes = classOf(easyModelingConfig).stream().map(elementUtils::getTypeElement).collect(Collectors.toList());
-            for (TypeElement clazz : classes) {
-                final String factoryTypeName = String.format("EM%sFactory", clazz.getSimpleName());
-                final TypeSpec.Builder factoryBuilder = TypeSpec.classBuilder(factoryTypeName).addModifiers(Modifier.PUBLIC);
+        for (Element element : roundEnv.getElementsAnnotatedWith(Builder.class)) {
+            List<TypeElement> typeElements = classNamesOf(element).stream().map(elementUtils::getTypeElement).collect(Collectors.toList());
+            process(typeElements);
+        }
+    }
 
-                final TypeSpec builderClass = builderGenerator.generate(clazz);
-                factoryBuilder.addType(builderClass);
+    private void process(List<TypeElement> classes) throws ProcessingException {
+        for (TypeElement clazz : classes) {
+            if (clazz.getAnnotation(AllArgsConstructor.class) == null) {
+                throw new RuntimeException();
+            }
 
-                final String constructorParameters = builderClass.fieldSpecs.stream()
-                        .map(field -> {
-                            switch (field.type.toString()) {
-                                case "int":
-                                case "long":
-                                    return "0";
-                                default:
-                                    return "null";
-                            }
-                        })
-                        .collect(Collectors.joining(","));
-                final String builderTypeName = builderClass.name;
-                final MethodSpec builder = MethodSpec.methodBuilder("builder")
-                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                        .returns(ClassName.get("", builderTypeName))
-                        .addStatement("return new $N(" + constructorParameters + ")", builderTypeName)
-                        .build();
-                factoryBuilder.addMethod(builder);
-                try {
-                    final PackageElement pkg = elementUtils.getPackageOf(clazz);
-                    JavaFile.builder(pkg.toString(), factoryBuilder.build()).build().writeTo(filer);
-                } catch (IOException e) {
-                    // TODO: 19.12.21 throw exceptions with elaborate messages
-                    throw new ProcessingException("Error when generate factory");
-                }
+            final FactoryType modelFactory = new FactoryType(clazz);
+            final TypeSpec factory = modelFactory.createType();
+            try {
+                final PackageElement pkg = elementUtils.getPackageOf(clazz);
+                JavaFile.builder(pkg.toString(), factory).build().writeTo(filer);
+            } catch (IOException e) {
+                // TODO: 19.12.21 throw exceptions with elaborate messages
+                throw new ProcessingException("Error when generate factory");
             }
         }
     }
@@ -118,7 +94,7 @@ public class EasyModelingProcessor extends AbstractProcessor {
         return Sets.newHashSet(Builder.class.getCanonicalName());
     }
 
-    private List<String> classOf(Element easyModelingConfig) {
+    private List<String> classNamesOf(Element easyModelingConfig) {
         final Builder builder = easyModelingConfig.getAnnotation(Builder.class);
         try {
             return Arrays.stream(builder.classes()).map(Class::getCanonicalName).collect(Collectors.toList());
