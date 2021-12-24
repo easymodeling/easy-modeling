@@ -1,9 +1,9 @@
-package xyz.v2my.easymodeling.field;
+package xyz.v2my.easymodeling.factory.field;
 
 import com.google.common.collect.Sets;
 import com.squareup.javapoet.TypeName;
-import xyz.v2my.easymodeling.Import;
 import xyz.v2my.easymodeling.Randomizer;
+import xyz.v2my.easymodeling.factory.Import;
 
 import java.util.Set;
 

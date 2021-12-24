@@ -1,4 +1,4 @@
-package xyz.v2my.easymodeling;
+package xyz.v2my.easymodeling.factory;
 
 public class Import {
 

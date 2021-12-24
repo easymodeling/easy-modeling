@@ -1,4 +1,4 @@
-package xyz.v2my.easymodeling.field;
+package xyz.v2my.easymodeling.factory.field;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -6,7 +6,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
-import xyz.v2my.easymodeling.Import;
+import xyz.v2my.easymodeling.factory.Import;
 
 import javax.lang.model.element.Modifier;
 import java.util.HashSet;

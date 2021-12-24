@@ -5,7 +5,9 @@ import com.google.common.collect.Sets;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 import lombok.AllArgsConstructor;
-import xyz.v2my.easymodeling.field.BuilderField;
+import xyz.v2my.easymodeling.factory.BuilderFieldProvider;
+import xyz.v2my.easymodeling.factory.FactoryType;
+import xyz.v2my.easymodeling.factory.field.BuilderField;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
