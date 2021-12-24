@@ -6,7 +6,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import xyz.v2my.easymodeling.factory.ImportGenerator;
 
-public interface BuilderField extends ImportGenerator {
+public interface ModelField extends ImportGenerator {
 
     String initializer();
 

@@ -2,9 +2,9 @@ package xyz.v2my.easymodeling.factory.field;
 
 import com.squareup.javapoet.TypeName;
 
-public class GenericBuilderField extends AbstractBuilderField {
+public class GenericField extends AbstractField {
 
-    public GenericBuilderField(TypeName type, String name) {
+    public GenericField(TypeName type, String name) {
         super(type, name);
     }
 

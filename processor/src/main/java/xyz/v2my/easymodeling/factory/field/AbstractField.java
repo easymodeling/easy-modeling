@@ -12,13 +12,13 @@ import javax.lang.model.element.Modifier;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class AbstractBuilderField implements BuilderField {
+public abstract class AbstractField implements ModelField {
 
     protected final TypeName type;
 
     protected final String name;
 
-    public AbstractBuilderField(TypeName type, String name) {
+    public AbstractField(TypeName type, String name) {
         this.type = type;
         this.name = name;
     }

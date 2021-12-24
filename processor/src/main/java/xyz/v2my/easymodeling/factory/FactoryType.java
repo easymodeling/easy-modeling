@@ -3,7 +3,7 @@ package xyz.v2my.easymodeling.factory;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
-import xyz.v2my.easymodeling.factory.field.BuilderField;
+import xyz.v2my.easymodeling.factory.field.ModelField;
 
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
@@ -20,14 +20,14 @@ public class FactoryType implements ImportGenerator {
 
     private final TypeElement clazz;
 
-    private final List<BuilderField> builderFields;
+    private final List<ModelField> modelFields;
 
     private final BuilderType builderType;
 
-    public FactoryType(TypeElement clazz, List<BuilderField> builderFields) {
+    public FactoryType(TypeElement clazz, List<ModelField> modelFields) {
         this.clazz = clazz;
-        this.builderFields = builderFields;
-        this.builderType = new BuilderType(clazz, builderFields);
+        this.modelFields = modelFields;
+        this.builderType = new BuilderType(clazz, modelFields);
     }
 
     public TypeSpec createType() {
@@ -44,14 +44,14 @@ public class FactoryType implements ImportGenerator {
 
     @Override
     public Set<Import> imports() {
-        return builderFields.stream().map(ImportGenerator::imports)
+        return modelFields.stream().map(ImportGenerator::imports)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toSet());
     }
 
     private MethodSpec builderMethod(String builderName) {
-        String builderParameters = builderFields.stream()
-                .map(BuilderField::initializer)
+        String builderParameters = modelFields.stream()
+                .map(ModelField::initializer)
                 .collect(Collectors.joining(", "));
         return MethodSpec.methodBuilder(BUILDER_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)

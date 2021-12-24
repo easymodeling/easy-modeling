@@ -6,7 +6,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
-import xyz.v2my.easymodeling.factory.field.BuilderField;
+import xyz.v2my.easymodeling.factory.field.ModelField;
 
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
@@ -19,11 +19,11 @@ public class BuilderType {
 
     private final TypeElement clazz;
 
-    private final List<BuilderField> builderFields;
+    private final List<ModelField> modelFields;
 
-    public BuilderType(TypeElement clazz, List<BuilderField> builderFields) {
+    public BuilderType(TypeElement clazz, List<ModelField> modelFields) {
         this.clazz = clazz;
-        this.builderFields = builderFields;
+        this.modelFields = modelFields;
     }
 
     public TypeSpec createType() {
@@ -37,11 +37,11 @@ public class BuilderType {
     }
 
     private MethodSpec builderAllArgsConstructor() {
-        final List<ParameterSpec> constructorParameters = builderFields.stream()
-                .map(BuilderField::constructorParameter)
+        final List<ParameterSpec> constructorParameters = modelFields.stream()
+                .map(ModelField::constructorParameter)
                 .collect(Collectors.toList());
-        final List<CodeBlock> constructorStatements = builderFields.stream()
-                .map(BuilderField::constructorStatement)
+        final List<CodeBlock> constructorStatements = modelFields.stream()
+                .map(ModelField::constructorStatement)
                 .collect(Collectors.toList());
 
         return MethodSpec.constructorBuilder()
@@ -51,8 +51,8 @@ public class BuilderType {
     }
 
     private MethodSpec buildMethod() {
-        final String constructionParameters = builderFields.stream()
-                .map(BuilderField::constructorVariable)
+        final String constructionParameters = modelFields.stream()
+                .map(ModelField::constructorVariable)
                 .collect(Collectors.joining(", "));
         return MethodSpec.methodBuilder("build")
                 .addModifiers(Modifier.PUBLIC)
@@ -62,11 +62,11 @@ public class BuilderType {
     }
 
     private List<FieldSpec> builderFields() {
-        return builderFields.stream().map(BuilderField::builderField).collect(Collectors.toList());
+        return modelFields.stream().map(ModelField::builderField).collect(Collectors.toList());
     }
 
     private List<MethodSpec> builderSetters() {
-        return builderFields.stream()
+        return modelFields.stream()
                 .map(field -> field.builderSetter(BUILDER_NAME_PATTERN))
                 .collect(Collectors.toList());
     }

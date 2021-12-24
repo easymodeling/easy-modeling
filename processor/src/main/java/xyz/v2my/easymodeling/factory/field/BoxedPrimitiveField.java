@@ -8,11 +8,11 @@ import xyz.v2my.easymodeling.factory.Import;
 
 import java.util.Set;
 
-public class BoxedPrimitiveBuilderField extends AbstractBuilderField {
+public class BoxedPrimitiveField extends AbstractField {
 
     private final String staticInitializer;
 
-    public BoxedPrimitiveBuilderField(TypeName type, String name) {
+    public BoxedPrimitiveField(TypeName type, String name) {
         super(type, name);
         this.staticInitializer = init();
     }

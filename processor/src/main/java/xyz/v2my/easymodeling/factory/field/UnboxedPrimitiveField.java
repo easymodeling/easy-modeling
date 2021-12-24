@@ -1,17 +1,18 @@
 package xyz.v2my.easymodeling.factory.field;
 
 import com.google.common.collect.Sets;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.Randomizer;
 import xyz.v2my.easymodeling.factory.Import;
 
 import java.util.Set;
 
-public class PrimitiveBuilderField extends AbstractBuilderField {
+public class UnboxedPrimitiveField extends AbstractField {
 
     private final String method;
 
-    public PrimitiveBuilderField(TypeName type, String name) {
+    public UnboxedPrimitiveField(TypeName type, String name) {
         super(type, name);
         this.method = init();
     }

@@ -7,7 +7,7 @@ import com.squareup.javapoet.TypeSpec;
 import lombok.AllArgsConstructor;
 import xyz.v2my.easymodeling.factory.BuilderFieldProvider;
 import xyz.v2my.easymodeling.factory.FactoryType;
-import xyz.v2my.easymodeling.factory.field.BuilderField;
+import xyz.v2my.easymodeling.factory.field.ModelField;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
@@ -106,7 +106,7 @@ public class EasyModelingProcessor extends AbstractProcessor {
         return Sets.newHashSet(Builder.class.getCanonicalName());
     }
 
-    private List<BuilderField> initBuilderFields(TypeElement clazz) {
+    private List<ModelField> initBuilderFields(TypeElement clazz) {
         return clazz.getEnclosedElements().stream()
                 .filter(element -> element.getKind().equals(ElementKind.FIELD))
                 .filter(element -> !element.getModifiers().contains(Modifier.STATIC))
