@@ -23,4 +23,11 @@ class TestModelTest {
         assertNotNull(testModel);
         assertEquals("some-string", testModel.getaString());
     }
+
+    @Test
+    void should_create_test_model_with_next_method() {
+        final TestModel testModel = EMTestModelFactory.next();
+
+        assertNotNull(testModel);
+    }
 }

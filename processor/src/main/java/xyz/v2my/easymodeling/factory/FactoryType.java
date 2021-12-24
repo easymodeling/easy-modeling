@@ -16,6 +16,8 @@ public class FactoryType implements ImportGenerator {
 
     private static final String FACTORY_NAME_PATTERN = "EM%sFactory";
 
+    private static final String BUILDER_METHOD_NAME = "builder";
+
     private final TypeElement clazz;
 
     private final List<BuilderField> builderFields;
@@ -34,8 +36,8 @@ public class FactoryType implements ImportGenerator {
         final TypeSpec innerBuilder = builderType.createType();
         factory.addType(innerBuilder);
 
-        final MethodSpec builder = builderMethod(innerBuilder.name);
-        factory.addMethod(builder);
+        factory.addMethod(nextMethod());
+        factory.addMethod(builderMethod(innerBuilder.name));
 
         return factory.build();
     }
@@ -51,10 +53,18 @@ public class FactoryType implements ImportGenerator {
         String builderParameters = builderFields.stream()
                 .map(BuilderField::initializer)
                 .collect(Collectors.joining(", "));
-        return MethodSpec.methodBuilder("builder")
+        return MethodSpec.methodBuilder(BUILDER_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(ClassName.get("", builderName))
                 .addStatement("return new $N(" + builderParameters + ")", builderName)
+                .build();
+    }
+
+    private MethodSpec nextMethod() {
+        return MethodSpec.methodBuilder("next")
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .returns(ClassName.get(clazz))
+                .addStatement("return $N().build()", BUILDER_METHOD_NAME)
                 .build();
     }
 }
