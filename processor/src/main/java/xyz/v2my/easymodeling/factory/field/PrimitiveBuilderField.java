@@ -34,7 +34,7 @@ public class PrimitiveBuilderField extends AbstractBuilderField {
         } else if (type.toString().equals(char.class.toString())) {
             return "aChar";
         } else {
-            throw new IllegalArgumentException("Class type " + type + " not supported");
+            throw new IllegalArgumentException("Primitive " + type + " not supported");
         }
     }
 

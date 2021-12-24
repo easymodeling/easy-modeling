@@ -3,7 +3,7 @@ package xyz.v2my.easymodeling;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class TestModel {
+public class PrimitiveTypeModel {
 
     private int anInt;
 
