@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class FactoryType implements ImportGenerator {
 
-    private static final String FACTORY_NAME_PATTERN = "EM%sFactory";
+    private static final String FACTORY_NAME_PATTERN = "EM%s";
 
     private static final String BUILDER_METHOD_NAME = "builder";
 

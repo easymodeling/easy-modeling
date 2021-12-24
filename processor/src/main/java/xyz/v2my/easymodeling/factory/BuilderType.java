@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class BuilderType {
 
-    private static final String BUILDER_NAME_PATTERN = "EM%sBuilder";
+    private static final String BUILDER_NAME_PATTERN = "Builder";
 
     private final TypeElement clazz;
 
@@ -27,8 +27,7 @@ public class BuilderType {
     }
 
     public TypeSpec createType() {
-        final String builderTypeName = String.format(BUILDER_NAME_PATTERN, clazz.getSimpleName());
-        final TypeSpec.Builder builder = TypeSpec.classBuilder(builderTypeName)
+        final TypeSpec.Builder builder = TypeSpec.classBuilder(BUILDER_NAME_PATTERN)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC);
         builder.addMethod(builderAllArgsConstructor())
                 .addMethod(buildMethod())
@@ -67,7 +66,8 @@ public class BuilderType {
     }
 
     private List<MethodSpec> builderSetters() {
-        final String builderTypeName = String.format("EM%sBuilder", clazz.getSimpleName());
-        return builderFields.stream().map(field -> field.builderSetter(builderTypeName)).collect(Collectors.toList());
+        return builderFields.stream()
+                .map(field -> field.builderSetter(BUILDER_NAME_PATTERN))
+                .collect(Collectors.toList());
     }
 }

@@ -12,7 +12,7 @@ class OrderTest {
 
     @Test
     void should_generate_order() {
-        final Order order = EMOrderFactory.builder().id("some-id").unitPrice(BigDecimal.TEN).build();
+        final Order order = EMOrder.builder().id("some-id").unitPrice(BigDecimal.TEN).build();
 
         assertNotNull(order);
         assertEquals(BigDecimal.TEN, order.getUnitPrice());

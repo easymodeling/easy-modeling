@@ -10,7 +10,7 @@ class TestModelTest {
 
     @Test
     void should_create_test_model() {
-        final TestModel testModel = EMTestModelFactory.builder().build();
+        final TestModel testModel = EMTestModel.builder().build();
 
         assertNotNull(testModel);
         assertNull(testModel.getaString());
@@ -18,7 +18,7 @@ class TestModelTest {
 
     @Test
     void should_create_test_model_and_build_string_field() {
-        final TestModel testModel = EMTestModelFactory.builder().aString("some-string").build();
+        final TestModel testModel = EMTestModel.builder().aString("some-string").build();
 
         assertNotNull(testModel);
         assertEquals("some-string", testModel.getaString());
@@ -26,7 +26,7 @@ class TestModelTest {
 
     @Test
     void should_create_test_model_with_next_method() {
-        final TestModel testModel = EMTestModelFactory.next();
+        final TestModel testModel = EMTestModel.next();
 
         assertNotNull(testModel);
     }
