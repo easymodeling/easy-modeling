@@ -18,21 +18,21 @@ public class UnboxedPrimitiveField extends AbstractField {
     }
 
     public String init() {
-        if (type.toString().equals(boolean.class.toString())) {
+        if (type.equals(ClassName.BOOLEAN)) {
             return "aBoolean";
-        } else if (type.toString().equals(byte.class.toString())) {
+        } else if (type.equals(ClassName.BYTE)) {
             return "aByte";
-        } else if (type.toString().equals(short.class.toString())) {
+        } else if (type.equals(ClassName.SHORT)) {
             return "aShort";
-        } else if (type.toString().equals(int.class.toString())) {
+        } else if (type.equals(ClassName.INT)) {
             return "anInt";
-        } else if (type.toString().equals(long.class.toString())) {
+        } else if (type.equals(ClassName.LONG)) {
             return "aLong";
-        } else if (type.toString().equals(float.class.toString())) {
+        } else if (type.equals(ClassName.FLOAT)) {
             return "aFloat";
-        } else if (type.toString().equals(double.class.toString())) {
+        } else if (type.equals(ClassName.DOUBLE)) {
             return "aDouble";
-        } else if (type.toString().equals(char.class.toString())) {
+        } else if (type.equals(ClassName.CHAR)) {
             return "aChar";
         } else {
             throw new IllegalArgumentException("Primitive " + type + " not supported");
