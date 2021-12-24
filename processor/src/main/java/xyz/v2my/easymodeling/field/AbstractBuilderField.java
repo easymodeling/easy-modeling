@@ -6,8 +6,11 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
+import xyz.v2my.easymodeling.Import;
 
 import javax.lang.model.element.Modifier;
+import java.util.HashSet;
+import java.util.Set;
 
 public abstract class AbstractBuilderField implements BuilderField {
 
@@ -49,5 +52,10 @@ public abstract class AbstractBuilderField implements BuilderField {
                 .addStatement("this.$N = $N", name, name)
                 .addStatement("return this")
                 .build();
+    }
+
+    @Override
+    public Set<Import> imports() {
+        return new HashSet<>();
     }
 }

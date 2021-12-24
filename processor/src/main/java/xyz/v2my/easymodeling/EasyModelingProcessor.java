@@ -2,7 +2,6 @@ package xyz.v2my.easymodeling;
 
 import com.google.auto.service.AutoService;
 import com.google.common.collect.Sets;
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 import lombok.AllArgsConstructor;
@@ -83,9 +82,11 @@ public class EasyModelingProcessor extends AbstractProcessor {
             final TypeSpec factory = modelFactory.createType();
             try {
                 final PackageElement pkg = elementUtils.getPackageOf(clazz);
-                JavaFile.builder(pkg.toString(), factory)
-                        .addStaticImport(ClassName.get("xyz.v2my.easymodeling", "Randomizer"), "*")
-                        .build().writeTo(filer);
+                final JavaFile.Builder javaFile = JavaFile.builder(pkg.toString(), factory);
+                modelFactory.imports().forEach(ipt ->
+                        javaFile.addStaticImport(ipt.getClazz(), ipt.getName()));
+                javaFile.build()
+                        .writeTo(filer);
             } catch (IOException e) {
                 // TODO: 19.12.21 throw exceptions with elaborate messages
                 throw new ProcessingException("Error when generate factory");

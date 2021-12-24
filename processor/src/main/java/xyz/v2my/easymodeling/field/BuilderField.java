@@ -4,8 +4,9 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
+import xyz.v2my.easymodeling.ImportGenerator;
 
-public interface BuilderField {
+public interface BuilderField extends ImportGenerator {
 
     String initializer();
 

@@ -7,10 +7,12 @@ import xyz.v2my.easymodeling.field.BuilderField;
 
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-public class FactoryType {
+public class FactoryType implements ImportGenerator {
 
     private static final String FACTORY_NAME_PATTERN = "EM%sFactory";
 
@@ -38,10 +40,17 @@ public class FactoryType {
         return factory.build();
     }
 
+    @Override
+    public Set<Import> imports() {
+        return builderFields.stream().map(ImportGenerator::imports)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toSet());
+    }
+
     private MethodSpec builderMethod(String builderName) {
         String builderParameters = builderFields.stream()
                 .map(BuilderField::initializer)
-                .collect(Collectors.joining(","));
+                .collect(Collectors.joining(", "));
         return MethodSpec.methodBuilder("builder")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(ClassName.get("", builderName))
