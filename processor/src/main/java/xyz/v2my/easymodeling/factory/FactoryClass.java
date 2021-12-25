@@ -3,7 +3,6 @@ package xyz.v2my.easymodeling.factory;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
-import xyz.v2my.easymodeling.Model;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 
 import javax.lang.model.element.ElementKind;
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class FactoryType implements ImportGenerator {
+public class FactoryClass implements ImportGenerator {
 
     private static final String FACTORY_NAME_PATTERN = "EM%s";
 
@@ -24,13 +23,13 @@ public class FactoryType implements ImportGenerator {
 
     private final List<ModelField> modelFields;
 
-    private final BuilderType builderType;
+    private final BuilderClass builderClass;
 
-    public FactoryType(TypeElement type) {
+    public FactoryClass(TypeElement type) {
         this.type = type;
         final List<ModelField> fields = initBuilderFields(type);
         this.modelFields = fields;
-        this.builderType = new BuilderType(type, fields);
+        this.builderClass = new BuilderClass(type, fields);
     }
 
     private List<ModelField> initBuilderFields(TypeElement type) {
@@ -44,7 +43,7 @@ public class FactoryType implements ImportGenerator {
     public TypeSpec createType() {
         final String factoryTypeName = String.format(FACTORY_NAME_PATTERN, type.getSimpleName());
         final TypeSpec.Builder factory = TypeSpec.classBuilder(factoryTypeName).addModifiers(Modifier.PUBLIC);
-        final TypeSpec innerBuilder = builderType.createType();
+        final TypeSpec innerBuilder = builderClass.createType();
         factory.addType(innerBuilder);
 
         factory.addMethod(nextMethod());

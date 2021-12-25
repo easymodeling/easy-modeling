@@ -5,7 +5,7 @@ import com.google.common.collect.Sets;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 import lombok.AllArgsConstructor;
-import xyz.v2my.easymodeling.factory.FactoryType;
+import xyz.v2my.easymodeling.factory.FactoryClass;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
@@ -68,7 +68,7 @@ public class ModelsProcessor extends AbstractProcessor {
 
     private void process(Model model) throws ProcessingException {
         TypeElement type = getTypeElementOf(model);
-        final FactoryType modelFactory = new FactoryType(type);
+        final FactoryClass modelFactory = new FactoryClass(type);
         final TypeSpec factory = modelFactory.createType();
         try {
             final PackageElement pkg = elementUtils.getPackageOf(type);

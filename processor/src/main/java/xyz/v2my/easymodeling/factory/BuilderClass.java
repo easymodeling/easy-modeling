@@ -13,7 +13,7 @@ import javax.lang.model.element.TypeElement;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BuilderType {
+public class BuilderClass {
 
     private static final String BUILDER_NAME_PATTERN = "Builder";
 
@@ -21,7 +21,7 @@ public class BuilderType {
 
     private final List<ModelField> modelFields;
 
-    public BuilderType(TypeElement type, List<ModelField> modelFields) {
+    public BuilderClass(TypeElement type, List<ModelField> modelFields) {
         this.type = type;
         this.modelFields = modelFields;
     }
