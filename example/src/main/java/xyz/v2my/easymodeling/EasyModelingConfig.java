@@ -6,5 +6,5 @@ package xyz.v2my.easymodeling;
         PrimitiveTypeModel.class,
         BoxedPrimitiveTypeModel.class,
 })
-public class TestModelConfig {
+public class EasyModelingConfig {
 }
