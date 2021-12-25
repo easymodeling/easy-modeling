@@ -17,12 +17,12 @@ public class BuilderType {
 
     private static final String BUILDER_NAME_PATTERN = "Builder";
 
-    private final TypeElement clazz;
+    private final TypeElement type;
 
     private final List<ModelField> modelFields;
 
-    public BuilderType(TypeElement clazz, List<ModelField> modelFields) {
-        this.clazz = clazz;
+    public BuilderType(TypeElement type, List<ModelField> modelFields) {
+        this.type = type;
         this.modelFields = modelFields;
     }
 
@@ -56,8 +56,8 @@ public class BuilderType {
                 .collect(Collectors.joining(", "));
         return MethodSpec.methodBuilder("build")
                 .addModifiers(Modifier.PUBLIC)
-                .returns(ClassName.get(clazz))
-                .addStatement("return new $N(" + constructionParameters + ")", clazz.getSimpleName())
+                .returns(ClassName.get(type))
+                .addStatement("return new $N(" + constructionParameters + ")", type.getSimpleName())
                 .build();
     }
 
