@@ -22,7 +22,7 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
-import javax.lang.model.type.MirroredTypesException;
+import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
@@ -33,7 +33,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @AutoService(Processor.class)
-public class EasyModelingProcessor extends AbstractProcessor {
+public class ModelsProcessor extends AbstractProcessor {
 
     private Elements elementUtils;
 
@@ -68,7 +68,7 @@ public class EasyModelingProcessor extends AbstractProcessor {
     }
 
     private void process(RoundEnvironment roundEnv) throws ProcessingException {
-        for (Element element : roundEnv.getElementsAnnotatedWith(Model.class)) {
+        for (Element element : roundEnv.getElementsAnnotatedWith(Models.class)) {
             List<TypeElement> typeElements = classNamesOf(element).stream().map(elementUtils::getTypeElement).collect(Collectors.toList());
             process(typeElements);
         }
@@ -103,7 +103,7 @@ public class EasyModelingProcessor extends AbstractProcessor {
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
-        return Sets.newHashSet(Model.class.getCanonicalName());
+        return Sets.newHashSet(Models.class.getCanonicalName());
     }
 
     private List<ModelField> initBuilderFields(TypeElement clazz) {
@@ -115,17 +115,20 @@ public class EasyModelingProcessor extends AbstractProcessor {
     }
 
     private List<String> classNamesOf(Element easyModelingConfig) {
-        final Model model = easyModelingConfig.getAnnotation(Model.class);
-        try {
-            return Arrays.stream(model.classes()).map(Class::getCanonicalName).collect(Collectors.toList());
-        } catch (MirroredTypesException mte) {
-            return mte.getTypeMirrors().stream().map(this::typeMirrorName).collect(Collectors.toList());
-        }
+        final Models models = easyModelingConfig.getAnnotation(Models.class);
+        return Arrays.stream(models.value())
+                .map(this::classNameOf)
+                .collect(Collectors.toList());
     }
 
-    private String typeMirrorName(TypeMirror typeMirror) {
-        final DeclaredType declaredType = (DeclaredType) typeMirror;
-        final TypeElement typeElement = (TypeElement) declaredType.asElement();
-        return typeElement.getQualifiedName().toString();
+    private String classNameOf(Model model) {
+        try {
+            return model.type().getCanonicalName();
+        } catch (MirroredTypeException mte) {
+            final TypeMirror typeMirror = mte.getTypeMirror();
+            final DeclaredType declaredType = (DeclaredType) typeMirror;
+            final TypeElement typeElement = (TypeElement) declaredType.asElement();
+            return typeElement.getQualifiedName().toString();
+        }
     }
 }

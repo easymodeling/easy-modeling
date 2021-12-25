@@ -1,10 +1,8 @@
 package xyz.v2my.easymodeling;
 
-@Model(classes = {
-        Order.class,
-        OrderLine.class,
-        PrimitiveTypeModel.class,
-        BoxedPrimitiveTypeModel.class,
-})
+@Model(type = Order.class)
+@Model(type = OrderLine.class)
+@Model(type = PrimitiveTypeModel.class)
+@Model(type = BoxedPrimitiveTypeModel.class)
 public class EasyModelingConfig {
 }
