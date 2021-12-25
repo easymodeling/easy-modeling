@@ -1,6 +1,6 @@
 package xyz.v2my.easymodeling;
 
-@Builder(classes = {
+@Model(classes = {
         Order.class,
         OrderLine.class,
         PrimitiveTypeModel.class,

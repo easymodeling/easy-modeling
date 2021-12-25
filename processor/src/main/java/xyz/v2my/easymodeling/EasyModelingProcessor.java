@@ -68,7 +68,7 @@ public class EasyModelingProcessor extends AbstractProcessor {
     }
 
     private void process(RoundEnvironment roundEnv) throws ProcessingException {
-        for (Element element : roundEnv.getElementsAnnotatedWith(Builder.class)) {
+        for (Element element : roundEnv.getElementsAnnotatedWith(Model.class)) {
             List<TypeElement> typeElements = classNamesOf(element).stream().map(elementUtils::getTypeElement).collect(Collectors.toList());
             process(typeElements);
         }
@@ -103,7 +103,7 @@ public class EasyModelingProcessor extends AbstractProcessor {
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
-        return Sets.newHashSet(Builder.class.getCanonicalName());
+        return Sets.newHashSet(Model.class.getCanonicalName());
     }
 
     private List<ModelField> initBuilderFields(TypeElement clazz) {
@@ -115,9 +115,9 @@ public class EasyModelingProcessor extends AbstractProcessor {
     }
 
     private List<String> classNamesOf(Element easyModelingConfig) {
-        final Builder builder = easyModelingConfig.getAnnotation(Builder.class);
+        final Model model = easyModelingConfig.getAnnotation(Model.class);
         try {
-            return Arrays.stream(builder.classes()).map(Class::getCanonicalName).collect(Collectors.toList());
+            return Arrays.stream(model.classes()).map(Class::getCanonicalName).collect(Collectors.toList());
         } catch (MirroredTypesException mte) {
             return mte.getTypeMirrors().stream().map(this::typeMirrorName).collect(Collectors.toList());
         }

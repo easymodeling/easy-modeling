@@ -8,31 +8,31 @@ import xyz.v2my.easymodeling.factory.Import;
 
 import java.util.Set;
 
-public class BoxedPrimitiveField extends AbstractField {
+public class PrimitiveField extends AbstractField {
 
     private final String staticInitializer;
 
-    public BoxedPrimitiveField(TypeName type, String name) {
+    public PrimitiveField(TypeName type, String name) {
         super(type, name);
         this.staticInitializer = init();
     }
 
     public String init() {
-        if (type.equals(ClassName.get(Boolean.class))) {
+        if (type.equals(ClassName.get(Boolean.class)) || type.equals(ClassName.BOOLEAN)) {
             return "aBoolean";
-        } else if (type.equals(ClassName.get(Byte.class))) {
+        } else if (type.equals(ClassName.get(Byte.class)) || type.equals(ClassName.BYTE)) {
             return "aByte";
-        } else if (type.equals(ClassName.get(Short.class))) {
+        } else if (type.equals(ClassName.get(Short.class)) || type.equals(ClassName.SHORT)) {
             return "aShort";
-        } else if (type.equals(ClassName.get(Integer.class))) {
+        } else if (type.equals(ClassName.get(Integer.class)) || type.equals(ClassName.INT)) {
             return "anInt";
-        } else if (type.equals(ClassName.get(Long.class))) {
+        } else if (type.equals(ClassName.get(Long.class)) || type.equals(ClassName.LONG)) {
             return "aLong";
-        } else if (type.equals(ClassName.get(Float.class))) {
+        } else if (type.equals(ClassName.get(Float.class)) || type.equals(ClassName.FLOAT)) {
             return "aFloat";
-        } else if (type.equals(ClassName.get(Double.class))) {
+        } else if (type.equals(ClassName.get(Double.class)) || type.equals(ClassName.DOUBLE)) {
             return "aDouble";
-        } else if (type.equals(ClassName.get(Character.class))) {
+        } else if (type.equals(ClassName.get(Character.class)) || type.equals(ClassName.CHAR)) {
             return "aChar";
         } else {
             throw new IllegalArgumentException("Boxed Primitive " + type + " not supported");
