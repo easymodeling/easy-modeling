@@ -10,4 +10,6 @@ import java.lang.annotation.Target;
 public @interface Field {
 
     String name();
+
+    long max() default Long.MAX_VALUE;
 }

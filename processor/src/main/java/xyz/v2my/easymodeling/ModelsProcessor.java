@@ -23,7 +23,9 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Set;
+import java.util.stream.Stream;
 
 @AutoService(Processor.class)
 public class ModelsProcessor extends AbstractProcessor {
@@ -58,12 +60,16 @@ public class ModelsProcessor extends AbstractProcessor {
     }
 
     private void process(RoundEnvironment roundEnv) throws ProcessingException {
-        for (Element modelsAnnotated : roundEnv.getElementsAnnotatedWith(Models.class)) {
-            final Models models = modelsAnnotated.getAnnotation(Models.class);
-            for (Model model : models.value()) {
-                process(model);
-            }
-        }
+        final Set<? extends Element> elementsAnnotatedWithModels = roundEnv.getElementsAnnotatedWith(Models.class);
+        final Set<? extends Element> elementsAnnotatedWithModel = roundEnv.getElementsAnnotatedWith(Model.class);
+        Stream.concat(
+                elementsAnnotatedWithModels.stream()
+                        .map(models -> models.getAnnotation(Models.class))
+                        .map(Models::value)
+                        .flatMap(Arrays::stream),
+                elementsAnnotatedWithModel.stream()
+                        .map(model -> model.getAnnotation(Model.class))
+        ).forEach(this::process);
     }
 
     private void process(Model model) throws ProcessingException {
@@ -90,7 +96,7 @@ public class ModelsProcessor extends AbstractProcessor {
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
-        return Sets.newHashSet(Models.class.getCanonicalName());
+        return Sets.newHashSet(Models.class.getCanonicalName(), Model.class.getCanonicalName());
     }
 
     private TypeElement getTypeElementOf(Model model) {

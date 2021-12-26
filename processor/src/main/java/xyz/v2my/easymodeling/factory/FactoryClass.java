@@ -54,8 +54,8 @@ public class FactoryClass implements ImportGenerator {
                 .filter(element -> element.getKind().equals(ElementKind.FIELD))
                 .filter(element -> !element.getModifiers().contains(Modifier.STATIC))
                 .map(element -> {
-                    final Field fieldDeclaration = declaredFieldsMap.get(element.getSimpleName().toString());
-                    return builderFieldProvider.provide(fieldDeclaration, element);
+                    final Field field = declaredFieldsMap.get(element.getSimpleName().toString());
+                    return builderFieldProvider.provide(element, field);
                 })
                 .collect(Collectors.toList());
     }
