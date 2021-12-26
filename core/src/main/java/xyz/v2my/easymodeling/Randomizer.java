@@ -10,66 +10,41 @@ public abstract class Randomizer {
         return random.nextBoolean();
     }
 
-    public static byte aByte() {
-        return (byte) nonNegativeLessThan(Byte.MAX_VALUE);
+    public static byte aByte(long min, long max) {
+        return (byte) intBetween(min, max);
     }
 
-    public static byte aByte(long max) {
-        return (byte) nonNegativeLessThan(max, Byte.MAX_VALUE);
+    public static short aShort(long min, long max) {
+        return (short) intBetween(min, max);
     }
 
-    public static short aShort() {
-        return (short) nonNegativeLessThan(Short.MAX_VALUE);
+    public static int anInt(long min, long max) {
+        return (int) intBetween(min, max);
     }
 
-    public static short aShort(long max) {
-        return (short) nonNegativeLessThan(max, Short.MAX_VALUE);
+    public static long aLong(long min, long max) {
+        return (long) aDouble(min, max);
     }
 
-    public static int anInt() {
-        return (int) nonNegativeLessThan(Integer.MAX_VALUE);
+    public static float aFloat(long min, long max) {
+        return random.nextFloat() * (max - min) + min;
     }
 
-    public static int anInt(long max) {
-        return (int) nonNegativeLessThan(max, Integer.MAX_VALUE);
-    }
-
-    public static long aLong() {
-        return nonNegativeLessThan(Long.MAX_VALUE);
-    }
-
-    public static long aLong(long max) {
-        return nonNegativeLessThan(max, Long.MAX_VALUE);
-    }
-
-    public static float aFloat() {
-        return random.nextFloat();
-    }
-
-    public static float aFloat(int max) {
-        return random.nextFloat() * max;
-    }
-
-    public static double aDouble(long max) {
-        return random.nextDouble() * max;
-    }
-
-    public static double aDouble() {
-        return random.nextDouble();
+    public static double aDouble(long min, long max) {
+        return random.nextDouble() * (max - min) + min;
     }
 
     public static char aChar() {
         return (char) random.nextInt(Character.MAX_VALUE);
     }
 
-    private static long nonNegativeLessThan(long width) {
-        return nonNegativeLessThan(width, width);
-    }
-
-    private static long nonNegativeLessThan(long bound, long width) {
-        if (bound <= 0) {
-            throw new IllegalArgumentException("bound must be positive");
+    private static long intBetween(long min, long max) {
+        if (max < min) {
+            throw new IllegalArgumentException("upper bound should not be less than lower bound");
         }
-        return (random.nextLong() >>> 1) % Math.min(bound, width);
+        if (max == min) {
+            return min;
+        }
+        return (random.nextInt() >>> 1) % (max - min) + min;
     }
 }

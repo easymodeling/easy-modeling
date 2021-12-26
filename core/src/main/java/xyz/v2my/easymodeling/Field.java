@@ -12,4 +12,6 @@ public @interface Field {
     String name();
 
     long max() default Long.MAX_VALUE;
+
+    long min() default 0;
 }
