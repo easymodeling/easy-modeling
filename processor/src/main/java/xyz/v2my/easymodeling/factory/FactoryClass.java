@@ -3,14 +3,20 @@ package xyz.v2my.easymodeling.factory;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
+import xyz.v2my.easymodeling.Field;
+import xyz.v2my.easymodeling.Model;
+import xyz.v2my.easymodeling.ProcessingException;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class FactoryClass implements ImportGenerator {
@@ -19,13 +25,16 @@ public class FactoryClass implements ImportGenerator {
 
     private static final String BUILDER_METHOD_NAME = "builder";
 
+    private final Model model;
+
     private final TypeElement type;
 
     private final List<ModelField> modelFields;
 
     private final BuilderClass builderClass;
 
-    public FactoryClass(TypeElement type) {
+    public FactoryClass(Model model, TypeElement type) {
+        this.model = model;
         this.type = type;
         final List<ModelField> fields = initBuilderFields(type);
         this.modelFields = fields;
@@ -33,10 +42,21 @@ public class FactoryClass implements ImportGenerator {
     }
 
     private List<ModelField> initBuilderFields(TypeElement type) {
+        final Field[] declaredFields = model.fields();
+        final Map<String, Field> declaredFieldsMap;
+        try {
+            declaredFieldsMap = Arrays.stream(declaredFields).collect(Collectors.toMap(Field::name, Function.identity()));
+        } catch (IllegalStateException e) {
+            throw new ProcessingException("Duplicated fields declaration: " + e.getMessage());
+        }
+        final BuilderFieldProvider builderFieldProvider = new BuilderFieldProvider();
         return type.getEnclosedElements().stream()
                 .filter(element -> element.getKind().equals(ElementKind.FIELD))
                 .filter(element -> !element.getModifiers().contains(Modifier.STATIC))
-                .map(new BuilderFieldProvider()::provide)
+                .map(element -> {
+                    final Field fieldDeclaration = declaredFieldsMap.get(element.getSimpleName().toString());
+                    return builderFieldProvider.provide(fieldDeclaration, element);
+                })
                 .collect(Collectors.toList());
     }
 

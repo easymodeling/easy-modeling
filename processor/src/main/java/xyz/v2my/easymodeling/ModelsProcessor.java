@@ -68,7 +68,7 @@ public class ModelsProcessor extends AbstractProcessor {
 
     private void process(Model model) throws ProcessingException {
         TypeElement type = getTypeElementOf(model);
-        final FactoryClass modelFactory = new FactoryClass(type);
+        final FactoryClass modelFactory = new FactoryClass(model, type);
         final TypeSpec factory = modelFactory.createType();
         try {
             final PackageElement pkg = elementUtils.getPackageOf(type);
