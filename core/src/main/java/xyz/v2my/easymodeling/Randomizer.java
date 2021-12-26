@@ -11,15 +11,15 @@ public abstract class Randomizer {
     }
 
     public static byte aByte(long min, long max) {
-        return (byte) intBetween(min, max);
+        return (byte) longBetween(min, max);
     }
 
     public static short aShort(long min, long max) {
-        return (short) intBetween(min, max);
+        return (short) longBetween(min, max);
     }
 
     public static int anInt(long min, long max) {
-        return (int) intBetween(min, max);
+        return (int) longBetween(min, max);
     }
 
     public static long aLong(long min, long max) {
@@ -38,7 +38,7 @@ public abstract class Randomizer {
         return (char) random.nextInt(Character.MAX_VALUE);
     }
 
-    private static long intBetween(long min, long max) {
+    private static long longBetween(long min, long max) {
         if (max < min) {
             throw new IllegalArgumentException("upper bound should not be less than lower bound");
         }
