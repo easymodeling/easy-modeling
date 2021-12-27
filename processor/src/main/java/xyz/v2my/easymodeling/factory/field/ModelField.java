@@ -8,7 +8,7 @@ import xyz.v2my.easymodeling.factory.ImportGenerator;
 
 public interface ModelField extends ImportGenerator {
 
-    String initializer();
+    CodeBlock initializer();
 
     ParameterSpec constructorParameter();
 

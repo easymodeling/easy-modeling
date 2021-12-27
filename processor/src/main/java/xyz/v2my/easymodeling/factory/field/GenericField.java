@@ -1,5 +1,6 @@
 package xyz.v2my.easymodeling.factory.field;
 
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 
 public class GenericField extends AbstractField {
@@ -9,7 +10,7 @@ public class GenericField extends AbstractField {
     }
 
     @Override
-    public String initializer() {
-        return "null";
+    public CodeBlock initializer() {
+        return CodeBlock.of("null");
     }
 }

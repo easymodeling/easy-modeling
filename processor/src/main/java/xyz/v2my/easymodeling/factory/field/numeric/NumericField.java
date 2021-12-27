@@ -1,6 +1,7 @@
 package xyz.v2my.easymodeling.factory.field.numeric;
 
 import com.google.common.collect.Sets;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.Field;
 import xyz.v2my.easymodeling.factory.Import;
@@ -20,8 +21,8 @@ public abstract class NumericField extends AbstractField {
     }
 
     @Override
-    public String initializer() {
-        return String.format("%s(%sL, %sL)", staticInitializer(), min(), max());
+    public CodeBlock initializer() {
+        return CodeBlock.of("$L($LL, $LL)", staticInitializer(), min(), max());
     }
 
     protected long min() {

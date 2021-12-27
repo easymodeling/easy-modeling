@@ -1,6 +1,7 @@
 package xyz.v2my.easymodeling.factory;
 
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 import xyz.v2my.easymodeling.Field;
@@ -80,13 +81,13 @@ public class FactoryClass implements ImportGenerator {
     }
 
     private MethodSpec builderMethod(String builderName) {
-        String builderParameters = modelFields.stream()
+        final CodeBlock builderParameters = modelFields.stream()
                 .map(ModelField::initializer)
-                .collect(Collectors.joining(", "));
+                .collect(CodeBlock.joining(", "));
         return MethodSpec.methodBuilder(BUILDER_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(ClassName.get("", builderName))
-                .addStatement("return new $N(" + builderParameters + ")", builderName)
+                .addStatement("return new $2N($1L)", builderParameters, builderName)
                 .build();
     }
 
