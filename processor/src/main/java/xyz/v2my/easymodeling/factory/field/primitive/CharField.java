@@ -1,4 +1,4 @@
-package xyz.v2my.easymodeling.factory.field;
+package xyz.v2my.easymodeling.factory.field.primitive;
 
 import com.squareup.javapoet.TypeName;
 

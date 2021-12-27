@@ -1,7 +1,6 @@
-package xyz.v2my.easymodeling.factory.field.numeric;
+package xyz.v2my.easymodeling.factory.field.primitive;
 
 import com.squareup.javapoet.TypeName;
-import xyz.v2my.easymodeling.factory.field.PrimitiveField;
 
 public class BooleanField extends PrimitiveField {
 
