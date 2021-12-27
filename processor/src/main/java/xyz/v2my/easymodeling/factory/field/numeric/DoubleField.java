@@ -1,5 +1,6 @@
 package xyz.v2my.easymodeling.factory.field.numeric;
 
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.Field;
 
@@ -19,6 +20,10 @@ public class DoubleField extends NumericField {
         return Long.MIN_VALUE;
     }
 
+    @Override
+    protected CodeBlock constantInit(Double c) {
+        return CodeBlock.of("$L", c);
+    }
 
     @Override
     protected String staticInitializer() {

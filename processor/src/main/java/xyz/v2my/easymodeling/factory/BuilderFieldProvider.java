@@ -3,16 +3,16 @@ package xyz.v2my.easymodeling.factory;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.Field;
-import xyz.v2my.easymodeling.factory.field.primitive.CharField;
 import xyz.v2my.easymodeling.factory.field.GenericField;
 import xyz.v2my.easymodeling.factory.field.ModelField;
-import xyz.v2my.easymodeling.factory.field.primitive.BooleanField;
 import xyz.v2my.easymodeling.factory.field.numeric.ByteField;
 import xyz.v2my.easymodeling.factory.field.numeric.DoubleField;
 import xyz.v2my.easymodeling.factory.field.numeric.FloatField;
 import xyz.v2my.easymodeling.factory.field.numeric.IntegerField;
 import xyz.v2my.easymodeling.factory.field.numeric.LongField;
 import xyz.v2my.easymodeling.factory.field.numeric.ShortField;
+import xyz.v2my.easymodeling.factory.field.primitive.BooleanField;
+import xyz.v2my.easymodeling.factory.field.primitive.CharField;
 
 import javax.lang.model.element.Element;
 

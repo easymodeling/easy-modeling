@@ -9,6 +9,7 @@ class NumericalTypeModelTest {
     void should_create_numerical_type_model() {
         final NumericalTypeModel model = EMNumericalTypeModel.builder().build();
 
-        Assertions.assertTrue(model.getAnInt() < 3 && model.getAnInt() >= 0);
+        Assertions.assertEquals(11, model.getAnInt());
+        Assertions.assertEquals(11, (short) model.getaShort());
     }
 }

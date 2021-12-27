@@ -22,7 +22,7 @@ public abstract class NumericField extends AbstractField {
 
     @Override
     public CodeBlock initializer() {
-        return CodeBlock.of("$L($LL, $LL)", staticInitializer(), min(), max());
+        return constantInit().orElseGet(this::randomInit);
     }
 
     protected long min() {
@@ -31,6 +31,17 @@ public abstract class NumericField extends AbstractField {
 
     protected long max() {
         return Optional.ofNullable(field).map(Field::max).map(bound -> Math.min(bound, ceiling())).orElse(ceiling());
+    }
+
+    private Optional<CodeBlock> constantInit() {
+        return Optional.ofNullable(field).map(Field::constant)
+                .filter(d -> !d.isNaN())
+                .filter(d -> d <= ceiling() && d >= floor())
+                .map(this::constantInit);
+    }
+
+    private CodeBlock randomInit() {
+        return CodeBlock.of("$L($LL, $LL)", staticInitializer(), min(), max());
     }
 
     @Override
@@ -44,4 +55,5 @@ public abstract class NumericField extends AbstractField {
 
     protected abstract long floor();
 
+    protected abstract CodeBlock constantInit(Double c);
 }

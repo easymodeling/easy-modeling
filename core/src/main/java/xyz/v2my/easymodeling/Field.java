@@ -14,4 +14,6 @@ public @interface Field {
     long max() default Long.MAX_VALUE;
 
     long min() default 0;
+
+    double constant() default Double.NaN;
 }
