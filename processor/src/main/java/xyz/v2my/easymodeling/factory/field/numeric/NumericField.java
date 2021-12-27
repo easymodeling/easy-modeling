@@ -21,20 +21,17 @@ public abstract class NumericField extends AbstractField {
     }
 
     @Override
+    public Set<Import> imports() {
+        return Sets.newHashSet(new Import(NumericRandomizer.class, staticInitializer()));
+    }
+
+    @Override
     public CodeBlock initializer() {
         return constantInit().orElseGet(this::randomInit);
     }
 
-    protected long min() {
-        return Optional.ofNullable(field).map(Field::min).map(bound -> Math.max(bound, floor())).orElse(0L);
-    }
-
-    protected long max() {
-        return Optional.ofNullable(field).map(Field::max).map(bound -> Math.min(bound, ceiling())).orElse(ceiling());
-    }
-
     private Optional<CodeBlock> constantInit() {
-        return Optional.ofNullable(field).map(Field::constant)
+        return fieldConstant()
                 .filter(d -> !d.isNaN())
                 .filter(d -> d <= ceiling() && d >= floor())
                 .map(this::constantInit);
@@ -44,9 +41,24 @@ public abstract class NumericField extends AbstractField {
         return CodeBlock.of("$L($LL, $LL)", staticInitializer(), min(), max());
     }
 
-    @Override
-    public Set<Import> imports() {
-        return Sets.newHashSet(new Import(NumericRandomizer.class, staticInitializer()));
+    private long min() {
+        return fieldMin().map(bound -> Math.max(bound, floor())).orElse(0L);
+    }
+
+    private long max() {
+        return fieldMax().map(bound -> Math.min(bound, ceiling())).orElse(ceiling());
+    }
+
+    private Optional<Long> fieldMin() {
+        return Optional.ofNullable(field).map(Field::min);
+    }
+
+    private Optional<Long> fieldMax() {
+        return Optional.ofNullable(field).map(Field::max);
+    }
+
+    private Optional<Double> fieldConstant() {
+        return Optional.ofNullable(field).map(Field::constant);
     }
 
     protected abstract String staticInitializer();
