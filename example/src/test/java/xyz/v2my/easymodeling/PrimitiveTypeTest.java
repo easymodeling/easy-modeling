@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 class PrimitiveTypeTest {
 
@@ -13,7 +12,7 @@ class PrimitiveTypeTest {
         final PrimitiveTypeModel testModel = EMPrimitiveTypeModel.builder().build();
 
         assertNotNull(testModel);
-        assertNull(testModel.getaString());
+        assertNotNull(testModel.getaString());
     }
 
     @Test

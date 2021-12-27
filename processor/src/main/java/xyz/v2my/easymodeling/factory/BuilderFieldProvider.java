@@ -13,6 +13,7 @@ import xyz.v2my.easymodeling.factory.field.numeric.LongField;
 import xyz.v2my.easymodeling.factory.field.numeric.ShortField;
 import xyz.v2my.easymodeling.factory.field.primitive.BooleanField;
 import xyz.v2my.easymodeling.factory.field.primitive.CharField;
+import xyz.v2my.easymodeling.factory.field.string.StringField;
 
 import javax.lang.model.element.Element;
 
@@ -44,6 +45,9 @@ public class BuilderFieldProvider {
         }
         if (type.equals(ClassName.get(Character.class)) || type.equals(ClassName.CHAR)) {
             return new CharField(type, name);
+        }
+        if (type.equals(ClassName.get(String.class))) {
+            return new StringField(type, name);
         }
         return new GenericField(type, name);
     }
