@@ -3,6 +3,7 @@ package xyz.v2my.easymodeling.factory;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import xyz.v2my.easymodeling.Model;
 import xyz.v2my.easymodeling.ProcessingException;
@@ -40,10 +41,11 @@ public class FactoryClass {
     }
 
     private List<ModelField> initBuilderFields(TypeElement type) {
-        final List<FieldWrapper> declaredFields = Arrays.stream(model.fields()).map(FieldWrapper::new).collect(Collectors.toList());
+        final List<FieldWrapper> declaredFields = Arrays.stream(model.fields()).map(FieldWrapper::of).collect(Collectors.toList());
         final Map<String, FieldWrapper> declaredFieldsMap;
         try {
             declaredFieldsMap = declaredFields.stream().collect(Collectors.toMap(FieldWrapper::name, Function.identity()));
+            // TODO: 29.12.21 merge multiple field declarations
         } catch (IllegalStateException e) {
             throw new ProcessingException("Duplicated fields declaration: " + e.getMessage());
         }
@@ -53,8 +55,9 @@ public class FactoryClass {
                 .filter(element -> !element.getModifiers().contains(Modifier.STATIC))
                 .map(element -> {
                     final String fieldName = element.getSimpleName().toString();
-                    final FieldWrapper field = declaredFieldsMap.getOrDefault(fieldName, FieldWrapper.EMPTY);
-                    return builderFieldProvider.provide(element, field);
+                    final TypeName typeName = ClassName.get(element.asType());
+                    final FieldWrapper field = declaredFieldsMap.getOrDefault(fieldName, FieldWrapper.of(fieldName));
+                    return builderFieldProvider.provide(typeName, field);
                 })
                 .collect(Collectors.toList());
     }

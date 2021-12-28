@@ -8,8 +8,8 @@ import xyz.v2my.easymodeling.randomizer.numberrandomizer.FloatRandomizer;
 
 public class FloatField extends NumericField {
 
-    public FloatField(TypeName type, String name, FieldWrapper field) {
-        super(type, name, field);
+    public FloatField(TypeName type, FieldWrapper field) {
+        super(type, field);
     }
 
     @Override

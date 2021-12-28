@@ -14,40 +14,36 @@ import xyz.v2my.easymodeling.factory.field.primitive.BooleanField;
 import xyz.v2my.easymodeling.factory.field.primitive.CharField;
 import xyz.v2my.easymodeling.factory.field.string.StringField;
 
-import javax.lang.model.element.Element;
-
 public class BuilderFieldProvider {
 
-    public ModelField provide(Element element, FieldWrapper field) {
-        final TypeName type = ClassName.get(element.asType());
-        final String name = element.getSimpleName().toString();
+    public ModelField provide(TypeName type, FieldWrapper field) {
         if (type.equals(ClassName.get(Byte.class)) || type.equals(ClassName.BYTE)) {
-            return new ByteField(type, name, field);
+            return new ByteField(type, field);
         }
         if (type.equals(ClassName.get(Short.class)) || type.equals(ClassName.SHORT)) {
-            return new ShortField(type, name, field);
+            return new ShortField(type, field);
         }
         if (type.equals(ClassName.get(Integer.class)) || type.equals(ClassName.INT)) {
-            return new IntegerField(type, name, field);
+            return new IntegerField(type, field);
         }
         if (type.equals(ClassName.get(Long.class)) || type.equals(ClassName.LONG)) {
-            return new LongField(type, name, field);
+            return new LongField(type, field);
         }
         if (type.equals(ClassName.get(Float.class)) || type.equals(ClassName.FLOAT)) {
-            return new FloatField(type, name, field);
+            return new FloatField(type, field);
         }
         if (type.equals(ClassName.get(Double.class)) || type.equals(ClassName.DOUBLE)) {
-            return new DoubleField(type, name, field);
+            return new DoubleField(type, field);
         }
         if (type.equals(ClassName.get(Boolean.class)) || type.equals(ClassName.BOOLEAN)) {
-            return new BooleanField(type, name);
+            return new BooleanField(type, field);
         }
         if (type.equals(ClassName.get(Character.class)) || type.equals(ClassName.CHAR)) {
-            return new CharField(type, name);
+            return new CharField(type, field);
         }
         if (type.equals(ClassName.get(String.class))) {
-            return new StringField(type, name, field);
+            return new StringField(type, field);
         }
-        return new GenericField(type, name);
+        return new GenericField(type, field);
     }
 }

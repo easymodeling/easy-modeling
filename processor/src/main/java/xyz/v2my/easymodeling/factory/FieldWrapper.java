@@ -6,20 +6,13 @@ import java.util.Optional;
 
 public class FieldWrapper {
 
-    // @formatter:off
-    public static final double DEFAULT_MAX          = Double.NaN;
-    public static final double DEFAULT_MIN          = Double.NaN;
-    public static final double DEFAULT_CONSTANT     = Double.NaN;
-    public static final String DEFAULT_STRING       = "";
-    // @formatter:on
+    private final String name;
 
-    private String name;
+    private Double max = Double.NaN;
 
-    private Double max = DEFAULT_MAX;
+    private Double min = Double.NaN;
 
-    private Double min = DEFAULT_MIN;
-
-    private Double constant = DEFAULT_CONSTANT;
+    private Double constant = Double.NaN;
 
     private Boolean alphanumeric = true;
 
@@ -27,14 +20,21 @@ public class FieldWrapper {
 
     private Boolean numeric = false;
 
-    private String string = DEFAULT_STRING;
+    private String string = "";
 
-    public static final FieldWrapper EMPTY = new FieldWrapper();
-
-    public FieldWrapper() {
+    public static FieldWrapper of(String name) {
+        return new FieldWrapper(name);
     }
 
-    public FieldWrapper(Field annotation) {
+    private FieldWrapper(String name) {
+        this.name = name;
+    }
+
+    public static FieldWrapper of(Field field) {
+        return new FieldWrapper(field);
+    }
+
+    private FieldWrapper(Field annotation) {
         this.name = annotation.name();
         this.max = annotation.max();
         this.min = annotation.min();

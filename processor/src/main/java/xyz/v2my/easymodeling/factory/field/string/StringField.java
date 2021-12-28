@@ -16,11 +16,8 @@ import static xyz.v2my.easymodeling.randomizer.StringRandomizer.RANDOM;
 
 public class StringField extends AbstractField {
 
-    private final FieldWrapper field;
-
-    public StringField(TypeName type, String name, FieldWrapper field) {
-        super(type, name);
-        this.field = field;
+    public StringField(TypeName type, FieldWrapper field) {
+        super(type, field);
     }
 
     @Override

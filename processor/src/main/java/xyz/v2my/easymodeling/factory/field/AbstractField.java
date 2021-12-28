@@ -6,6 +6,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
+import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 
 import javax.lang.model.element.Modifier;
@@ -16,9 +17,12 @@ public abstract class AbstractField implements ModelField {
 
     protected final String name;
 
-    public AbstractField(TypeName type, String name) {
+    protected final FieldWrapper field;
+
+    public AbstractField(TypeName type, FieldWrapper field) {
         this.type = type;
-        this.name = name;
+        this.name = field.name();
+        this.field = field;
     }
 
     @Override

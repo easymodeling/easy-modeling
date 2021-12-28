@@ -8,8 +8,8 @@ import xyz.v2my.easymodeling.randomizer.numberrandomizer.ByteRandomizer;
 
 public class ByteField extends NumericField {
 
-    public ByteField(TypeName type, String name, FieldWrapper field) {
-        super(type, name, field);
+    public ByteField(TypeName type, FieldWrapper field) {
+        super(type, field);
     }
 
     @Override

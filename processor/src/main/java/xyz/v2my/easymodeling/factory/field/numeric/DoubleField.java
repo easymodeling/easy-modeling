@@ -8,8 +8,8 @@ import xyz.v2my.easymodeling.randomizer.numberrandomizer.DoubleRandomizer;
 
 public class DoubleField extends NumericField {
 
-    public DoubleField(TypeName type, String name, FieldWrapper field) {
-        super(type, name, field);
+    public DoubleField(TypeName type, FieldWrapper field) {
+        super(type, field);
     }
 
     @Override
