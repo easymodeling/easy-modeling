@@ -13,13 +13,16 @@ import javax.lang.model.element.Modifier;
 
 public abstract class AbstractField implements ModelField {
 
-    protected final TypeName type;
+    protected TypeName type;
 
-    protected final String name;
+    protected String name;
 
-    protected final FieldWrapper field;
+    protected FieldWrapper field;
 
-    public AbstractField(TypeName type, FieldWrapper field) {
+    public AbstractField() {
+    }
+
+    protected AbstractField(TypeName type, FieldWrapper field) {
         this.type = type;
         this.name = field.name();
         this.field = field;

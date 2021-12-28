@@ -3,13 +3,17 @@ package xyz.v2my.easymodeling.factory.field.numeric;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.numberrandomizer.LongRandomizer;
 
 public class LongField extends NumericField {
 
-    public LongField(TypeName type, FieldWrapper field) {
+    protected LongField(TypeName type, FieldWrapper field) {
         super(type, field);
+    }
+
+    public LongField() {
     }
 
     @Override
@@ -30,5 +34,10 @@ public class LongField extends NumericField {
     @Override
     protected Class<? extends Randomizer> randomizer() {
         return LongRandomizer.class;
+    }
+
+    @Override
+    public ModelField create(TypeName type, FieldWrapper field) {
+        return new LongField(type, field);
     }
 }

@@ -7,13 +7,21 @@ import xyz.v2my.easymodeling.randomizer.Randomizer;
 
 public class GenericField extends AbstractField {
 
-    public GenericField(TypeName type, FieldWrapper field) {
+    protected GenericField(TypeName type, FieldWrapper field) {
         super(type, field);
+    }
+
+    public GenericField() {
     }
 
     @Override
     protected Class<? extends Randomizer> randomizer() {
         return null;
+    }
+
+    @Override
+    public ModelField create(TypeName type, FieldWrapper field) {
+        return new GenericField(type, field);
     }
 
     @Override

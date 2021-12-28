@@ -9,8 +9,11 @@ import java.util.Optional;
 
 public abstract class NumericField extends AbstractField {
 
-    public NumericField(TypeName type, FieldWrapper field) {
+    protected NumericField(TypeName type, FieldWrapper field) {
         super(type, field);
+    }
+
+    public NumericField() {
     }
 
     @Override

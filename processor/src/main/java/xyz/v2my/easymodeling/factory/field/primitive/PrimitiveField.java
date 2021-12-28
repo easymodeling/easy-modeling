@@ -7,8 +7,11 @@ import xyz.v2my.easymodeling.factory.field.AbstractField;
 
 public abstract class PrimitiveField extends AbstractField {
 
-    public PrimitiveField(TypeName type, FieldWrapper field) {
+    protected PrimitiveField(TypeName type, FieldWrapper field) {
         super(type, field);
+    }
+
+    public PrimitiveField() {
     }
 
     @Override
