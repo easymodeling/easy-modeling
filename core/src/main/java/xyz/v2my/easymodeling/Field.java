@@ -11,9 +11,9 @@ public @interface Field {
 
     String name();
 
-    long max() default Long.MAX_VALUE;
+    double max() default Double.NaN;
 
-    long min() default 0;
+    double min() default Double.NaN;
 
     double constant() default Double.NaN;
 

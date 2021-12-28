@@ -13,12 +13,12 @@ public class ByteField extends NumericField {
     }
 
     @Override
-    protected long ceiling() {
+    protected double ceiling() {
         return Byte.MAX_VALUE;
     }
 
     @Override
-    protected long floor() {
+    protected double floor() {
         return Byte.MIN_VALUE;
     }
 

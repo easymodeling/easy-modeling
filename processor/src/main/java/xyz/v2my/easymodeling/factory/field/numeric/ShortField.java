@@ -13,12 +13,12 @@ public class ShortField extends NumericField {
     }
 
     @Override
-    protected long ceiling() {
+    protected double ceiling() {
         return Short.MAX_VALUE;
     }
 
     @Override
-    protected long floor() {
+    protected double floor() {
         return Short.MIN_VALUE;
     }
 

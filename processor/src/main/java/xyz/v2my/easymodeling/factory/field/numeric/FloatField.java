@@ -13,12 +13,12 @@ public class FloatField extends NumericField {
     }
 
     @Override
-    protected long ceiling() {
+    protected double ceiling() {
         return Long.MAX_VALUE;
     }
 
     @Override
-    protected long floor() {
+    protected double floor() {
         return Long.MIN_VALUE;
     }
 

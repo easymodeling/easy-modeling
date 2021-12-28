@@ -6,7 +6,7 @@ import xyz.v2my.easymodeling.randomizer.NumberRandomizer;
 public class ByteRandomizer extends NumberRandomizer<Byte> {
 
     @Override
-    public Byte next(long min, long max) {
+    public Byte next(double min, double max) {
         return doubleBetween(min, max).byteValue();
     }
 }

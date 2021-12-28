@@ -35,11 +35,19 @@ public class StringField extends AbstractField {
     }
 
     private long min() {
-        return Optional.ofNullable(field).map(Field::min).filter(min -> min != 0).orElse(6L);
+        return Optional.ofNullable(field).map(Field::min)
+                .filter(min -> !min.isNaN())
+                .map(Double::longValue)
+                .filter(min -> min >= 1)
+                .orElse(6L);
     }
 
     private long max() {
-        return Optional.ofNullable(field).map(Field::max).filter(min -> min != Long.MAX_VALUE).orElse(20L);
+        return Optional.ofNullable(field).map(Field::max)
+                .filter(min -> !min.isNaN())
+                .map(Double::longValue)
+                .filter(min -> min != Long.MAX_VALUE)
+                .orElse(20L);
     }
 
     private int alphabetic() {

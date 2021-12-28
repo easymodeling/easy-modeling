@@ -13,12 +13,12 @@ public class IntegerField extends NumericField {
     }
 
     @Override
-    protected long ceiling() {
+    protected double ceiling() {
         return Integer.MAX_VALUE;
     }
 
     @Override
-    protected long floor() {
+    protected double floor() {
         return Integer.MIN_VALUE;
     }
 

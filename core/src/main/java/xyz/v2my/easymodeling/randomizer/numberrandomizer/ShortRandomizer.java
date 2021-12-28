@@ -6,7 +6,7 @@ import xyz.v2my.easymodeling.randomizer.NumberRandomizer;
 public class ShortRandomizer extends NumberRandomizer<Short> {
 
     @Override
-    public Short next(long min, long max) {
+    public Short next(double min, double max) {
         return doubleBetween(min, max).shortValue();
     }
 }
