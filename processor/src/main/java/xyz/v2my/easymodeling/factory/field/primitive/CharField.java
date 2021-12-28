@@ -1,6 +1,8 @@
 package xyz.v2my.easymodeling.factory.field.primitive;
 
 import com.squareup.javapoet.TypeName;
+import xyz.v2my.easymodeling.randomizer.Randomizer;
+import xyz.v2my.easymodeling.randomizer.primitive.CharRandomizer;
 
 public class CharField extends PrimitiveField {
 
@@ -9,7 +11,7 @@ public class CharField extends PrimitiveField {
     }
 
     @Override
-    protected String staticInitializer() {
-        return "aChar";
+    protected Class<? extends Randomizer> randomizer() {
+        return CharRandomizer.class;
     }
 }

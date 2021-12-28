@@ -3,6 +3,8 @@ package xyz.v2my.easymodeling.factory.field.numeric;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.Field;
+import xyz.v2my.easymodeling.randomizer.Randomizer;
+import xyz.v2my.easymodeling.randomizer.numberrandomizer.LongRandomizer;
 
 public class LongField extends NumericField {
 
@@ -26,7 +28,7 @@ public class LongField extends NumericField {
     }
 
     @Override
-    protected String staticInitializer() {
-        return "aLong";
+    protected Class<? extends Randomizer> randomizer() {
+        return LongRandomizer.class;
     }
 }

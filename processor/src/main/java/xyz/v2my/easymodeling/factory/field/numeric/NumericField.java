@@ -1,15 +1,11 @@
 package xyz.v2my.easymodeling.factory.field.numeric;
 
-import com.google.common.collect.Sets;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.Field;
-import xyz.v2my.easymodeling.factory.Import;
 import xyz.v2my.easymodeling.factory.field.AbstractField;
-import xyz.v2my.easymodeling.randomizer.NumericRandomizer;
 
 import java.util.Optional;
-import java.util.Set;
 
 public abstract class NumericField extends AbstractField {
 
@@ -18,11 +14,6 @@ public abstract class NumericField extends AbstractField {
     public NumericField(TypeName type, String name, Field field) {
         super(type, name);
         this.field = field;
-    }
-
-    @Override
-    public Set<Import> imports() {
-        return Sets.newHashSet(new Import(NumericRandomizer.class, staticInitializer()));
     }
 
     @Override
@@ -38,7 +29,7 @@ public abstract class NumericField extends AbstractField {
     }
 
     private CodeBlock randomInit() {
-        return CodeBlock.of("$L($LL, $LL)", staticInitializer(), min(), max());
+        return CodeBlock.of("new $T().next($LL, $LL)", randomizer(), min(), max());
     }
 
     private long min() {
@@ -60,8 +51,6 @@ public abstract class NumericField extends AbstractField {
     private Optional<Double> fieldConstant() {
         return Optional.ofNullable(field).map(Field::constant);
     }
-
-    protected abstract String staticInitializer();
 
     protected abstract long ceiling();
 

@@ -6,6 +6,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
+import xyz.v2my.easymodeling.randomizer.Randomizer;
 
 import javax.lang.model.element.Modifier;
 
@@ -50,4 +51,7 @@ public abstract class AbstractField implements ModelField {
                 .addStatement("return this")
                 .build();
     }
+
+    protected abstract Class<? extends Randomizer> randomizer();
+
 }

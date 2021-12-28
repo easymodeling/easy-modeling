@@ -2,10 +2,7 @@ package xyz.v2my.easymodeling.factory.field;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import xyz.v2my.easymodeling.factory.Import;
-
-import java.util.HashSet;
-import java.util.Set;
+import xyz.v2my.easymodeling.randomizer.Randomizer;
 
 public class GenericField extends AbstractField {
 
@@ -14,12 +11,12 @@ public class GenericField extends AbstractField {
     }
 
     @Override
-    public CodeBlock initializer() {
-        return CodeBlock.of("null");
+    protected Class<? extends Randomizer> randomizer() {
+        return null;
     }
 
     @Override
-    public Set<Import> imports() {
-        return new HashSet<>();
+    public CodeBlock initializer() {
+        return CodeBlock.of("null");
     }
 }

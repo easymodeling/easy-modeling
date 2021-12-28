@@ -1,6 +1,6 @@
 package xyz.v2my.easymodeling.randomizer;
 
-public class StringRandomizer extends GenericRandomizer {
+public class StringRandomizer extends GenericRandomizer<String> {
 
     // @formatter:off
     public static final int ELSE          = 0b0100;
@@ -10,7 +10,7 @@ public class StringRandomizer extends GenericRandomizer {
     public static final int RANDOM        = 0b0111;
     // @formatter:on
 
-    public static String aString(long min, long max, int charset) {
+    public String next(long min, long max, int charset) {
         return random.ints(0x00, 0x7F + 1)
                 .filter(c -> ((isAlphabet(c) | isNumeric(c) | ELSE) & charset) != 0)
                 .limit(longBetween(min, max))

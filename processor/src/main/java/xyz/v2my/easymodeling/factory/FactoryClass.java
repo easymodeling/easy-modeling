@@ -13,14 +13,12 @@ import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class FactoryClass implements ImportGenerator {
+public class FactoryClass {
 
     private static final String FACTORY_NAME_PATTERN = "EM%s";
 
@@ -71,13 +69,6 @@ public class FactoryClass implements ImportGenerator {
         factory.addMethod(builderMethod(innerBuilder.name));
 
         return factory.build();
-    }
-
-    @Override
-    public Set<Import> imports() {
-        return modelFields.stream().map(ImportGenerator::imports)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toSet());
     }
 
     private MethodSpec builderMethod(String builderName) {

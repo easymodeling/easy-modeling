@@ -1,15 +1,13 @@
 package xyz.v2my.easymodeling.factory.field.string;
 
-import com.google.common.collect.Sets;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.Field;
-import xyz.v2my.easymodeling.factory.Import;
 import xyz.v2my.easymodeling.factory.field.AbstractField;
+import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.StringRandomizer;
 
 import java.util.Optional;
-import java.util.Set;
 
 import static xyz.v2my.easymodeling.randomizer.StringRandomizer.ALPHABETIC;
 import static xyz.v2my.easymodeling.randomizer.StringRandomizer.ALPHANUMERIC;
@@ -33,7 +31,7 @@ public class StringField extends AbstractField {
             throw new IllegalArgumentException("No charset specified");
         }
         return string().map(format -> CodeBlock.of("$S", format))
-                .orElse(CodeBlock.of("aString($L, $L, $L)", min(), max(), charset));
+                .orElse(CodeBlock.of("new $T().next($L, $L, $L)", randomizer(), min(), max(), charset));
     }
 
     private long min() {
@@ -61,7 +59,7 @@ public class StringField extends AbstractField {
     }
 
     @Override
-    public Set<Import> imports() {
-        return Sets.newHashSet(new Import(StringRandomizer.class, "aString"));
+    protected Class<? extends Randomizer> randomizer() {
+        return StringRandomizer.class;
     }
 }

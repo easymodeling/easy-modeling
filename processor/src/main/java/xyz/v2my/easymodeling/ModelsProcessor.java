@@ -78,10 +78,7 @@ public class ModelsProcessor extends AbstractProcessor {
         final TypeSpec factory = modelFactory.createType();
         try {
             final PackageElement pkg = elementUtils.getPackageOf(type);
-            final JavaFile.Builder javaFile = JavaFile.builder(pkg.toString(), factory);
-            modelFactory.imports().forEach(ipt ->
-                    javaFile.addStaticImport(ipt.getClazz(), ipt.getName()));
-            javaFile.build()
+            JavaFile.builder(pkg.toString(), factory).build()
                     .writeTo(filer);
         } catch (IOException e) {
             // TODO: 19.12.21 throw exceptions with elaborate messages

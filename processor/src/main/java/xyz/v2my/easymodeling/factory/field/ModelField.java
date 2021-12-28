@@ -4,9 +4,8 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
-import xyz.v2my.easymodeling.factory.ImportGenerator;
 
-public interface ModelField extends ImportGenerator {
+public interface ModelField {
 
     CodeBlock initializer();
 
