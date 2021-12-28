@@ -2,7 +2,7 @@ package xyz.v2my.easymodeling.factory.field.string;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import xyz.v2my.easymodeling.Field;
+import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.factory.field.AbstractField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.StringRandomizer;
@@ -16,9 +16,9 @@ import static xyz.v2my.easymodeling.randomizer.StringRandomizer.RANDOM;
 
 public class StringField extends AbstractField {
 
-    private final Field field;
+    private final FieldWrapper field;
 
-    public StringField(TypeName type, String name, Field field) {
+    public StringField(TypeName type, String name, FieldWrapper field) {
         super(type, name);
         this.field = field;
     }
@@ -35,35 +35,34 @@ public class StringField extends AbstractField {
     }
 
     private long min() {
-        return Optional.ofNullable(field).map(Field::min)
-                .filter(min -> !min.isNaN())
+        return field.min()
                 .map(Double::longValue)
                 .filter(min -> min >= 1)
                 .orElse(6L);
     }
 
     private long max() {
-        return Optional.ofNullable(field).map(Field::max)
-                .filter(min -> !min.isNaN())
+        // FIXME: 28.12.21 should limit the reasonable string length in validation
+        return field.max()
                 .map(Double::longValue)
-                .filter(min -> min != Long.MAX_VALUE)
+                .filter(min -> min < Integer.MAX_VALUE)
                 .orElse(20L);
     }
 
     private int alphabetic() {
-        return field != null && field.alphabetic() ? ALPHABETIC : RANDOM;
+        return field.alphabetic() ? ALPHABETIC : RANDOM;
     }
 
     private int numeric() {
-        return field != null && field.numeric() ? NUMERIC : RANDOM;
+        return field.numeric() ? NUMERIC : RANDOM;
     }
 
     private int alphaNumeric() {
-        return field == null || field.alphanumeric() ? ALPHANUMERIC : RANDOM;
+        return field.alphanumeric() ? ALPHANUMERIC : RANDOM;
     }
 
     private Optional<String> string() {
-        return Optional.ofNullable(field).map(Field::string).filter(s -> !s.isEmpty());
+        return field.string();
     }
 
     @Override

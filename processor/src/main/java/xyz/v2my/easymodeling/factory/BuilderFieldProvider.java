@@ -2,7 +2,6 @@ package xyz.v2my.easymodeling.factory;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
-import xyz.v2my.easymodeling.Field;
 import xyz.v2my.easymodeling.factory.field.GenericField;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.factory.field.numeric.ByteField;
@@ -19,7 +18,7 @@ import javax.lang.model.element.Element;
 
 public class BuilderFieldProvider {
 
-    public ModelField provide(Element element, Field field) {
+    public ModelField provide(Element element, FieldWrapper field) {
         final TypeName type = ClassName.get(element.asType());
         final String name = element.getSimpleName().toString();
         if (type.equals(ClassName.get(Byte.class)) || type.equals(ClassName.BYTE)) {

@@ -2,16 +2,16 @@ package xyz.v2my.easymodeling.factory.field.numeric;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import xyz.v2my.easymodeling.Field;
+import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.factory.field.AbstractField;
 
 import java.util.Optional;
 
 public abstract class NumericField extends AbstractField {
 
-    protected final Field field;
+    protected final FieldWrapper field;
 
-    public NumericField(TypeName type, String name, Field field) {
+    public NumericField(TypeName type, String name, FieldWrapper field) {
         super(type, name);
         this.field = field;
     }
@@ -22,7 +22,7 @@ public abstract class NumericField extends AbstractField {
     }
 
     private Optional<CodeBlock> constantInit() {
-        return fieldConstant()
+        return field.constant()
                 .filter(d -> d <= ceiling() && d >= floor())
                 .map(this::constantInit);
     }
@@ -32,23 +32,11 @@ public abstract class NumericField extends AbstractField {
     }
 
     private double min() {
-        return fieldMin().map(bound -> Math.max(bound, floor())).orElse(0.);
+        return field.min().map(bound -> Math.max(bound, floor())).orElse(0.);
     }
 
     private double max() {
-        return fieldMax().map(bound -> Math.min(bound, ceiling())).orElse(ceiling());
-    }
-
-    private Optional<Double> fieldMin() {
-        return Optional.ofNullable(field).map(Field::min).filter(d -> !d.isNaN());
-    }
-
-    private Optional<Double> fieldMax() {
-        return Optional.ofNullable(field).map(Field::max).filter(d -> !d.isNaN());
-    }
-
-    private Optional<Double> fieldConstant() {
-        return Optional.ofNullable(field).map(Field::constant).filter(d -> !d.isNaN());
+        return field.max().map(bound -> Math.min(bound, ceiling())).orElse(ceiling());
     }
 
     protected abstract double ceiling();

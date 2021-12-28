@@ -4,7 +4,6 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
-import xyz.v2my.easymodeling.Field;
 import xyz.v2my.easymodeling.Model;
 import xyz.v2my.easymodeling.ProcessingException;
 import xyz.v2my.easymodeling.factory.field.ModelField;
@@ -41,10 +40,10 @@ public class FactoryClass {
     }
 
     private List<ModelField> initBuilderFields(TypeElement type) {
-        final Field[] declaredFields = model.fields();
-        final Map<String, Field> declaredFieldsMap;
+        final List<FieldWrapper> declaredFields = Arrays.stream(model.fields()).map(FieldWrapper::new).collect(Collectors.toList());
+        final Map<String, FieldWrapper> declaredFieldsMap;
         try {
-            declaredFieldsMap = Arrays.stream(declaredFields).collect(Collectors.toMap(Field::name, Function.identity()));
+            declaredFieldsMap = declaredFields.stream().collect(Collectors.toMap(FieldWrapper::name, Function.identity()));
         } catch (IllegalStateException e) {
             throw new ProcessingException("Duplicated fields declaration: " + e.getMessage());
         }
@@ -53,7 +52,8 @@ public class FactoryClass {
                 .filter(element -> element.getKind().equals(ElementKind.FIELD))
                 .filter(element -> !element.getModifiers().contains(Modifier.STATIC))
                 .map(element -> {
-                    final Field field = declaredFieldsMap.get(element.getSimpleName().toString());
+                    final String fieldName = element.getSimpleName().toString();
+                    final FieldWrapper field = declaredFieldsMap.getOrDefault(fieldName, FieldWrapper.EMPTY);
                     return builderFieldProvider.provide(element, field);
                 })
                 .collect(Collectors.toList());
