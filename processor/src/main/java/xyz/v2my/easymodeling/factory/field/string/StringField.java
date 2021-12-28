@@ -11,6 +11,11 @@ import xyz.v2my.easymodeling.randomizer.StringRandomizer;
 import java.util.Optional;
 import java.util.Set;
 
+import static xyz.v2my.easymodeling.randomizer.StringRandomizer.ALPHABETIC;
+import static xyz.v2my.easymodeling.randomizer.StringRandomizer.ALPHANUMERIC;
+import static xyz.v2my.easymodeling.randomizer.StringRandomizer.NUMERIC;
+import static xyz.v2my.easymodeling.randomizer.StringRandomizer.RANDOM;
+
 public class StringField extends AbstractField {
 
     private final Field field;
@@ -22,7 +27,13 @@ public class StringField extends AbstractField {
 
     @Override
     public CodeBlock initializer() {
-        return CodeBlock.of("aString($L, $L)", min(), max());
+        final int charset = alphabetic() & numeric() & alphaNumeric();
+        if (charset == 0) {
+            // TODO: 28.12.21 switch to more specific exception
+            throw new IllegalArgumentException("No charset specified");
+        }
+        return string().map(format -> CodeBlock.of("$S", format))
+                .orElse(CodeBlock.of("aString($L, $L, $L)", min(), max(), charset));
     }
 
     private long min() {
@@ -31,6 +42,22 @@ public class StringField extends AbstractField {
 
     private long max() {
         return Optional.ofNullable(field).map(Field::max).filter(min -> min != Long.MAX_VALUE).orElse(20L);
+    }
+
+    private int alphabetic() {
+        return field != null && field.alphabetic() ? ALPHABETIC : RANDOM;
+    }
+
+    private int numeric() {
+        return field != null && field.numeric() ? NUMERIC : RANDOM;
+    }
+
+    private int alphaNumeric() {
+        return field == null || field.alphanumeric() ? ALPHANUMERIC : RANDOM;
+    }
+
+    private Optional<String> string() {
+        return Optional.ofNullable(field).map(Field::string).filter(s -> !s.isEmpty());
     }
 
     @Override

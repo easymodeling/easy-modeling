@@ -16,4 +16,12 @@ public @interface Field {
     long min() default 0;
 
     double constant() default Double.NaN;
+
+    boolean alphanumeric() default true;
+
+    boolean alphabetic() default false;
+
+    boolean numeric() default false;
+
+    String string() default "";
 }
