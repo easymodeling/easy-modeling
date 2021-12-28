@@ -13,7 +13,7 @@ public class StringRandomizer extends GenericRandomizer<String> {
     public String next(long min, long max, int charset) {
         return random.ints(0x00, 0x7F + 1)
                 .filter(c -> ((isAlphabet(c) | isNumeric(c) | ELSE) & charset) != 0)
-                .limit(longBetween(min, max))
+                .limit(doubleBetween(min, max).longValue())
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
     }
