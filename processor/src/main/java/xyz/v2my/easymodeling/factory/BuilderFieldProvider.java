@@ -47,7 +47,7 @@ public class BuilderFieldProvider {
             return new CharField(type, name);
         }
         if (type.equals(ClassName.get(String.class))) {
-            return new StringField(type, name);
+            return new StringField(type, name, field);
         }
         return new GenericField(type, name);
     }
