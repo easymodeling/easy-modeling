@@ -5,7 +5,7 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.Import;
 import xyz.v2my.easymodeling.factory.field.AbstractField;
-import xyz.v2my.easymodeling.randomizer.Randomizer;
+import xyz.v2my.easymodeling.randomizer.GenericRandomizer;
 
 import java.util.Set;
 
@@ -24,6 +24,6 @@ public abstract class PrimitiveField extends AbstractField {
 
     @Override
     public Set<Import> imports() {
-        return Sets.newHashSet(new Import(Randomizer.class, staticInitializer()));
+        return Sets.newHashSet(new Import(GenericRandomizer.class, staticInitializer()));
     }
 }

@@ -1,6 +1,6 @@
 package xyz.v2my.easymodeling.randomizer;
 
-public class StringRandomizer extends Randomizer {
+public class StringRandomizer extends GenericRandomizer {
 
     // @formatter:off
     public static final int ELSE          = 0b0100;

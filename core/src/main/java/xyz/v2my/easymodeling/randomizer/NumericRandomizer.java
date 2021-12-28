@@ -1,6 +1,6 @@
 package xyz.v2my.easymodeling.randomizer;
 
-public class NumericRandomizer extends Randomizer {
+public class NumericRandomizer extends GenericRandomizer {
 
     public static byte aByte(long min, long max) {
         return (byte) longBetween(min, max);
