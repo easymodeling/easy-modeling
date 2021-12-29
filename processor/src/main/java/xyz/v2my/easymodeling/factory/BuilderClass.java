@@ -38,10 +38,10 @@ public class BuilderClass {
 
     private MethodSpec builderAllArgsConstructor() {
         final List<ParameterSpec> constructorParameters = modelFields.stream()
-                .map(ModelField::constructorParameter)
+                .map(ModelField::parameter)
                 .collect(Collectors.toList());
         final List<CodeBlock> constructorStatements = modelFields.stream()
-                .map(ModelField::constructorStatement)
+                .map(ModelField::statement)
                 .collect(Collectors.toList());
 
         return MethodSpec.constructorBuilder()
@@ -52,7 +52,7 @@ public class BuilderClass {
 
     private MethodSpec buildMethod() {
         final String constructionParameters = modelFields.stream()
-                .map(ModelField::constructorVariable)
+                .map(ModelField::name)
                 .collect(Collectors.joining(", "));
         return MethodSpec.methodBuilder("build")
                 .addModifiers(Modifier.PUBLIC)
@@ -62,12 +62,12 @@ public class BuilderClass {
     }
 
     private List<FieldSpec> builderFields() {
-        return modelFields.stream().map(ModelField::builderField).collect(Collectors.toList());
+        return modelFields.stream().map(ModelField::field).collect(Collectors.toList());
     }
 
     private List<MethodSpec> builderSetters() {
         return modelFields.stream()
-                .map(field -> field.builderSetter(BUILDER_NAME_PATTERN))
+                .map(field -> field.setter(BUILDER_NAME_PATTERN))
                 .collect(Collectors.toList());
     }
 }

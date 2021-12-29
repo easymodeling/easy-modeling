@@ -3,7 +3,7 @@ package xyz.v2my.easymodeling.factory.field.string;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
-import xyz.v2my.easymodeling.factory.field.AbstractField;
+import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.StringRandomizer;
 
@@ -14,13 +14,15 @@ import static xyz.v2my.easymodeling.randomizer.StringRandomizer.ALPHANUMERIC;
 import static xyz.v2my.easymodeling.randomizer.StringRandomizer.NUMERIC;
 import static xyz.v2my.easymodeling.randomizer.StringRandomizer.RANDOM;
 
-public class StringField extends AbstractField {
+public class StringField extends ModelField {
 
     public StringField() {
     }
 
     protected StringField(TypeName type, FieldWrapper field) {
-        super(type, field);
+        this.type = type;
+        this.name = field.name();
+        this.field = field;
     }
 
     @Override

@@ -1,28 +1,17 @@
 package xyz.v2my.easymodeling.factory.field;
 
-import com.squareup.javapoet.CodeBlock;
-import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 
-public interface ModelField {
+public abstract class ModelField extends InitializableField {
 
-    ModelField create(TypeName type, FieldWrapper field);
+    public ModelField() {
+    }
 
-    CodeBlock initialization();
+    protected ModelField(TypeName type, FieldWrapper field) {
+        super(type, field);
+    }
 
-    CodeBlock initializer();
-
-    ParameterSpec constructorParameter();
-
-    CodeBlock constructorStatement();
-
-    String constructorVariable();
-
-    FieldSpec builderField();
-
-    MethodSpec builderSetter(String builderTypeName);
+    public abstract ModelField create(TypeName type, FieldWrapper field);
 
 }

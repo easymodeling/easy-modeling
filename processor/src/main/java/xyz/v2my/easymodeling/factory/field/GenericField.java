@@ -7,10 +7,12 @@ import xyz.v2my.easymodeling.randomizer.Randomizer;
 
 import java.util.Optional;
 
-public class GenericField extends AbstractField {
+public class GenericField extends ModelField {
 
     protected GenericField(TypeName type, FieldWrapper field) {
-        super(type, field);
+        this.type = type;
+        this.name = field.name();
+        this.field = field;
     }
 
     @Override

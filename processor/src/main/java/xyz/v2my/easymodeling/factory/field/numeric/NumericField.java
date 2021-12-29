@@ -3,14 +3,16 @@ package xyz.v2my.easymodeling.factory.field.numeric;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
-import xyz.v2my.easymodeling.factory.field.AbstractField;
+import xyz.v2my.easymodeling.factory.field.ModelField;
 
 import java.util.Optional;
 
-public abstract class NumericField extends AbstractField {
+public abstract class NumericField extends ModelField {
 
     protected NumericField(TypeName type, FieldWrapper field) {
-        super(type, field);
+        this.type = type;
+        this.name = field.name();
+        this.field = field;
     }
 
     public NumericField() {
