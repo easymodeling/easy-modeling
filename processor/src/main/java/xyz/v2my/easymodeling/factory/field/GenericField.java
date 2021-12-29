@@ -15,7 +15,7 @@ public class GenericField extends AbstractField {
     }
 
     @Override
-    protected Class<? extends Randomizer> randomizer() {
+    protected Class<? extends Randomizer<?>> randomizer() {
         return null;
     }
 

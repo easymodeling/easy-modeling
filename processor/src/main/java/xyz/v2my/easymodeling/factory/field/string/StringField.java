@@ -35,7 +35,7 @@ public class StringField extends AbstractField {
             throw new IllegalArgumentException("No charset specified");
         }
         return string().map(format -> CodeBlock.of("$S", format))
-                .orElse(CodeBlock.of("new $T().next($L, $L, $L)", randomizer(), min(), max(), charset));
+                .orElse(CodeBlock.of("new $T($L, $L, $L).next()", randomizer(), min(), max(), charset));
     }
 
     private long min() {
@@ -70,7 +70,7 @@ public class StringField extends AbstractField {
     }
 
     @Override
-    protected Class<? extends Randomizer> randomizer() {
+    protected Class<? extends Randomizer<?>> randomizer() {
         return StringRandomizer.class;
     }
 }

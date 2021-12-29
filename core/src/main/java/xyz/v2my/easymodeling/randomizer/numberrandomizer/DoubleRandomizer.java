@@ -5,8 +5,12 @@ import xyz.v2my.easymodeling.randomizer.NumberRandomizer;
 
 public class DoubleRandomizer extends NumberRandomizer<Double> {
 
+    public DoubleRandomizer(double min, double max) {
+        super(min, max);
+    }
+
     @Override
-    public Double next(double min, double max) {
+    public Double next() {
         return doubleBetween(min, max);
     }
 }

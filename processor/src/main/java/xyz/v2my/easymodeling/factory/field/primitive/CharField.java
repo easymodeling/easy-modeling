@@ -21,7 +21,7 @@ public class CharField extends PrimitiveField {
     }
 
     @Override
-    protected Class<? extends Randomizer> randomizer() {
+    protected Class<? extends Randomizer<?>> randomizer() {
         return CharRandomizer.class;
     }
 }

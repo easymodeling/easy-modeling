@@ -28,7 +28,7 @@ public abstract class NumericField extends AbstractField {
     }
 
     private CodeBlock randomInit() {
-        return CodeBlock.of("new $T().next($L, $L)", randomizer(), min(), max());
+        return CodeBlock.of("new $T($L, $L).next()", randomizer(), min(), max());
     }
 
     private double min() {

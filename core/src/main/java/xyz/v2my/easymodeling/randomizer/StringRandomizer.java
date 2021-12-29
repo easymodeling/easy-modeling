@@ -10,10 +10,22 @@ public class StringRandomizer extends GenericRandomizer<String> {
     public static final int RANDOM        = 0b0111;
     // @formatter:on
 
-    public String next(long min, long max, int charset) {
+    private final long min;
+
+    private final long max;
+
+    private final int charset;
+
+    public StringRandomizer(long min, long max, int charset) {
+        this.min = min;
+        this.max = max;
+        this.charset = charset;
+    }
+
+    public String next() {
         return random.ints(0x00, 0x7F + 1)
-                .filter(c -> ((isAlphabet(c) | isNumeric(c) | ELSE) & charset) != 0)
-                .limit(doubleBetween(min, max).longValue())
+                .filter(c -> ((isAlphabet(c) | isNumeric(c) | ELSE) & this.charset) != 0)
+                .limit(doubleBetween(this.min, this.max).longValue())
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
     }

@@ -2,7 +2,7 @@ package xyz.v2my.easymodeling.randomizer;
 
 import java.util.Random;
 
-public abstract class GenericRandomizer<T> implements Randomizer {
+public abstract class GenericRandomizer<T> implements Randomizer<T> {
 
     protected static final Random random = new Random();
 

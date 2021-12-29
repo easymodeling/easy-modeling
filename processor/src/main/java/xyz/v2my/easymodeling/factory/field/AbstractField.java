@@ -59,6 +59,6 @@ public abstract class AbstractField implements ModelField {
                 .build();
     }
 
-    protected abstract Class<? extends Randomizer> randomizer();
+    protected abstract Class<? extends Randomizer<?>> randomizer();
 
 }

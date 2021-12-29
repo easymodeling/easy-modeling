@@ -1,7 +1,6 @@
 package xyz.v2my.easymodeling.randomizer;
 
-/**
- * Marker interface for randomizers.
- */
-public interface Randomizer {
+public interface Randomizer<T> {
+
+    T next();
 }

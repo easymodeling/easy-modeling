@@ -32,7 +32,7 @@ public class FloatField extends NumericField {
     }
 
     @Override
-    protected Class<? extends Randomizer> randomizer() {
+    protected Class<? extends Randomizer<?>> randomizer() {
         return FloatRandomizer.class;
     }
 
