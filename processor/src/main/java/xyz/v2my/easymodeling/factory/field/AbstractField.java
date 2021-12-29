@@ -31,10 +31,10 @@ public abstract class AbstractField implements ModelField {
 
     @Override
     public CodeBlock initialization() {
-        return constantInit().orElse(CodeBlock.of("$L.next()", initializer()));
+        return constantInitialization().orElse(CodeBlock.of("$L.next()", initializer()));
     }
 
-    protected abstract Optional<CodeBlock> constantInit();
+    protected abstract Optional<CodeBlock> constantInitialization();
 
     @Override
     public ParameterSpec constructorParameter() {

@@ -24,7 +24,7 @@ public class StringField extends AbstractField {
     }
 
     @Override
-    protected Optional<CodeBlock> constantInit() {
+    protected Optional<CodeBlock> constantInitialization() {
         return string().map(s -> CodeBlock.of("$S", s));
     }
 

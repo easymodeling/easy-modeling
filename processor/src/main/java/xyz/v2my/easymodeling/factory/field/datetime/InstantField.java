@@ -21,7 +21,7 @@ public class InstantField extends AbstractField {
     }
 
     @Override
-    protected Optional<CodeBlock> constantInit() {
+    protected Optional<CodeBlock> constantInitialization() {
         if (field.now()) {
             return Optional.of(CodeBlock.of("$T.now()", Instant.class));
         } else {

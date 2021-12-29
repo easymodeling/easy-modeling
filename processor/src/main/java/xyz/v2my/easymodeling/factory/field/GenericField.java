@@ -14,7 +14,7 @@ public class GenericField extends AbstractField {
     }
 
     @Override
-    protected Optional<CodeBlock> constantInit() {
+    protected Optional<CodeBlock> constantInitialization() {
         return Optional.empty();
     }
 

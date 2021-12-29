@@ -22,7 +22,7 @@ public abstract class NumericField extends AbstractField {
     }
 
     @Override
-    protected Optional<CodeBlock> constantInit() {
+    protected Optional<CodeBlock> constantInitialization() {
         return field.constant()
                 .filter(d -> d <= ceiling() && d >= floor())
                 .map(this::constantInit);
