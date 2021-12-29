@@ -9,6 +9,8 @@ public class DatetimeModel {
 
     private Instant instant;
 
+    private Instant now;
+
     public Instant getInstant() {
         return instant;
     }

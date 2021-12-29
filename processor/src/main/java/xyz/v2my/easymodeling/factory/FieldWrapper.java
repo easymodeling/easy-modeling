@@ -22,6 +22,8 @@ public class FieldWrapper {
 
     private String string = "";
 
+    boolean now = false;
+
     public static FieldWrapper of(String name) {
         return new FieldWrapper(name);
     }
@@ -43,6 +45,7 @@ public class FieldWrapper {
         this.alphabetic = annotation.alphabetic();
         this.numeric = annotation.numeric();
         this.string = annotation.string();
+        this.now = annotation.now();
     }
 
     public String name() {
@@ -75,6 +78,10 @@ public class FieldWrapper {
 
     public Optional<String> string() {
         return this.isStringSet() ? Optional.of(string) : Optional.empty();
+    }
+
+    public boolean now() {
+        return now;
     }
 
     private boolean isMinSet() {

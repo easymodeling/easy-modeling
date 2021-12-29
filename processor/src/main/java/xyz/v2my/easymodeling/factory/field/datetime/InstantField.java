@@ -8,6 +8,8 @@ import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.datetime.InstantRandomizer;
 
+import java.time.Instant;
+
 public class InstantField extends AbstractField {
 
     public InstantField() {
@@ -24,6 +26,9 @@ public class InstantField extends AbstractField {
 
     @Override
     public CodeBlock initializer() {
+        if (field.now()) {
+            return CodeBlock.of("$T.now()", Instant.class);
+        }
         return CodeBlock.of("new $T().next()", randomizer());
     }
 

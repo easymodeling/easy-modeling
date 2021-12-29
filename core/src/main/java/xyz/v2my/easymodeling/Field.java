@@ -24,4 +24,6 @@ public @interface Field {
     boolean numeric() default false;
 
     String string() default "";
+
+    boolean now() default false;
 }
