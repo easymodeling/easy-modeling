@@ -10,9 +10,7 @@ import java.util.Optional;
 public class GenericField extends ModelField {
 
     protected GenericField(TypeName type, FieldWrapper field) {
-        this.type = type;
-        this.name = field.name();
-        this.field = field;
+        super(type, field);
     }
 
     @Override
@@ -22,7 +20,7 @@ public class GenericField extends ModelField {
 
     @Override
     public CodeBlock initialization() {
-        return initializer();
+        return CodeBlock.of("null");
     }
 
     public GenericField() {

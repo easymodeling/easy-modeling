@@ -16,9 +16,7 @@ public class InstantField extends ModelField {
     }
 
     protected InstantField(TypeName type, FieldWrapper field) {
-        this.type = type;
-        this.name = field.name();
-        this.field = field;
+        super(type, field);
     }
 
     @Override

@@ -10,9 +10,7 @@ import java.util.Optional;
 public abstract class NumericField extends ModelField {
 
     protected NumericField(TypeName type, FieldWrapper field) {
-        this.type = type;
-        this.name = field.name();
-        this.field = field;
+        super(type, field);
     }
 
     public NumericField() {
