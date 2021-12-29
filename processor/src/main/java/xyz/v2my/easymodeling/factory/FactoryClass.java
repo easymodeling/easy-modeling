@@ -76,7 +76,7 @@ public class FactoryClass {
 
     private MethodSpec builderMethod(String builderName) {
         final CodeBlock builderParameters = modelFields.stream()
-                .map(ModelField::initializer)
+                .map(ModelField::initialization)
                 .collect(CodeBlock.joining(", "));
         return MethodSpec.methodBuilder(BUILDER_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)

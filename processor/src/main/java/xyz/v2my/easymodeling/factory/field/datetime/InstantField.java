@@ -9,6 +9,7 @@ import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.datetime.InstantRandomizer;
 
 import java.time.Instant;
+import java.util.Optional;
 
 public class InstantField extends AbstractField {
 
@@ -20,18 +21,22 @@ public class InstantField extends AbstractField {
     }
 
     @Override
+    protected Optional<CodeBlock> constantInit() {
+        if (field.now()) {
+            return Optional.of(CodeBlock.of("$T.now()", Instant.class));
+        } else {
+            return field.datetime().map(datetime -> CodeBlock.of("$T.ofEpochMilli($L)", Instant.class, datetime.toEpochMilli()));
+        }
+    }
+
+    @Override
     public ModelField create(TypeName type, FieldWrapper field) {
         return new InstantField(type, field);
     }
 
     @Override
     public CodeBlock initializer() {
-        if (field.now()) {
-            return CodeBlock.of("$T.now()", Instant.class);
-        }
-        return field.datetime()
-                .map(datetime -> CodeBlock.of("$T.ofEpochMilli($L)", Instant.class, datetime.toEpochMilli()))
-                .orElse(CodeBlock.of("new $T($LL, $LL).next()", randomizer(), min(), max()));
+        return CodeBlock.of("new $T($LL, $LL)", randomizer(), min(), max());
     }
 
     private long min() {

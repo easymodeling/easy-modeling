@@ -10,8 +10,8 @@ public class StringBuilderField extends StringField {
     }
 
     @Override
-    public CodeBlock initializer() {
-        return CodeBlock.of("new $T($L)", StringBuilder.class, super.initializer());
+    public CodeBlock initialization() {
+        return CodeBlock.of("new $T($L.next())", StringBuilder.class, super.initializer());
     }
 
     protected StringBuilderField(TypeName type, FieldWrapper field) {

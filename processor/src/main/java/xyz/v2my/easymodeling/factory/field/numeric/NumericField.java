@@ -18,17 +18,14 @@ public abstract class NumericField extends AbstractField {
 
     @Override
     public CodeBlock initializer() {
-        return constantInit().orElseGet(this::randomInit);
+        return CodeBlock.of("new $T($L, $L)", randomizer(), min(), max());
     }
 
-    private Optional<CodeBlock> constantInit() {
+    @Override
+    protected Optional<CodeBlock> constantInit() {
         return field.constant()
                 .filter(d -> d <= ceiling() && d >= floor())
                 .map(this::constantInit);
-    }
-
-    private CodeBlock randomInit() {
-        return CodeBlock.of("new $T($L, $L).next()", randomizer(), min(), max());
     }
 
     private double min() {

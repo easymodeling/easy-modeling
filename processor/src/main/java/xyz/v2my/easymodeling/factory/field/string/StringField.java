@@ -23,6 +23,11 @@ public class StringField extends AbstractField {
         super(type, field);
     }
 
+    @Override
+    protected Optional<CodeBlock> constantInit() {
+        return string().map(s -> CodeBlock.of("$S", s));
+    }
+
     public StringField create(TypeName type, FieldWrapper field) {
         return new StringField(type, field);
     }
@@ -34,8 +39,7 @@ public class StringField extends AbstractField {
             // TODO: 28.12.21 switch to more specific exception
             throw new IllegalArgumentException("No charset specified");
         }
-        return string().map(format -> CodeBlock.of("$S", format))
-                .orElse(CodeBlock.of("new $T($L, $L, $L).next()", randomizer(), min(), max(), charset));
+        return CodeBlock.of("new $T($L, $L, $L)", randomizer(), min(), max(), charset);
     }
 
     private long min() {

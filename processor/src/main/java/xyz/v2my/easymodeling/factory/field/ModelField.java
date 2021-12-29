@@ -11,6 +11,8 @@ public interface ModelField {
 
     ModelField create(TypeName type, FieldWrapper field);
 
+    CodeBlock initialization();
+
     CodeBlock initializer();
 
     ParameterSpec constructorParameter();

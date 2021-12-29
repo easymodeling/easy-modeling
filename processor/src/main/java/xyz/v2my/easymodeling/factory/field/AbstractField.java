@@ -10,6 +10,7 @@ import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 
 import javax.lang.model.element.Modifier;
+import java.util.Optional;
 
 public abstract class AbstractField implements ModelField {
 
@@ -27,6 +28,13 @@ public abstract class AbstractField implements ModelField {
         this.name = field.name();
         this.field = field;
     }
+
+    @Override
+    public CodeBlock initialization() {
+        return constantInit().orElse(CodeBlock.of("$L.next()", initializer()));
+    }
+
+    protected abstract Optional<CodeBlock> constantInit();
 
     @Override
     public ParameterSpec constructorParameter() {
