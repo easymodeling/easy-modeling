@@ -34,4 +34,6 @@ public @interface Field {
     String before() default "";
 
     String after() default "";
+
+    String datetime() default "";
 }

@@ -29,7 +29,9 @@ public class InstantField extends AbstractField {
         if (field.now()) {
             return CodeBlock.of("$T.now()", Instant.class);
         }
-        return CodeBlock.of("new $T($LL, $LL).next()", randomizer(), min(), max());
+        return field.datetime()
+                .map(datetime -> CodeBlock.of("$T.ofEpochMilli($L)", Instant.class, datetime.toEpochMilli()))
+                .orElse(CodeBlock.of("new $T($LL, $LL).next()", randomizer(), min(), max()));
     }
 
     private long min() {

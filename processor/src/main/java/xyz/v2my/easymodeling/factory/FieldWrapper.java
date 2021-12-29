@@ -3,6 +3,7 @@ package xyz.v2my.easymodeling.factory;
 import xyz.v2my.easymodeling.Field;
 
 import java.time.Instant;
+import java.time.format.DateTimeParseException;
 import java.util.Optional;
 
 public class FieldWrapper {
@@ -33,6 +34,8 @@ public class FieldWrapper {
 
     private boolean future = false;
 
+    private String datetime = "";
+
     public static FieldWrapper of(String name) {
         return new FieldWrapper(name);
     }
@@ -59,6 +62,7 @@ public class FieldWrapper {
         this.after = annotation.after();
         this.future = annotation.future();
         this.past = annotation.past();
+        this.datetime = annotation.datetime();
     }
 
     public String name() {
@@ -111,6 +115,19 @@ public class FieldWrapper {
         return now;
     }
 
+    public Optional<Instant> datetime() {
+        return this.isDatetimeSet() ? dateTimeParsed() : Optional.empty();
+    }
+
+    private Optional<Instant> dateTimeParsed() {
+        try {
+            return Optional.of(datetime).map(Instant::parse);
+        } catch (DateTimeParseException e) {
+            // TODO: 29.12.21 ignore (return Optional.empty()) or throw more specific exception
+            throw new IllegalArgumentException("datetime format error", e);
+        }
+    }
+
     private boolean isMinSet() {
         return !min.isNaN();
     }
@@ -135,4 +152,7 @@ public class FieldWrapper {
         return !after.isEmpty();
     }
 
+    public boolean isDatetimeSet() {
+        return !datetime.isEmpty();
+    }
 }
