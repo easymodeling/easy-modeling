@@ -2,6 +2,7 @@ package xyz.v2my.easymodeling.factory;
 
 import xyz.v2my.easymodeling.Field;
 
+import java.time.Instant;
 import java.util.Optional;
 
 public class FieldWrapper {
@@ -22,7 +23,11 @@ public class FieldWrapper {
 
     private String string = "";
 
-    boolean now = false;
+    private boolean now = false;
+
+    private String before = "";
+
+    private String after = "";
 
     public static FieldWrapper of(String name) {
         return new FieldWrapper(name);
@@ -46,6 +51,8 @@ public class FieldWrapper {
         this.numeric = annotation.numeric();
         this.string = annotation.string();
         this.now = annotation.now();
+        this.before = annotation.before();
+        this.after = annotation.after();
     }
 
     public String name() {
@@ -80,6 +87,14 @@ public class FieldWrapper {
         return this.isStringSet() ? Optional.of(string) : Optional.empty();
     }
 
+    public Optional<Instant> before() {
+        return this.isBeforeSet() ? Optional.of(before).map(Instant::parse) : Optional.empty();
+    }
+
+    public Optional<Instant> after() {
+        return this.isAfterSet() ? Optional.of(after).map(Instant::parse) : Optional.empty();
+    }
+
     public boolean now() {
         return now;
     }
@@ -99,4 +114,13 @@ public class FieldWrapper {
     private boolean isStringSet() {
         return !string.isEmpty();
     }
+
+    private boolean isBeforeSet() {
+        return !before.isEmpty();
+    }
+
+    private boolean isAfterSet() {
+        return !after.isEmpty();
+    }
+
 }

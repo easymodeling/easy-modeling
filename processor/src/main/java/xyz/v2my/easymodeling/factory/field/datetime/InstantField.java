@@ -29,7 +29,23 @@ public class InstantField extends AbstractField {
         if (field.now()) {
             return CodeBlock.of("$T.now()", Instant.class);
         }
-        return CodeBlock.of("new $T().next()", randomizer());
+        return CodeBlock.of("new $T($LL, $LL).next()", randomizer(), min(), max());
+    }
+
+    private long min() {
+        return field.after().map(Instant::toEpochMilli).orElse(floor());
+    }
+
+    private long max() {
+        return field.before().map(Instant::toEpochMilli).orElse(ceiling());
+    }
+
+    protected long ceiling() {
+        return 1_000L * Integer.MAX_VALUE;
+    }
+
+    protected long floor() {
+        return 0;
     }
 
     @Override

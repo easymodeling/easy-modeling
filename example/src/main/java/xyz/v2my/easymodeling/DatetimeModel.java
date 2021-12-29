@@ -11,7 +11,23 @@ public class DatetimeModel {
 
     private Instant now;
 
+    private Instant before;
+
+    private Instant after;
+
     public Instant getInstant() {
         return instant;
+    }
+
+    public Instant getNow() {
+        return now;
+    }
+
+    public Instant getBefore() {
+        return before;
+    }
+
+    public Instant getAfter() {
+        return after;
     }
 }

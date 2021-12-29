@@ -26,4 +26,8 @@ public @interface Field {
     String string() default "";
 
     boolean now() default false;
+
+    String before() default "";
+
+    String after() default "";
 }
