@@ -27,6 +27,10 @@ public @interface Field {
 
     boolean now() default false;
 
+    boolean past() default false;
+
+    boolean future() default false;
+
     String before() default "";
 
     String after() default "";

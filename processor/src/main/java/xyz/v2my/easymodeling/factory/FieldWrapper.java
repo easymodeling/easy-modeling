@@ -29,6 +29,10 @@ public class FieldWrapper {
 
     private String after = "";
 
+    private boolean past = false;
+
+    private boolean future = false;
+
     public static FieldWrapper of(String name) {
         return new FieldWrapper(name);
     }
@@ -53,6 +57,8 @@ public class FieldWrapper {
         this.now = annotation.now();
         this.before = annotation.before();
         this.after = annotation.after();
+        this.future = annotation.future();
+        this.past = annotation.past();
     }
 
     public String name() {
@@ -88,10 +94,16 @@ public class FieldWrapper {
     }
 
     public Optional<Instant> before() {
+        if (future) {
+            return Optional.of(Instant.now());
+        }
         return this.isBeforeSet() ? Optional.of(before).map(Instant::parse) : Optional.empty();
     }
 
     public Optional<Instant> after() {
+        if (past) {
+            return Optional.of(Instant.now());
+        }
         return this.isAfterSet() ? Optional.of(after).map(Instant::parse) : Optional.empty();
     }
 
