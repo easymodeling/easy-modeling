@@ -12,6 +12,7 @@ import xyz.v2my.easymodeling.factory.field.numeric.LongField;
 import xyz.v2my.easymodeling.factory.field.numeric.ShortField;
 import xyz.v2my.easymodeling.factory.field.primitive.BooleanField;
 import xyz.v2my.easymodeling.factory.field.primitive.CharField;
+import xyz.v2my.easymodeling.factory.field.string.StringBuilderField;
 import xyz.v2my.easymodeling.factory.field.string.StringField;
 
 import java.util.HashMap;
@@ -39,6 +40,7 @@ public class BuilderFieldProvider {
         FIELD_MAP.put(ClassName.get(Boolean.class), new BooleanField());
         FIELD_MAP.put(ClassName.get(Character.class), new CharField());
         FIELD_MAP.put(ClassName.get(String.class), new StringField());
+        FIELD_MAP.put(ClassName.get(StringBuilder.class), new StringBuilderField());
     }
 
     public ModelField provide(TypeName type, FieldWrapper field) {

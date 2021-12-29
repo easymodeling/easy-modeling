@@ -6,6 +6,7 @@ package xyz.v2my.easymodeling;
         @Field(name = "alphabeticString", alphabetic = true),
         @Field(name = "numericString", numeric = true),
         @Field(name = "constString", string = "constString"),
+        @Field(name = "builder"),
 })
 public class StringTypeModelConfig {
 

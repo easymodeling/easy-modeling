@@ -15,6 +15,8 @@ public class StringTypeModel {
 
     private String constString;
 
+    private StringBuilder builder;
+
     public String getCommonString() {
         return commonString;
     }
@@ -33,5 +35,9 @@ public class StringTypeModel {
 
     public String getConstString() {
         return constString;
+    }
+
+    public StringBuilder getBuilder() {
+        return builder;
     }
 }
