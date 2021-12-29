@@ -18,7 +18,11 @@ public abstract class InitializableField extends BuilderField implements Initial
 
     @Override
     public CodeBlock initialization() {
-        return constantInitialization().orElse(CodeBlock.of("$L.next()", initializer()));
+        return constantInitialization().orElse(randomInitialization());
+    }
+
+    private CodeBlock randomInitialization() {
+        return CodeBlock.of("$L.next()", initializer());
     }
 
     protected abstract Optional<CodeBlock> constantInitialization();
