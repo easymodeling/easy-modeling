@@ -4,6 +4,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.field.GenericField;
 import xyz.v2my.easymodeling.factory.field.ModelField;
+import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
 import xyz.v2my.easymodeling.factory.field.numeric.ByteField;
 import xyz.v2my.easymodeling.factory.field.numeric.DoubleField;
 import xyz.v2my.easymodeling.factory.field.numeric.FloatField;
@@ -15,6 +16,7 @@ import xyz.v2my.easymodeling.factory.field.primitive.CharField;
 import xyz.v2my.easymodeling.factory.field.string.StringBuilderField;
 import xyz.v2my.easymodeling.factory.field.string.StringField;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +43,7 @@ public class BuilderFieldProvider {
         FIELD_MAP.put(ClassName.get(Character.class), new CharField());
         FIELD_MAP.put(ClassName.get(String.class), new StringField());
         FIELD_MAP.put(ClassName.get(StringBuilder.class), new StringBuilderField());
+        FIELD_MAP.put(ClassName.get(Instant.class), new InstantField());
     }
 
     public ModelField provide(TypeName type, FieldWrapper field) {

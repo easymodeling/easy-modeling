@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 class OrderTest {
 
@@ -16,6 +15,6 @@ class OrderTest {
 
         assertNotNull(order);
         assertEquals(BigDecimal.TEN, order.getUnitPrice());
-        assertNull(order.getCreationTime());
+        assertNotNull(order.getCreationTime());
     }
 }
