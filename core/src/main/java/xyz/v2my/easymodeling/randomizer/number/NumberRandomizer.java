@@ -1,4 +1,6 @@
-package xyz.v2my.easymodeling.randomizer;
+package xyz.v2my.easymodeling.randomizer.number;
+
+import xyz.v2my.easymodeling.randomizer.GenericRandomizer;
 
 public abstract class NumberRandomizer<T> extends GenericRandomizer<T> {
 

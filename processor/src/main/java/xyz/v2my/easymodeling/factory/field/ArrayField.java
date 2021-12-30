@@ -3,7 +3,7 @@ package xyz.v2my.easymodeling.factory.field;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
-import xyz.v2my.easymodeling.randomizer.collection.ArrayRandomizer;
+import xyz.v2my.easymodeling.randomizer.ArrayRandomizer;
 
 import java.util.Optional;
 

@@ -5,7 +5,7 @@ import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
-import xyz.v2my.easymodeling.randomizer.numberrandomizer.IntegerRandomizer;
+import xyz.v2my.easymodeling.randomizer.number.IntegerRandomizer;
 
 public class IntegerField extends NumericField {
 

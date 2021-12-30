@@ -1,15 +1,16 @@
-package xyz.v2my.easymodeling.factory.field;
+package xyz.v2my.easymodeling.factory.field.string;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.field.ModelField;
 
 import java.util.Optional;
 
-import static xyz.v2my.easymodeling.randomizer.string.StringRandomizer.ALPHABETIC;
-import static xyz.v2my.easymodeling.randomizer.string.StringRandomizer.ALPHANUMERIC;
-import static xyz.v2my.easymodeling.randomizer.string.StringRandomizer.NUMERIC;
-import static xyz.v2my.easymodeling.randomizer.string.StringRandomizer.RANDOM;
+import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.ALPHABETIC;
+import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.ALPHANUMERIC;
+import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.NUMERIC;
+import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.RANDOM;
 
 public abstract class CharSequenceField extends ModelField {
 

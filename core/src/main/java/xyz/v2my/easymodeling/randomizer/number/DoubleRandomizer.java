@@ -1,7 +1,5 @@
-package xyz.v2my.easymodeling.randomizer.numberrandomizer;
+package xyz.v2my.easymodeling.randomizer.number;
 
-
-import xyz.v2my.easymodeling.randomizer.NumberRandomizer;
 
 public class DoubleRandomizer extends NumberRandomizer<Double> {
 

@@ -1,12 +1,9 @@
-package xyz.v2my.easymodeling.randomizer.collection;
-
-import xyz.v2my.easymodeling.randomizer.GenericRandomizer;
-import xyz.v2my.easymodeling.randomizer.Randomizer;
+package xyz.v2my.easymodeling.randomizer;
 
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class ArrayRandomizer extends GenericRandomizer<Object> {
+public class ArrayRandomizer extends GenericRandomizer<Stream<?>> {
 
     private final Randomizer<?> elementRandomizer;
 
