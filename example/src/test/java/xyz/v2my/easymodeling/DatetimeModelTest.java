@@ -18,5 +18,7 @@ class DatetimeModelTest {
         assertNotNull(model.getNow());
         assertTrue(model.getBefore().isBefore(Instant.parse("2000-01-01T00:00:00Z")));
         assertTrue(model.getAfter().isAfter(Instant.parse("2000-01-01T00:00:00Z")));
+
+        assertTrue(model.getStrings().length > 0);
     }
 }

@@ -22,7 +22,7 @@ public abstract class PrimitiveField extends ModelField {
     }
 
     @Override
-    public CodeBlock initializer() {
+    protected CodeBlock initializer() {
         return CodeBlock.of("new $T()", randomizer());
     }
 }

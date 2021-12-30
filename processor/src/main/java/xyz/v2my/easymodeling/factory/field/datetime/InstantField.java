@@ -4,7 +4,6 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.factory.field.ModelField;
-import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.datetime.InstantRandomizer;
 
 import java.time.Instant;
@@ -34,8 +33,8 @@ public class InstantField extends ModelField {
     }
 
     @Override
-    public CodeBlock initializer() {
-        return CodeBlock.of("new $T($LL, $LL)", randomizer(), min(), max());
+    protected CodeBlock initializer() {
+        return CodeBlock.of("new $T($LL, $LL)", InstantRandomizer.class, min(), max());
     }
 
     private long min() {
@@ -54,8 +53,4 @@ public class InstantField extends ModelField {
         return 0;
     }
 
-    @Override
-    protected Class<? extends Randomizer<?>> randomizer() {
-        return InstantRandomizer.class;
-    }
 }

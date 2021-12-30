@@ -17,7 +17,7 @@ public abstract class NumericField extends ModelField {
     }
 
     @Override
-    public CodeBlock initializer() {
+    protected CodeBlock initializer() {
         return CodeBlock.of("new $T($L, $L)", randomizer(), min(), max());
     }
 

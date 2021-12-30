@@ -15,6 +15,8 @@ public class DatetimeModel {
 
     private Instant after;
 
+    private String[] strings;
+
     public Instant getInstant() {
         return instant;
     }
@@ -29,5 +31,9 @@ public class DatetimeModel {
 
     public Instant getAfter() {
         return after;
+    }
+
+    public String[] getStrings() {
+        return strings;
     }
 }

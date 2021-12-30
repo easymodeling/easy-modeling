@@ -36,8 +36,4 @@ public class GenericField extends ModelField {
         return new GenericField(type, field);
     }
 
-    @Override
-    public CodeBlock initializer() {
-        return CodeBlock.of("null");
-    }
 }

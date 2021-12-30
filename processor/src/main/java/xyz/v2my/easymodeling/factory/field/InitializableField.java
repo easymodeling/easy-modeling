@@ -27,8 +27,12 @@ public abstract class InitializableField extends BuilderField implements Initial
 
     protected abstract Optional<CodeBlock> constantInitialization();
 
-    protected abstract CodeBlock initializer();
+    protected CodeBlock initializer() {
+        throw new UnsupportedOperationException("generic initializer is not supported");
+    }
 
-    protected abstract Class<? extends Randomizer<?>> randomizer();
+    protected Class<? extends Randomizer<?>> randomizer() {
+        throw new UnsupportedOperationException("generic randomizer is not supported");
+    }
 
 }

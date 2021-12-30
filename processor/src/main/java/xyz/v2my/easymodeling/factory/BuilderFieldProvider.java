@@ -1,9 +1,11 @@
 package xyz.v2my.easymodeling.factory;
 
+import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.field.GenericField;
 import xyz.v2my.easymodeling.factory.field.ModelField;
+import xyz.v2my.easymodeling.factory.field.ArrayField;
 import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
 import xyz.v2my.easymodeling.factory.field.numeric.ByteField;
 import xyz.v2my.easymodeling.factory.field.numeric.DoubleField;
@@ -47,6 +49,10 @@ public class BuilderFieldProvider {
     }
 
     public ModelField provide(TypeName type, FieldWrapper field) {
+        if (type instanceof ArrayTypeName) {
+            final TypeName componentType = ((ArrayTypeName) type).componentType;
+            return new ArrayField(type, field, provide(componentType, field));
+        }
         ModelField modelField = FIELD_MAP.getOrDefault(type, new GenericField());
         return modelField.create(type, field);
     }
