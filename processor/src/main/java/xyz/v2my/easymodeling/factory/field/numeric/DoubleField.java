@@ -7,7 +7,7 @@ import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.number.DoubleRandomizer;
 
-public class DoubleField extends NumericField {
+public class DoubleField extends NumericField<Double> {
 
     protected DoubleField(TypeName type, FieldWrapper field) {
         super(type, field);
@@ -32,12 +32,12 @@ public class DoubleField extends NumericField {
     }
 
     @Override
-    protected Class<? extends Randomizer<?>> randomizer() {
+    protected Class<? extends Randomizer<Double>> randomizer() {
         return DoubleRandomizer.class;
     }
 
     @Override
-    public ModelField create(TypeName type, FieldWrapper field) {
+    public ModelField<Double> create(TypeName type, FieldWrapper field) {
         return new DoubleField(type, field);
     }
 }

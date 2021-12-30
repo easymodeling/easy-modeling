@@ -7,7 +7,7 @@ import xyz.v2my.easymodeling.factory.field.ModelField;
 
 import java.util.Optional;
 
-public abstract class NumericField extends ModelField {
+public abstract class NumericField<FIELD extends Number> extends ModelField<FIELD> {
 
     protected NumericField(TypeName type, FieldWrapper field) {
         super(type, field);

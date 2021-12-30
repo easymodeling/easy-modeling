@@ -19,9 +19,9 @@ public class BuilderClass {
 
     private final TypeElement type;
 
-    private final List<ModelField> modelFields;
+    private final List<ModelField<?>> modelFields;
 
-    public BuilderClass(TypeElement type, List<ModelField> modelFields) {
+    public BuilderClass(TypeElement type, List<ModelField<?>> modelFields) {
         this.type = type;
         this.modelFields = modelFields;
     }

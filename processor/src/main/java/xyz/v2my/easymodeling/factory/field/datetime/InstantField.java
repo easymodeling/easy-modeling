@@ -9,7 +9,7 @@ import xyz.v2my.easymodeling.randomizer.datetime.InstantRandomizer;
 import java.time.Instant;
 import java.util.Optional;
 
-public class InstantField extends ModelField {
+public class InstantField extends ModelField<Instant> {
 
     public InstantField() {
     }
@@ -28,7 +28,7 @@ public class InstantField extends ModelField {
     }
 
     @Override
-    public ModelField create(TypeName type, FieldWrapper field) {
+    public ModelField<Instant> create(TypeName type, FieldWrapper field) {
         return new InstantField(type, field);
     }
 

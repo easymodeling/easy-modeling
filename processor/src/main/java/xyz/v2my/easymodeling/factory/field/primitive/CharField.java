@@ -6,7 +6,7 @@ import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.primitive.CharRandomizer;
 
-public class CharField extends PrimitiveField {
+public class CharField extends PrimitiveField<Character> {
 
     protected CharField(TypeName type, FieldWrapper field) {
         super(type, field);
@@ -16,12 +16,12 @@ public class CharField extends PrimitiveField {
     }
 
     @Override
-    public ModelField create(TypeName type, FieldWrapper field) {
+    public ModelField<Character> create(TypeName type, FieldWrapper field) {
         return new CharField(type, field);
     }
 
     @Override
-    protected Class<? extends Randomizer<?>> randomizer() {
+    protected Class<? extends Randomizer<Character>> randomizer() {
         return CharRandomizer.class;
     }
 }

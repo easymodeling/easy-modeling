@@ -12,7 +12,7 @@ import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.ALP
 import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.NUMERIC;
 import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.RANDOM;
 
-public abstract class CharSequenceField extends ModelField {
+public abstract class CharSequenceField<FIELD extends CharSequence> extends ModelField<FIELD> {
 
     public CharSequenceField() {
     }

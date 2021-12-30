@@ -7,17 +7,17 @@ import xyz.v2my.easymodeling.randomizer.ArrayRandomizer;
 
 import java.util.Optional;
 
-public class ArrayField extends ModelField {
+public class ArrayField extends ModelField<Object> {
 
-    private final ModelField elementField;
+    private final ModelField<?> elementField;
 
-    public ArrayField(TypeName type, FieldWrapper field, ModelField elementField) {
+    public ArrayField(TypeName type, FieldWrapper field, ModelField<?> elementField) {
         super(type, field);
         this.elementField = elementField;
     }
 
     @Override
-    public ModelField create(TypeName type, FieldWrapper field) {
+    public ModelField<Object> create(TypeName type, FieldWrapper field) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

@@ -6,7 +6,7 @@ import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.primitive.BooleanRandomizer;
 
-public class BooleanField extends PrimitiveField {
+public class BooleanField extends PrimitiveField<Boolean> {
 
     protected BooleanField(TypeName type, FieldWrapper field) {
         super(type, field);
@@ -16,12 +16,12 @@ public class BooleanField extends PrimitiveField {
     }
 
     @Override
-    protected Class<? extends Randomizer<?>> randomizer() {
+    protected Class<? extends Randomizer<Boolean>> randomizer() {
         return BooleanRandomizer.class;
     }
 
     @Override
-    public ModelField create(TypeName type, FieldWrapper field) {
+    public ModelField<Boolean> create(TypeName type, FieldWrapper field) {
         return new BooleanField(type, field);
     }
 }

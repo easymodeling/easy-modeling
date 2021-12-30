@@ -7,7 +7,7 @@ import xyz.v2my.easymodeling.randomizer.Randomizer;
 
 import java.util.Optional;
 
-public class GenericField extends ModelField {
+public class GenericField extends ModelField<Void> {
 
     protected GenericField(TypeName type, FieldWrapper field) {
         super(type, field);
@@ -27,12 +27,12 @@ public class GenericField extends ModelField {
     }
 
     @Override
-    protected Class<? extends Randomizer<?>> randomizer() {
+    protected Class<? extends Randomizer<Void>> randomizer() {
         return null;
     }
 
     @Override
-    public ModelField create(TypeName type, FieldWrapper field) {
+    public ModelField<Void> create(TypeName type, FieldWrapper field) {
         return new GenericField(type, field);
     }
 

@@ -7,7 +7,7 @@ import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.number.ByteRandomizer;
 
-public class ByteField extends NumericField {
+public class ByteField extends NumericField<Byte> {
 
     protected ByteField(TypeName type, FieldWrapper field) {
         super(type, field);
@@ -32,12 +32,12 @@ public class ByteField extends NumericField {
     }
 
     @Override
-    protected Class<? extends Randomizer<?>> randomizer() {
+    protected Class<? extends Randomizer<Byte>> randomizer() {
         return ByteRandomizer.class;
     }
 
     @Override
-    public ModelField create(TypeName type, FieldWrapper field) {
+    public ModelField<Byte> create(TypeName type, FieldWrapper field) {
         return new ByteField(type, field);
     }
 }

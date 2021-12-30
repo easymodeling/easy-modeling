@@ -7,7 +7,7 @@ import xyz.v2my.easymodeling.factory.field.ModelField;
 
 import java.util.Optional;
 
-public abstract class PrimitiveField extends ModelField {
+public abstract class PrimitiveField<E> extends ModelField<E> {
 
     protected PrimitiveField(TypeName type, FieldWrapper field) {
         super(type, field);

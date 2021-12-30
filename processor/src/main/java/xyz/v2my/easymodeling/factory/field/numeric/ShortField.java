@@ -7,7 +7,7 @@ import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.number.ShortRandomizer;
 
-public class ShortField extends NumericField {
+public class ShortField extends NumericField<Short> {
 
     protected ShortField(TypeName type, FieldWrapper field) {
         super(type, field);
@@ -32,12 +32,12 @@ public class ShortField extends NumericField {
     }
 
     @Override
-    protected Class<? extends Randomizer<?>> randomizer() {
+    protected Class<? extends Randomizer<Short>> randomizer() {
         return ShortRandomizer.class;
     }
 
     @Override
-    public ModelField create(TypeName type, FieldWrapper field) {
+    public ModelField<Short> create(TypeName type, FieldWrapper field) {
         return new ShortField(type, field);
     }
 }

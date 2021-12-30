@@ -28,19 +28,19 @@ public class FactoryClass {
 
     private final TypeElement type;
 
-    private final List<ModelField> modelFields;
+    private final List<ModelField<?>> modelFields;
 
     private final BuilderClass builderClass;
 
     public FactoryClass(Model model, TypeElement type) {
         this.model = model;
         this.type = type;
-        final List<ModelField> fields = initBuilderFields(type);
+        final List<ModelField<?>> fields = initBuilderFields(type);
         this.modelFields = fields;
         this.builderClass = new BuilderClass(type, fields);
     }
 
-    private List<ModelField> initBuilderFields(TypeElement type) {
+    private List<ModelField<?>> initBuilderFields(TypeElement type) {
         final List<FieldWrapper> declaredFields = Arrays.stream(model.fields()).map(FieldWrapper::of).collect(Collectors.toList());
         final Map<String, FieldWrapper> declaredFieldsMap;
         try {

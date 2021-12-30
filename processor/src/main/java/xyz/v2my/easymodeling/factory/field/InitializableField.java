@@ -7,7 +7,7 @@ import xyz.v2my.easymodeling.randomizer.Randomizer;
 
 import java.util.Optional;
 
-public abstract class InitializableField extends BuilderField implements Initializable {
+public abstract class InitializableField<FIELD> extends BuilderField implements Initializable {
 
     public InitializableField() {
     }
@@ -31,7 +31,7 @@ public abstract class InitializableField extends BuilderField implements Initial
         throw new UnsupportedOperationException("generic initializer is not supported");
     }
 
-    protected Class<? extends Randomizer<?>> randomizer() {
+    protected Class<? extends Randomizer<FIELD>> randomizer() {
         throw new UnsupportedOperationException("generic randomizer is not supported");
     }
 
