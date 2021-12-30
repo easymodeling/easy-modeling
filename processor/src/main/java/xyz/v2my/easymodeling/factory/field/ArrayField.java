@@ -27,7 +27,7 @@ public class ArrayField extends ModelField<Object> {
     }
 
     @Override
-    public CodeBlock initialization() {
-        return CodeBlock.of("new $T($L).next().toArray($T[]::new)", ArrayRandomizer.class, elementField.initializer(), elementField.getType());
+    public CodeBlock initializer() {
+        return CodeBlock.of("new $T<>($L, $T.class)", ArrayRandomizer.class, elementField.initializer(), elementField.getType());
     }
 }
