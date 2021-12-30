@@ -11,7 +11,7 @@ public class StringBuilderField extends CharSequenceField<StringBuilder> {
     public StringBuilderField() {
     }
 
-    protected StringBuilderField(TypeName type, FieldWrapper field) {
+    private StringBuilderField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 

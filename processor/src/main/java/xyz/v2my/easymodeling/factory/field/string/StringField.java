@@ -11,7 +11,7 @@ public class StringField extends CharSequenceField<String> {
     public StringField() {
     }
 
-    protected StringField(TypeName type, FieldWrapper field) {
+    private StringField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 

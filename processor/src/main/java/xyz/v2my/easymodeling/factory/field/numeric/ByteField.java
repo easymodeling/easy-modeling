@@ -9,7 +9,7 @@ import xyz.v2my.easymodeling.randomizer.number.ByteRandomizer;
 
 public class ByteField extends NumericField<Byte> {
 
-    protected ByteField(TypeName type, FieldWrapper field) {
+    private ByteField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 

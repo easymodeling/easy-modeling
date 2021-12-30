@@ -9,7 +9,7 @@ import xyz.v2my.easymodeling.randomizer.number.IntegerRandomizer;
 
 public class IntegerField extends NumericField<Integer> {
 
-    protected IntegerField(TypeName type, FieldWrapper field) {
+    private IntegerField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 

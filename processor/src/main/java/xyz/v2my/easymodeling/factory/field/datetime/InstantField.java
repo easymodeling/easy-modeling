@@ -14,7 +14,7 @@ public class InstantField extends ModelField<Instant> {
     public InstantField() {
     }
 
-    protected InstantField(TypeName type, FieldWrapper field) {
+    private InstantField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 
@@ -38,19 +38,15 @@ public class InstantField extends ModelField<Instant> {
     }
 
     private long min() {
-        return field.after().map(Instant::toEpochMilli).orElse(floor());
+        return field.after().map(Instant::toEpochMilli).orElse(0L);
     }
 
     private long max() {
         return field.before().map(Instant::toEpochMilli).orElse(ceiling());
     }
 
-    protected long ceiling() {
+    private long ceiling() {
         return 1_000L * Integer.MAX_VALUE;
-    }
-
-    protected long floor() {
-        return 0;
     }
 
 }

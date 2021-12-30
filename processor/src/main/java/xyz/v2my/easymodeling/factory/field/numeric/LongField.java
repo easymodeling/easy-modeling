@@ -9,7 +9,7 @@ import xyz.v2my.easymodeling.randomizer.number.LongRandomizer;
 
 public class LongField extends NumericField<Long> {
 
-    protected LongField(TypeName type, FieldWrapper field) {
+    private LongField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 

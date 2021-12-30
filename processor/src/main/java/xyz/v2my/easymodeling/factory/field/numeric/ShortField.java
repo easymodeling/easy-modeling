@@ -9,7 +9,7 @@ import xyz.v2my.easymodeling.randomizer.number.ShortRandomizer;
 
 public class ShortField extends NumericField<Short> {
 
-    protected ShortField(TypeName type, FieldWrapper field) {
+    private ShortField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 

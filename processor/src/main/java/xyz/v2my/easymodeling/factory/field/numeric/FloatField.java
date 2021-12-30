@@ -9,7 +9,7 @@ import xyz.v2my.easymodeling.randomizer.number.FloatRandomizer;
 
 public class FloatField extends NumericField<Float> {
 
-    protected FloatField(TypeName type, FieldWrapper field) {
+    private FloatField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 

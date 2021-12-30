@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class GenericField extends ModelField<Void> {
 
-    protected GenericField(TypeName type, FieldWrapper field) {
+    private GenericField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 

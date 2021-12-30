@@ -8,7 +8,7 @@ import xyz.v2my.easymodeling.randomizer.primitive.BooleanRandomizer;
 
 public class BooleanField extends PrimitiveField<Boolean> {
 
-    protected BooleanField(TypeName type, FieldWrapper field) {
+    private BooleanField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 

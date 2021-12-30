@@ -9,7 +9,7 @@ import xyz.v2my.easymodeling.randomizer.number.DoubleRandomizer;
 
 public class DoubleField extends NumericField<Double> {
 
-    protected DoubleField(TypeName type, FieldWrapper field) {
+    private DoubleField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 
