@@ -2,6 +2,7 @@ package xyz.v2my.easymodeling;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -124,4 +125,18 @@ class ArrayModelTest {
         assertTrue(model.anIntArray.length < 5);
     }
 
+    @Test
+    void should_populate_constant_string_fields() {
+        final ArrayModel model = EMArrayModel.next();
+
+        for (final String s : model.aStringArray) {
+            assertEquals("abc", s);
+        }
+
+        for (final Short[] shortArray : model.aShortMatrix) {
+            for (final Short s : shortArray) {
+                assertEquals((short) -8, s);
+            }
+        }
+    }
 }

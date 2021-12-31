@@ -44,7 +44,7 @@ public class ArrayField extends ModelField<Object> {
     }
 
     private CodeBlock elementRandomizer() {
-        return CodeBlock.of("new $T($L)", elementField.initializerType(), elementField.randomParameter());
+        return CodeBlock.of("new $T($L)", elementField.initializerType(), elementField.initializerParameter());
     }
 
     private int max() {
