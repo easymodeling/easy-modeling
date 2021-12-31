@@ -50,18 +50,26 @@ public class BuilderFieldProvider {
 
     public ModelField<?> provide(TypeName type, FieldWrapper field) {
         if (type instanceof ArrayTypeName) {
-            final ModelField<?> elementField = provideElementFieldOfArray(((ArrayTypeName) type).componentType, field);
-            return new ArrayField(type, field, elementField);
+            return arrayField(type, field);
         }
-        ModelField<?> modelField = FIELD_MAP.getOrDefault(type, new GenericField());
-        return modelField.create(type, field);
+        return typedField(type, field);
     }
 
-    private ModelField<?> provideElementFieldOfArray(TypeName type, FieldWrapper field) {
+    private ArrayField arrayField(TypeName type, FieldWrapper field) {
+        final ModelField<?> elementField = typedFieldOfArray(((ArrayTypeName) type).componentType, field);
+        return new ArrayField(type, field, elementField);
+    }
+
+    private ModelField<?> typedFieldOfArray(TypeName type, FieldWrapper field) {
         if (type instanceof ArrayTypeName) {
-            return provideElementFieldOfArray(((ArrayTypeName) type).componentType, field);
+            return typedFieldOfArray(((ArrayTypeName) type).componentType, field);
         } else {
-            return provide(type, field);
+            return typedField(type, field);
         }
+    }
+
+    private ModelField<?> typedField(TypeName type, FieldWrapper field) {
+        ModelField<?> modelField = FIELD_MAP.getOrDefault(type, new GenericField());
+        return modelField.create(type, field);
     }
 }
