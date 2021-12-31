@@ -138,5 +138,10 @@ class ArrayModelTest {
                 assertEquals((short) -8, s);
             }
         }
+
+        for (final float f : model.aFloatArray) {
+            System.out.println(f);
+            assertTrue(f >= -1.1 && f < 5.5);
+        }
     }
 }
