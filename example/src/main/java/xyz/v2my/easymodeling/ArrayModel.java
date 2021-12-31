@@ -2,20 +2,75 @@ package xyz.v2my.easymodeling;
 
 import lombok.AllArgsConstructor;
 
-import java.time.Instant;
-
 @AllArgsConstructor
 public class ArrayModel {
 
-    public String string;
+    public Integer[] anIntArray;
 
-    public Integer[] intArray;
+    public Integer[] anIntMatrix;
 
-    public Double[][] matrix;
+    public Byte[] aByteArray;
 
-    public Instant[][][][] crazyInstantArray;
+    public Byte[] aByteMatrix;
 
-    public int[] primitiveIntArray;
+    public Short[] aShortArray;
 
-    public int[][] primitiveIntMatrix;
+    public Short[] aShortMatrix;
+
+    public Long[] aLongArray;
+
+    public Long[] aLongMatrix;
+
+    public Float[] aFloatArray;
+
+    public Float[] aFloatMatrix;
+
+    public Double[] aDoubleArray;
+
+    public Double[] aDoubleMatrix;
+
+    public Boolean[] aBooleanArray;
+
+    public Boolean[] aBooleanMatrix;
+
+    public Character[] aCharArray;
+
+    public Character[] aCharMatrix;
+
+    public String[] aStringArray;
+
+    public String[] aStringMatrix;
+
+    public int[] anPrimitiveIntArray;
+
+    public int[][] anPrimitiveIntArrayMatrix;
+
+    public byte[] aPrimitiveByteArray;
+
+    public byte[][] aPrimitiveByteArrayMatrix;
+
+    public short[] aPrimitiveShortArray;
+
+    public short[][] aPrimitiveShortArrayMatrix;
+
+    public long[] aPrimitiveLongArray;
+
+    public long[][] aPrimitiveLongArrayMatrix;
+
+    public float[] aPrimitiveFloatArray;
+
+    public float[][] aPrimitiveFloatArrayMatrix;
+
+    public double[] aPrimitiveDoubleArray;
+
+    public double[][] aPrimitiveDoubleArrayMatrix;
+
+    public boolean[] aPrimitiveBooleanArray;
+
+    public boolean[][] aPrimitiveBooleanArrayMatrix;
+
+    public char[] aPrimitiveCharArray;
+
+    public char[][] aPrimitiveCharArrayMatrix;
+
 }
