@@ -5,6 +5,7 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.ArrayRandomizer;
+import xyz.v2my.easymodeling.randomizer.Randomizer;
 
 import java.util.Optional;
 
@@ -24,18 +25,26 @@ public class ArrayField extends ModelField<Object> {
 
     @Override
     protected Optional<CodeBlock> constantParameter() {
-        return Optional.empty();
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public CodeBlock initialValue() {
-        return CodeBlock.of("($L) $L.next()", type, randomParameter());
+    public CodeBlock initializer() {
+        return CodeBlock.of("($L) new $T<>($L)", type, ArrayRandomizer.class, randomParameter());
+    }
+
+    @Override
+    protected Class<? extends Randomizer<Object>> initializerType() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public CodeBlock randomParameter() {
-        return CodeBlock.of("new $T<>(new $T($L), $T.class, $L, $L, $L)", ArrayRandomizer.class,
-                elementField.initializerType(), elementField.randomParameter(), elementField.type, dimension(), min(), max());
+        return CodeBlock.of("$L, $T.class, $L, $L, $L", elementRandomizer(), elementField.type, dimension(), min(), max());
+    }
+
+    private CodeBlock elementRandomizer() {
+        return CodeBlock.of("new $T($L)", elementField.initializerType(), elementField.randomParameter());
     }
 
     private int max() {

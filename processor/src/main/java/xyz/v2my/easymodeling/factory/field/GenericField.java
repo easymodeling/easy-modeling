@@ -13,9 +13,7 @@ public class GenericField extends ModelField<Void> {
         super(type, field);
     }
 
-    @Override
-    protected Optional<CodeBlock> constantParameter() {
-        return Optional.empty();
+    public GenericField() {
     }
 
     @Override
@@ -23,17 +21,24 @@ public class GenericField extends ModelField<Void> {
         return CodeBlock.of("null");
     }
 
-    public GenericField() {
+    @Override
+    public ModelField<Void> create(TypeName type, FieldWrapper field) {
+        return new GenericField(type, field);
+    }
+
+    @Override
+    protected Optional<CodeBlock> constantParameter() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    protected CodeBlock randomParameter() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     protected Class<? extends Randomizer<Void>> initializerType() {
-        return null;
-    }
-
-    @Override
-    public ModelField<Void> create(TypeName type, FieldWrapper field) {
-        return new GenericField(type, field);
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
