@@ -14,4 +14,8 @@ public class ArrayModel {
     public Double[][] matrix;
 
     public Instant[][][][] crazyInstantArray;
+
+    public int[] primitiveIntArray;
+
+    public int[][] primitiveIntMatrix;
 }

@@ -2,7 +2,10 @@ package xyz.v2my.easymodeling;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ArrayModelTest {
 
@@ -15,5 +18,12 @@ class ArrayModelTest {
         assertNotNull(model.intArray);
         assertNotNull(model.matrix);
         assertNotNull(model.crazyInstantArray);
+
+        for (Integer integer : model.intArray) {
+            assertNotNull(integer);
+        }
+
+        final boolean notAllZero = Arrays.stream(model.primitiveIntArray).anyMatch(i -> i != 0);
+        assertTrue(notAllZero);
     }
 }

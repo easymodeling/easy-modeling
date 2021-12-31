@@ -19,8 +19,4 @@ public abstract class AbstractField {
         this.name = field.name();
         this.field = field;
     }
-
-    public TypeName getType() {
-        return type;
-    }
 }
