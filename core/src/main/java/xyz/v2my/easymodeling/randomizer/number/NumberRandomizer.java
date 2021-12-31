@@ -4,12 +4,16 @@ import xyz.v2my.easymodeling.randomizer.GenericRandomizer;
 
 public abstract class NumberRandomizer<T> extends GenericRandomizer<T> {
 
-    protected final double min;
+    protected double min;
 
-    protected final double max;
+    protected double max;
 
     public NumberRandomizer(double min, double max) {
         this.min = min;
         this.max = max;
+    }
+
+    public NumberRandomizer(T constant) {
+        super(constant);
     }
 }

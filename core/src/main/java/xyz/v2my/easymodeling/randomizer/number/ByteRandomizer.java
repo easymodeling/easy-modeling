@@ -7,8 +7,12 @@ public class ByteRandomizer extends NumberRandomizer<Byte> {
         super(min, max);
     }
 
+    public ByteRandomizer(Byte constant) {
+        super(constant);
+    }
+
     @Override
-    public Byte next() {
+    public Byte random() {
         return doubleBetween(this.min, this.max).byteValue();
     }
 }

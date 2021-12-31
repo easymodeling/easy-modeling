@@ -32,7 +32,7 @@ public class IntegerField extends NumericField<Integer> {
     }
 
     @Override
-    protected Class<? extends Randomizer<Integer>> randomizer() {
+    protected Class<? extends Randomizer<Integer>> initializerType() {
         return IntegerRandomizer.class;
     }
 

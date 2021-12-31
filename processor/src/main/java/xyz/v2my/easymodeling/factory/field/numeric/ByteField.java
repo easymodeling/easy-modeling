@@ -32,7 +32,7 @@ public class ByteField extends NumericField<Byte> {
     }
 
     @Override
-    protected Class<? extends Randomizer<Byte>> randomizer() {
+    protected Class<? extends Randomizer<Byte>> initializerType() {
         return ByteRandomizer.class;
     }
 

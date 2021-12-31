@@ -17,12 +17,12 @@ public abstract class PrimitiveField<E> extends ModelField<E> {
     }
 
     @Override
-    protected Optional<CodeBlock> constantInitialization() {
+    protected Optional<CodeBlock> constantParameter() {
         return Optional.empty();
     }
 
     @Override
-    protected CodeBlock initializer() {
-        return CodeBlock.of("new $T()", randomizer());
+    protected CodeBlock randomParameter() {
+        return CodeBlock.of("");
     }
 }

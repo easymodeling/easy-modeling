@@ -7,8 +7,12 @@ public class ShortRandomizer extends NumberRandomizer<Short> {
         super(min, max);
     }
 
+    public ShortRandomizer(Short constant) {
+        super(constant);
+    }
+
     @Override
-    public Short next() {
+    public Short random() {
         return doubleBetween(min, max).shortValue();
     }
 }

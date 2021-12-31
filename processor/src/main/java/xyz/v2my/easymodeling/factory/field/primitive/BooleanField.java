@@ -16,7 +16,7 @@ public class BooleanField extends PrimitiveField<Boolean> {
     }
 
     @Override
-    protected Class<? extends Randomizer<Boolean>> randomizer() {
+    protected Class<? extends Randomizer<Boolean>> initializerType() {
         return BooleanRandomizer.class;
     }
 

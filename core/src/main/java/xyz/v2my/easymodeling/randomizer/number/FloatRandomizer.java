@@ -7,8 +7,12 @@ public class FloatRandomizer extends NumberRandomizer<Float> {
         super(min, max);
     }
 
+    public FloatRandomizer(Float constant) {
+        super(constant);
+    }
+
     @Override
-    public Float next() {
+    public Float random() {
         return doubleBetween(min, max).floatValue();
     }
 }

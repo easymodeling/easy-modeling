@@ -32,7 +32,7 @@ public class ShortField extends NumericField<Short> {
     }
 
     @Override
-    protected Class<? extends Randomizer<Short>> randomizer() {
+    protected Class<? extends Randomizer<Short>> initializerType() {
         return ShortRandomizer.class;
     }
 

@@ -7,8 +7,12 @@ public class LongRandomizer extends NumberRandomizer<Long> {
         super(min, max);
     }
 
+    public LongRandomizer(Long constant) {
+        super(constant);
+    }
+
     @Override
-    public Long next() {
+    public Long random() {
         return doubleBetween(min, max).longValue();
     }
 }

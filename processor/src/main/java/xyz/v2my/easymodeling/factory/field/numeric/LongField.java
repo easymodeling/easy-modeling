@@ -32,7 +32,7 @@ public class LongField extends NumericField<Long> {
     }
 
     @Override
-    protected Class<? extends Randomizer<Long>> randomizer() {
+    protected Class<? extends Randomizer<Long>> initializerType() {
         return LongRandomizer.class;
     }
 

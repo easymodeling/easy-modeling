@@ -4,7 +4,7 @@ import xyz.v2my.easymodeling.randomizer.GenericRandomizer;
 
 public class CharRandomizer extends GenericRandomizer<Character> {
 
-    public Character next() {
+    public Character random() {
         return (char) random.nextInt(Character.MAX_VALUE);
     }
 }

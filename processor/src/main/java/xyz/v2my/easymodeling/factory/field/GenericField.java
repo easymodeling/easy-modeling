@@ -14,12 +14,12 @@ public class GenericField extends ModelField<Void> {
     }
 
     @Override
-    protected Optional<CodeBlock> constantInitialization() {
+    protected Optional<CodeBlock> constantParameter() {
         return Optional.empty();
     }
 
     @Override
-    public CodeBlock initialization() {
+    public CodeBlock initialValue() {
         return CodeBlock.of("null");
     }
 
@@ -27,7 +27,7 @@ public class GenericField extends ModelField<Void> {
     }
 
     @Override
-    protected Class<? extends Randomizer<Void>> randomizer() {
+    protected Class<? extends Randomizer<Void>> initializerType() {
         return null;
     }
 

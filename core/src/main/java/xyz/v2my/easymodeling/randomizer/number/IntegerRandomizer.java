@@ -7,8 +7,12 @@ public class IntegerRandomizer extends NumberRandomizer<Integer> {
         super(min, max);
     }
 
+    public IntegerRandomizer(Integer constant) {
+        super(constant);
+    }
+
     @Override
-    public Integer next() {
+    public Integer random() {
         return doubleBetween(min, max).intValue();
     }
 }

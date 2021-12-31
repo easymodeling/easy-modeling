@@ -23,19 +23,19 @@ public class ArrayField extends ModelField<Object> {
     }
 
     @Override
-    protected Optional<CodeBlock> constantInitialization() {
+    protected Optional<CodeBlock> constantParameter() {
         return Optional.empty();
     }
 
     @Override
-    public CodeBlock initialization() {
-        return CodeBlock.of("($L) $L.next()", type, initializer());
+    public CodeBlock initialValue() {
+        return CodeBlock.of("($L) $L.next()", type, randomParameter());
     }
 
     @Override
-    public CodeBlock initializer() {
-        return CodeBlock.of("new $T<>($L, $T.class, $L, $L, $L)", ArrayRandomizer.class,
-                elementField.initializer(), elementField.type, dimension(), min(), max());
+    public CodeBlock randomParameter() {
+        return CodeBlock.of("new $T<>(new $T($L), $T.class, $L, $L, $L)", ArrayRandomizer.class,
+                elementField.initializerType(), elementField.randomParameter(), elementField.type, dimension(), min(), max());
     }
 
     private int max() {

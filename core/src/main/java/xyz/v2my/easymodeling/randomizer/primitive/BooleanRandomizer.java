@@ -4,7 +4,7 @@ import xyz.v2my.easymodeling.randomizer.GenericRandomizer;
 
 public class BooleanRandomizer extends GenericRandomizer<Boolean> {
 
-    public Boolean next() {
+    public Boolean random() {
         return random.nextBoolean();
     }
 }

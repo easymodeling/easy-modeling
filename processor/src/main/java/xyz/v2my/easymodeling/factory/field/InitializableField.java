@@ -17,22 +17,27 @@ public abstract class InitializableField<FIELD> extends BuilderField implements 
     }
 
     @Override
-    public CodeBlock initialization() {
-        return constantInitialization().orElse(randomInitialization());
-    }
-
-    private CodeBlock randomInitialization() {
+    public CodeBlock initialValue() {
         return CodeBlock.of("$L.next()", initializer());
     }
 
-    protected abstract Optional<CodeBlock> constantInitialization();
-
-    protected CodeBlock initializer() {
-        throw new UnsupportedOperationException("generic initializer is not supported");
+    @Override
+    public CodeBlock initializer() {
+        return CodeBlock.of("new $T($L)", initializerType(), initializerParameter());
     }
 
-    protected Class<? extends Randomizer<FIELD>> randomizer() {
+    protected Class<? extends Randomizer<FIELD>> initializerType() {
         throw new UnsupportedOperationException("generic randomizer is not supported");
+    }
+
+    private CodeBlock initializerParameter() {
+        return constantParameter().orElseGet(this::randomParameter);
+    }
+
+    protected abstract Optional<CodeBlock> constantParameter();
+
+    protected CodeBlock randomParameter() {
+        throw new UnsupportedOperationException("generic initializer is not supported");
     }
 
 }

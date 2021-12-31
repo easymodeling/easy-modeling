@@ -6,8 +6,12 @@ public class StringBuilderRandomizer extends CharSequenceRandomizer<StringBuilde
         super(min, max, charset);
     }
 
+    public StringBuilderRandomizer(StringBuilder constant) {
+        super(constant);
+    }
+
     @Override
-    public StringBuilder next() {
+    public StringBuilder random() {
         return nextStringBuilder();
     }
 }

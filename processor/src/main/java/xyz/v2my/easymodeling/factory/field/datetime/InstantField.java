@@ -4,6 +4,7 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.factory.field.ModelField;
+import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.datetime.InstantRandomizer;
 
 import java.time.Instant;
@@ -19,11 +20,11 @@ public class InstantField extends ModelField<Instant> {
     }
 
     @Override
-    protected Optional<CodeBlock> constantInitialization() {
+    protected Optional<CodeBlock> constantParameter() {
         if (field.now()) {
             return Optional.of(CodeBlock.of("$T.now()", Instant.class));
         } else {
-            return field.datetime().map(datetime -> CodeBlock.of("$T.ofEpochMilli($L)", Instant.class, datetime.toEpochMilli()));
+            return field.datetime().map(datetime -> CodeBlock.of("new $T($T.ofEpochMilli($L))", initializerType(), Instant.class, datetime.toEpochMilli()));
         }
     }
 
@@ -33,8 +34,13 @@ public class InstantField extends ModelField<Instant> {
     }
 
     @Override
-    protected CodeBlock initializer() {
-        return CodeBlock.of("new $T($LL, $LL)", InstantRandomizer.class, min(), max());
+    protected CodeBlock randomParameter() {
+        return CodeBlock.of("$LL, $LL", min(), max());
+    }
+
+    @Override
+    protected Class<? extends Randomizer<Instant>> initializerType() {
+        return InstantRandomizer.class;
     }
 
     private long min() {

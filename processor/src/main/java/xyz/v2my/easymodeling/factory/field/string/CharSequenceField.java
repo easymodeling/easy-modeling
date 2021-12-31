@@ -22,17 +22,17 @@ public abstract class CharSequenceField<FIELD extends CharSequence> extends Mode
     }
 
     @Override
-    public CodeBlock initializer() {
+    public CodeBlock randomParameter() {
         final int charset = alphabetic() & numeric() & alphaNumeric();
         if (charset == 0) {
             // TODO: 28.12.21 switch to more specific exception
             throw new IllegalArgumentException("No charset specified");
         }
-        return CodeBlock.of("new $T($L, $L, $L)", randomizer(), min(), max(), charset);
+        return CodeBlock.of("$L, $L, $L", min(), max(), charset);
     }
 
     @Override
-    protected Optional<CodeBlock> constantInitialization() {
+    protected Optional<CodeBlock> constantParameter() {
         return string().map(s -> CodeBlock.of("$S", s));
     }
 

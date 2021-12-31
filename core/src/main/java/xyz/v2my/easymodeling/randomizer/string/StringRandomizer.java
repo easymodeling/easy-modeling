@@ -6,7 +6,11 @@ public class StringRandomizer extends CharSequenceRandomizer<String> {
         super(min, max, charset);
     }
 
-    public String next() {
+    public StringRandomizer(String constant) {
+        super(constant);
+    }
+
+    public String random() {
         return nextStringBuilder().toString();
     }
 }

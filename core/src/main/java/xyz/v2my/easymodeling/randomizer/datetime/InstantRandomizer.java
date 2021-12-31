@@ -6,17 +6,21 @@ import java.time.Instant;
 
 public class InstantRandomizer extends GenericRandomizer<Instant> {
 
-    protected final long min;
+    protected long min;
 
-    protected final long max;
+    protected long max;
 
     public InstantRandomizer(long min, long max) {
         this.min = min;
         this.max = max;
     }
 
+    public InstantRandomizer(Instant constant) {
+        super(constant);
+    }
+
     @Override
-    public Instant next() {
+    public Instant random() {
         final long milli = doubleBetween(min, max).longValue();
         return Instant.ofEpochMilli(milli);
     }

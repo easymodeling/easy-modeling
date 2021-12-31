@@ -7,8 +7,12 @@ public class DoubleRandomizer extends NumberRandomizer<Double> {
         super(min, max);
     }
 
+    public DoubleRandomizer(Double constant) {
+        super(constant);
+    }
+
     @Override
-    public Double next() {
+    public Double random() {
         return doubleBetween(min, max);
     }
 }

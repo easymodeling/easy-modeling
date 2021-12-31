@@ -25,7 +25,7 @@ public class ArrayRandomizer<E> extends GenericRandomizer<Object> {
     }
 
     @Override
-    public Object next() {
+    public Object random() {
         final int[] dimensions = IntStream.range(0, dimension).map(i -> doubleBetween(min, max).intValue()).toArray();
         return generateArray(dimensions);
     }

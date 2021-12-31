@@ -18,11 +18,15 @@ public abstract class CharSequenceRandomizer<T extends CharSequence> extends Gen
         this.charset = charset;
     }
 
-    protected final long min;
+    public CharSequenceRandomizer(T constant) {
+        super(constant);
+    }
 
-    protected final long max;
+    protected long min;
 
-    protected final int charset;
+    protected long max;
+
+    protected int charset;
 
     private static int isAlphabet(int c) {
         return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ? ALPHABETIC : 0;

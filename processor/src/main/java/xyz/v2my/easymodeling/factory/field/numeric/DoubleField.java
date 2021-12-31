@@ -32,7 +32,7 @@ public class DoubleField extends NumericField<Double> {
     }
 
     @Override
-    protected Class<? extends Randomizer<Double>> randomizer() {
+    protected Class<? extends Randomizer<Double>> initializerType() {
         return DoubleRandomizer.class;
     }
 

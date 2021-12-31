@@ -21,7 +21,7 @@ public class StringField extends CharSequenceField<String> {
     }
 
     @Override
-    protected Class<? extends Randomizer<String>> randomizer() {
+    protected Class<? extends Randomizer<String>> initializerType() {
         return StringRandomizer.class;
     }
 }
