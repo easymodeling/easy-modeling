@@ -36,6 +36,8 @@ public class FieldWrapper {
 
     private String datetime = "";
 
+    private int size = Integer.MAX_VALUE;
+
     public static FieldWrapper of(String name) {
         return new FieldWrapper(name);
     }
@@ -115,6 +117,10 @@ public class FieldWrapper {
         return now;
     }
 
+    public Optional<Integer> size() {
+        return this.isSizeSet() ? Optional.of(size) : Optional.empty();
+    }
+
     public Optional<Instant> datetime() {
         return this.isDatetimeSet() ? dateTimeParsed() : Optional.empty();
     }
@@ -154,5 +160,9 @@ public class FieldWrapper {
 
     public boolean isDatetimeSet() {
         return !datetime.isEmpty();
+    }
+
+    private boolean isSizeSet() {
+        return size != Integer.MAX_VALUE && size >= 0;
     }
 }

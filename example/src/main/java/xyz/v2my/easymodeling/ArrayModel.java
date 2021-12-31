@@ -7,39 +7,39 @@ public class ArrayModel {
 
     public Integer[] anIntArray;
 
-    public Integer[] anIntMatrix;
+    public Integer[][] anIntMatrix;
 
     public Byte[] aByteArray;
 
-    public Byte[] aByteMatrix;
+    public Byte[][] aByteMatrix;
 
     public Short[] aShortArray;
 
-    public Short[] aShortMatrix;
+    public Short[][] aShortMatrix;
 
     public Long[] aLongArray;
 
-    public Long[] aLongMatrix;
+    public Long[][] aLongMatrix;
 
     public Float[] aFloatArray;
 
-    public Float[] aFloatMatrix;
+    public Float[][] aFloatMatrix;
 
     public Double[] aDoubleArray;
 
-    public Double[] aDoubleMatrix;
+    public Double[][] aDoubleMatrix;
 
     public Boolean[] aBooleanArray;
 
-    public Boolean[] aBooleanMatrix;
+    public Boolean[][] aBooleanMatrix;
 
     public Character[] aCharArray;
 
-    public Character[] aCharMatrix;
+    public Character[][] aCharMatrix;
 
     public String[] aStringArray;
 
-    public String[] aStringMatrix;
+    public String[][] aStringMatrix;
 
     public int[] anPrimitiveIntArray;
 

@@ -36,4 +36,6 @@ public @interface Field {
     String after() default "";
 
     String datetime() default "";
+
+    int size() default Integer.MAX_VALUE;
 }

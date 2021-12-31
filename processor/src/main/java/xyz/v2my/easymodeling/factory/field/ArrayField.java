@@ -34,7 +34,24 @@ public class ArrayField extends ModelField<Object> {
 
     @Override
     public CodeBlock initializer() {
-        return CodeBlock.of("new $T<>($L, $T.class, $L)", ArrayRandomizer.class, elementField.initializer(), elementField.type, dimension());
+        return CodeBlock.of("new $T<>($L, $T.class, $L, $L, $L)", ArrayRandomizer.class,
+                elementField.initializer(), elementField.type, dimension(), min(), max());
+    }
+
+    private int max() {
+        return field.size().orElse(fieldMax());
+    }
+
+    private int fieldMax() {
+        return field.max().map(Double::intValue).orElse(20);
+    }
+
+    private int min() {
+        return field.size().orElse(fieldMin());
+    }
+
+    private int fieldMin() {
+        return field.min().map(Double::intValue).filter(min -> min >= 0).orElse(1);
     }
 
     private int dimension() {

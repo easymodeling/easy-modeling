@@ -115,4 +115,13 @@ class ArrayModelTest {
         assertTrue(model.aPrimitiveCharArrayMatrix.length > 0);
 
     }
+
+    @Test
+    void should_generate_array_with_size() {
+        final ArrayModel model = EMArrayModel.next();
+
+        assertTrue(model.anIntArray.length >= 2);
+        assertTrue(model.anIntArray.length < 5);
+    }
+
 }

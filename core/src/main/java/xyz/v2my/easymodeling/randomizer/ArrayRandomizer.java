@@ -12,15 +12,21 @@ public class ArrayRandomizer<E> extends GenericRandomizer<Object> {
 
     private final int dimension;
 
-    public ArrayRandomizer(Randomizer<E> elementRandomizer, Class<E> elementClass, int dimension) {
+    private final int min;
+
+    private final int max;
+
+    public ArrayRandomizer(Randomizer<E> elementRandomizer, Class<E> elementClass, int dimension, int min, int max) {
         this.elementRandomizer = elementRandomizer;
         this.elementClass = elementClass;
         this.dimension = dimension;
+        this.min = min;
+        this.max = max;
     }
 
     @Override
     public Object next() {
-        final int[] dimensions = IntStream.range(0, dimension).map(i -> doubleBetween(1, 10).intValue()).toArray();
+        final int[] dimensions = IntStream.range(0, dimension).map(i -> doubleBetween(min, max).intValue()).toArray();
         return generateArray(dimensions);
     }
 
