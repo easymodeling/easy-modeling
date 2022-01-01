@@ -7,11 +7,11 @@ import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.ArrayRandomizer;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 
-public class ArrayField extends ModelField<Object> {
+public class ArrayField extends PlainField<Object> {
 
-    private final ModelField<?> elementField;
+    private final PlainField<?> elementField;
 
-    public ArrayField(TypeName type, FieldWrapper field, ModelField<?> elementField) {
+    public ArrayField(TypeName type, FieldWrapper field, PlainField<?> elementField) {
         super(type, field);
         this.elementField = elementField;
     }
@@ -49,7 +49,7 @@ public class ArrayField extends ModelField<Object> {
     }
 
     @Override
-    public ModelField<Object> create(TypeName type, FieldWrapper field) {
+    public PlainField<Object> create(TypeName type, FieldWrapper field) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

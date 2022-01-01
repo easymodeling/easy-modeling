@@ -7,7 +7,7 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import xyz.v2my.easymodeling.Model;
 import xyz.v2my.easymodeling.ProcessingException;
-import xyz.v2my.easymodeling.factory.field.ModelField;
+import xyz.v2my.easymodeling.factory.field.PlainField;
 
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
@@ -28,19 +28,19 @@ public class FactoryClass {
 
     private final TypeElement type;
 
-    private final List<ModelField<?>> modelFields;
+    private final List<PlainField<?>> modelFields;
 
     private final BuilderClass builderClass;
 
     public FactoryClass(Model model, TypeElement type) {
         this.model = model;
         this.type = type;
-        final List<ModelField<?>> fields = initBuilderFields(type);
+        final List<PlainField<?>> fields = initBuilderFields(type);
         this.modelFields = fields;
         this.builderClass = new BuilderClass(type, fields);
     }
 
-    private List<ModelField<?>> initBuilderFields(TypeElement type) {
+    private List<PlainField<?>> initBuilderFields(TypeElement type) {
         final List<FieldWrapper> declaredFields = Arrays.stream(model.fields()).map(FieldWrapper::of).collect(Collectors.toList());
         final Map<String, FieldWrapper> declaredFieldsMap;
         try {
@@ -76,7 +76,7 @@ public class FactoryClass {
 
     private MethodSpec builderMethod(String builderName) {
         final CodeBlock builderParameters = modelFields.stream()
-                .map(ModelField::initialValue)
+                .map(PlainField::initialValue)
                 .collect(CodeBlock.joining(", "));
         return MethodSpec.methodBuilder(BUILDER_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)

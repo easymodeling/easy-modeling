@@ -8,14 +8,14 @@ import xyz.v2my.easymodeling.randomizer.Randomizer;
 
 import java.util.Optional;
 
-public class OptionalField<VALUE> extends ModelField<Optional<VALUE>> {
+public class OptionalField<VALUE> extends PlainField<Optional<VALUE>> {
 
-    private ModelField<VALUE> valueField;
+    private PlainField<VALUE> valueField;
 
     public OptionalField() {
     }
 
-    public OptionalField(TypeName type, FieldWrapper field, ModelField<VALUE> valueField) {
+    public OptionalField(TypeName type, FieldWrapper field, PlainField<VALUE> valueField) {
         super(type, field);
         this.valueField = valueField;
     }
@@ -49,7 +49,7 @@ public class OptionalField<VALUE> extends ModelField<Optional<VALUE>> {
     }
 
     @Override
-    public ModelField<Optional<VALUE>> create(TypeName type, FieldWrapper field) {
+    public PlainField<Optional<VALUE>> create(TypeName type, FieldWrapper field) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

@@ -3,14 +3,14 @@ package xyz.v2my.easymodeling.factory.field.datetime;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
-import xyz.v2my.easymodeling.factory.field.ModelField;
+import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.datetime.InstantRandomizer;
 
 import java.time.Instant;
 import java.util.Optional;
 
-public class InstantField extends ModelField<Instant> {
+public class InstantField extends PlainField<Instant> {
 
     public InstantField() {
     }
@@ -33,7 +33,7 @@ public class InstantField extends ModelField<Instant> {
     }
 
     @Override
-    public ModelField<Instant> create(TypeName type, FieldWrapper field) {
+    public PlainField<Instant> create(TypeName type, FieldWrapper field) {
         return new InstantField(type, field);
     }
 

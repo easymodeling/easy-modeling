@@ -5,7 +5,7 @@ import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 
-public class GenericField extends ModelField<Void> {
+public class GenericField extends PlainField<Void> {
 
     private GenericField(TypeName type, FieldWrapper field) {
         super(type, field);
@@ -20,7 +20,7 @@ public class GenericField extends ModelField<Void> {
     }
 
     @Override
-    public ModelField<Void> create(TypeName type, FieldWrapper field) {
+    public PlainField<Void> create(TypeName type, FieldWrapper field) {
         return new GenericField(type, field);
     }
 
