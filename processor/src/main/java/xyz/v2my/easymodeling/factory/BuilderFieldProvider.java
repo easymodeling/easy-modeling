@@ -49,6 +49,7 @@ public class BuilderFieldProvider {
         FIELD_MAP.put(ClassName.get(String.class), new StringField());
         FIELD_MAP.put(ClassName.get(StringBuilder.class), new StringBuilderField());
         FIELD_MAP.put(ClassName.get(Instant.class), new InstantField());
+        FIELD_MAP.put(ClassName.get(Optional.class), new OptionalField<>());
     }
 
     public ModelField<?> provide(TypeName type, FieldWrapper field) {
@@ -56,22 +57,23 @@ public class BuilderFieldProvider {
             return arrayField(type, field);
         }
         if (type instanceof ParameterizedTypeName) {
-            final ParameterizedTypeName parameterizedTypeName = (ParameterizedTypeName) type;
-            final ClassName rawType = parameterizedTypeName.rawType;
-            if (rawType.equals(ClassName.get(Optional.class))) {
-                return optionalField(parameterizedTypeName, field);
-            }
+            return containerField((ParameterizedTypeName) type, field);
         }
         return typedField(type, field);
     }
 
+    private ModelField<?> containerField(ParameterizedTypeName parameterizedTypeName, FieldWrapper field) {
+        if (parameterizedTypeName.rawType.equals(ClassName.get(Optional.class))) {
+            return optionalField(parameterizedTypeName, field);
+        } else {
+            return new GenericField();
+        }
+    }
+
     private ModelField<?> optionalField(ParameterizedTypeName type, FieldWrapper field) {
         final TypeName nestedType = type.typeArguments.get(0);
-        if (nestedType instanceof ParameterizedTypeName) {
-            return new OptionalField<>(type, field, optionalField((ParameterizedTypeName) nestedType, field));
-        } else {
-            return new OptionalField<>(type, field, typedField(nestedType, field));
-        }
+        final ModelField<?> nestedField = provide(nestedType, field);
+        return new OptionalField<>(type, field, nestedField);
     }
 
     private ArrayField arrayField(TypeName type, FieldWrapper field) {

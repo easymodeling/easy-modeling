@@ -10,7 +10,10 @@ import java.util.Optional;
 
 public class OptionalField<VALUE> extends ModelField<Optional<VALUE>> {
 
-    private final ModelField<VALUE> valueField;
+    private ModelField<VALUE> valueField;
+
+    public OptionalField() {
+    }
 
     public OptionalField(TypeName type, FieldWrapper field, ModelField<VALUE> valueField) {
         super(type, field);
