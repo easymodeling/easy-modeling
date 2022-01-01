@@ -35,7 +35,11 @@ public class OptionalField<VALUE> extends ModelField<Optional<VALUE>> {
 
     @Override
     protected CodeBlock randomParameter() {
-        return CodeBlock.of("$L", elementRandomizer());
+        return CodeBlock.of("$L, $L", elementRandomizer(), allowEmpty());
+    }
+
+    private boolean allowEmpty() {
+        return field.allowEmpty();
     }
 
     private CodeBlock elementRandomizer() {

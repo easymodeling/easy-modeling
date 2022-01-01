@@ -43,4 +43,5 @@ public @interface Field {
 
     int maxLength() default Integer.MAX_VALUE;
 
+    boolean allowEmpty() default false;
 }

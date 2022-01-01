@@ -34,7 +34,7 @@ public abstract class GenericRandomizer<T> implements Randomizer<T> {
      * @param max exclusive upper bound, should be greater than or equal to min
      * @return a random double between min (inclusive) and max (exclusive)
      */
-    public Double doubleBetween(double min, double max) {
+    protected Double doubleBetween(double min, double max) {
         final double value = random.nextDouble() * (max - min) + min;
         if (value <= min) {
             return min;
@@ -43,5 +43,9 @@ public abstract class GenericRandomizer<T> implements Randomizer<T> {
         } else {
             return value;
         }
+    }
+
+    protected boolean oneThirdTruth() {
+        return random.nextInt(3) == 0;
     }
 }

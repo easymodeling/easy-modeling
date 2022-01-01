@@ -42,6 +42,8 @@ public class FieldWrapper {
 
     private Integer maxLength = Integer.MAX_VALUE;
 
+    boolean allowEmpty = false;
+
     public static FieldWrapper of(String name) {
         return new FieldWrapper(name);
     }
@@ -72,6 +74,7 @@ public class FieldWrapper {
         this.length = annotation.length();
         this.minLength = annotation.minLength();
         this.maxLength = annotation.maxLength();
+        this.allowEmpty = annotation.allowEmpty();
     }
 
     public String name() {
@@ -134,6 +137,10 @@ public class FieldWrapper {
 
     public Optional<Instant> datetime() {
         return this.isDatetimeSet() ? dateTimeParsed() : Optional.empty();
+    }
+
+    public boolean allowEmpty() {
+        return allowEmpty;
     }
 
     private Optional<Instant> dateTimeParsed() {
