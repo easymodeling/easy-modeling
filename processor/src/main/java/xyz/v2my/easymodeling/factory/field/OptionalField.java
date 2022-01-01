@@ -24,7 +24,7 @@ public class OptionalField<VALUE> extends ModelField<Optional<VALUE>> {
     }
 
     @Override
-    protected Optional<CodeBlock> constantParameter() {
+    protected CodeBlock initializerParameter() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -33,7 +33,6 @@ public class OptionalField<VALUE> extends ModelField<Optional<VALUE>> {
         return CodeBlock.of("new $T<>($L)", OptionalRandomizer.class, randomParameter());
     }
 
-    @Override
     protected CodeBlock randomParameter() {
         return CodeBlock.of("$L, $L", elementRandomizer(), allowEmpty());
     }

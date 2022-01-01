@@ -5,8 +5,6 @@ import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 
-import java.util.Optional;
-
 public abstract class PrimitiveField<E> extends ModelField<E> {
 
     protected PrimitiveField(TypeName type, FieldWrapper field) {
@@ -17,12 +15,7 @@ public abstract class PrimitiveField<E> extends ModelField<E> {
     }
 
     @Override
-    protected Optional<CodeBlock> constantParameter() {
-        return Optional.empty();
-    }
-
-    @Override
-    protected CodeBlock randomParameter() {
+    protected CodeBlock initializerParameter() {
         return CodeBlock.of("");
     }
 }

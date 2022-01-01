@@ -5,6 +5,4 @@ import com.squareup.javapoet.CodeBlock;
 public interface Initializable {
 
     CodeBlock initialValue();
-
-    CodeBlock initializer();
 }

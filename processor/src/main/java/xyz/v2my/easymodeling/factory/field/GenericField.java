@@ -5,8 +5,6 @@ import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 
-import java.util.Optional;
-
 public class GenericField extends ModelField<Void> {
 
     private GenericField(TypeName type, FieldWrapper field) {
@@ -27,17 +25,12 @@ public class GenericField extends ModelField<Void> {
     }
 
     @Override
-    protected Optional<CodeBlock> constantParameter() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    protected CodeBlock randomParameter() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
     protected Class<? extends Randomizer<Void>> initializerType() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    protected CodeBlock initializerParameter() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

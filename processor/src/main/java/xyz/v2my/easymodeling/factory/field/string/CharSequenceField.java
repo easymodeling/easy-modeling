@@ -22,6 +22,10 @@ public abstract class CharSequenceField<FIELD extends CharSequence> extends Mode
     }
 
     @Override
+    protected CodeBlock initializerParameter() {
+        return constantParameter().orElseGet(this::randomParameter);
+    }
+
     public CodeBlock randomParameter() {
         final int charset = alphabetic() & numeric() & alphaNumeric();
         if (charset == 0) {
@@ -31,7 +35,6 @@ public abstract class CharSequenceField<FIELD extends CharSequence> extends Mode
         return CodeBlock.of("$L, $L, $L", min(), max(), charset);
     }
 
-    @Override
     protected Optional<CodeBlock> constantParameter() {
         return string().map(s -> CodeBlock.of("$S", s));
     }

@@ -7,8 +7,6 @@ import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.ArrayRandomizer;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 
-import java.util.Optional;
-
 public class ArrayField extends ModelField<Object> {
 
     private final ModelField<?> elementField;
@@ -23,7 +21,6 @@ public class ArrayField extends ModelField<Object> {
         return CodeBlock.of("($L) new $T<>($L)", type, ArrayRandomizer.class, randomParameter());
     }
 
-    @Override
     public CodeBlock randomParameter() {
         return CodeBlock.of("$L, $T.class, $L, $L, $L", elementRandomizer(), elementField.type, dimension(), minLength(), maxLength());
     }
@@ -57,12 +54,12 @@ public class ArrayField extends ModelField<Object> {
     }
 
     @Override
-    protected Optional<CodeBlock> constantParameter() {
+    protected Class<? extends Randomizer<Object>> initializerType() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    protected Class<? extends Randomizer<Object>> initializerType() {
+    protected CodeBlock initializerParameter() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

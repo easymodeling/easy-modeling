@@ -20,6 +20,10 @@ public class InstantField extends ModelField<Instant> {
     }
 
     @Override
+    protected CodeBlock initializerParameter() {
+        return constantParameter().orElseGet(this::randomParameter);
+    }
+
     protected Optional<CodeBlock> constantParameter() {
         if (field.now()) {
             return Optional.of(CodeBlock.of("$T.now()", Instant.class));
@@ -33,7 +37,6 @@ public class InstantField extends ModelField<Instant> {
         return new InstantField(type, field);
     }
 
-    @Override
     protected CodeBlock randomParameter() {
         return CodeBlock.of("$LL, $LL", min(), max());
     }

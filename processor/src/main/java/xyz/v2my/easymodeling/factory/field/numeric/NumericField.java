@@ -17,11 +17,14 @@ public abstract class NumericField<FIELD extends Number> extends ModelField<FIEL
     }
 
     @Override
+    protected CodeBlock initializerParameter() {
+        return constantParameter().orElseGet(this::randomParameter);
+    }
+
     protected CodeBlock randomParameter() {
         return CodeBlock.of("$L, $L", min(), max());
     }
 
-    @Override
     protected Optional<CodeBlock> constantParameter() {
         return field.constant()
                 .filter(d -> d <= ceiling() && d >= floor())
