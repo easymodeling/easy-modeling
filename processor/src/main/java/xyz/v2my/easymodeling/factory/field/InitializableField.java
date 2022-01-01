@@ -5,4 +5,6 @@ import com.squareup.javapoet.CodeBlock;
 public interface InitializableField {
 
     CodeBlock initialValue();
+
+    CodeBlock initializer();
 }

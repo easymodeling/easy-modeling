@@ -5,7 +5,7 @@ import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 
-public abstract class InitializablePlainField<FIELD> extends BuilderField implements InitializableField {
+public abstract class InitializablePlainField<FIELD> extends ModelField {
 
     public InitializablePlainField() {
     }
@@ -19,6 +19,7 @@ public abstract class InitializablePlainField<FIELD> extends BuilderField implem
         return CodeBlock.of("$L.next()", initializer());
     }
 
+    @Override
     public CodeBlock initializer() {
         return CodeBlock.of("new $T($L)", initializerType(), initializerParameter());
     }

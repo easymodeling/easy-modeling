@@ -6,7 +6,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
-import xyz.v2my.easymodeling.factory.field.PlainField;
+import xyz.v2my.easymodeling.factory.field.ModelField;
 
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
@@ -19,9 +19,9 @@ public class BuilderClass {
 
     private final TypeElement type;
 
-    private final List<PlainField<?>> modelFields;
+    private final List<ModelField> modelFields;
 
-    public BuilderClass(TypeElement type, List<PlainField<?>> modelFields) {
+    public BuilderClass(TypeElement type, List<ModelField> modelFields) {
         this.type = type;
         this.modelFields = modelFields;
     }
@@ -38,10 +38,10 @@ public class BuilderClass {
 
     private MethodSpec builderAllArgsConstructor() {
         final List<ParameterSpec> constructorParameters = modelFields.stream()
-                .map(PlainField::parameter)
+                .map(ModelField::parameter)
                 .collect(Collectors.toList());
         final List<CodeBlock> constructorStatements = modelFields.stream()
-                .map(PlainField::statement)
+                .map(ModelField::statement)
                 .collect(Collectors.toList());
 
         return MethodSpec.constructorBuilder()
@@ -52,7 +52,7 @@ public class BuilderClass {
 
     private MethodSpec buildMethod() {
         final String constructionParameters = modelFields.stream()
-                .map(PlainField::name)
+                .map(ModelField::name)
                 .collect(Collectors.joining(", "));
         return MethodSpec.methodBuilder("build")
                 .addModifiers(Modifier.PUBLIC)
@@ -62,7 +62,7 @@ public class BuilderClass {
     }
 
     private List<FieldSpec> builderFields() {
-        return modelFields.stream().map(PlainField::field).collect(Collectors.toList());
+        return modelFields.stream().map(ModelField::field).collect(Collectors.toList());
     }
 
     private List<MethodSpec> builderSetters() {

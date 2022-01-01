@@ -4,52 +4,34 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.OptionalRandomizer;
-import xyz.v2my.easymodeling.randomizer.Randomizer;
 
 import java.util.Optional;
 
-public class OptionalField<VALUE> extends PlainField<Optional<VALUE>> {
-
-    private PlainField<VALUE> valueField;
+public class OptionalField extends ContainerField<Optional<?>> {
 
     public OptionalField() {
     }
 
-    public OptionalField(TypeName type, FieldWrapper field, PlainField<VALUE> valueField) {
-        super(type, field);
-        this.valueField = valueField;
+    public OptionalField(TypeName type, FieldWrapper field, InitializableField valueField) {
+        super(type, field, valueField);
     }
 
     @Override
-    protected Class<? extends Randomizer<Optional<VALUE>>> initializerType() {
-        // TODO: 01.01.22 extract to abstract non-creatable class
-        throw new UnsupportedOperationException("Not supported yet.");
+    public ContainerField<?> create(TypeName type, FieldWrapper field, InitializableField valueField) {
+        return new OptionalField(type, field, valueField);
     }
 
     @Override
-    protected CodeBlock initializerParameter() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    protected CodeBlock initializerType() {
+        return CodeBlock.of("$T", OptionalRandomizer.class);
     }
 
     @Override
-    public CodeBlock initializer() {
-        return CodeBlock.of("new $T<>($L)", OptionalRandomizer.class, randomParameter());
-    }
-
     protected CodeBlock randomParameter() {
-        return CodeBlock.of("$L, $L", elementRandomizer(), allowEmpty());
+        return CodeBlock.of("$L", allowEmpty());
     }
 
     private boolean allowEmpty() {
         return field.allowEmpty();
-    }
-
-    private CodeBlock elementRandomizer() {
-        return CodeBlock.of("new $T($L)", valueField.initializerType(), valueField.initializerParameter());
-    }
-
-    @Override
-    public PlainField<Optional<VALUE>> create(TypeName type, FieldWrapper field) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

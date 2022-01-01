@@ -6,8 +6,9 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.field.ArrayField;
 import xyz.v2my.easymodeling.factory.field.GenericField;
-import xyz.v2my.easymodeling.factory.field.PlainField;
+import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.factory.field.OptionalField;
+import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
 import xyz.v2my.easymodeling.factory.field.numeric.ByteField;
 import xyz.v2my.easymodeling.factory.field.numeric.DoubleField;
@@ -27,7 +28,7 @@ import java.util.Optional;
 
 public class BuilderFieldProvider {
 
-    private static final Map<TypeName, PlainField<?>> FIELD_MAP = new HashMap<>();
+    private static final Map<TypeName, ModelField> FIELD_MAP = new HashMap<>();
 
     static {
         FIELD_MAP.put(TypeName.BYTE, new ByteField());
@@ -49,10 +50,10 @@ public class BuilderFieldProvider {
         FIELD_MAP.put(ClassName.get(String.class), new StringField());
         FIELD_MAP.put(ClassName.get(StringBuilder.class), new StringBuilderField());
         FIELD_MAP.put(ClassName.get(Instant.class), new InstantField());
-        FIELD_MAP.put(ClassName.get(Optional.class), new OptionalField<>());
+        FIELD_MAP.put(ClassName.get(Optional.class), new OptionalField());
     }
 
-    public PlainField<?> provide(TypeName type, FieldWrapper field) {
+    public ModelField provide(TypeName type, FieldWrapper field) {
         if (type instanceof ArrayTypeName) {
             return arrayField(type, field);
         }
@@ -62,18 +63,18 @@ public class BuilderFieldProvider {
         return typedField(type, field);
     }
 
-    private PlainField<?> containerField(ParameterizedTypeName parameterizedTypeName, FieldWrapper field) {
+    private ModelField containerField(ParameterizedTypeName parameterizedTypeName, FieldWrapper field) {
         if (parameterizedTypeName.rawType.equals(ClassName.get(Optional.class))) {
             return optionalField(parameterizedTypeName, field);
         } else {
-            return new GenericField();
+            return null;
         }
     }
 
-    private PlainField<?> optionalField(ParameterizedTypeName type, FieldWrapper field) {
+    private ModelField optionalField(ParameterizedTypeName type, FieldWrapper field) {
         final TypeName nestedType = type.typeArguments.get(0);
-        final PlainField<?> nestedField = provide(nestedType, field);
-        return new OptionalField<>(type, field, nestedField);
+        final ModelField nestedField = provide(nestedType, field);
+        return new OptionalField(type, field, nestedField);
     }
 
     private ArrayField arrayField(TypeName type, FieldWrapper field) {
@@ -90,7 +91,7 @@ public class BuilderFieldProvider {
     }
 
     private PlainField<?> typedField(TypeName type, FieldWrapper field) {
-        PlainField<?> modelField = FIELD_MAP.getOrDefault(type, new GenericField());
+        PlainField<?> modelField = (PlainField<?>) FIELD_MAP.getOrDefault(type, new GenericField());
         return modelField.create(type, field);
     }
 }
