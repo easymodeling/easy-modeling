@@ -123,6 +123,8 @@ class ArrayModelTest {
 
         assertTrue(model.anIntArray.length >= 2);
         assertTrue(model.anIntArray.length < 5);
+
+        assertEquals(8, model.aByteMatrix.length);
     }
 
     @Test

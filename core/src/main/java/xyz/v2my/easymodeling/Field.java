@@ -37,5 +37,10 @@ public @interface Field {
 
     String datetime() default "";
 
-    int size() default Integer.MAX_VALUE;
+    int length() default Integer.MAX_VALUE;
+
+    int minLength() default Integer.MAX_VALUE;
+
+    int maxLength() default Integer.MAX_VALUE;
+
 }

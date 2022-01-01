@@ -36,7 +36,11 @@ public class FieldWrapper {
 
     private String datetime = "";
 
-    private int size = Integer.MAX_VALUE;
+    private Integer length = Integer.MAX_VALUE;
+
+    private Integer minLength = Integer.MAX_VALUE;
+
+    private Integer maxLength = Integer.MAX_VALUE;
 
     public static FieldWrapper of(String name) {
         return new FieldWrapper(name);
@@ -65,6 +69,9 @@ public class FieldWrapper {
         this.future = annotation.future();
         this.past = annotation.past();
         this.datetime = annotation.datetime();
+        this.length = annotation.length();
+        this.minLength = annotation.minLength();
+        this.maxLength = annotation.maxLength();
     }
 
     public String name() {
@@ -117,8 +124,12 @@ public class FieldWrapper {
         return now;
     }
 
-    public Optional<Integer> size() {
-        return this.isSizeSet() ? Optional.of(size) : Optional.empty();
+    public Optional<Integer> minLength() {
+        return isLengthSet() ? Optional.of(length) : isMinLengthSet() ? Optional.of(minLength) : Optional.empty();
+    }
+
+    public Optional<Integer> maxLength() {
+        return isLengthSet() ? Optional.of(length) : isMaxLengthSet() ? Optional.of(maxLength) : Optional.empty();
     }
 
     public Optional<Instant> datetime() {
@@ -162,7 +173,16 @@ public class FieldWrapper {
         return !datetime.isEmpty();
     }
 
-    private boolean isSizeSet() {
-        return size != Integer.MAX_VALUE && size >= 0;
+    private boolean isLengthSet() {
+        return length != Integer.MAX_VALUE && length >= 0;
     }
+
+    private boolean isMinLengthSet() {
+        return minLength != Integer.MAX_VALUE && minLength >= 0;
+    }
+
+    private boolean isMaxLengthSet() {
+        return maxLength != Integer.MAX_VALUE && maxLength >= 0;
+    }
+
 }

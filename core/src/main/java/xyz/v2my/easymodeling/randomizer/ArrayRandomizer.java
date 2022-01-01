@@ -2,6 +2,7 @@ package xyz.v2my.easymodeling.randomizer;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 public class ArrayRandomizer<E> extends GenericRandomizer<Object> {
@@ -33,11 +34,10 @@ public class ArrayRandomizer<E> extends GenericRandomizer<Object> {
 
     private Object generateArray(int... dimensions) {
         final Object array = Array.newInstance(elementClass, dimensions);
+        final int[] shiftedDimensions = Arrays.copyOfRange(dimensions, 1, dimensions.length);
+        final Supplier<Object> supplier = dimensions.length == 1 ? elementRandomizer::next : () -> generateArray(shiftedDimensions);
         for (int i = 0; i < dimensions[0]; i++) {
-            final Object next = dimensions.length == 1 ?
-                    elementRandomizer.next() :
-                    generateArray(Arrays.copyOfRange(dimensions, 1, dimensions.length));
-            Array.set(array, i, next);
+            Array.set(array, i, supplier.get());
         }
         return array;
     }
