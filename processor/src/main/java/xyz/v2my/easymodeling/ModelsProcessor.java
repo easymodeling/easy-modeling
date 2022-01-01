@@ -9,7 +9,6 @@ import xyz.v2my.easymodeling.factory.FactoryClass;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
-import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
@@ -21,11 +20,12 @@ import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
-import javax.tools.Diagnostic;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Stream;
+
+import static xyz.v2my.easymodeling.ProcessorLogger.log;
 
 @AutoService(Processor.class)
 public class ModelsProcessor extends AbstractProcessor {
@@ -34,12 +34,10 @@ public class ModelsProcessor extends AbstractProcessor {
 
     private Filer filer;
 
-    private Messager messager;
-
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
-        messager = processingEnv.getMessager();
+        log.setMessager(processingEnv.getMessager());
         elementUtils = processingEnv.getElementUtils();
         filer = processingEnv.getFiler();
     }
@@ -53,7 +51,7 @@ public class ModelsProcessor extends AbstractProcessor {
             process(roundEnv);
         } catch (ProcessingException e) {
             // TODO: 19.12.21 move Diagnostic.Kind to exception
-            messager.printMessage(Diagnostic.Kind.ERROR, e.getMessage());
+            log.error(e.getMessage());
             return false;
         }
         return false;
