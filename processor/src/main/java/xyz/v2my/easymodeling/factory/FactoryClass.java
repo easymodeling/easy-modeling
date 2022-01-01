@@ -49,7 +49,7 @@ public class FactoryClass {
         } catch (IllegalStateException e) {
             throw new ProcessingException("Duplicated fields declaration: " + e.getMessage());
         }
-        final BuilderFieldProvider builderFieldProvider = new BuilderFieldProvider();
+        final ModelFieldFieldProvider modelFieldFieldProvider = new ModelFieldFieldProvider();
         return type.getEnclosedElements().stream()
                 .filter(element -> element.getKind().equals(ElementKind.FIELD))
                 .filter(element -> !element.getModifiers().contains(Modifier.STATIC))
@@ -57,7 +57,7 @@ public class FactoryClass {
                     final String fieldName = element.getSimpleName().toString();
                     final TypeName typeName = ClassName.get(element.asType());
                     final FieldWrapper field = declaredFieldsMap.getOrDefault(fieldName, FieldWrapper.of(fieldName));
-                    return builderFieldProvider.provide(typeName, field);
+                    return modelFieldFieldProvider.provide(typeName, field);
                 })
                 .collect(Collectors.toList());
     }
