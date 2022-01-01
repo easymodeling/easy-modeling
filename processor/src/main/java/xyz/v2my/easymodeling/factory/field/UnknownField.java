@@ -5,13 +5,18 @@ import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 
-public class GenericField extends PlainField<Void> {
+public class UnknownField extends PlainField<Void> {
 
-    private GenericField(TypeName type, FieldWrapper field) {
+    public UnknownField() {
+    }
+
+    public UnknownField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 
-    public GenericField() {
+    @Override
+    public PlainField<Void> create(TypeName type, FieldWrapper field) {
+        return new UnknownField(type, field);
     }
 
     @Override
@@ -20,8 +25,8 @@ public class GenericField extends PlainField<Void> {
     }
 
     @Override
-    public PlainField<Void> create(TypeName type, FieldWrapper field) {
-        return new GenericField(type, field);
+    public CodeBlock initializer() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -33,5 +38,4 @@ public class GenericField extends PlainField<Void> {
     protected CodeBlock initializerParameter() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
 }

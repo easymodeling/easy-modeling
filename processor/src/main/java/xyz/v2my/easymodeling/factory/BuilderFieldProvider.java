@@ -5,10 +5,11 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.field.ArrayField;
-import xyz.v2my.easymodeling.factory.field.GenericField;
+import xyz.v2my.easymodeling.factory.field.ContainerField;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.factory.field.OptionalField;
 import xyz.v2my.easymodeling.factory.field.PlainField;
+import xyz.v2my.easymodeling.factory.field.UnknownField;
 import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
 import xyz.v2my.easymodeling.factory.field.numeric.ByteField;
 import xyz.v2my.easymodeling.factory.field.numeric.DoubleField;
@@ -25,32 +26,36 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class BuilderFieldProvider {
 
-    private static final Map<TypeName, ModelField> FIELD_MAP = new HashMap<>();
+    private static final Map<TypeName, PlainField<?>> PLAIN_FIELDS = new HashMap<>();
+
+    private static final Map<TypeName, ContainerField<?>> CONTAINER_FIELDS = new HashMap<>();
 
     static {
-        FIELD_MAP.put(TypeName.BYTE, new ByteField());
-        FIELD_MAP.put(TypeName.SHORT, new ShortField());
-        FIELD_MAP.put(TypeName.INT, new IntegerField());
-        FIELD_MAP.put(TypeName.LONG, new LongField());
-        FIELD_MAP.put(TypeName.FLOAT, new FloatField());
-        FIELD_MAP.put(TypeName.DOUBLE, new DoubleField());
-        FIELD_MAP.put(TypeName.BOOLEAN, new BooleanField());
-        FIELD_MAP.put(TypeName.CHAR, new CharField());
-        FIELD_MAP.put(ClassName.get(Byte.class), new ByteField());
-        FIELD_MAP.put(ClassName.get(Short.class), new ShortField());
-        FIELD_MAP.put(ClassName.get(Integer.class), new IntegerField());
-        FIELD_MAP.put(ClassName.get(Long.class), new LongField());
-        FIELD_MAP.put(ClassName.get(Float.class), new FloatField());
-        FIELD_MAP.put(ClassName.get(Double.class), new DoubleField());
-        FIELD_MAP.put(ClassName.get(Boolean.class), new BooleanField());
-        FIELD_MAP.put(ClassName.get(Character.class), new CharField());
-        FIELD_MAP.put(ClassName.get(String.class), new StringField());
-        FIELD_MAP.put(ClassName.get(StringBuilder.class), new StringBuilderField());
-        FIELD_MAP.put(ClassName.get(Instant.class), new InstantField());
-        FIELD_MAP.put(ClassName.get(Optional.class), new OptionalField());
+        PLAIN_FIELDS.put(TypeName.BYTE, new ByteField());
+        PLAIN_FIELDS.put(TypeName.SHORT, new ShortField());
+        PLAIN_FIELDS.put(TypeName.INT, new IntegerField());
+        PLAIN_FIELDS.put(TypeName.LONG, new LongField());
+        PLAIN_FIELDS.put(TypeName.FLOAT, new FloatField());
+        PLAIN_FIELDS.put(TypeName.DOUBLE, new DoubleField());
+        PLAIN_FIELDS.put(TypeName.BOOLEAN, new BooleanField());
+        PLAIN_FIELDS.put(TypeName.CHAR, new CharField());
+        PLAIN_FIELDS.put(ClassName.get(Byte.class), new ByteField());
+        PLAIN_FIELDS.put(ClassName.get(Short.class), new ShortField());
+        PLAIN_FIELDS.put(ClassName.get(Integer.class), new IntegerField());
+        PLAIN_FIELDS.put(ClassName.get(Long.class), new LongField());
+        PLAIN_FIELDS.put(ClassName.get(Float.class), new FloatField());
+        PLAIN_FIELDS.put(ClassName.get(Double.class), new DoubleField());
+        PLAIN_FIELDS.put(ClassName.get(Boolean.class), new BooleanField());
+        PLAIN_FIELDS.put(ClassName.get(Character.class), new CharField());
+        PLAIN_FIELDS.put(ClassName.get(String.class), new StringField());
+        PLAIN_FIELDS.put(ClassName.get(StringBuilder.class), new StringBuilderField());
+        PLAIN_FIELDS.put(ClassName.get(Instant.class), new InstantField());
+
+        CONTAINER_FIELDS.put(ClassName.get(Optional.class), new OptionalField());
     }
 
     public ModelField provide(TypeName type, FieldWrapper field) {
@@ -67,14 +72,14 @@ public class BuilderFieldProvider {
         if (parameterizedTypeName.rawType.equals(ClassName.get(Optional.class))) {
             return optionalField(parameterizedTypeName, field);
         } else {
-            return null;
+            return new UnknownField();
         }
     }
 
     private ModelField optionalField(ParameterizedTypeName type, FieldWrapper field) {
-        final TypeName nestedType = type.typeArguments.get(0);
-        final ModelField nestedField = provide(nestedType, field);
-        return new OptionalField(type, field, nestedField);
+        final ContainerField<?> containerField = CONTAINER_FIELDS.get(type.rawType);
+        return containerField.create(
+                type, field, type.typeArguments.stream().map(t -> provide(t, field)).collect(Collectors.toList()));
     }
 
     private ArrayField arrayField(TypeName type, FieldWrapper field) {
@@ -91,7 +96,8 @@ public class BuilderFieldProvider {
     }
 
     private PlainField<?> typedField(TypeName type, FieldWrapper field) {
-        PlainField<?> modelField = (PlainField<?>) FIELD_MAP.getOrDefault(type, new GenericField());
+        // FIXME: 01.01.22
+        PlainField<?> modelField = PLAIN_FIELDS.getOrDefault(type, new UnknownField());
         return modelField.create(type, field);
     }
 }

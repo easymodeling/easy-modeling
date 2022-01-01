@@ -4,21 +4,18 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 
+import java.util.List;
+
 public abstract class InitializableContainerField extends ModelField {
 
-    private InitializableField valueField;
+    private List<ModelField> valueFields;
 
     public InitializableContainerField() {
     }
 
-    public InitializableContainerField(TypeName type, FieldWrapper field, InitializableField valueField) {
+    public InitializableContainerField(TypeName type, FieldWrapper field, List<ModelField> valueFields) {
         super(type, field);
-        this.valueField = valueField;
-    }
-
-    @Override
-    public CodeBlock initialValue() {
-        return CodeBlock.of("$L.next()", initializer());
+        this.valueFields = valueFields;
     }
 
     @Override
@@ -29,7 +26,10 @@ public abstract class InitializableContainerField extends ModelField {
     protected abstract CodeBlock initializerType();
 
     private CodeBlock elementRandomizer() {
-        return CodeBlock.of("$L", valueField.initializer());
+        return valueFields.stream()
+                .map(ModelField::initializer)
+                .map(init -> CodeBlock.of("$L", init))
+                .collect(CodeBlock.joining(", "));
     }
 
     protected abstract CodeBlock randomParameter();

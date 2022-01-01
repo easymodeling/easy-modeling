@@ -5,6 +5,7 @@ import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.OptionalRandomizer;
 
+import java.util.List;
 import java.util.Optional;
 
 public class OptionalField extends ContainerField<Optional<?>> {
@@ -12,13 +13,13 @@ public class OptionalField extends ContainerField<Optional<?>> {
     public OptionalField() {
     }
 
-    public OptionalField(TypeName type, FieldWrapper field, InitializableField valueField) {
-        super(type, field, valueField);
+    public OptionalField(TypeName type, FieldWrapper field, List<ModelField> valueFields) {
+        super(type, field, valueFields);
     }
 
     @Override
-    public ContainerField<?> create(TypeName type, FieldWrapper field, InitializableField valueField) {
-        return new OptionalField(type, field, valueField);
+    public ContainerField<?> create(TypeName type, FieldWrapper field, List<ModelField> valueFields) {
+        return new OptionalField(type, field, valueFields);
     }
 
     @Override
