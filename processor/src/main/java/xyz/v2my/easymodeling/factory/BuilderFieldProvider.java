@@ -2,10 +2,12 @@ package xyz.v2my.easymodeling.factory;
 
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.field.ArrayField;
 import xyz.v2my.easymodeling.factory.field.GenericField;
 import xyz.v2my.easymodeling.factory.field.ModelField;
+import xyz.v2my.easymodeling.factory.field.OptionalField;
 import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
 import xyz.v2my.easymodeling.factory.field.numeric.ByteField;
 import xyz.v2my.easymodeling.factory.field.numeric.DoubleField;
@@ -21,6 +23,7 @@ import xyz.v2my.easymodeling.factory.field.string.StringField;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class BuilderFieldProvider {
 
@@ -52,7 +55,23 @@ public class BuilderFieldProvider {
         if (type instanceof ArrayTypeName) {
             return arrayField(type, field);
         }
+        if (type instanceof ParameterizedTypeName) {
+            final ParameterizedTypeName parameterizedTypeName = (ParameterizedTypeName) type;
+            final ClassName rawType = parameterizedTypeName.rawType;
+            if (rawType.equals(ClassName.get(Optional.class))) {
+                return optionalField(parameterizedTypeName, field);
+            }
+        }
         return typedField(type, field);
+    }
+
+    private ModelField<?> optionalField(ParameterizedTypeName type, FieldWrapper field) {
+        final TypeName nestedType = type.typeArguments.get(0);
+        if (nestedType instanceof ParameterizedTypeName) {
+            return new OptionalField<>(type, field, optionalField((ParameterizedTypeName) nestedType, field));
+        } else {
+            return new OptionalField<>(type, field, typedField(nestedType, field));
+        }
     }
 
     private ArrayField arrayField(TypeName type, FieldWrapper field) {
