@@ -10,7 +10,7 @@ public class UnknownField extends PlainField<Void> {
     public UnknownField() {
     }
 
-    public UnknownField(TypeName type, FieldWrapper field) {
+    private UnknownField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 

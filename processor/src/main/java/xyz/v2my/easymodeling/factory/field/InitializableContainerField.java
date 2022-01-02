@@ -8,14 +8,14 @@ import java.util.List;
 
 public abstract class InitializableContainerField extends ModelField {
 
-    private List<ModelField> valueFields;
+    private List<ModelField> nestedFields;
 
     public InitializableContainerField() {
     }
 
-    public InitializableContainerField(TypeName type, FieldWrapper field, List<ModelField> valueFields) {
+    public InitializableContainerField(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
         super(type, field);
-        this.valueFields = valueFields;
+        this.nestedFields = nestedFields;
     }
 
     @Override
@@ -26,7 +26,7 @@ public abstract class InitializableContainerField extends ModelField {
     protected abstract CodeBlock initializerType();
 
     private CodeBlock elementRandomizer() {
-        return valueFields.stream()
+        return nestedFields.stream()
                 .map(ModelField::initializer)
                 .map(init -> CodeBlock.of("$L", init))
                 .collect(CodeBlock.joining(", "));

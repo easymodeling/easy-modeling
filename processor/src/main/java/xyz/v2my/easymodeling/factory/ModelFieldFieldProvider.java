@@ -9,6 +9,7 @@ import xyz.v2my.easymodeling.factory.field.ContainerField;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.factory.field.OptionalField;
 import xyz.v2my.easymodeling.factory.field.PlainField;
+import xyz.v2my.easymodeling.factory.field.UnknownContainer;
 import xyz.v2my.easymodeling.factory.field.UnknownField;
 import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
 import xyz.v2my.easymodeling.factory.field.numeric.ByteField;
@@ -24,6 +25,7 @@ import xyz.v2my.easymodeling.factory.field.string.StringField;
 
 import java.time.Instant;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -69,17 +71,8 @@ public class ModelFieldFieldProvider {
     }
 
     private ModelField containerField(ParameterizedTypeName parameterizedTypeName, FieldWrapper field) {
-        if (parameterizedTypeName.rawType.equals(ClassName.get(Optional.class))) {
-            return optionalField(parameterizedTypeName, field);
-        } else {
-            return new UnknownField();
-        }
-    }
-
-    private ModelField optionalField(ParameterizedTypeName type, FieldWrapper field) {
-        final ContainerField<?> containerField = CONTAINER_FIELDS.get(type.rawType);
-        return containerField.create(
-                type, field, type.typeArguments.stream().map(t -> provide(t, field)).collect(Collectors.toList()));
+        final List<ModelField> nestedFields = parameterizedTypeName.typeArguments.stream().map(t -> provide(t, field)).collect(Collectors.toList());
+        return CONTAINER_FIELDS.getOrDefault(parameterizedTypeName.rawType, new UnknownContainer()).create(parameterizedTypeName, field, nestedFields);
     }
 
     private ArrayField arrayField(TypeName type, FieldWrapper field) {
@@ -96,7 +89,6 @@ public class ModelFieldFieldProvider {
     }
 
     private PlainField<?> typedField(TypeName type, FieldWrapper field) {
-        // FIXME: 01.01.22
         PlainField<?> modelField = PLAIN_FIELDS.getOrDefault(type, new UnknownField());
         return modelField.create(type, field);
     }

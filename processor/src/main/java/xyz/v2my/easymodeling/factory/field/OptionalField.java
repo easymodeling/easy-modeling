@@ -18,8 +18,8 @@ public class OptionalField extends ContainerField<Optional<?>> {
     }
 
     @Override
-    public ContainerField<?> create(TypeName type, FieldWrapper field, List<ModelField> valueFields) {
-        return new OptionalField(type, field, valueFields);
+    public ContainerField<?> create(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
+        return new OptionalField(type, field, nestedFields);
     }
 
     @Override

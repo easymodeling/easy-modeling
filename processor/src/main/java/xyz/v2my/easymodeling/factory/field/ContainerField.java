@@ -14,5 +14,5 @@ public abstract class ContainerField<CONTAINER> extends InitializableContainerFi
         super(type, field, valueFields);
     }
 
-    public abstract ContainerField<?> create(TypeName type, FieldWrapper field, List<ModelField> valueFields);
+    public abstract ContainerField<?> create(TypeName type, FieldWrapper field, List<ModelField> nestedFields);
 }
