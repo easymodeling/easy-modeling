@@ -6,7 +6,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
-import xyz.v2my.easymodeling.factory.field.ModelField;
+import xyz.v2my.easymodeling.factory.field.Type;
 
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
@@ -19,11 +19,11 @@ public class BuilderClass {
 
     private final TypeElement type;
 
-    private final List<ModelField> modelFields;
+    private final List<Type> types;
 
-    public BuilderClass(TypeElement type, List<ModelField> modelFields) {
+    public BuilderClass(TypeElement type, List<Type> types) {
         this.type = type;
-        this.modelFields = modelFields;
+        this.types = types;
     }
 
     public TypeSpec createType() {
@@ -37,11 +37,11 @@ public class BuilderClass {
     }
 
     private MethodSpec builderAllArgsConstructor() {
-        final List<ParameterSpec> constructorParameters = modelFields.stream()
-                .map(ModelField::parameter)
+        final List<ParameterSpec> constructorParameters = types.stream()
+                .map(Type::parameter)
                 .collect(Collectors.toList());
-        final List<CodeBlock> constructorStatements = modelFields.stream()
-                .map(ModelField::statement)
+        final List<CodeBlock> constructorStatements = types.stream()
+                .map(Type::statement)
                 .collect(Collectors.toList());
 
         return MethodSpec.constructorBuilder()
@@ -51,8 +51,8 @@ public class BuilderClass {
     }
 
     private MethodSpec buildMethod() {
-        final String constructionParameters = modelFields.stream()
-                .map(ModelField::name)
+        final String constructionParameters = types.stream()
+                .map(Type::name)
                 .collect(Collectors.joining(", "));
         return MethodSpec.methodBuilder("build")
                 .addModifiers(Modifier.PUBLIC)
@@ -62,11 +62,11 @@ public class BuilderClass {
     }
 
     private List<FieldSpec> builderFields() {
-        return modelFields.stream().map(ModelField::field).collect(Collectors.toList());
+        return types.stream().map(Type::field).collect(Collectors.toList());
     }
 
     private List<MethodSpec> builderSetters() {
-        return modelFields.stream()
+        return types.stream()
                 .map(field -> field.setter(BUILDER_NAME_PATTERN))
                 .collect(Collectors.toList());
     }

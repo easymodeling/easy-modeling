@@ -6,12 +6,12 @@ import xyz.v2my.easymodeling.factory.FieldWrapper;
 
 import java.util.List;
 
-public class UnknownContainer extends ContainerField<Void> {
+public class UnknownContainer extends Container<Void> {
 
     public UnknownContainer() {
     }
 
-    public UnknownContainer(TypeName type, FieldWrapper field, List<ModelField> valueFields) {
+    public UnknownContainer(TypeName type, FieldWrapper field, List<Type> valueFields) {
         super(type, field, valueFields);
     }
 
@@ -21,7 +21,7 @@ public class UnknownContainer extends ContainerField<Void> {
     }
 
     @Override
-    public ContainerField<?> create(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
+    public Container<?> create(TypeName type, FieldWrapper field, List<Type> nestedFields) {
         return new UnknownContainer(type, field, nestedFields);
     }
 

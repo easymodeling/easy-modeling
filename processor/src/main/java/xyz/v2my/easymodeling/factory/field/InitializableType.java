@@ -2,7 +2,7 @@ package xyz.v2my.easymodeling.factory.field;
 
 import com.squareup.javapoet.CodeBlock;
 
-public interface InitializableField {
+public interface InitializableType {
 
     CodeBlock initialValue();
 

@@ -3,19 +3,19 @@ package xyz.v2my.easymodeling.factory.field.datetime;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
-import xyz.v2my.easymodeling.factory.field.PlainField;
+import xyz.v2my.easymodeling.factory.field.PlainType;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.datetime.InstantRandomizer;
 
 import java.time.Instant;
 import java.util.Optional;
 
-public class InstantField extends PlainField<Instant> {
+public class InstantType extends PlainType<Instant> {
 
-    public InstantField() {
+    public InstantType() {
     }
 
-    private InstantField(TypeName type, FieldWrapper field) {
+    private InstantType(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 
@@ -33,8 +33,8 @@ public class InstantField extends PlainField<Instant> {
     }
 
     @Override
-    public PlainField<Instant> create(TypeName type, FieldWrapper field) {
-        return new InstantField(type, field);
+    public PlainType<Instant> create(TypeName type, FieldWrapper field) {
+        return new InstantType(type, field);
     }
 
     protected CodeBlock randomParameter() {

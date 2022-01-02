@@ -4,12 +4,12 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 
-public abstract class ModelField extends BuilderField implements InitializableField {
+public abstract class Type extends BuilderField implements InitializableType {
 
-    public ModelField() {
+    public Type() {
     }
 
-    public ModelField(TypeName type, FieldWrapper field) {
+    public Type(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 

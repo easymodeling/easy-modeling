@@ -8,18 +8,18 @@ import xyz.v2my.easymodeling.randomizer.OptionalRandomizer;
 import java.util.List;
 import java.util.Optional;
 
-public class OptionalField extends ContainerField<Optional<?>> {
+public class OptionalType extends Container<Optional<?>> {
 
-    public OptionalField() {
+    public OptionalType() {
     }
 
-    public OptionalField(TypeName type, FieldWrapper field, List<ModelField> valueFields) {
+    public OptionalType(TypeName type, FieldWrapper field, List<Type> valueFields) {
         super(type, field, valueFields);
     }
 
     @Override
-    public ContainerField<?> create(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
-        return new OptionalField(type, field, nestedFields);
+    public Container<?> create(TypeName type, FieldWrapper field, List<Type> nestedFields) {
+        return new OptionalType(type, field, nestedFields);
     }
 
     @Override

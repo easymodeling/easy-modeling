@@ -3,17 +3,17 @@ package xyz.v2my.easymodeling.factory.field.numeric;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
-import xyz.v2my.easymodeling.factory.field.PlainField;
+import xyz.v2my.easymodeling.factory.field.PlainType;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.number.ShortRandomizer;
 
-public class ShortField extends NumericField<Short> {
+public class ShortType extends NumericType<Short> {
 
-    private ShortField(TypeName type, FieldWrapper field) {
+    private ShortType(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 
-    public ShortField() {
+    public ShortType() {
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ShortField extends NumericField<Short> {
     }
 
     @Override
-    public PlainField<Short> create(TypeName type, FieldWrapper field) {
-        return new ShortField(type, field);
+    public PlainType<Short> create(TypeName type, FieldWrapper field) {
+        return new ShortType(type, field);
     }
 }

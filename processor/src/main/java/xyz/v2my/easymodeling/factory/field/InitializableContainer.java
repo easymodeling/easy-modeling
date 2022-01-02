@@ -6,14 +6,14 @@ import xyz.v2my.easymodeling.factory.FieldWrapper;
 
 import java.util.List;
 
-public abstract class InitializableContainerField extends ModelField {
+public abstract class InitializableContainer extends Type {
 
-    private List<ModelField> nestedFields;
+    private List<Type> nestedFields;
 
-    public InitializableContainerField() {
+    public InitializableContainer() {
     }
 
-    public InitializableContainerField(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
+    public InitializableContainer(TypeName type, FieldWrapper field, List<Type> nestedFields) {
         super(type, field);
         this.nestedFields = nestedFields;
     }
@@ -27,7 +27,7 @@ public abstract class InitializableContainerField extends ModelField {
 
     private CodeBlock elementRandomizer() {
         return nestedFields.stream()
-                .map(ModelField::initializer)
+                .map(Type::initializer)
                 .map(init -> CodeBlock.of("$L", init))
                 .collect(CodeBlock.joining(", "));
     }

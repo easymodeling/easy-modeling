@@ -5,12 +5,12 @@ import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 
-public abstract class InitializablePlainField<FIELD> extends ModelField {
+public abstract class InitializablePlainType<FIELD> extends Type {
 
-    public InitializablePlainField() {
+    public InitializablePlainType() {
     }
 
-    protected InitializablePlainField(TypeName type, FieldWrapper field) {
+    protected InitializablePlainType(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 

@@ -7,7 +7,7 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import xyz.v2my.easymodeling.Model;
 import xyz.v2my.easymodeling.ProcessingException;
-import xyz.v2my.easymodeling.factory.field.ModelField;
+import xyz.v2my.easymodeling.factory.field.Type;
 
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
@@ -28,19 +28,19 @@ public class FactoryClass {
 
     private final TypeElement type;
 
-    private final List<ModelField> modelFields;
+    private final List<Type> types;
 
     private final BuilderClass builderClass;
 
     public FactoryClass(Model model, TypeElement type) {
         this.model = model;
         this.type = type;
-        final List<ModelField> fields = initBuilderFields(type);
-        this.modelFields = fields;
+        final List<Type> fields = initBuilderFields(type);
+        this.types = fields;
         this.builderClass = new BuilderClass(type, fields);
     }
 
-    private List<ModelField> initBuilderFields(TypeElement type) {
+    private List<Type> initBuilderFields(TypeElement type) {
         final List<FieldWrapper> declaredFields = Arrays.stream(model.fields()).map(FieldWrapper::of).collect(Collectors.toList());
         final Map<String, FieldWrapper> declaredFieldsMap;
         try {
@@ -49,7 +49,7 @@ public class FactoryClass {
         } catch (IllegalStateException e) {
             throw new ProcessingException("Duplicated fields declaration: " + e.getMessage());
         }
-        final ModelFieldFieldProvider modelFieldFieldProvider = new ModelFieldFieldProvider();
+        final ModelFieldProvider modelFieldProvider = new ModelFieldProvider();
         return type.getEnclosedElements().stream()
                 .filter(element -> element.getKind().equals(ElementKind.FIELD))
                 .filter(element -> !element.getModifiers().contains(Modifier.STATIC))
@@ -57,7 +57,7 @@ public class FactoryClass {
                     final String fieldName = element.getSimpleName().toString();
                     final TypeName typeName = ClassName.get(element.asType());
                     final FieldWrapper field = declaredFieldsMap.getOrDefault(fieldName, FieldWrapper.of(fieldName));
-                    return modelFieldFieldProvider.provide(typeName, field);
+                    return modelFieldProvider.provide(typeName, field);
                 })
                 .collect(Collectors.toList());
     }
@@ -75,8 +75,8 @@ public class FactoryClass {
     }
 
     private MethodSpec builderMethod(String builderName) {
-        final CodeBlock builderParameters = modelFields.stream()
-                .map(ModelField::initialValue)
+        final CodeBlock builderParameters = types.stream()
+                .map(Type::initialValue)
                 .collect(CodeBlock.joining(", "));
         return MethodSpec.methodBuilder(BUILDER_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)

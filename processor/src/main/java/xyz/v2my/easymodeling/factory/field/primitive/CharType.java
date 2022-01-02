@@ -2,22 +2,22 @@ package xyz.v2my.easymodeling.factory.field.primitive;
 
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
-import xyz.v2my.easymodeling.factory.field.PlainField;
+import xyz.v2my.easymodeling.factory.field.PlainType;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.primitive.CharRandomizer;
 
-public class CharField extends PrimitiveField<Character> {
+public class CharType extends PrimitiveType<Character> {
 
-    private CharField(TypeName type, FieldWrapper field) {
+    private CharType(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 
-    public CharField() {
+    public CharType() {
     }
 
     @Override
-    public PlainField<Character> create(TypeName type, FieldWrapper field) {
-        return new CharField(type, field);
+    public PlainType<Character> create(TypeName type, FieldWrapper field) {
+        return new CharType(type, field);
     }
 
     @Override
