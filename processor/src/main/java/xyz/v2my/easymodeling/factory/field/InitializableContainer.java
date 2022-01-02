@@ -25,7 +25,7 @@ public abstract class InitializableContainer extends Type {
 
     protected abstract CodeBlock initializerType();
 
-    private CodeBlock elementRandomizer() {
+    protected CodeBlock elementRandomizer() {
         return nestedFields.stream()
                 .map(Type::initializer)
                 .map(init -> CodeBlock.of("$L", init))

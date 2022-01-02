@@ -20,23 +20,17 @@ public class ArrayType extends Container<Object> {
 
     @Override
     public CodeBlock initialValue() {
-        return CodeBlock.of("($L) new $T($L).next()", type, ArrayRandomizer.class, randomParameter());
-    }
-
-    @Override
-    public CodeBlock initializer() {
-        return CodeBlock.of("new $T<>($L)", ArrayRandomizer.class, randomParameter());
+        return CodeBlock.of("($L) new $L($L, $L).next()", type, initializerType(), elementRandomizer(), randomParameter());
     }
 
     @Override
     protected CodeBlock initializerType() {
-        return null;
+        return CodeBlock.of("$T", ArrayRandomizer.class);
     }
 
     @Override
     protected CodeBlock randomParameter() {
-        final Type elementField = this.elementField;
-        return CodeBlock.of("$L, $T.class, $L, $L, $L", this.elementField.initializer(), elementField.typeName(), dimension(), minLength(), maxLength());
+        return CodeBlock.of("$T.class, $L, $L, $L", elementField.typeName(), dimension(), minLength(), maxLength());
     }
 
     private int maxLength() {
