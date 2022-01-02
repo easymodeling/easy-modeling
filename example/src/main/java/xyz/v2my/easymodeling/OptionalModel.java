@@ -14,4 +14,9 @@ public class OptionalModel {
 
     public Optional<Integer> nullableInteger;
 
+    public Optional<Optional<Instant>> optionalOfOptionalInstant;
+
+    public Optional<Instant[]> optionalOfInstantArray;
+
+    public Optional<Instant[][]> optionalOfInstantMatrix;
 }

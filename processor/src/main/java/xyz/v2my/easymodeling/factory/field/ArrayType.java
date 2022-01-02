@@ -17,8 +17,13 @@ public class ArrayType extends PlainType<Object> {
     }
 
     @Override
+    public CodeBlock initialValue() {
+        return CodeBlock.of("($L) $L.next()", type, initializer());
+    }
+
+    @Override
     public CodeBlock initializer() {
-        return CodeBlock.of("($L) new $T<>($L)", type, ArrayRandomizer.class, randomParameter());
+        return CodeBlock.of("new $T<>($L)", ArrayRandomizer.class, randomParameter());
     }
 
     public CodeBlock randomParameter() {

@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class InitializableContainer extends Type {
 
-    private List<Type> nestedFields;
+    protected List<Type> nestedFields;
 
     public InitializableContainer() {
     }

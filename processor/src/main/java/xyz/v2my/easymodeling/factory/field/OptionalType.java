@@ -23,16 +23,26 @@ public class OptionalType extends Container<Optional<?>> {
     }
 
     @Override
+    public CodeBlock initialValue() {
+        return CodeBlock.of("$L.next()$L", initializer(), typeMapper());
+    }
+
+    private CodeBlock typeMapper() {
+        final Type valueType = nestedFields.get(0);
+        if (valueType instanceof ArrayType) {
+            return CodeBlock.of(".map(o -> ($T) o)", valueType.type);
+        } else {
+            return CodeBlock.of("");
+        }
+    }
+
+    @Override
     protected CodeBlock initializerType() {
         return CodeBlock.of("$T", OptionalRandomizer.class);
     }
 
     @Override
     protected CodeBlock randomParameter() {
-        return CodeBlock.of("$L", allowEmpty());
-    }
-
-    private boolean allowEmpty() {
-        return field.allowEmpty();
+        return CodeBlock.of("$L", field.allowEmpty());
     }
 }
