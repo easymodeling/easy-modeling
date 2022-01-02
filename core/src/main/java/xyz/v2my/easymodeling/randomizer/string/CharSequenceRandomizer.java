@@ -9,7 +9,7 @@ public abstract class CharSequenceRandomizer<T extends CharSequence> extends Gen
     public static final int NUMERIC       = 0b0001;
     public static final int ALPHABETIC    = 0b0010;
     public static final int ALPHANUMERIC  = 0b0011;
-    public static final int RANDOM        = 0b0111;
+    public static final int ANY           = 0b0111;
     // @formatter:on
 
     protected CharSequenceRandomizer(long min, long max, int charset) {

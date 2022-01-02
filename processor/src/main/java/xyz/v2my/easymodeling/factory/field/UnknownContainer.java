@@ -21,7 +21,7 @@ public class UnknownContainer extends Container<Void> {
     }
 
     @Override
-    public Container<?> create(TypeName type, FieldWrapper field, List<Type> nestedFields) {
+    public Container<Void> create(TypeName type, FieldWrapper field, List<Type> nestedFields) {
         return new UnknownContainer(type, field, nestedFields);
     }
 

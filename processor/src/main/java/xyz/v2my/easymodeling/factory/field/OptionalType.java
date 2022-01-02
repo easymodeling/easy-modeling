@@ -19,7 +19,7 @@ public class OptionalType extends Container<Optional<?>> {
     }
 
     @Override
-    public Container<?> create(TypeName type, FieldWrapper field, List<Type> nestedFields) {
+    public Container<Optional<?>> create(TypeName type, FieldWrapper field, List<Type> nestedFields) {
         return new OptionalType(type, field, nestedFields);
     }
 

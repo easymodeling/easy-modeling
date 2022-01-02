@@ -10,7 +10,7 @@ import java.util.Optional;
 import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.ALPHABETIC;
 import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.ALPHANUMERIC;
 import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.NUMERIC;
-import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.RANDOM;
+import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.ANY;
 
 public abstract class CharSequenceType<FIELD extends CharSequence> extends PlainType<FIELD> {
 
@@ -55,15 +55,15 @@ public abstract class CharSequenceType<FIELD extends CharSequence> extends Plain
     }
 
     private int alphabetic() {
-        return field.alphabetic() ? ALPHABETIC : RANDOM;
+        return field.alphabetic() ? ALPHABETIC : ANY;
     }
 
     private int numeric() {
-        return field.numeric() ? NUMERIC : RANDOM;
+        return field.numeric() ? NUMERIC : ANY;
     }
 
     private int alphaNumeric() {
-        return field.alphanumeric() ? ALPHANUMERIC : RANDOM;
+        return field.alphanumeric() ? ALPHANUMERIC : ANY;
     }
 
     private Optional<String> string() {

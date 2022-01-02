@@ -53,7 +53,7 @@ public class ArrayType extends Container<Object> {
     }
 
     @Override
-    public Container<?> create(TypeName type, FieldWrapper field, List<Type> nestedFields) {
+    public Container<Object> create(TypeName type, FieldWrapper field, List<Type> nestedFields) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

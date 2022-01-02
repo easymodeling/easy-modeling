@@ -55,7 +55,7 @@ public class FactoryClass {
                 .filter(element -> !element.getModifiers().contains(Modifier.STATIC))
                 .map(element -> {
                     final String fieldName = element.getSimpleName().toString();
-                    final TypeName typeName = ClassName.get(element.asType());
+                    final TypeName typeName = TypeName.get(element.asType());
                     final FieldWrapper field = declaredFieldsMap.getOrDefault(fieldName, FieldWrapper.of(fieldName));
                     return modelFieldProvider.provide(typeName, field);
                 })

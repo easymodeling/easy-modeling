@@ -14,5 +14,5 @@ public abstract class Container<CONTAINER> extends InitializableContainer {
         super(type, field, valueFields);
     }
 
-    public abstract Container<?> create(TypeName type, FieldWrapper field, List<Type> nestedFields);
+    public abstract Container<CONTAINER> create(TypeName type, FieldWrapper field, List<Type> nestedFields);
 }

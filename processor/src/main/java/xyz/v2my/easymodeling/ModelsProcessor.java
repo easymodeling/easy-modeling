@@ -49,12 +49,12 @@ public class ModelsProcessor extends AbstractProcessor {
         }
         try {
             process(roundEnv);
+            return true;
         } catch (ProcessingException e) {
             // TODO: 19.12.21 move Diagnostic.Kind to exception
             log.error(e.getMessage());
             return false;
         }
-        return false;
     }
 
     private void process(RoundEnvironment roundEnv) throws ProcessingException {
