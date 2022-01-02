@@ -7,10 +7,10 @@ import java.util.List;
 
 public abstract class Container<CONTAINER> extends InitializableContainer {
 
-    public Container() {
+    protected Container() {
     }
 
-    public Container(TypeName type, FieldWrapper field, List<Type> valueFields) {
+    protected Container(TypeName type, FieldWrapper field, List<Type> valueFields) {
         super(type, field, valueFields);
     }
 

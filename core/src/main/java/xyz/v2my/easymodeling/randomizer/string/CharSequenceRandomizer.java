@@ -18,7 +18,7 @@ public abstract class CharSequenceRandomizer<T extends CharSequence> extends Gen
         this.charset = charset;
     }
 
-    public CharSequenceRandomizer(T constant) {
+    protected CharSequenceRandomizer(T constant) {
         super(constant);
     }
 

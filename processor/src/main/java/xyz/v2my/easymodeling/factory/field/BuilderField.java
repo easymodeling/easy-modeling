@@ -10,7 +10,7 @@ import javax.lang.model.element.Modifier;
 
 public abstract class BuilderField extends ConstructorContributingField implements BuilderMember {
 
-    public BuilderField() {
+    protected BuilderField() {
     }
 
     protected BuilderField(TypeName type, FieldWrapper field) {

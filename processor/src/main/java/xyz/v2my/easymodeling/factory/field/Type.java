@@ -6,10 +6,10 @@ import xyz.v2my.easymodeling.factory.FieldWrapper;
 
 public abstract class Type extends BuilderField implements InitializableType {
 
-    public Type() {
+    protected Type() {
     }
 
-    public Type(TypeName type, FieldWrapper field) {
+    protected Type(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 

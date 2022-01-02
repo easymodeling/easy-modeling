@@ -7,7 +7,7 @@ import xyz.v2my.easymodeling.randomizer.Randomizer;
 
 public abstract class InitializablePlainType<FIELD> extends Type {
 
-    public InitializablePlainType() {
+    protected InitializablePlainType() {
     }
 
     protected InitializablePlainType(TypeName type, FieldWrapper field) {

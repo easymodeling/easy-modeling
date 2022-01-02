@@ -5,7 +5,7 @@ import xyz.v2my.easymodeling.factory.FieldWrapper;
 
 public abstract class PlainType<FIELD> extends InitializablePlainType<FIELD> {
 
-    public PlainType() {
+    protected PlainType() {
     }
 
     protected PlainType(TypeName type, FieldWrapper field) {

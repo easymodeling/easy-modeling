@@ -13,7 +13,7 @@ public abstract class NumericType<FIELD extends Number> extends PlainType<FIELD>
         super(type, field);
     }
 
-    public NumericType() {
+    protected NumericType() {
     }
 
     @Override

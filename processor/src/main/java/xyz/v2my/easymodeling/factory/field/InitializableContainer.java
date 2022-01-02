@@ -10,10 +10,10 @@ public abstract class InitializableContainer extends Type {
 
     protected List<Type> nestedFields;
 
-    public InitializableContainer() {
+    protected InitializableContainer() {
     }
 
-    public InitializableContainer(TypeName type, FieldWrapper field, List<Type> nestedFields) {
+    protected InitializableContainer(TypeName type, FieldWrapper field, List<Type> nestedFields) {
         super(type, field);
         this.nestedFields = nestedFields;
     }

@@ -128,11 +128,13 @@ public class FieldWrapper {
     }
 
     public Optional<Integer> minLength() {
-        return isLengthSet() ? Optional.of(length) : isMinLengthSet() ? Optional.of(minLength) : Optional.empty();
+        final Optional<Integer> minLength = isMinLengthSet() ? Optional.of(this.minLength) : Optional.empty();
+        return isLengthSet() ? Optional.of(length) : minLength;
     }
 
     public Optional<Integer> maxLength() {
-        return isLengthSet() ? Optional.of(length) : isMaxLengthSet() ? Optional.of(maxLength) : Optional.empty();
+        final Optional<Integer> maxLength = isMaxLengthSet() ? Optional.of(this.maxLength) : Optional.empty();
+        return isLengthSet() ? Optional.of(length) : maxLength;
     }
 
     public Optional<Instant> datetime() {

@@ -9,10 +9,10 @@ public abstract class GenericRandomizer<T> implements Randomizer<T> {
 
     protected T constant;
 
-    public GenericRandomizer() {
+    protected GenericRandomizer() {
     }
 
-    public GenericRandomizer(T constant) {
+    protected GenericRandomizer(T constant) {
         this.constant = constant;
     }
 

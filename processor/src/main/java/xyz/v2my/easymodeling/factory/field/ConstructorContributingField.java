@@ -7,7 +7,7 @@ import xyz.v2my.easymodeling.factory.FieldWrapper;
 
 public abstract class ConstructorContributingField extends AbstractField implements ConstructorContributor {
 
-    public ConstructorContributingField() {
+    protected ConstructorContributingField() {
     }
 
     protected ConstructorContributingField(TypeName type, FieldWrapper field) {

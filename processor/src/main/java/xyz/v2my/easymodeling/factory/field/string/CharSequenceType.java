@@ -9,15 +9,15 @@ import java.util.Optional;
 
 import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.ALPHABETIC;
 import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.ALPHANUMERIC;
-import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.NUMERIC;
 import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.ANY;
+import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.NUMERIC;
 
 public abstract class CharSequenceType<FIELD extends CharSequence> extends PlainType<FIELD> {
 
-    public CharSequenceType() {
+    protected CharSequenceType() {
     }
 
-    public CharSequenceType(TypeName type, FieldWrapper field) {
+    protected CharSequenceType(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 

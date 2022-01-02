@@ -8,12 +8,12 @@ public abstract class NumberRandomizer<T> extends GenericRandomizer<T> {
 
     protected double max;
 
-    public NumberRandomizer(double min, double max) {
+    protected NumberRandomizer(double min, double max) {
         this.min = min;
         this.max = max;
     }
 
-    public NumberRandomizer(T constant) {
+    protected NumberRandomizer(T constant) {
         super(constant);
     }
 }

@@ -11,7 +11,7 @@ public abstract class AbstractField {
 
     protected FieldWrapper field;
 
-    public AbstractField() {
+    protected AbstractField() {
     }
 
     protected AbstractField(TypeName type, FieldWrapper field) {
