@@ -62,7 +62,7 @@ public class ModelFieldProvider {
 
     public Type provide(TypeName type, FieldWrapper field) {
         if (type instanceof ArrayTypeName) {
-            return arrayField(type, field);
+            return arrayField((ArrayTypeName) type, field);
         }
         if (type instanceof ParameterizedTypeName) {
             return containerField((ParameterizedTypeName) type, field);
@@ -70,28 +70,26 @@ public class ModelFieldProvider {
         return typedField(type, field);
     }
 
-    private Type containerField(ParameterizedTypeName parameterizedTypeName, FieldWrapper field) {
-        final List<Type> nestedFields = parameterizedTypeName.typeArguments.stream().map(t -> provide(t, field)).collect(Collectors.toList());
-        return CONTAINER_FIELDS.getOrDefault(parameterizedTypeName.rawType, new UnknownContainer()).create(parameterizedTypeName, field, nestedFields);
+    private ArrayType arrayField(ArrayTypeName type, FieldWrapper field) {
+        final Type elementField = typedFieldOfArray(type.componentType, field);
+        return new ArrayType(type, field, elementField);
     }
 
-    private ArrayType arrayField(TypeName type, FieldWrapper field) {
-        final Type elementField = typedFieldOfArray(((ArrayTypeName) type).componentType, field);
-        return new ArrayType(type, field, elementField);
+    private Type containerField(ParameterizedTypeName parameterizedTypeName, FieldWrapper field) {
+        final List<Type> nestedFields = parameterizedTypeName.typeArguments.stream().map(type -> provide(type, field)).collect(Collectors.toList());
+        return CONTAINER_FIELDS.getOrDefault(parameterizedTypeName.rawType, new UnknownContainer())
+                .create(parameterizedTypeName, field, nestedFields);
+    }
+
+    private PlainType<?> typedField(TypeName type, FieldWrapper field) {
+        PlainType<?> modelField = PLAIN_FIELDS.getOrDefault(type, new UnknownType());
+        return modelField.create(type, field);
     }
 
     private Type typedFieldOfArray(TypeName type, FieldWrapper field) {
         if (type instanceof ArrayTypeName) {
             return typedFieldOfArray(((ArrayTypeName) type).componentType, field);
         }
-        if (type instanceof ParameterizedTypeName) {
-            return containerField((ParameterizedTypeName) type, field);
-        }
-        return typedField(type, field);
-    }
-
-    private PlainType<?> typedField(TypeName type, FieldWrapper field) {
-        PlainType<?> modelField = PLAIN_FIELDS.getOrDefault(type, new UnknownType());
-        return modelField.create(type, field);
+        return provide(type, field);
     }
 }
