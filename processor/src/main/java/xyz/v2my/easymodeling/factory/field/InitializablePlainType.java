@@ -5,7 +5,7 @@ import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 
-public abstract class InitializablePlainType<FIELD> extends Type {
+public abstract class InitializablePlainType<T> extends Type {
 
     protected InitializablePlainType() {
     }
@@ -19,7 +19,7 @@ public abstract class InitializablePlainType<FIELD> extends Type {
         return CodeBlock.of("new $T($L)", initializerType(), initializerParameter());
     }
 
-    protected abstract Class<? extends Randomizer<FIELD>> initializerType();
+    protected abstract Class<? extends Randomizer<T>> initializerType();
 
     protected abstract CodeBlock initializerParameter();
 

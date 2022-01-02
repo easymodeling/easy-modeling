@@ -5,7 +5,7 @@ import xyz.v2my.easymodeling.factory.FieldWrapper;
 
 import java.util.List;
 
-public abstract class Container<CONTAINER> extends InitializableContainer {
+public abstract class Container<T> extends InitializableContainer {
 
     protected Container() {
     }
@@ -14,5 +14,5 @@ public abstract class Container<CONTAINER> extends InitializableContainer {
         super(type, field, valueFields);
     }
 
-    public abstract Container<CONTAINER> create(TypeName type, FieldWrapper field, List<Type> nestedFields);
+    public abstract Container<T> create(TypeName type, FieldWrapper field, List<Type> nestedFields);
 }

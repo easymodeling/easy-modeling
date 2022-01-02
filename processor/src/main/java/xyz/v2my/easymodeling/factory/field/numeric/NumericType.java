@@ -7,7 +7,7 @@ import xyz.v2my.easymodeling.factory.field.PlainType;
 
 import java.util.Optional;
 
-public abstract class NumericType<FIELD extends Number> extends PlainType<FIELD> {
+public abstract class NumericType<T extends Number> extends PlainType<T> {
 
     protected NumericType(TypeName type, FieldWrapper field) {
         super(type, field);

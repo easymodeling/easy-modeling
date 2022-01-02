@@ -3,7 +3,7 @@ package xyz.v2my.easymodeling.factory.field;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 
-public abstract class PlainType<FIELD> extends InitializablePlainType<FIELD> {
+public abstract class PlainType<T> extends InitializablePlainType<T> {
 
     protected PlainType() {
     }
@@ -12,6 +12,6 @@ public abstract class PlainType<FIELD> extends InitializablePlainType<FIELD> {
         super(type, field);
     }
 
-    public abstract PlainType<FIELD> create(TypeName type, FieldWrapper field);
+    public abstract PlainType<T> create(TypeName type, FieldWrapper field);
 
 }

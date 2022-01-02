@@ -12,7 +12,7 @@ import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.ALP
 import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.ANY;
 import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.NUMERIC;
 
-public abstract class CharSequenceType<FIELD extends CharSequence> extends PlainType<FIELD> {
+public abstract class CharSequenceType<T extends CharSequence> extends PlainType<T> {
 
     protected CharSequenceType() {
     }

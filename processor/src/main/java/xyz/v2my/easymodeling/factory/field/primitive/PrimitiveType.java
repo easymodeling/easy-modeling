@@ -5,7 +5,7 @@ import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.factory.field.PlainType;
 
-public abstract class PrimitiveType<E> extends PlainType<E> {
+public abstract class PrimitiveType<T> extends PlainType<T> {
 
     protected PrimitiveType(TypeName type, FieldWrapper field) {
         super(type, field);
