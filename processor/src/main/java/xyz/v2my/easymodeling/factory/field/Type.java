@@ -17,4 +17,8 @@ public abstract class Type extends BuilderField implements InitializableType {
     public CodeBlock initialValue() {
         return CodeBlock.of("$L.next()", initializer());
     }
+
+    protected TypeName typeName() {
+        return type;
+    }
 }

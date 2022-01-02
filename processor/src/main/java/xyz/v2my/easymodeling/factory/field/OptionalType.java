@@ -1,6 +1,7 @@
 package xyz.v2my.easymodeling.factory.field;
 
 import com.squareup.javapoet.CodeBlock;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.OptionalRandomizer;
@@ -44,5 +45,10 @@ public class OptionalType extends Container<Optional<?>> {
     @Override
     protected CodeBlock randomParameter() {
         return CodeBlock.of("$L", field.allowEmpty());
+    }
+
+    @Override
+    protected TypeName typeName() {
+        return ((ParameterizedTypeName) type).rawType;
     }
 }

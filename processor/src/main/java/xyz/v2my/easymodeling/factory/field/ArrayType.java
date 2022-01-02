@@ -2,7 +2,6 @@ package xyz.v2my.easymodeling.factory.field;
 
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.CodeBlock;
-import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.ArrayRandomizer;
@@ -36,13 +35,8 @@ public class ArrayType extends Container<Object> {
 
     @Override
     protected CodeBlock randomParameter() {
-        final TypeName type;
-        if (elementField.type instanceof ParameterizedTypeName) {
-            type = ((ParameterizedTypeName) elementField.type).rawType;
-        } else {
-            type = elementField.type;
-        }
-        return CodeBlock.of("$L, $T.class, $L, $L, $L", elementField.initializer(), type, dimension(), minLength(), maxLength());
+        final Type elementField = this.elementField;
+        return CodeBlock.of("$L, $T.class, $L, $L, $L", this.elementField.initializer(), elementField.typeName(), dimension(), minLength(), maxLength());
     }
 
     private int maxLength() {
