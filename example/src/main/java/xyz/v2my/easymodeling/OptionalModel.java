@@ -19,4 +19,12 @@ public class OptionalModel {
     public Optional<Instant[]> optionalOfInstantArray;
 
     public Optional<Instant[][]> optionalOfInstantMatrix;
+
+    public Optional<Instant>[] arrayOfOptionalInstant;
+
+    public Optional<Instant>[][] matrixOfOptionalInstant;
+
+    public Optional<Instant[]>[] arrayOfOptionalArrayOfInstant;
+
+    public Optional<Instant[][]>[] arrayOfOptionalMatrixOfInstant;
 }

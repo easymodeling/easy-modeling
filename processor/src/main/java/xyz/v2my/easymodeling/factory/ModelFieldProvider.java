@@ -76,16 +76,18 @@ public class ModelFieldProvider {
     }
 
     private ArrayType arrayField(TypeName type, FieldWrapper field) {
-        final PlainType<?> elementField = typedFieldOfArray(((ArrayTypeName) type).componentType, field);
+        final Type elementField = typedFieldOfArray(((ArrayTypeName) type).componentType, field);
         return new ArrayType(type, field, elementField);
     }
 
-    private PlainType<?> typedFieldOfArray(TypeName type, FieldWrapper field) {
+    private Type typedFieldOfArray(TypeName type, FieldWrapper field) {
         if (type instanceof ArrayTypeName) {
             return typedFieldOfArray(((ArrayTypeName) type).componentType, field);
-        } else {
-            return typedField(type, field);
         }
+        if (type instanceof ParameterizedTypeName) {
+            return containerField((ParameterizedTypeName) type, field);
+        }
+        return typedField(type, field);
     }
 
     private PlainType<?> typedField(TypeName type, FieldWrapper field) {
