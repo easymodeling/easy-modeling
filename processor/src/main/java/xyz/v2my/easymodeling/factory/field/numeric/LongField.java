@@ -3,17 +3,17 @@ package xyz.v2my.easymodeling.factory.field.numeric;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
-import xyz.v2my.easymodeling.factory.field.PlainType;
+import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
-import xyz.v2my.easymodeling.randomizer.number.DoubleRandomizer;
+import xyz.v2my.easymodeling.randomizer.number.LongRandomizer;
 
-public class DoubleType extends NumericType<Double> {
+public class LongField extends NumericField<Long> {
 
-    private DoubleType(TypeName type, FieldWrapper field) {
+    private LongField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 
-    public DoubleType() {
+    public LongField() {
     }
 
     @Override
@@ -28,16 +28,16 @@ public class DoubleType extends NumericType<Double> {
 
     @Override
     protected CodeBlock constantInit(Double c) {
-        return CodeBlock.of("$L", c);
+        return CodeBlock.of("$LL", c.longValue());
     }
 
     @Override
-    protected Class<? extends Randomizer<Double>> initializerType() {
-        return DoubleRandomizer.class;
+    protected Class<? extends Randomizer<Long>> initializerType() {
+        return LongRandomizer.class;
     }
 
     @Override
-    public PlainType<Double> create(TypeName type, FieldWrapper field) {
-        return new DoubleType(type, field);
+    public PlainField<Long> create(TypeName type, FieldWrapper field) {
+        return new LongField(type, field);
     }
 }

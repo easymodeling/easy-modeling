@@ -5,18 +5,18 @@ import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 
-public class UnknownType extends PlainType<Void> {
+public class UnknownField extends PlainField<Void> {
 
-    public UnknownType() {
+    public UnknownField() {
     }
 
-    private UnknownType(TypeName type, FieldWrapper field) {
+    private UnknownField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 
     @Override
-    public PlainType<Void> create(TypeName type, FieldWrapper field) {
-        return new UnknownType(type, field);
+    public PlainField<Void> create(TypeName type, FieldWrapper field) {
+        return new UnknownField(type, field);
     }
 
     @Override

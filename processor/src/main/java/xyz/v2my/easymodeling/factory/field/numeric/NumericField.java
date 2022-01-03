@@ -3,17 +3,17 @@ package xyz.v2my.easymodeling.factory.field.numeric;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
-import xyz.v2my.easymodeling.factory.field.PlainType;
+import xyz.v2my.easymodeling.factory.field.PlainField;
 
 import java.util.Optional;
 
-public abstract class NumericType<T extends Number> extends PlainType<T> {
+public abstract class NumericField<T extends Number> extends PlainField<T> {
 
-    protected NumericType(TypeName type, FieldWrapper field) {
+    protected NumericField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 
-    protected NumericType() {
+    protected NumericField() {
     }
 
     @Override

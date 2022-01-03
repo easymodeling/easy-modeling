@@ -9,11 +9,11 @@ import xyz.v2my.easymodeling.randomizer.ArrayRandomizer;
 import java.util.Collections;
 import java.util.List;
 
-public class ArrayType extends Container<Object> {
+public class ArrayField extends Container<Object> {
 
-    private final Type elementField;
+    private final ModelField elementField;
 
-    public ArrayType(TypeName type, FieldWrapper field, Type elementField) {
+    public ArrayField(TypeName type, FieldWrapper field, ModelField elementField) {
         super(type, field, Collections.singletonList(elementField));
         this.elementField = elementField;
     }
@@ -58,7 +58,7 @@ public class ArrayType extends Container<Object> {
     }
 
     @Override
-    public Container<Object> create(TypeName type, FieldWrapper field, List<Type> nestedFields) {
+    public Container<Object> create(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

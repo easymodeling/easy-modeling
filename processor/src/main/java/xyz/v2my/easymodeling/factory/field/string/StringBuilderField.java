@@ -2,22 +2,22 @@ package xyz.v2my.easymodeling.factory.field.string;
 
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
-import xyz.v2my.easymodeling.factory.field.PlainType;
+import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.string.StringBuilderRandomizer;
 
-public class StringBuilderType extends CharSequenceType<StringBuilder> {
+public class StringBuilderField extends CharSequenceField<StringBuilder> {
 
-    public StringBuilderType() {
+    public StringBuilderField() {
     }
 
-    private StringBuilderType(TypeName type, FieldWrapper field) {
+    private StringBuilderField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 
     @Override
-    public PlainType<StringBuilder> create(TypeName type, FieldWrapper field) {
-        return new StringBuilderType(type, field);
+    public PlainField<StringBuilder> create(TypeName type, FieldWrapper field) {
+        return new StringBuilderField(type, field);
     }
 
     @Override

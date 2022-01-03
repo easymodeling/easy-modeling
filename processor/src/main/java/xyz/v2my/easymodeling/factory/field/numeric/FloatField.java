@@ -3,17 +3,17 @@ package xyz.v2my.easymodeling.factory.field.numeric;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
-import xyz.v2my.easymodeling.factory.field.PlainType;
+import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.number.FloatRandomizer;
 
-public class FloatType extends NumericType<Float> {
+public class FloatField extends NumericField<Float> {
 
-    private FloatType(TypeName type, FieldWrapper field) {
+    private FloatField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 
-    public FloatType() {
+    public FloatField() {
     }
 
     @Override
@@ -37,7 +37,7 @@ public class FloatType extends NumericType<Float> {
     }
 
     @Override
-    public PlainType<Float> create(TypeName type, FieldWrapper field) {
-        return new FloatType(type, field);
+    public PlainField<Float> create(TypeName type, FieldWrapper field) {
+        return new FloatField(type, field);
     }
 }

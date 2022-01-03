@@ -3,15 +3,15 @@ package xyz.v2my.easymodeling.factory.field.primitive;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
-import xyz.v2my.easymodeling.factory.field.PlainType;
+import xyz.v2my.easymodeling.factory.field.PlainField;
 
-public abstract class PrimitiveType<T> extends PlainType<T> {
+public abstract class PrimitiveField<T> extends PlainField<T> {
 
-    protected PrimitiveType(TypeName type, FieldWrapper field) {
+    protected PrimitiveField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 
-    public PrimitiveType() {
+    public PrimitiveField() {
     }
 
     @Override

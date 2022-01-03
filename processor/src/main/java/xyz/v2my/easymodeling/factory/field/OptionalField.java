@@ -9,18 +9,18 @@ import xyz.v2my.easymodeling.randomizer.OptionalRandomizer;
 import java.util.List;
 import java.util.Optional;
 
-public class OptionalType extends Container<Optional<?>> {
+public class OptionalField extends Container<Optional<?>> {
 
-    public OptionalType() {
+    public OptionalField() {
     }
 
-    public OptionalType(TypeName type, FieldWrapper field, List<Type> valueFields) {
+    public OptionalField(TypeName type, FieldWrapper field, List<ModelField> valueFields) {
         super(type, field, valueFields);
     }
 
     @Override
-    public Container<Optional<?>> create(TypeName type, FieldWrapper field, List<Type> nestedFields) {
-        return new OptionalType(type, field, nestedFields);
+    public Container<Optional<?>> create(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
+        return new OptionalField(type, field, nestedFields);
     }
 
     @Override
@@ -29,12 +29,12 @@ public class OptionalType extends Container<Optional<?>> {
     }
 
     private CodeBlock typeMapper() {
-        final Type valueType = nestedFields.get(0);
-        if (valueType instanceof OptionalType) {
-            return CodeBlock.of(".map(_$L -> _$L$L)", valueType.identifier, valueType.identifier, ((OptionalType) valueType).typeMapper());
+        final ModelField valueField = nestedFields.get(0);
+        if (valueField instanceof OptionalField) {
+            return CodeBlock.of(".map(_$L -> _$L$L)", valueField.identifier, valueField.identifier, ((OptionalField) valueField).typeMapper());
         }
-        if (valueType instanceof ArrayType) {
-            return CodeBlock.of(".map(_$L -> ($T) _$L)", valueType.identifier, valueType.type, valueType.identifier);
+        if (valueField instanceof ArrayField) {
+            return CodeBlock.of(".map(_$L -> ($T) _$L)", valueField.identifier, valueField.type, valueField.identifier);
         } else {
             return CodeBlock.of("");
         }

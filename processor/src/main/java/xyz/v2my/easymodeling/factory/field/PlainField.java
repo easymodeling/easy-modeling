@@ -5,14 +5,16 @@ import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 
-public abstract class InitializablePlainType<T> extends Type {
+public abstract class PlainField<T> extends ModelField {
 
-    protected InitializablePlainType() {
+    protected PlainField() {
     }
 
-    protected InitializablePlainType(TypeName type, FieldWrapper field) {
+    protected PlainField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
+
+    public abstract PlainField<T> create(TypeName type, FieldWrapper field);
 
     @Override
     public CodeBlock initializer() {

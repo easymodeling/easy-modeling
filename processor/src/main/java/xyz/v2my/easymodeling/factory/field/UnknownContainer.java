@@ -11,7 +11,7 @@ public class UnknownContainer extends Container<Void> {
     public UnknownContainer() {
     }
 
-    public UnknownContainer(TypeName type, FieldWrapper field, List<Type> valueFields) {
+    public UnknownContainer(TypeName type, FieldWrapper field, List<ModelField> valueFields) {
         super(type, field, valueFields);
     }
 
@@ -21,7 +21,7 @@ public class UnknownContainer extends Container<Void> {
     }
 
     @Override
-    public Container<Void> create(TypeName type, FieldWrapper field, List<Type> nestedFields) {
+    public Container<Void> create(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
         return new UnknownContainer(type, field, nestedFields);
     }
 

@@ -2,17 +2,17 @@ package xyz.v2my.easymodeling.factory.field.primitive;
 
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
-import xyz.v2my.easymodeling.factory.field.PlainType;
+import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.primitive.BooleanRandomizer;
 
-public class BooleanType extends PrimitiveType<Boolean> {
+public class BooleanField extends PrimitiveField<Boolean> {
 
-    private BooleanType(TypeName type, FieldWrapper field) {
+    private BooleanField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 
-    public BooleanType() {
+    public BooleanField() {
     }
 
     @Override
@@ -21,7 +21,7 @@ public class BooleanType extends PrimitiveType<Boolean> {
     }
 
     @Override
-    public PlainType<Boolean> create(TypeName type, FieldWrapper field) {
-        return new BooleanType(type, field);
+    public PlainField<Boolean> create(TypeName type, FieldWrapper field) {
+        return new BooleanField(type, field);
     }
 }

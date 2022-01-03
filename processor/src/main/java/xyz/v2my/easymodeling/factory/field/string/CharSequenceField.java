@@ -3,7 +3,7 @@ package xyz.v2my.easymodeling.factory.field.string;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
-import xyz.v2my.easymodeling.factory.field.PlainType;
+import xyz.v2my.easymodeling.factory.field.PlainField;
 
 import java.util.Optional;
 
@@ -12,12 +12,12 @@ import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.ALP
 import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.ANY;
 import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.NUMERIC;
 
-public abstract class CharSequenceType<T extends CharSequence> extends PlainType<T> {
+public abstract class CharSequenceField<T extends CharSequence> extends PlainField<T> {
 
-    protected CharSequenceType() {
+    protected CharSequenceField() {
     }
 
-    protected CharSequenceType(TypeName type, FieldWrapper field) {
+    protected CharSequenceField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 
