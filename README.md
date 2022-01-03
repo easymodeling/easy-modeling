@@ -2,7 +2,7 @@
 
 [![TEST][test-badge]][test-link]
 
-EasyModeling is a Java library which generate randomly populated models for test using.
+EasyModeling is a Java library that generates randomly populated models for test use.
 
 [test-badge]: https://github.com/zhezhangz/easy-modeling/actions/workflows/test.yml/badge.svg?branch=master
 
