@@ -18,13 +18,8 @@ public abstract class BuilderField extends ConstructorContributingField implemen
     }
 
     @Override
-    public String name() {
-        return name;
-    }
-
-    @Override
     public FieldSpec field() {
-        return FieldSpec.builder(type, name, Modifier.PRIVATE).build();
+        return FieldSpec.builder(type, identity(), Modifier.PRIVATE).build();
     }
 
     @Override
@@ -32,8 +27,8 @@ public abstract class BuilderField extends ConstructorContributingField implemen
         return MethodSpec.methodBuilder(name)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(ClassName.get("", builderTypeName))
-                .addParameter(type, name)
-                .addStatement("this.$N = $N", name, name)
+                .addParameter(type, identity())
+                .addStatement("this.$N = $N", identity(), identity())
                 .addStatement("return this")
                 .build();
     }

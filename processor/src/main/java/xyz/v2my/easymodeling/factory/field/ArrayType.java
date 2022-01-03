@@ -19,6 +19,11 @@ public class ArrayType extends Container<Object> {
     }
 
     @Override
+    public CodeBlock initializer() {
+        return CodeBlock.of("new $L($L, $L)", initializerType(), elementRandomizer(), randomParameter());
+    }
+
+    @Override
     public CodeBlock initialValue() {
         return CodeBlock.of("($L) new $L($L, $L).next()", type, initializerType(), elementRandomizer(), randomParameter());
     }

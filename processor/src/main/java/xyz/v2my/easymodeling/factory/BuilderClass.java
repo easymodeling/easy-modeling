@@ -52,7 +52,7 @@ public class BuilderClass {
 
     private MethodSpec buildMethod() {
         final String constructionParameters = types.stream()
-                .map(Type::name)
+                .map(Type::identity)
                 .collect(Collectors.joining(", "));
         return MethodSpec.methodBuilder("build")
                 .addModifiers(Modifier.PUBLIC)

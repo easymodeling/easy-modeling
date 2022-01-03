@@ -5,11 +5,11 @@ import java.util.Arrays;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
-public class ArrayRandomizer<E> extends GenericRandomizer<Object> {
+public class ArrayRandomizer extends GenericRandomizer<Object> {
 
-    private final Randomizer<E> elementRandomizer;
+    private final Randomizer<?> elementRandomizer;
 
-    private final Class<E> elementClass;
+    private final Class<?> elementClass;
 
     private final int dimension;
 
@@ -17,7 +17,7 @@ public class ArrayRandomizer<E> extends GenericRandomizer<Object> {
 
     private final int max;
 
-    public ArrayRandomizer(Randomizer<E> elementRandomizer, Class<E> elementClass, int dimension, int min, int max) {
+    public ArrayRandomizer(Randomizer<?> elementRandomizer, Class<?> elementClass, int dimension, int min, int max) {
         this.elementRandomizer = elementRandomizer;
         this.elementClass = elementClass;
         this.dimension = dimension;

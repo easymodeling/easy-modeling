@@ -16,12 +16,11 @@ public abstract class ConstructorContributingField extends AbstractField impleme
 
     @Override
     public ParameterSpec parameter() {
-        return ParameterSpec.builder(type, name).build();
+        return ParameterSpec.builder(type, identity()).build();
     }
 
     @Override
     public CodeBlock statement() {
-        return CodeBlock.of("this.$N = $N", name, name);
+        return CodeBlock.of("this.$N = $N", identity(), identity());
     }
-
 }

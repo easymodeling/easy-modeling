@@ -30,8 +30,11 @@ public class OptionalType extends Container<Optional<?>> {
 
     private CodeBlock typeMapper() {
         final Type valueType = nestedFields.get(0);
+        if (valueType instanceof OptionalType) {
+            return CodeBlock.of(".map(_$L -> _$L$L)", valueType.identifier, valueType.identifier, ((OptionalType) valueType).typeMapper());
+        }
         if (valueType instanceof ArrayType) {
-            return CodeBlock.of(".map(o -> ($T) o)", valueType.type);
+            return CodeBlock.of(".map(_$L -> ($T) _$L)", valueType.identifier, valueType.type, valueType.identifier);
         } else {
             return CodeBlock.of("");
         }

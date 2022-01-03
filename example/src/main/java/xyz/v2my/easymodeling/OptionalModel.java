@@ -8,6 +8,16 @@ import java.util.Optional;
 @AllArgsConstructor
 public class OptionalModel {
 
+    public Optional<Optional<Instant[]>[]> optionalOfArrayOfOptionalInstantArray;
+
+    public Optional<Optional<Instant[]>[]>[] arrayOfOptionalOfArrayOfOptionalInstantArray;
+
+    public Optional<Optional<Instant>[]> optionalOfArrayOfOptionalInstant;
+
+    public Optional<Optional<Instant[]>> optionalOfOptionalInstantArray;
+
+    public Optional<Optional<Optional<Instant[]>>> optionalOfOptionalOfOptionalInstantArray;
+
     public Optional<Integer> optionalInteger;
 
     public Optional<Instant> optionalInstant;
