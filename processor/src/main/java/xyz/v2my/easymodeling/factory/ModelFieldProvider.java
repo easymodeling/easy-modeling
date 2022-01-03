@@ -6,11 +6,12 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.field.ArrayField;
 import xyz.v2my.easymodeling.factory.field.Container;
+import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.factory.field.OptionalField;
 import xyz.v2my.easymodeling.factory.field.PlainField;
-import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.factory.field.UnknownContainer;
 import xyz.v2my.easymodeling.factory.field.UnknownField;
+import xyz.v2my.easymodeling.factory.field.collection.ListField;
 import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
 import xyz.v2my.easymodeling.factory.field.numeric.ByteField;
 import xyz.v2my.easymodeling.factory.field.numeric.DoubleField;
@@ -34,7 +35,7 @@ public class ModelFieldProvider {
 
     private static final Map<TypeName, PlainField<?>> PLAIN_FIELDS = new HashMap<>();
 
-    private static final Map<TypeName, Container<?>> CONTAINER_FIELDS = new HashMap<>();
+    private static final Map<TypeName, Container> CONTAINER_FIELDS = new HashMap<>();
 
     static {
         PLAIN_FIELDS.put(TypeName.BYTE, new ByteField());
@@ -58,6 +59,7 @@ public class ModelFieldProvider {
         PLAIN_FIELDS.put(ClassName.get(Instant.class), new InstantField());
 
         CONTAINER_FIELDS.put(ClassName.get(Optional.class), new OptionalField());
+        CONTAINER_FIELDS.put(ClassName.get(List.class), new ListField());
     }
 
     public ModelField provide(TypeName type, FieldWrapper field) {

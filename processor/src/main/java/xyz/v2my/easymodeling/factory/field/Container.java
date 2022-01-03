@@ -6,7 +6,7 @@ import xyz.v2my.easymodeling.factory.FieldWrapper;
 
 import java.util.List;
 
-public abstract class Container<T> extends ModelField {
+public abstract class Container extends ModelField {
 
     protected List<ModelField> nestedFields;
 
@@ -18,7 +18,7 @@ public abstract class Container<T> extends ModelField {
         this.nestedFields = nestedFields;
     }
 
-    public abstract Container<T> create(TypeName type, FieldWrapper field, List<ModelField> nestedFields);
+    public abstract Container create(TypeName type, FieldWrapper field, List<ModelField> nestedFields);
 
     @Override
     public CodeBlock initializer() {

@@ -2,6 +2,7 @@ package xyz.v2my.easymodeling.factory.field;
 
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.CodeBlock;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.ArrayRandomizer;
@@ -9,11 +10,11 @@ import xyz.v2my.easymodeling.randomizer.ArrayRandomizer;
 import java.util.Collections;
 import java.util.List;
 
-public class ArrayField extends Container<Object> {
+public class ArrayField extends Container {
 
     private final ModelField elementField;
 
-    public ArrayField(TypeName type, FieldWrapper field, ModelField elementField) {
+    public ArrayField(ArrayTypeName type, FieldWrapper field, ModelField elementField) {
         super(type, field, Collections.singletonList(elementField));
         this.elementField = elementField;
     }
@@ -35,7 +36,7 @@ public class ArrayField extends Container<Object> {
 
     @Override
     protected CodeBlock randomParameter() {
-        return CodeBlock.of("$T.class, $L, $L, $L", elementField.typeName(), dimension(), minLength(), maxLength());
+        return CodeBlock.of("$L, $L, $L, $L", rawNameOfType(elementField.type), dimension(), minLength(), maxLength());
     }
 
     private int maxLength() {
@@ -58,7 +59,14 @@ public class ArrayField extends Container<Object> {
     }
 
     @Override
-    public Container<Object> create(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
+    public Container create(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    private CodeBlock rawNameOfType(TypeName typeName) {
+        if (typeName instanceof ParameterizedTypeName) {
+            return rawNameOfType(((ParameterizedTypeName) typeName).rawType);
+        }
+        return CodeBlock.of("$T.class", typeName);
     }
 }

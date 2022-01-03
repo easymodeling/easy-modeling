@@ -21,6 +21,11 @@ public abstract class PlainField<T> extends ModelField {
         return CodeBlock.of("new $T($L)", initializerType(), initializerParameter());
     }
 
+    @Override
+    public CodeBlock initialValue() {
+        return CodeBlock.of("$L.next()", initializer());
+    }
+
     protected abstract Class<? extends Randomizer<T>> initializerType();
 
     protected abstract CodeBlock initializerParameter();

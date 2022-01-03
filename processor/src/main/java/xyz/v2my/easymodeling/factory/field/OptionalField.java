@@ -1,25 +1,23 @@
 package xyz.v2my.easymodeling.factory.field;
 
 import com.squareup.javapoet.CodeBlock;
-import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.OptionalRandomizer;
 
 import java.util.List;
-import java.util.Optional;
 
-public class OptionalField extends Container<Optional<?>> {
+public class OptionalField extends Container {
 
     public OptionalField() {
     }
 
-    public OptionalField(TypeName type, FieldWrapper field, List<ModelField> valueFields) {
+    private OptionalField(TypeName type, FieldWrapper field, List<ModelField> valueFields) {
         super(type, field, valueFields);
     }
 
     @Override
-    public Container<Optional<?>> create(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
+    public OptionalField create(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
         return new OptionalField(type, field, nestedFields);
     }
 
@@ -48,10 +46,5 @@ public class OptionalField extends Container<Optional<?>> {
     @Override
     protected CodeBlock randomParameter() {
         return CodeBlock.of("$L", field.allowEmpty());
-    }
-
-    @Override
-    protected TypeName typeName() {
-        return ((ParameterizedTypeName) type).rawType;
     }
 }
