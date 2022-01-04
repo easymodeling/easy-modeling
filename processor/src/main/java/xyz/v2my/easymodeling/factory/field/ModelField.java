@@ -63,4 +63,8 @@ public abstract class ModelField implements InitializableType, BuilderMember, Co
     public String identity() {
         return String.format("%s_%s", name, identifier);
     }
+
+    public TypeName type() {
+        return type;
+    }
 }

@@ -4,13 +4,14 @@ import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
-import xyz.v2my.easymodeling.factory.field.ArrayField;
 import xyz.v2my.easymodeling.factory.field.Container;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.factory.field.OptionalField;
 import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.factory.field.UnknownContainer;
 import xyz.v2my.easymodeling.factory.field.UnknownField;
+import xyz.v2my.easymodeling.factory.field.array.ArrayField;
+import xyz.v2my.easymodeling.factory.field.array.PrimitiveArrayField;
 import xyz.v2my.easymodeling.factory.field.collection.ListField;
 import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
 import xyz.v2my.easymodeling.factory.field.numeric.ByteField;
@@ -69,29 +70,33 @@ public class ModelFieldProvider {
         if (type instanceof ParameterizedTypeName) {
             return containerField((ParameterizedTypeName) type, field);
         }
-        return typedField(type, field);
+        return plainField(type, field);
     }
 
-    private ArrayField arrayField(ArrayTypeName type, FieldWrapper field) {
-        final ModelField elementField = typedFieldOfArray(type.componentType, field);
-        return new ArrayField(type, field, elementField);
+    private Container arrayField(ArrayTypeName type, FieldWrapper field) {
+        final TypeName rawType = rawType(type);
+        if (rawType.isPrimitive()) {
+            return new PrimitiveArrayField(type, field, plainField(rawType, field));
+        }
+        return new ArrayField(type, field, provide(type.componentType, field));
     }
 
-    private ModelField containerField(ParameterizedTypeName parameterizedTypeName, FieldWrapper field) {
+    private Container containerField(ParameterizedTypeName parameterizedTypeName, FieldWrapper field) {
         final List<ModelField> nestedFields = parameterizedTypeName.typeArguments.stream().map(type -> provide(type, field)).collect(Collectors.toList());
         return CONTAINER_FIELDS.getOrDefault(parameterizedTypeName.rawType, new UnknownContainer())
                 .create(parameterizedTypeName, field, nestedFields);
     }
 
-    private PlainField<?> typedField(TypeName type, FieldWrapper field) {
+    private PlainField<?> plainField(TypeName type, FieldWrapper field) {
         PlainField<?> modelField = PLAIN_FIELDS.getOrDefault(type, new UnknownField());
         return modelField.create(type, field);
     }
 
-    private ModelField typedFieldOfArray(TypeName type, FieldWrapper field) {
+    private TypeName rawType(TypeName type) {
         if (type instanceof ArrayTypeName) {
-            return typedFieldOfArray(((ArrayTypeName) type).componentType, field);
+            return rawType(((ArrayTypeName) type).componentType);
+        } else {
+            return type;
         }
-        return provide(type, field);
     }
 }

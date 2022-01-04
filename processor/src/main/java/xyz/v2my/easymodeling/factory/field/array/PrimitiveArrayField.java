@@ -1,22 +1,20 @@
-package xyz.v2my.easymodeling.factory.field;
+package xyz.v2my.easymodeling.factory.field.array;
 
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.CodeBlock;
-import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
-import xyz.v2my.easymodeling.randomizer.ArrayRandomizer;
+import xyz.v2my.easymodeling.factory.field.Container;
+import xyz.v2my.easymodeling.factory.field.ModelField;
+import xyz.v2my.easymodeling.randomizer.array.PrimitiveArrayRandomizer;
 
 import java.util.Collections;
 import java.util.List;
 
-public class ArrayField extends Container {
+public class PrimitiveArrayField extends Container {
 
-    private final ModelField elementField;
-
-    public ArrayField(ArrayTypeName type, FieldWrapper field, ModelField elementField) {
+    public PrimitiveArrayField(ArrayTypeName type, FieldWrapper field, ModelField elementField) {
         super(type, field, Collections.singletonList(elementField));
-        this.elementField = elementField;
     }
 
     @Override
@@ -31,12 +29,12 @@ public class ArrayField extends Container {
 
     @Override
     protected CodeBlock initializerType() {
-        return CodeBlock.of("$T", ArrayRandomizer.class);
+        return CodeBlock.of("$T", PrimitiveArrayRandomizer.class);
     }
 
     @Override
     protected CodeBlock randomParameter() {
-        return CodeBlock.of("$L, $L, $L, $L", rawNameOfType(elementField.type), dimension(), minLength(), maxLength());
+        return CodeBlock.of("$L, $L, $L", dimension(), minLength(), maxLength());
     }
 
     private int maxLength() {
@@ -61,12 +59,5 @@ public class ArrayField extends Container {
     @Override
     public Container create(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
         throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    private CodeBlock rawNameOfType(TypeName typeName) {
-        if (typeName instanceof ParameterizedTypeName) {
-            return rawNameOfType(((ParameterizedTypeName) typeName).rawType);
-        }
-        return CodeBlock.of("$T.class", typeName);
     }
 }
