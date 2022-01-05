@@ -45,7 +45,7 @@ class ArrayFieldTest {
 
             final CodeBlock initialValue = arrayField.initialValue();
 
-            final String arrayRandomizer = "new " + $(ArrayRandomizer.class) + "<>(new " + $(IntegerRandomizer.class) + "(1.0, 3.0), " + $(Integer.class) + ".class, 2, 5)";
+            final String arrayRandomizer = "new " + $(ArrayRandomizer.class) + "<>(new " + $(IntegerRandomizer.class) + "(1.0, 3.0), 2, 5)";
             assertThat(initialValue.toString()).isEqualTo(arrayRandomizer + ".next()");
         }
 
@@ -57,8 +57,8 @@ class ArrayFieldTest {
 
             final CodeBlock initialValue = matrixField.initialValue();
 
-            final String arrayRandomizer = "new " + $(ArrayRandomizer.class) + "<>(new " + $(IntegerRandomizer.class) + "(1.0, 3.0), " + $(Integer.class) + ".class, 2, 5)";
-            final String matrixRandomizer = "new " + $(ArrayRandomizer.class) + "<>(" + arrayRandomizer + ", " + $(Integer.class) + "[].class, 2, 5)";
+            final String arrayRandomizer = "new " + $(ArrayRandomizer.class) + "<>(new " + $(IntegerRandomizer.class) + "(1.0, 3.0), 2, 5)";
+            final String matrixRandomizer = "new " + $(ArrayRandomizer.class) + "<>(" + arrayRandomizer + ", 2, 5)";
             assertThat(initialValue.toString()).isEqualTo(matrixRandomizer + ".next()");
         }
 
@@ -71,9 +71,9 @@ class ArrayFieldTest {
 
             final CodeBlock initialValue = cubeField.initialValue();
 
-            final String arrayRandomizer = "new " + $(ArrayRandomizer.class) + "<>(new " + $(InstantRandomizer.class) + "(0L, 2147483647000L), " + $(Instant.class) + ".class, 2, 5)";
-            final String matrixRandomizer = "new " + $(ArrayRandomizer.class) + "<>(" + arrayRandomizer + ", " + $(Instant.class) + "[].class, 2, 5)";
-            final String cubeRandomizer = "new " + $(ArrayRandomizer.class) + "<>(" + matrixRandomizer + ", " + $(Instant.class) + "[][].class, 2, 5)";
+            final String arrayRandomizer = "new " + $(ArrayRandomizer.class) + "<>(new " + $(InstantRandomizer.class) + "(0L, 2147483647000L), 2, 5)";
+            final String matrixRandomizer = "new " + $(ArrayRandomizer.class) + "<>(" + arrayRandomizer + ", 2, 5)";
+            final String cubeRandomizer = "new " + $(ArrayRandomizer.class) + "<>(" + matrixRandomizer + ", 2, 5)";
             assertThat(initialValue.toString()).isEqualTo(cubeRandomizer + ".next()");
         }
     }
