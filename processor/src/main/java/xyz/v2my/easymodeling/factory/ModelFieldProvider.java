@@ -64,16 +64,28 @@ public class ModelFieldProvider {
 
     public ModelField provide(TypeName type, FieldWrapper field) {
         try {
-            if (type instanceof ArrayTypeName) {
-                return arrayField((ArrayTypeName) type, field);
-            }
-            if (type instanceof ParameterizedTypeName) {
-                return containerField((ParameterizedTypeName) type, field);
-            }
-            return plainField(type, field);
+            return findField(type, field);
         } catch (FieldNotSupportedException e) {
             return new UnknownField(type, field);
         }
+    }
+
+    private ModelField findField(TypeName type, FieldWrapper field) {
+        if (type instanceof ArrayTypeName) {
+            return arrayField((ArrayTypeName) type, field);
+        }
+        if (type instanceof ParameterizedTypeName) {
+            return containerField((ParameterizedTypeName) type, field);
+        }
+        return plainField(type, field);
+    }
+
+    private ModelField nestedField(TypeName type, FieldWrapper field) {
+        final ModelField nestedField = findField(type, field);
+        if (nestedField instanceof PrimitiveArrayField) {
+            throw new FieldNotSupportedException();
+        }
+        return nestedField;
     }
 
     private Container arrayField(ArrayTypeName type, FieldWrapper field) {
@@ -97,14 +109,6 @@ public class ModelFieldProvider {
         return Optional.ofNullable(PLAIN_FIELDS.get(type))
                 .map(modelField -> modelField.create(type, field))
                 .orElseThrow(FieldNotSupportedException::new);
-    }
-
-    private ModelField nestedField(TypeName type, FieldWrapper field) {
-        final ModelField nestedField = provide(type, field);
-        if (nestedField instanceof PrimitiveArrayField) {
-            throw new FieldNotSupportedException();
-        }
-        return nestedField;
     }
 
     private TypeName rawType(TypeName type) {
