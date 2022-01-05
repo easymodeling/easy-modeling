@@ -17,13 +17,13 @@ public abstract class PlainField<T> extends ModelField {
     public abstract PlainField<T> create(TypeName type, FieldWrapper field);
 
     @Override
-    public CodeBlock initializer() {
-        return CodeBlock.of("new $T($L)", initializerType(), initializerParameter());
+    public CodeBlock initialValue() {
+        return CodeBlock.of("$L.next()", initializer());
     }
 
     @Override
-    public CodeBlock initialValue() {
-        return CodeBlock.of("$L.next()", initializer());
+    public CodeBlock initializer() {
+        return CodeBlock.of("new $T($L)", initializerType(), initializerParameter());
     }
 
     protected abstract Class<? extends Randomizer<T>> initializerType();

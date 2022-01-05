@@ -17,11 +17,6 @@ public class ArrayField extends Container {
     }
 
     @Override
-    public CodeBlock initialValue() {
-        return CodeBlock.of("$L.next()", initializer());
-    }
-
-    @Override
     public Container create(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -32,7 +27,7 @@ public class ArrayField extends Container {
     }
 
     @Override
-    protected CodeBlock randomParameter() {
+    protected CodeBlock initializerParameter() {
         return CodeBlock.of("$L, $L", minLength(), maxLength());
     }
 

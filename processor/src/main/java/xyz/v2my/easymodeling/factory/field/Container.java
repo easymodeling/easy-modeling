@@ -21,19 +21,24 @@ public abstract class Container extends ModelField {
     public abstract Container create(TypeName type, FieldWrapper field, List<ModelField> nestedFields);
 
     @Override
-    public CodeBlock initializer() {
-        return CodeBlock.of("new $L<>($L, $L)", initializerType(), elementRandomizer(), randomParameter());
+    public CodeBlock initialValue() {
+        return CodeBlock.of("$L.next()", initializer());
     }
 
-    protected abstract CodeBlock initializerType();
+    @Override
+    public CodeBlock initializer() {
+        return CodeBlock.of("new $L<>($L, $L)", initializerType(), nestedRandomizers(), initializerParameter());
+    }
 
-    protected CodeBlock elementRandomizer() {
+    protected CodeBlock nestedRandomizers() {
         return nestedFields.stream()
                 .map(ModelField::initializer)
                 .map(init -> CodeBlock.of("$L", init))
                 .collect(CodeBlock.joining(", "));
     }
 
-    protected abstract CodeBlock randomParameter();
+    protected abstract CodeBlock initializerType();
+
+    protected abstract CodeBlock initializerParameter();
 
 }

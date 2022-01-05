@@ -18,13 +18,13 @@ public class PrimitiveArrayField extends Container {
     }
 
     @Override
-    public CodeBlock initializer() {
-        return CodeBlock.of("new $L($L, $L)", initializerType(), elementRandomizer(), randomParameter());
+    public CodeBlock initialValue() {
+        return CodeBlock.of("($L) $L.next()", type, initializer());
     }
 
     @Override
-    public CodeBlock initialValue() {
-        return CodeBlock.of("($L) new $L($L, $L).next()", type, initializerType(), elementRandomizer(), randomParameter());
+    public CodeBlock initializer() {
+        return CodeBlock.of("new $L($L, $L)", initializerType(), nestedRandomizers(), initializerParameter());
     }
 
     @Override
@@ -33,7 +33,7 @@ public class PrimitiveArrayField extends Container {
     }
 
     @Override
-    protected CodeBlock randomParameter() {
+    protected CodeBlock initializerParameter() {
         return CodeBlock.of("$L, $L, $L", dimension(), minLength(), maxLength());
     }
 

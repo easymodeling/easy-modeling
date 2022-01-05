@@ -24,17 +24,12 @@ public class ListField extends Container {
     }
 
     @Override
-    public CodeBlock initialValue() {
-        return CodeBlock.of("$L.next()", initializer());
-    }
-
-    @Override
     protected CodeBlock initializerType() {
         return CodeBlock.of("$T", ListRandomizer.class);
     }
 
     @Override
-    protected CodeBlock randomParameter() {
+    protected CodeBlock initializerParameter() {
         return CodeBlock.of("2, 5");
     }
 }
