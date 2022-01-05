@@ -18,3 +18,16 @@ dependencies {
     testImplementation 'org.apache.commons:commons-lang3:3.8.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
 }
+
+test {
+    useJUnitPlatform()
+//    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        csv.required = false
+        html.required = false
+    }
+}

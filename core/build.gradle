@@ -9,3 +9,16 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     testImplementation 'org.assertj:assertj-core:3.21.0'
 }
+
+test {
+    useJUnitPlatform()
+//    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        csv.required = false
+        html.required = false
+    }
+}
