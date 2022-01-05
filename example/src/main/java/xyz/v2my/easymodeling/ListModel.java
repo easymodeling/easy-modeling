@@ -11,6 +11,8 @@ public class ListModel {
 
     public List<Integer> listOfInts;
 
+    public List<int[]> listOfPrimitiveInts;
+
     public List<List<Integer>> listOfListOfInts;
 
     public List<List<List<Integer>>> listOfListOfListOfInts;

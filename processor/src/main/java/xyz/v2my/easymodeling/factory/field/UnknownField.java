@@ -7,16 +7,13 @@ import xyz.v2my.easymodeling.randomizer.Randomizer;
 
 public class UnknownField extends PlainField<Void> {
 
-    public UnknownField() {
-    }
-
-    private UnknownField(TypeName type, FieldWrapper field) {
+    public UnknownField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 
     @Override
     public PlainField<Void> create(TypeName type, FieldWrapper field) {
-        return new UnknownField(type, field);
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

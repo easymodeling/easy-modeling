@@ -8,7 +8,6 @@ import xyz.v2my.easymodeling.factory.field.Container;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.factory.field.OptionalField;
 import xyz.v2my.easymodeling.factory.field.PlainField;
-import xyz.v2my.easymodeling.factory.field.UnknownContainer;
 import xyz.v2my.easymodeling.factory.field.UnknownField;
 import xyz.v2my.easymodeling.factory.field.array.ArrayField;
 import xyz.v2my.easymodeling.factory.field.array.PrimitiveArrayField;
@@ -64,13 +63,17 @@ public class ModelFieldProvider {
     }
 
     public ModelField provide(TypeName type, FieldWrapper field) {
-        if (type instanceof ArrayTypeName) {
-            return arrayField((ArrayTypeName) type, field);
+        try {
+            if (type instanceof ArrayTypeName) {
+                return arrayField((ArrayTypeName) type, field);
+            }
+            if (type instanceof ParameterizedTypeName) {
+                return containerField((ParameterizedTypeName) type, field);
+            }
+            return plainField(type, field);
+        } catch (FieldNotSupportedException e) {
+            return new UnknownField(type, field);
         }
-        if (type instanceof ParameterizedTypeName) {
-            return containerField((ParameterizedTypeName) type, field);
-        }
-        return plainField(type, field);
     }
 
     private Container arrayField(ArrayTypeName type, FieldWrapper field) {
@@ -78,18 +81,30 @@ public class ModelFieldProvider {
         if (rawType.isPrimitive()) {
             return new PrimitiveArrayField(type, field, plainField(rawType, field));
         }
-        return new ArrayField(type, field, provide(type.componentType, field));
+        return new ArrayField(type, field, nestedField(type.componentType, field));
     }
 
     private Container containerField(ParameterizedTypeName parameterizedTypeName, FieldWrapper field) {
-        final List<ModelField> nestedFields = parameterizedTypeName.typeArguments.stream().map(type -> provide(type, field)).collect(Collectors.toList());
-        return CONTAINER_FIELDS.getOrDefault(parameterizedTypeName.rawType, new UnknownContainer())
-                .create(parameterizedTypeName, field, nestedFields);
+        final List<ModelField> nestedFields = parameterizedTypeName.typeArguments.stream()
+                .map(type -> nestedField(type, field))
+                .collect(Collectors.toList());
+        return Optional.ofNullable(CONTAINER_FIELDS.get(parameterizedTypeName.rawType))
+                .map(container -> container.create(parameterizedTypeName, field, nestedFields))
+                .orElseThrow(FieldNotSupportedException::new);
     }
 
     private PlainField<?> plainField(TypeName type, FieldWrapper field) {
-        PlainField<?> modelField = PLAIN_FIELDS.getOrDefault(type, new UnknownField());
-        return modelField.create(type, field);
+        return Optional.ofNullable(PLAIN_FIELDS.get(type))
+                .map(modelField -> modelField.create(type, field))
+                .orElseThrow(FieldNotSupportedException::new);
+    }
+
+    private ModelField nestedField(TypeName type, FieldWrapper field) {
+        final ModelField nestedField = provide(type, field);
+        if (nestedField instanceof PrimitiveArrayField) {
+            throw new FieldNotSupportedException();
+        }
+        return nestedField;
     }
 
     private TypeName rawType(TypeName type) {
