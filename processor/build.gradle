@@ -1,18 +1,7 @@
-plugins {
-    id 'java-library'
-}
-
-group 'xyz.v2my'
-version project.version
-
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(8)
     }
-}
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {
@@ -28,8 +17,4 @@ dependencies {
     testImplementation 'org.assertj:assertj-core:3.21.0'
     testImplementation 'org.apache.commons:commons-lang3:3.8.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
-}
-
-test {
-    useJUnitPlatform()
 }

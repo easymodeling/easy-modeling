@@ -1,18 +1,7 @@
-plugins {
-    id 'java'
-}
-
-group 'xyz.v2my'
-version '1.0-SNAPSHOT'
-
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(11)
     }
-}
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {
@@ -23,8 +12,4 @@ dependencies {
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-}
-
-test {
-    useJUnitPlatform()
 }

@@ -1,13 +1,37 @@
 plugins {
     id 'java'
     id "org.sonarqube" version "3.3"
+    id 'jacoco'
 }
 
-group 'xyz.v2my'
-version project.version
+def projectVersion = '0.0.1-SNAPSHOT'
 
-repositories {
-    mavenCentral()
+group 'xyz.v2my'
+version projectVersion
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+
+    group 'xyz.v2my'
+    version projectVersion
+
+    repositories {
+        mavenCentral()
+    }
+
+    test {
+        useJUnitPlatform()
+        finalizedBy jacocoTestReport
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.required = true
+            csv.required = false
+//            html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+        }
+    }
 }
 
 sonarqube {
@@ -18,9 +42,6 @@ sonarqube {
         // ignore the example project
         property "sonar.exclusions", "example/**"
     }
-}
-
-dependencies {
 }
 
 test {
