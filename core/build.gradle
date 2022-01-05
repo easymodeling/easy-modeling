@@ -12,10 +12,10 @@ dependencies {
 
 test {
     useJUnitPlatform()
-//    finalizedBy jacocoTestReport
 }
 
 jacocoTestReport {
+    dependsOn test
     reports {
         xml.required = true
         csv.required = false

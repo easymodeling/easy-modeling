@@ -4,10 +4,13 @@ plugins {
     id 'jacoco'
 }
 
-def projectVersion = '0.0.1-SNAPSHOT'
+ext {
+    projectGroup = 'xyz.v2my'
+    projectVersion = '0.0.1-SNAPSHOT'
+}
 
-group 'xyz.v2my'
-version projectVersion
+group ext.projectGroup
+version ext.projectVersion
 
 subprojects {
     apply plugin: 'java'
