@@ -40,10 +40,10 @@ public abstract class ModelField implements InitializableType, BuilderMember, Co
     }
 
     @Override
-    public MethodSpec setter(String builderTypeName) {
+    public MethodSpec setter(String builderName) {
         return MethodSpec.methodBuilder(name)
                 .addModifiers(Modifier.PUBLIC)
-                .returns(ClassName.get("", builderTypeName))
+                .returns(ClassName.get("", builderName))
                 .addParameter(type, identity())
                 .addStatement("this.$N = $N", identity(), identity())
                 .addStatement("return this")

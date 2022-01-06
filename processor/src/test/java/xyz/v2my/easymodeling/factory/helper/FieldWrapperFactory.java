@@ -7,8 +7,8 @@ public class FieldWrapperFactory {
 
     private final FieldWrapper field;
 
-    private FieldWrapperFactory() {
-        this.field = FieldWrapper.of("field_name");
+    private FieldWrapperFactory(String name) {
+        this.field = FieldWrapper.of(name);
     }
 
     public FieldWrapperFactory minLength(Object minLength) {
@@ -32,11 +32,11 @@ public class FieldWrapperFactory {
     }
 
     public static FieldWrapper any() {
-        return FieldWrapperFactory.one().build();
+        return FieldWrapperFactory.one("field_name").build();
     }
 
-    public static FieldWrapperFactory one() {
-        return new FieldWrapperFactory();
+    public static FieldWrapperFactory one(String name) {
+        return new FieldWrapperFactory(name);
     }
 
     public FieldWrapper build() {
