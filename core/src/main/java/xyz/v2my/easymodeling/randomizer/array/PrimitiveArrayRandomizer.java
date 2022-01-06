@@ -26,7 +26,7 @@ public class PrimitiveArrayRandomizer extends GenericRandomizer<Object> {
     }
 
     @Override
-    public Object random() {
+    protected Object random() {
         final int[] dimensions = IntStream.generate(() -> doubleBetween(min, max).intValue()).limit(dimension).toArray();
         return generateArray(dimensions);
     }

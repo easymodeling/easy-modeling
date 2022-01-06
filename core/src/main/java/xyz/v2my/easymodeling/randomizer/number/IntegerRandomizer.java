@@ -12,7 +12,7 @@ public class IntegerRandomizer extends NumberRandomizer<Integer> {
     }
 
     @Override
-    public Integer random() {
+    protected Integer random() {
         return doubleBetween(min, max).intValue();
     }
 }
