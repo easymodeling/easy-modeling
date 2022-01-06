@@ -1,19 +1,19 @@
-package xyz.v2my.easymodeling.factory.field.numeric;
+package xyz.v2my.easymodeling.factory.field.number;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
-import xyz.v2my.easymodeling.randomizer.number.FloatRandomizer;
+import xyz.v2my.easymodeling.randomizer.number.DoubleRandomizer;
 
-public class FloatField extends NumericField<Float> {
+public class DoubleField extends NumericField<Double> {
 
-    private FloatField(TypeName type, FieldWrapper field) {
+    private DoubleField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 
-    public FloatField() {
+    public DoubleField() {
     }
 
     @Override
@@ -28,16 +28,16 @@ public class FloatField extends NumericField<Float> {
 
     @Override
     protected CodeBlock constantInit(Double c) {
-        return CodeBlock.of("$LF", c.floatValue());
+        return CodeBlock.of("$L", c);
     }
 
     @Override
-    protected Class<? extends Randomizer<Float>> initializerType() {
-        return FloatRandomizer.class;
+    protected Class<? extends Randomizer<Double>> initializerType() {
+        return DoubleRandomizer.class;
     }
 
     @Override
-    public PlainField<Float> create(TypeName type, FieldWrapper field) {
-        return new FloatField(type, field);
+    public PlainField<Double> create(TypeName type, FieldWrapper field) {
+        return new DoubleField(type, field);
     }
 }

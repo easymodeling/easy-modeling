@@ -1,4 +1,4 @@
-package xyz.v2my.easymodeling.factory.field.numeric;
+package xyz.v2my.easymodeling.factory.field.number;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;

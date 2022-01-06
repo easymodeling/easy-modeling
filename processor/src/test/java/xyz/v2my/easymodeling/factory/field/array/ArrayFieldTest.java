@@ -11,7 +11,7 @@ import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.factory.field.Container;
 import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
-import xyz.v2my.easymodeling.factory.field.numeric.IntegerField;
+import xyz.v2my.easymodeling.factory.field.number.IntegerField;
 import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
 import xyz.v2my.easymodeling.randomizer.array.ArrayRandomizer;
 import xyz.v2my.easymodeling.randomizer.datetime.InstantRandomizer;
