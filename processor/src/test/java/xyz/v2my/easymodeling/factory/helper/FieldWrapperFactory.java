@@ -1,6 +1,7 @@
-package xyz.v2my.easymodeling.factory;
+package xyz.v2my.easymodeling.factory.helper;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
+import xyz.v2my.easymodeling.factory.FieldWrapper;
 
 public class FieldWrapperFactory {
 

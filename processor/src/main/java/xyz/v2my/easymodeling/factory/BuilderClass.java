@@ -9,7 +9,6 @@ import com.squareup.javapoet.TypeSpec;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 
 import javax.lang.model.element.Modifier;
-import javax.lang.model.element.TypeElement;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,13 +16,13 @@ public class BuilderClass {
 
     private static final String BUILDER_NAME_PATTERN = "Builder";
 
-    private final TypeElement type;
+    private final List<ModelField> builderFields;
 
-    private final List<ModelField> fields;
+    private final ClassName returnType;
 
-    public BuilderClass(TypeElement type, List<ModelField> fields) {
-        this.type = type;
-        this.fields = fields;
+    public BuilderClass(List<ModelField> builderFields, ClassName builtTypeName) {
+        this.builderFields = builderFields;
+        this.returnType = builtTypeName;
     }
 
     public TypeSpec createType() {
@@ -37,10 +36,10 @@ public class BuilderClass {
     }
 
     private MethodSpec builderAllArgsConstructor() {
-        final List<ParameterSpec> constructorParameters = fields.stream()
+        final List<ParameterSpec> constructorParameters = builderFields.stream()
                 .map(ModelField::parameter)
                 .collect(Collectors.toList());
-        final List<CodeBlock> constructorStatements = fields.stream()
+        final List<CodeBlock> constructorStatements = builderFields.stream()
                 .map(ModelField::statement)
                 .collect(Collectors.toList());
 
@@ -51,22 +50,22 @@ public class BuilderClass {
     }
 
     private MethodSpec buildMethod() {
-        final String constructionParameters = fields.stream()
+        final String constructionParameters = builderFields.stream()
                 .map(ModelField::identity)
                 .collect(Collectors.joining(", "));
         return MethodSpec.methodBuilder("build")
                 .addModifiers(Modifier.PUBLIC)
-                .returns(ClassName.get(type))
-                .addStatement("return new $N(" + constructionParameters + ")", type.getSimpleName())
+                .returns(returnType)
+                .addStatement("return new $N(" + constructionParameters + ")", returnType.simpleName())
                 .build();
     }
 
     private List<FieldSpec> builderFields() {
-        return fields.stream().map(ModelField::field).collect(Collectors.toList());
+        return builderFields.stream().map(ModelField::field).collect(Collectors.toList());
     }
 
     private List<MethodSpec> builderSetters() {
-        return fields.stream()
+        return builderFields.stream()
                 .map(field -> field.setter(BUILDER_NAME_PATTERN))
                 .collect(Collectors.toList());
     }

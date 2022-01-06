@@ -8,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.factory.field.UnknownField;
+import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
 
 import java.time.Instant;
 import java.util.Optional;
