@@ -1,4 +1,4 @@
-name: Build
+name: SONARQUBE
 on:
   push:
     branches:
@@ -6,10 +6,14 @@ on:
   pull_request:
     types: [ opened, synchronize, reopened ]
 jobs:
-  build:
-    name: Build
+  sonarqube:
+    name: Sonarqube
     runs-on: ubuntu-latest
     steps:
+      - name: 'Cancel previous runs'
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
