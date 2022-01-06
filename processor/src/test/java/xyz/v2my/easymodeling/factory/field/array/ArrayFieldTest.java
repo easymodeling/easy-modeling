@@ -1,18 +1,18 @@
-package xyz.v2my.easymodeling.factory.field.collection;
+package xyz.v2my.easymodeling.factory.field.array;
 
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import xyz.v2my.easymodeling.factory.FieldTest;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.factory.field.Container;
 import xyz.v2my.easymodeling.factory.field.PlainField;
-import xyz.v2my.easymodeling.factory.field.array.ArrayField;
 import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
 import xyz.v2my.easymodeling.factory.field.numeric.IntegerField;
+import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
 import xyz.v2my.easymodeling.randomizer.array.ArrayRandomizer;
 import xyz.v2my.easymodeling.randomizer.datetime.InstantRandomizer;
 import xyz.v2my.easymodeling.randomizer.number.IntegerRandomizer;
@@ -21,18 +21,13 @@ import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ArrayFieldTest {
+class ArrayFieldTest extends FieldTest {
 
     private FieldWrapper field;
 
     @BeforeEach
-    void setUp() throws IllegalAccessException {
-        this.field = FieldWrapper.of("field");
-
-        FieldUtils.writeField(field, "minLength", 2, true);
-        FieldUtils.writeField(field, "maxLength", 5, true);
-        FieldUtils.writeField(field, "min", 1., true);
-        FieldUtils.writeField(field, "max", 3., true);
+    void setUp() {
+        this.field = FieldWrapperFactory.one().minLength(2).maxLength(5).min(1.).max(3.).build();
     }
 
     @Nested
@@ -78,7 +73,4 @@ class ArrayFieldTest {
         }
     }
 
-    private String $(Class<?> clazz) {
-        return clazz.getCanonicalName();
-    }
 }

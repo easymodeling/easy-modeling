@@ -30,6 +30,14 @@ public class ListField extends Container {
 
     @Override
     protected CodeBlock initializerParameter() {
-        return CodeBlock.of("2, 5");
+        return CodeBlock.of("$L, $L", minLength(), maxLength());
+    }
+
+    private int maxLength() {
+        return field.maxLength().orElse(20);
+    }
+
+    private int minLength() {
+        return field.minLength().orElse(1);
     }
 }

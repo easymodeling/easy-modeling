@@ -27,6 +27,10 @@ public class FieldWrapperFactory {
         return decorate("max", max);
     }
 
+    public FieldWrapperFactory string(Object string) {
+        return decorate("string", string);
+    }
+
     public static FieldWrapper any() {
         return FieldWrapperFactory.one().build();
     }
@@ -43,7 +47,7 @@ public class FieldWrapperFactory {
         try {
             FieldUtils.writeField(field, name, value, true);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return this;
     }
