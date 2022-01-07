@@ -7,7 +7,7 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import xyz.v2my.easymodeling.factory.FieldTest;
+import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
@@ -28,7 +28,8 @@ class BooleanFieldTest extends FieldTest {
     }
 
     @Test
-    void should_generate_builder_field() {
+    @Override
+    protected void should_generate_builder_field() {
         final FieldSpec field = booleanPlainField.field();
 
         assertThat(field.name).contains("booleanField");
@@ -37,7 +38,8 @@ class BooleanFieldTest extends FieldTest {
     }
 
     @Test
-    void should_generate_builder_setter() {
+    @Override
+    protected void should_generate_builder_setter() {
         final MethodSpec builder = booleanPlainField.setter("Builder");
 
         assertThat(builder.name).contains("booleanField");

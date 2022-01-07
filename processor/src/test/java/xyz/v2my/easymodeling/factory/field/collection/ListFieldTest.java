@@ -8,7 +8,7 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import xyz.v2my.easymodeling.factory.FieldTest;
+import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.factory.field.string.StringField;
@@ -38,7 +38,8 @@ class ListFieldTest extends FieldTest {
     }
 
     @Test
-    void should_generate_builder_field() {
+    @Override
+    protected void should_generate_builder_field() {
         final FieldSpec field = listField.field();
 
         assertThat(field.type).isEqualTo(typeName);
@@ -47,7 +48,8 @@ class ListFieldTest extends FieldTest {
     }
 
     @Test
-    void should_generate_builder_setter() {
+    @Override
+    protected void should_generate_builder_setter() {
         final MethodSpec setter = listField.setter("Some_builder_name");
 
         assertThat(setter.returnType.toString()).isEqualTo("Some_builder_name");
