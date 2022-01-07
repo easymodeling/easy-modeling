@@ -31,6 +31,10 @@ public class FieldWrapperFactory {
         return decorate("string", string);
     }
 
+    public FieldWrapperFactory allowEmpty(Object allowEmpty) {
+        return decorate("allowEmpty", allowEmpty);
+    }
+
     public static FieldWrapper any() {
         return FieldWrapperFactory.one("field_name").build();
     }

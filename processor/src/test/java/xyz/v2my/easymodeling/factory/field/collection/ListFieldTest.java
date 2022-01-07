@@ -25,7 +25,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ListFieldTest extends FieldTest {
 
     private TypeName typeName;
+
     private FieldWrapper fieldWrapper;
+
     private ListField listField;
 
     @BeforeEach
