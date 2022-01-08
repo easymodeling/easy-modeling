@@ -33,7 +33,7 @@ class ListFieldTest extends FieldTest {
     @BeforeEach
     void setUp() {
         typeName = ParameterizedTypeName.get(List.class, String.class);
-        fieldWrapper = FieldWrapperFactory.one("field_name").string("").min(3.).max(9.).minLength(20).maxLength(50).build();
+        fieldWrapper = FieldWrapperFactory.one("field_name").string("").min(3.).max(9.).minSize(20).maxSize(50).build();
         final List<ModelField> nestedFields = Collections.singletonList(new StringField().create(ClassName.get(String.class), fieldWrapper));
 
         listField = new ListField().create(typeName, fieldWrapper, nestedFields);

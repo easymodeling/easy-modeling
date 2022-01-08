@@ -23,7 +23,7 @@ public class ListRandomizer<E> extends GenericRandomizer<List<E>> {
 
     @Override
     protected List<E> random() {
-        int length = doubleBetween(min, max).intValue();
-        return Stream.generate(elementRandomizer::next).limit(length).collect(Collectors.toList());
+        int size = doubleBetween(min, max).intValue();
+        return Stream.generate(elementRandomizer::next).limit(size).collect(Collectors.toList());
     }
 }

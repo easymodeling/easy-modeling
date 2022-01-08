@@ -28,14 +28,14 @@ public class ArrayField extends Container {
 
     @Override
     protected CodeBlock initializerParameter() {
-        return CodeBlock.of("$L, $L", minLength(), maxLength());
+        return CodeBlock.of("$L, $L", minSize(), maxSize());
     }
 
-    private int maxLength() {
-        return field.maxLength().orElse(20);
+    private int maxSize() {
+        return field.maxSize().orElse(20);
     }
 
-    private int minLength() {
-        return field.minLength().orElse(1);
+    private int minSize() {
+        return field.minSize().orElse(1);
     }
 }

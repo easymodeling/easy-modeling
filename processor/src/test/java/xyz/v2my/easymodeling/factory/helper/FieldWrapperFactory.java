@@ -11,12 +11,12 @@ public class FieldWrapperFactory {
         this.field = FieldWrapper.of(name);
     }
 
-    public FieldWrapperFactory minLength(Object minLength) {
-        return decorate("minLength", minLength);
+    public FieldWrapperFactory minSize(Object minSize) {
+        return decorate("minSize", minSize);
     }
 
-    public FieldWrapperFactory maxLength(Object maxLength) {
-        return decorate("maxLength", maxLength);
+    public FieldWrapperFactory maxSize(Object maxSize) {
+        return decorate("maxSize", maxSize);
     }
 
     public FieldWrapperFactory min(Object min) {

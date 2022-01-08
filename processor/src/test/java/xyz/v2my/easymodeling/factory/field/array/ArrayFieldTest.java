@@ -31,7 +31,7 @@ class ArrayFieldTest extends FieldTest {
 
     @BeforeEach
     void setUp() {
-        this.field = FieldWrapperFactory.one("field_name").minLength(2).maxLength(5).min(1.).max(3.).build();
+        this.field = FieldWrapperFactory.one("field_name").minSize(2).maxSize(5).min(1.).max(3.).build();
     }
 
     @Override

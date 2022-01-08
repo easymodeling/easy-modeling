@@ -36,11 +36,11 @@ public class FieldWrapper {
 
     private String datetime = "";
 
-    private Integer length = Integer.MAX_VALUE;
+    private Integer size = Integer.MAX_VALUE;
 
-    private Integer minLength = Integer.MAX_VALUE;
+    private Integer minSize = Integer.MAX_VALUE;
 
-    private Integer maxLength = Integer.MAX_VALUE;
+    private Integer maxSize = Integer.MAX_VALUE;
 
     boolean allowEmpty = false;
 
@@ -71,9 +71,9 @@ public class FieldWrapper {
         this.future = annotation.future();
         this.past = annotation.past();
         this.datetime = annotation.datetime();
-        this.length = annotation.length();
-        this.minLength = annotation.minLength();
-        this.maxLength = annotation.maxLength();
+        this.size = annotation.size();
+        this.minSize = annotation.minSize();
+        this.maxSize = annotation.maxSize();
         this.allowEmpty = annotation.allowEmpty();
     }
 
@@ -127,14 +127,14 @@ public class FieldWrapper {
         return now;
     }
 
-    public Optional<Integer> minLength() {
-        final Optional<Integer> minLength = isMinLengthSet() ? Optional.of(this.minLength) : Optional.empty();
-        return isLengthSet() ? Optional.of(length) : minLength;
+    public Optional<Integer> minSize() {
+        final Optional<Integer> minSize = isMinSizeSet() ? Optional.of(this.minSize) : Optional.empty();
+        return isSizeSet() ? Optional.of(size) : minSize;
     }
 
-    public Optional<Integer> maxLength() {
-        final Optional<Integer> maxLength = isMaxLengthSet() ? Optional.of(this.maxLength) : Optional.empty();
-        return isLengthSet() ? Optional.of(length) : maxLength;
+    public Optional<Integer> maxSize() {
+        final Optional<Integer> maxSize = isMaxSizeSet() ? Optional.of(this.maxSize) : Optional.empty();
+        return isSizeSet() ? Optional.of(size) : maxSize;
     }
 
     public Optional<Instant> datetime() {
@@ -182,16 +182,16 @@ public class FieldWrapper {
         return !datetime.isEmpty();
     }
 
-    private boolean isLengthSet() {
-        return length != Integer.MAX_VALUE && length >= 0;
+    private boolean isSizeSet() {
+        return size != Integer.MAX_VALUE && size >= 0;
     }
 
-    private boolean isMinLengthSet() {
-        return minLength != Integer.MAX_VALUE && minLength >= 0;
+    private boolean isMinSizeSet() {
+        return minSize != Integer.MAX_VALUE && minSize >= 0;
     }
 
-    private boolean isMaxLengthSet() {
-        return maxLength != Integer.MAX_VALUE && maxLength >= 0;
+    private boolean isMaxSizeSet() {
+        return maxSize != Integer.MAX_VALUE && maxSize >= 0;
     }
 
 }

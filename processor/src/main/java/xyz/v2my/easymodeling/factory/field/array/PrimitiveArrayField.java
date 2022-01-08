@@ -34,15 +34,15 @@ public class PrimitiveArrayField extends Container {
 
     @Override
     protected CodeBlock initializerParameter() {
-        return CodeBlock.of("$L, $L, $L", dimension(), minLength(), maxLength());
+        return CodeBlock.of("$L, $L, $L", dimension(), minSize(), maxSize());
     }
 
-    private int maxLength() {
-        return field.maxLength().orElse(20);
+    private int maxSize() {
+        return field.maxSize().orElse(20);
     }
 
-    private int minLength() {
-        return field.minLength().orElse(1);
+    private int minSize() {
+        return field.minSize().orElse(1);
     }
 
     private int dimension() {

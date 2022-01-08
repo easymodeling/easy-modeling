@@ -31,7 +31,7 @@ class PrimitiveArrayFieldTest extends FieldTest {
 
     @BeforeEach
     void setUp() {
-        final FieldWrapper field = FieldWrapperFactory.one(FIELD_NAME).minLength(3).maxLength(8).build();
+        final FieldWrapper field = FieldWrapperFactory.one(FIELD_NAME).minSize(3).maxSize(8).build();
         integerField = new IntegerField().create(ClassName.get(Integer.class), field);
         primitiveArrayField = new PrimitiveArrayField(ArrayTypeName.of(int[].class), field, integerField);
     }
@@ -66,7 +66,7 @@ class PrimitiveArrayFieldTest extends FieldTest {
 
     @Test
     void should_not_create_field() {
-        final FieldWrapper field = FieldWrapperFactory.one(FIELD_NAME).minLength(3).maxLength(8).build();
+        final FieldWrapper field = FieldWrapperFactory.one(FIELD_NAME).minSize(3).maxSize(8).build();
         final List<ModelField> integerField = Collections.singletonList(new IntegerField());
 
         final Throwable throwable = catchThrowable(() -> primitiveArrayField.create(ArrayTypeName.of(int[].class), field, integerField));
