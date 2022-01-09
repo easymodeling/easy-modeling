@@ -1,9 +1,9 @@
 package xyz.v2my.easymodeling.factory.field.primitive;
 
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
-import com.squareup.javapoet.TypeName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
@@ -19,8 +19,8 @@ class BooleanFieldTest extends FieldTest {
     @BeforeEach
     void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).build();
-        typeName = TypeName.BOOLEAN;
-        modelField = new BooleanField(typeName, fieldWrapper);
+        typeName = ClassName.get(Boolean.class);
+        modelField = new BooleanField(fieldWrapper);
     }
 
     @Test
@@ -34,7 +34,7 @@ class BooleanFieldTest extends FieldTest {
         assertThat(builder.parameters).hasSize(1);
         final ParameterSpec parameter = builder.parameters.get(0);
         assertThat(parameter.name).isEqualTo(FIELD_NAME);
-        assertThat(parameter.type.toString()).isEqualTo(TypeName.BOOLEAN.toString());
+        assertThat(parameter.type).isEqualTo(ClassName.get(Boolean.class));
         assertThat(builder.code.toString()).isEqualTo("this." + FIELD_NAME + " = " + FIELD_NAME + ";\nreturn this;\n");
     }
 

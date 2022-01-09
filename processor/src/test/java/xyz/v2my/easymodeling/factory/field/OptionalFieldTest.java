@@ -1,6 +1,5 @@
 package xyz.v2my.easymodeling.factory.field;
 
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -25,7 +24,7 @@ class OptionalFieldTest extends FieldTest {
     @BeforeEach
     void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).min(3.).max(9.).build();
-        final List<ModelField> nestedFields = Collections.singletonList(new StringField(ClassName.get(String.class), fieldWrapper));
+        final List<ModelField> nestedFields = Collections.singletonList(new StringField(fieldWrapper));
         typeName = ParameterizedTypeName.get(Optional.class, Integer.class);
         modelField = new OptionalField(typeName, fieldWrapper, nestedFields);
     }
@@ -44,7 +43,7 @@ class OptionalFieldTest extends FieldTest {
     @ValueSource(booleans = {true, false})
     void should_generate_init_value_based_on_field_wrapper(boolean allowEmpty) {
         FieldWrapper fieldWrapper = FieldWrapperFactory.one("field_name").allowEmpty(allowEmpty).build();
-        final PlainField<String> stringField = new StringField(ClassName.get(String.class), fieldWrapper);
+        final PlainField<String> stringField = new StringField(fieldWrapper);
         final List<ModelField> nestedFields = Collections.singletonList(stringField);
         final OptionalField optionalField = new OptionalField(typeName, fieldWrapper, nestedFields);
 

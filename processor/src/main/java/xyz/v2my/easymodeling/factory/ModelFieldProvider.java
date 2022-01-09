@@ -27,20 +27,11 @@ import xyz.v2my.easymodeling.factory.field.string.StringField;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ModelFieldProvider {
-
-    private static final Map<TypeName, PlainField<?>> PLAIN_FIELDS = new HashMap<>();
-
-    private static final Map<TypeName, Container> CONTAINER_FIELDS = new HashMap<>();
-
-    static {
-    }
 
     public ModelField provide(TypeName type, FieldWrapper field) {
         try {
@@ -95,37 +86,37 @@ public class ModelFieldProvider {
 
     private PlainField<?> plainField(TypeName type, FieldWrapper field) {
         if (TypeName.BYTE.equals(type) || ClassName.get(Byte.class).equals(type)) {
-            return new ByteField(type, field);
+            return new ByteField(field);
         }
         if (TypeName.SHORT.equals(type) || ClassName.get(Short.class).equals(type)) {
-            return new ShortField(type, field);
+            return new ShortField(field);
         }
         if (TypeName.INT.equals(type) || ClassName.get(Integer.class).equals(type)) {
-            return new IntegerField(type, field);
+            return new IntegerField(field);
         }
         if (TypeName.LONG.equals(type) || ClassName.get(Long.class).equals(type)) {
-            return new LongField(type, field);
+            return new LongField(field);
         }
         if (TypeName.FLOAT.equals(type) || ClassName.get(Float.class).equals(type)) {
-            return new FloatField(type, field);
+            return new FloatField(field);
         }
         if (TypeName.DOUBLE.equals(type) || ClassName.get(Double.class).equals(type)) {
-            return new DoubleField(type, field);
+            return new DoubleField(field);
         }
         if (TypeName.BOOLEAN.equals(type) || ClassName.get(Boolean.class).equals(type)) {
-            return new BooleanField(type, field);
+            return new BooleanField(field);
         }
         if (TypeName.CHAR.equals(type) || ClassName.get(Character.class).equals(type)) {
-            return new CharField(type, field);
+            return new CharField(field);
         }
         if (type.equals(ClassName.get(String.class))) {
-            return new StringField(type, field);
+            return new StringField(field);
         }
         if (type.equals(ClassName.get(StringBuilder.class))) {
-            return new StringBuilderField(type, field);
+            return new StringBuilderField(field);
         }
         if (type.equals(ClassName.get(Instant.class))) {
-            return new InstantField(type, field);
+            return new InstantField(field);
         }
         throw new FieldNotSupportedException();
     }

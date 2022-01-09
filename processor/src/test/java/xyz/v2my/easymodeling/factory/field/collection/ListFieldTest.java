@@ -1,6 +1,5 @@
 package xyz.v2my.easymodeling.factory.field.collection;
 
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -26,7 +25,7 @@ class ListFieldTest extends FieldTest {
     void setUp() {
         typeName = ParameterizedTypeName.get(List.class, String.class);
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).string("").min(3.).max(9.).minSize(20).maxSize(50).build();
-        final List<ModelField> nestedFields = Collections.singletonList(new StringField(ClassName.get(String.class), fieldWrapper));
+        final List<ModelField> nestedFields = Collections.singletonList(new StringField(fieldWrapper));
         modelField = new ListField(typeName, fieldWrapper, nestedFields);
     }
 

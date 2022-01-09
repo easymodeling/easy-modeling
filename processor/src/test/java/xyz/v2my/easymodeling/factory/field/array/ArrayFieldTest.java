@@ -1,10 +1,8 @@
 package xyz.v2my.easymodeling.factory.field.array;
 
 import com.squareup.javapoet.ArrayTypeName;
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.TypeName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -28,7 +26,7 @@ class ArrayFieldTest extends FieldTest {
     @BeforeEach
     void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(2).maxSize(5).min(1.).max(3.).build();
-        final PlainField<Integer> integerField = new IntegerField(TypeName.get(Integer.class), fieldWrapper);
+        final PlainField<Integer> integerField = new IntegerField(fieldWrapper);
         typeName = ArrayTypeName.of(Integer.class);
         modelField = new ArrayField(typeName, fieldWrapper, integerField);
     }
@@ -48,7 +46,7 @@ class ArrayFieldTest extends FieldTest {
 
         @Test
         void should_generate_statement_of_array() {
-            final PlainField<Integer> integerField = new IntegerField(ClassName.get(Integer.class), fieldWrapper);
+            final PlainField<Integer> integerField = new IntegerField(fieldWrapper);
             final Container arrayField = new ArrayField(ArrayTypeName.of(Integer.class), fieldWrapper, integerField);
 
             final CodeBlock initialValue = arrayField.initialValue();
@@ -59,7 +57,7 @@ class ArrayFieldTest extends FieldTest {
 
         @Test
         void should_generate_statement_of_matrix() {
-            final PlainField<Integer> integerField = new IntegerField(ClassName.get(Integer.class), fieldWrapper);
+            final PlainField<Integer> integerField = new IntegerField(fieldWrapper);
             final Container arrayField = new ArrayField(ArrayTypeName.get(Integer[].class), fieldWrapper, integerField);
             final Container matrixField = new ArrayField(ArrayTypeName.get(Integer[][].class), fieldWrapper, arrayField);
 
@@ -72,7 +70,7 @@ class ArrayFieldTest extends FieldTest {
 
         @Test
         void should_generate_statement_of_cube() {
-            final PlainField<Instant> instantField = new InstantField(ClassName.get(Instant.class), fieldWrapper);
+            final PlainField<Instant> instantField = new InstantField(fieldWrapper);
             final Container arrayField = new ArrayField(ArrayTypeName.get(Instant[].class), fieldWrapper, instantField);
             final Container matrixField = new ArrayField(ArrayTypeName.get(Instant[][].class), fieldWrapper, arrayField);
             final Container cubeField = new ArrayField(ArrayTypeName.get(Instant[][][].class), fieldWrapper, matrixField);

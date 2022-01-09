@@ -1,15 +1,15 @@
 package xyz.v2my.easymodeling.factory.field.number;
 
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.number.DoubleRandomizer;
 
 public class DoubleField extends NumericField<Double> {
 
-    public DoubleField(TypeName type, FieldWrapper field) {
-        super(type, field);
+    public DoubleField(FieldWrapper field) {
+        super(ClassName.get(Double.class), field);
     }
 
     @Override

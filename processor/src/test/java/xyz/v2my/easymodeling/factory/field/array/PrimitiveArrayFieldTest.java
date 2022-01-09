@@ -1,7 +1,6 @@
 package xyz.v2my.easymodeling.factory.field.array;
 
 import com.squareup.javapoet.ArrayTypeName;
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +22,7 @@ class PrimitiveArrayFieldTest extends FieldTest {
     @BeforeEach
     void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(3).maxSize(8).build();
-        integerField = new IntegerField(ClassName.get(Integer.class), fieldWrapper);
+        integerField = new IntegerField(fieldWrapper);
         typeName = ArrayTypeName.of(int[].class);
         modelField = new PrimitiveArrayField((ArrayTypeName) typeName, fieldWrapper, integerField);
     }
