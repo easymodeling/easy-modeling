@@ -35,6 +35,18 @@ public class FieldWrapperFactory {
         return decorate("allowEmpty", allowEmpty);
     }
 
+    public FieldWrapperFactory alphanumeric(Object alphanumeric) {
+        return decorate("alphanumeric", alphanumeric);
+    }
+
+    public FieldWrapperFactory alphabetic(Object alphabetic) {
+        return decorate("alphabetic", alphabetic);
+    }
+
+    public FieldWrapperFactory numeric(Object numeric) {
+        return decorate("numeric", numeric);
+    }
+
     public static FieldWrapper any() {
         return FieldWrapperFactory.one("field_name").build();
     }
