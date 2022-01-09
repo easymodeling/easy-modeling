@@ -11,6 +11,7 @@ import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.factory.field.UnknownField;
 import xyz.v2my.easymodeling.factory.field.array.ArrayField;
 import xyz.v2my.easymodeling.factory.field.array.PrimitiveArrayField;
+import xyz.v2my.easymodeling.factory.field.collection.ArrayListField;
 import xyz.v2my.easymodeling.factory.field.collection.ListField;
 import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
 import xyz.v2my.easymodeling.factory.field.number.ByteField;
@@ -25,6 +26,7 @@ import xyz.v2my.easymodeling.factory.field.string.StringBuilderField;
 import xyz.v2my.easymodeling.factory.field.string.StringField;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +62,7 @@ public class ModelFieldProvider {
 
         CONTAINER_FIELDS.put(ClassName.get(Optional.class), new OptionalField());
         CONTAINER_FIELDS.put(ClassName.get(List.class), new ListField());
+        CONTAINER_FIELDS.put(ClassName.get(ArrayList.class), new ArrayListField());
     }
 
     public ModelField provide(TypeName type, FieldWrapper field) {

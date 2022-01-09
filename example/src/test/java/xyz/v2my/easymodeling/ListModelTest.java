@@ -14,5 +14,6 @@ class ListModelTest {
         assertNotNull(model);
         assertNotNull(model.listOfInts);
         assertNull(model.listOfPrimitiveInts);
+        assertNotNull(model.arrayListOfListOfInts);
     }
 }

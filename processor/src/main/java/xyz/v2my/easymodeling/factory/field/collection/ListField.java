@@ -14,7 +14,7 @@ public class ListField extends Container {
     public ListField() {
     }
 
-    private ListField(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
+    protected ListField(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
         super(type, field, nestedFields);
     }
 
