@@ -70,7 +70,7 @@ class FactoryClassTest {
 
         @Test
         void should_invoke_builder_build() {
-            assertThat(nextMethod.code.toString()).contains("return builder().build();");
+            assertThat(nextMethod.code.toString()).isEqualTo("return builder().build();\n");
         }
     }
 
@@ -101,7 +101,7 @@ class FactoryClassTest {
 
         @Test
         void should_invoke_constructor_of_builder() {
-            assertThat(nextMethod.code.toString()).contains("return new Builder(");
+            assertThat(nextMethod.code.toString()).isEqualTo("return new Builder();\n");
         }
     }
 

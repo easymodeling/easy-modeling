@@ -24,12 +24,12 @@ public abstract class FieldTest {
     }
 
     @Test
-    void should_generate_builder_field() {
+    final void should_generate_builder_field() {
         final FieldSpec field = modelField.field();
 
         assertThat(field.modifiers).containsExactly(Modifier.PRIVATE);
         assertThat(field.type).isEqualTo(typeName);
-        assertThat(field.name).contains(FIELD_NAME);
+        assertThat(field.name).isEqualTo(FIELD_NAME);
     }
 
     @Test

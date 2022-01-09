@@ -28,14 +28,14 @@ class BooleanFieldTest extends FieldTest {
     protected void should_generate_builder_setter() {
         final MethodSpec builder = modelField.setter("Builder");
 
-        assertThat(builder.name).contains(FIELD_NAME);
+        assertThat(builder.name).isEqualTo(FIELD_NAME);
         assertThat(builder.returnType.toString()).isEqualTo("Builder");
         assertThat(builder.modifiers).containsExactly(Modifier.PUBLIC);
         assertThat(builder.parameters).hasSize(1);
         final ParameterSpec parameter = builder.parameters.get(0);
-        assertThat(parameter.name).contains(FIELD_NAME);
+        assertThat(parameter.name).isEqualTo(FIELD_NAME);
         assertThat(parameter.type.toString()).isEqualTo(TypeName.BOOLEAN.toString());
-        assertThat(builder.code.toString()).contains("this." + FIELD_NAME).contains(" = ").contains(FIELD_NAME).contains(";");
+        assertThat(builder.code.toString()).isEqualTo("this." + FIELD_NAME + " = " + FIELD_NAME + ";\nreturn this;\n");
     }
 
     @Test

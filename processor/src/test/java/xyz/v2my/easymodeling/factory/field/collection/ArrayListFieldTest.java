@@ -35,6 +35,6 @@ class ArrayListFieldTest extends FieldTest {
 
         final MethodSpec builder = listField.setter("Builder");
 
-        assertThat(builder.name).contains("fieldName");
+        assertThat(builder.name).isEqualTo("fieldName");
     }
 }

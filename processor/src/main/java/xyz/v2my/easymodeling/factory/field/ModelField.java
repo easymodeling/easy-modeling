@@ -9,17 +9,12 @@ import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 
 import javax.lang.model.element.Modifier;
-import java.util.concurrent.atomic.AtomicLong;
 
 public abstract class ModelField implements InitializableType, BuilderMember, ConstructorContributor {
-
-    private static final AtomicLong FIELD_COUNTER = new AtomicLong(0);
 
     protected TypeName type;
 
     protected String name;
-
-    protected String identifier;
 
     protected FieldWrapper field;
 
@@ -31,7 +26,6 @@ public abstract class ModelField implements InitializableType, BuilderMember, Co
         this.type = type;
         this.name = field.name();
         this.field = field;
-        this.identifier = String.valueOf(FIELD_COUNTER.getAndIncrement());
     }
 
     @Override
@@ -61,7 +55,7 @@ public abstract class ModelField implements InitializableType, BuilderMember, Co
     }
 
     public String identity() {
-        return String.format("%s_%s", name, identifier);
+        return name;
     }
 
     public TypeName type() {
