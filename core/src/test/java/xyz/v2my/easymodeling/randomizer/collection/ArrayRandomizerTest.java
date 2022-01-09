@@ -1,6 +1,7 @@
 package xyz.v2my.easymodeling.randomizer.collection;
 
 import org.junit.jupiter.api.Test;
+import xyz.v2my.easymodeling.randomizer.RandomizerTest;
 import xyz.v2my.easymodeling.randomizer.array.ArrayRandomizer;
 import xyz.v2my.easymodeling.randomizer.number.IntegerRandomizer;
 
@@ -8,7 +9,7 @@ import java.lang.reflect.Array;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ArrayRandomizerTest {
+class ArrayRandomizerTest extends RandomizerTest {
 
     @Test
     void should_populate_array() {

@@ -1,13 +1,12 @@
 package xyz.v2my.easymodeling.randomizer.array;
 
 import org.assertj.core.data.Index;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import xyz.v2my.easymodeling.randomizer.GenericRandomizerDecorator;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
+import xyz.v2my.easymodeling.randomizer.RandomizerTest;
 import xyz.v2my.easymodeling.randomizer.number.ByteRandomizer;
 import xyz.v2my.easymodeling.randomizer.number.DoubleRandomizer;
 import xyz.v2my.easymodeling.randomizer.number.FloatRandomizer;
@@ -22,12 +21,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PrimitiveArrayRandomizerTest {
-
-    @BeforeEach
-    void setUp() {
-        GenericRandomizerDecorator.decorateSeed(0);
-    }
+class PrimitiveArrayRandomizerTest extends RandomizerTest {
 
     @Test
     void should_generate_1_dimension_array() {

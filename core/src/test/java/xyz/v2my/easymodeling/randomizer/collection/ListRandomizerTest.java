@@ -1,0 +1,22 @@
+package xyz.v2my.easymodeling.randomizer.collection;
+
+import org.junit.jupiter.api.RepeatedTest;
+import xyz.v2my.easymodeling.randomizer.RandomizerTest;
+import xyz.v2my.easymodeling.randomizer.number.IntegerRandomizer;
+
+import java.util.ArrayList;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class ListRandomizerTest extends RandomizerTest {
+
+    @RepeatedTest(100)
+    void should_generate_random_list_with_size_in_the_range() {
+        ArrayListRandomizer<Integer> randomizer = new ArrayListRandomizer<>(new IntegerRandomizer(-2, 3), 3, 7);
+
+        final ArrayList<Integer> list = randomizer.random();
+
+        assertThat(list).hasSizeBetween(3, 6);
+        assertThat(list).allMatch(i -> i >= -2 && i < 3);
+    }
+}
