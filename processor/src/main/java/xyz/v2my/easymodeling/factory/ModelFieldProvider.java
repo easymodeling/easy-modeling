@@ -68,18 +68,19 @@ public class ModelFieldProvider {
     }
 
     private Container containerField(ParameterizedTypeName parameterizedTypeName, FieldWrapper field) {
-        final List<ModelField> nestedFields = parameterizedTypeName.typeArguments.stream()
+        final ClassName rawType = parameterizedTypeName.rawType;
+        final List<TypeName> typeArguments = parameterizedTypeName.typeArguments;
+        final List<ModelField> nestedFields = typeArguments.stream()
                 .map(type -> nestedField(type, field))
                 .collect(Collectors.toList());
-        final ClassName type = parameterizedTypeName.rawType;
-        if (ClassName.get(Optional.class).equals(type)) {
-            return new OptionalField(parameterizedTypeName, field, nestedFields);
+        if (ClassName.get(Optional.class).equals(rawType)) {
+            return new OptionalField(typeArguments.get(0), field, nestedFields);
         }
-        if (ClassName.get(List.class).equals(type)) {
-            return new ListField(parameterizedTypeName, field, nestedFields);
+        if (ClassName.get(List.class).equals(rawType)) {
+            return new ListField(typeArguments.get(0), field, nestedFields);
         }
-        if (ClassName.get(ArrayList.class).equals(type)) {
-            return new ArrayListField(parameterizedTypeName, field, nestedFields);
+        if (ClassName.get(ArrayList.class).equals(rawType)) {
+            return new ArrayListField(typeArguments.get(0), field, nestedFields);
         }
         throw new FieldNotSupportedException();
     }

@@ -1,5 +1,6 @@
 package xyz.v2my.easymodeling.factory.field;
 
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -21,12 +22,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class OptionalFieldTest extends FieldTest {
 
+    private ClassName rawType;
+
     @BeforeEach
     void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).min(3.).max(9.).build();
         final List<ModelField> nestedFields = Collections.singletonList(new StringField(fieldWrapper));
         typeName = ParameterizedTypeName.get(Optional.class, Integer.class);
-        modelField = new OptionalField(typeName, fieldWrapper, nestedFields);
+        rawType = ClassName.get(Integer.class);
+        modelField = new OptionalField(rawType, fieldWrapper, nestedFields);
     }
 
     @Override
@@ -45,7 +49,7 @@ class OptionalFieldTest extends FieldTest {
         FieldWrapper fieldWrapper = FieldWrapperFactory.one("field_name").allowEmpty(allowEmpty).build();
         final PlainField<String> stringField = new StringField(fieldWrapper);
         final List<ModelField> nestedFields = Collections.singletonList(stringField);
-        final OptionalField optionalField = new OptionalField(typeName, fieldWrapper, nestedFields);
+        final OptionalField optionalField = new OptionalField(rawType, fieldWrapper, nestedFields);
 
         final CodeBlock initialValue = optionalField.initialValue();
 
