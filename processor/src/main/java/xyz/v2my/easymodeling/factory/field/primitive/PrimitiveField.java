@@ -11,9 +11,6 @@ public abstract class PrimitiveField<T> extends PlainField<T> {
         super(type, field);
     }
 
-    public PrimitiveField() {
-    }
-
     @Override
     protected CodeBlock initializerParameter() {
         return CodeBlock.of("");

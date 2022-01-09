@@ -9,16 +9,8 @@ import java.util.List;
 
 public class OptionalField extends Container {
 
-    public OptionalField() {
-    }
-
-    private OptionalField(TypeName type, FieldWrapper field, List<ModelField> valueFields) {
+    public OptionalField(TypeName type, FieldWrapper field, List<ModelField> valueFields) {
         super(type, field, valueFields);
-    }
-
-    @Override
-    public OptionalField create(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
-        return new OptionalField(type, field, nestedFields);
     }
 
     @Override

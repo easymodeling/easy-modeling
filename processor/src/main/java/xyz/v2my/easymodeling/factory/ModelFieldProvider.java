@@ -40,29 +40,6 @@ public class ModelFieldProvider {
     private static final Map<TypeName, Container> CONTAINER_FIELDS = new HashMap<>();
 
     static {
-        PLAIN_FIELDS.put(TypeName.BYTE, new ByteField());
-        PLAIN_FIELDS.put(TypeName.SHORT, new ShortField());
-        PLAIN_FIELDS.put(TypeName.INT, new IntegerField());
-        PLAIN_FIELDS.put(TypeName.LONG, new LongField());
-        PLAIN_FIELDS.put(TypeName.FLOAT, new FloatField());
-        PLAIN_FIELDS.put(TypeName.DOUBLE, new DoubleField());
-        PLAIN_FIELDS.put(TypeName.BOOLEAN, new BooleanField());
-        PLAIN_FIELDS.put(TypeName.CHAR, new CharField());
-        PLAIN_FIELDS.put(ClassName.get(Byte.class), new ByteField());
-        PLAIN_FIELDS.put(ClassName.get(Short.class), new ShortField());
-        PLAIN_FIELDS.put(ClassName.get(Integer.class), new IntegerField());
-        PLAIN_FIELDS.put(ClassName.get(Long.class), new LongField());
-        PLAIN_FIELDS.put(ClassName.get(Float.class), new FloatField());
-        PLAIN_FIELDS.put(ClassName.get(Double.class), new DoubleField());
-        PLAIN_FIELDS.put(ClassName.get(Boolean.class), new BooleanField());
-        PLAIN_FIELDS.put(ClassName.get(Character.class), new CharField());
-        PLAIN_FIELDS.put(ClassName.get(String.class), new StringField());
-        PLAIN_FIELDS.put(ClassName.get(StringBuilder.class), new StringBuilderField());
-        PLAIN_FIELDS.put(ClassName.get(Instant.class), new InstantField());
-
-        CONTAINER_FIELDS.put(ClassName.get(Optional.class), new OptionalField());
-        CONTAINER_FIELDS.put(ClassName.get(List.class), new ListField());
-        CONTAINER_FIELDS.put(ClassName.get(ArrayList.class), new ArrayListField());
     }
 
     public ModelField provide(TypeName type, FieldWrapper field) {
@@ -103,15 +80,54 @@ public class ModelFieldProvider {
         final List<ModelField> nestedFields = parameterizedTypeName.typeArguments.stream()
                 .map(type -> nestedField(type, field))
                 .collect(Collectors.toList());
-        return Optional.ofNullable(CONTAINER_FIELDS.get(parameterizedTypeName.rawType))
-                .map(container -> container.create(parameterizedTypeName, field, nestedFields))
-                .orElseThrow(FieldNotSupportedException::new);
+        final ClassName type = parameterizedTypeName.rawType;
+        if (ClassName.get(Optional.class).equals(type)) {
+            return new OptionalField(parameterizedTypeName, field, nestedFields);
+        }
+        if (ClassName.get(List.class).equals(type)) {
+            return new ListField(parameterizedTypeName, field, nestedFields);
+        }
+        if (ClassName.get(ArrayList.class).equals(type)) {
+            return new ArrayListField(parameterizedTypeName, field, nestedFields);
+        }
+        throw new FieldNotSupportedException();
     }
 
     private PlainField<?> plainField(TypeName type, FieldWrapper field) {
-        return Optional.ofNullable(PLAIN_FIELDS.get(type))
-                .map(modelField -> modelField.create(type, field))
-                .orElseThrow(FieldNotSupportedException::new);
+        if (TypeName.BYTE.equals(type) || ClassName.get(Byte.class).equals(type)) {
+            return new ByteField(type, field);
+        }
+        if (TypeName.SHORT.equals(type) || ClassName.get(Short.class).equals(type)) {
+            return new ShortField(type, field);
+        }
+        if (TypeName.INT.equals(type) || ClassName.get(Integer.class).equals(type)) {
+            return new IntegerField(type, field);
+        }
+        if (TypeName.LONG.equals(type) || ClassName.get(Long.class).equals(type)) {
+            return new LongField(type, field);
+        }
+        if (TypeName.FLOAT.equals(type) || ClassName.get(Float.class).equals(type)) {
+            return new FloatField(type, field);
+        }
+        if (TypeName.DOUBLE.equals(type) || ClassName.get(Double.class).equals(type)) {
+            return new DoubleField(type, field);
+        }
+        if (TypeName.BOOLEAN.equals(type) || ClassName.get(Boolean.class).equals(type)) {
+            return new BooleanField(type, field);
+        }
+        if (TypeName.CHAR.equals(type) || ClassName.get(Character.class).equals(type)) {
+            return new CharField(type, field);
+        }
+        if (type.equals(ClassName.get(String.class))) {
+            return new StringField(type, field);
+        }
+        if (type.equals(ClassName.get(StringBuilder.class))) {
+            return new StringBuilderField(type, field);
+        }
+        if (type.equals(ClassName.get(Instant.class))) {
+            return new InstantField(type, field);
+        }
+        throw new FieldNotSupportedException();
     }
 
     private TypeName rawType(TypeName type) {

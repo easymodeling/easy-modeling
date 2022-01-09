@@ -10,16 +10,8 @@ import java.util.List;
 
 public class ArrayListField extends ListField {
 
-    public ArrayListField() {
-    }
-
-    private ArrayListField(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
+    public ArrayListField(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
         super(type, field, nestedFields);
-    }
-
-    @Override
-    public ArrayListField create(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
-        return new ArrayListField(type, field, nestedFields);
     }
 
     @Override

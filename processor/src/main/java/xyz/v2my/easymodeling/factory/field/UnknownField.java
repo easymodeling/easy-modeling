@@ -12,11 +12,6 @@ public class UnknownField extends PlainField<Void> {
     }
 
     @Override
-    public PlainField<Void> create(TypeName type, FieldWrapper field) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
     public CodeBlock initialValue() {
         return CodeBlock.of("null");
     }

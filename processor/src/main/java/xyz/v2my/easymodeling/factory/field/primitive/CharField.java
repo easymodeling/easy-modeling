@@ -7,16 +7,8 @@ import xyz.v2my.easymodeling.randomizer.primitive.CharRandomizer;
 
 public class CharField extends PrimitiveField<Character> {
 
-    private CharField(TypeName type, FieldWrapper field) {
+    public CharField(TypeName type, FieldWrapper field) {
         super(type, field);
-    }
-
-    public CharField() {
-    }
-
-    @Override
-    public CharField create(TypeName type, FieldWrapper field) {
-        return new CharField(type, field);
     }
 
     @Override

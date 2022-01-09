@@ -13,9 +13,6 @@ public abstract class NumericField<T extends Number> extends PlainField<T> {
         super(type, field);
     }
 
-    protected NumericField() {
-    }
-
     @Override
     protected CodeBlock initializerParameter() {
         return constantParameter().orElseGet(this::randomParameter);

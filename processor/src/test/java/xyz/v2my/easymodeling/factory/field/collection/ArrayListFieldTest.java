@@ -23,8 +23,8 @@ class ArrayListFieldTest extends FieldTest {
     @Test
     protected void should_generate_builder_field() {
         final FieldWrapper fieldWrapper = FieldWrapperFactory.one("fieldName").build();
-        final PlainField<Integer> integerField = new IntegerField().create(TypeName.get(Integer.class), fieldWrapper);
-        final ArrayListField listField = new ArrayListField().create(ParameterizedTypeName.get(ArrayList.class, Integer.class), fieldWrapper, Collections.singletonList(integerField));
+        final PlainField<Integer> integerField = new IntegerField(TypeName.get(Integer.class), fieldWrapper);
+        final ArrayListField listField = new ArrayListField(ParameterizedTypeName.get(ArrayList.class, Integer.class), fieldWrapper, Collections.singletonList(integerField));
 
         final FieldSpec field = listField.field();
 
@@ -37,8 +37,8 @@ class ArrayListFieldTest extends FieldTest {
     @Test
     protected void should_generate_builder_setter() {
         final FieldWrapper fieldWrapper = FieldWrapperFactory.one("fieldName").build();
-        final PlainField<Integer> integerField = new IntegerField().create(TypeName.get(Integer.class), fieldWrapper);
-        final ArrayListField listField = new ArrayListField().create(ParameterizedTypeName.get(ArrayList.class, Integer.class), fieldWrapper, Collections.singletonList(integerField));
+        final PlainField<Integer> integerField = new IntegerField(TypeName.get(Integer.class), fieldWrapper);
+        final ArrayListField listField = new ArrayListField(ParameterizedTypeName.get(ArrayList.class, Integer.class), fieldWrapper, Collections.singletonList(integerField));
 
         final MethodSpec builder = listField.setter("Builder");
 

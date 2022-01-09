@@ -14,9 +14,6 @@ import static xyz.v2my.easymodeling.randomizer.string.CharSequenceRandomizer.NUM
 
 public abstract class CharSequenceField<T extends CharSequence> extends PlainField<T> {
 
-    protected CharSequenceField() {
-    }
-
     protected CharSequenceField(TypeName type, FieldWrapper field) {
         super(type, field);
     }

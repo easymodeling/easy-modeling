@@ -26,8 +26,8 @@ class OptionalFieldTest extends FieldTest {
     @Test
     protected void should_generate_builder_field() {
         FieldWrapper fieldWrapper = FieldWrapperFactory.one("field_name").min(3.).max(9.).build();
-        final List<ModelField> nestedFields = Collections.singletonList(new StringField().create(ClassName.get(String.class), fieldWrapper));
-        final OptionalField optionalField = new OptionalField().create(ParameterizedTypeName.get(Optional.class, Integer.class), fieldWrapper, nestedFields);
+        final List<ModelField> nestedFields = Collections.singletonList(new StringField(ClassName.get(String.class), fieldWrapper));
+        final OptionalField optionalField = new OptionalField(ParameterizedTypeName.get(Optional.class, Integer.class), fieldWrapper, nestedFields);
 
         final FieldSpec field = optionalField.field();
 
@@ -40,8 +40,8 @@ class OptionalFieldTest extends FieldTest {
     @Test
     protected void should_generate_builder_setter() {
         FieldWrapper fieldWrapper = FieldWrapperFactory.one("field_name").build();
-        final List<ModelField> nestedFields = Collections.singletonList(new StringField().create(ClassName.get(String.class), fieldWrapper));
-        final OptionalField optionalField = new OptionalField().create(ParameterizedTypeName.get(Optional.class, Integer.class), fieldWrapper, nestedFields);
+        final List<ModelField> nestedFields = Collections.singletonList(new StringField(ClassName.get(String.class), fieldWrapper));
+        final OptionalField optionalField = new OptionalField(ParameterizedTypeName.get(Optional.class, Integer.class), fieldWrapper, nestedFields);
 
         final MethodSpec setter = optionalField.setter("Builder");
 
@@ -54,9 +54,9 @@ class OptionalFieldTest extends FieldTest {
     @ValueSource(booleans = {true, false})
     void should_generate_(boolean allowEmpty) {
         FieldWrapper fieldWrapper = FieldWrapperFactory.one("field_name").allowEmpty(allowEmpty).build();
-        final PlainField<String> stringField = new StringField().create(ClassName.get(String.class), fieldWrapper);
+        final PlainField<String> stringField = new StringField(ClassName.get(String.class), fieldWrapper);
         final List<ModelField> nestedFields = Collections.singletonList(stringField);
-        final OptionalField optionalField = new OptionalField().create(ParameterizedTypeName.get(Optional.class, Integer.class), fieldWrapper, nestedFields);
+        final OptionalField optionalField = new OptionalField(ParameterizedTypeName.get(Optional.class, Integer.class), fieldWrapper, nestedFields);
 
         final CodeBlock initialValue = optionalField.initialValue();
 

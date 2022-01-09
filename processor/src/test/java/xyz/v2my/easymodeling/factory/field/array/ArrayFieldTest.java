@@ -8,9 +8,9 @@ import com.squareup.javapoet.MethodSpec;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.factory.field.Container;
+import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
 import xyz.v2my.easymodeling.factory.field.number.IntegerField;
@@ -23,7 +23,6 @@ import javax.lang.model.element.Modifier;
 import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 
 class ArrayFieldTest extends FieldTest {
 
@@ -37,7 +36,7 @@ class ArrayFieldTest extends FieldTest {
     @Override
     @Test
     protected void should_generate_builder_field() {
-        final PlainField<Integer> integerField = new IntegerField().create(ClassName.get(Integer.class), field);
+        final PlainField<Integer> integerField = new IntegerField(ClassName.get(Integer.class), field);
         final Container arrayField = new ArrayField(ArrayTypeName.of(Integer.class), field, integerField);
 
         final FieldSpec field = arrayField.field();
@@ -50,7 +49,7 @@ class ArrayFieldTest extends FieldTest {
     @Override
     @Test
     protected void should_generate_builder_setter() {
-        final PlainField<Integer> integerField = new IntegerField().create(ClassName.get(Integer.class), field);
+        final PlainField<Integer> integerField = new IntegerField(ClassName.get(Integer.class), field);
         final Container arrayField = new ArrayField(ArrayTypeName.of(Integer.class), field, integerField);
 
         final MethodSpec setter = arrayField.setter("Builder");
@@ -60,21 +59,12 @@ class ArrayFieldTest extends FieldTest {
         assertThat(setter.modifiers).containsExactly(Modifier.PUBLIC);
     }
 
-    @Test
-    void should_not_create_field() {
-        final Container arrayField = new ArrayField(ArrayTypeName.of(Integer.class), field, null);
-
-        final Throwable throwable = catchThrowable(() -> arrayField.create(ArrayTypeName.of(Integer.class), field, null));
-
-        assertThat(throwable).isInstanceOf(UnsupportedOperationException.class);
-    }
-
     @Nested
     class ArrayOfArrayTest {
 
         @Test
         void should_generate_statement_of_array() {
-            final PlainField<Integer> integerField = new IntegerField().create(ClassName.get(Integer.class), field);
+            final PlainField<Integer> integerField = new IntegerField(ClassName.get(Integer.class), field);
             final Container arrayField = new ArrayField(ArrayTypeName.of(Integer.class), field, integerField);
 
             final CodeBlock initialValue = arrayField.initialValue();
@@ -85,7 +75,7 @@ class ArrayFieldTest extends FieldTest {
 
         @Test
         void should_generate_statement_of_matrix() {
-            final PlainField<Integer> integerField = new IntegerField().create(ClassName.get(Integer.class), field);
+            final PlainField<Integer> integerField = new IntegerField(ClassName.get(Integer.class), field);
             final Container arrayField = new ArrayField(ArrayTypeName.get(Integer[].class), field, integerField);
             final Container matrixField = new ArrayField(ArrayTypeName.get(Integer[][].class), field, arrayField);
 
@@ -98,7 +88,7 @@ class ArrayFieldTest extends FieldTest {
 
         @Test
         void should_generate_statement_of_cube() {
-            final PlainField<Instant> instantField = new InstantField().create(ClassName.get(Instant.class), field);
+            final PlainField<Instant> instantField = new InstantField(ClassName.get(Instant.class), field);
             final Container arrayField = new ArrayField(ArrayTypeName.get(Instant[].class), field, instantField);
             final Container matrixField = new ArrayField(ArrayTypeName.get(Instant[][].class), field, arrayField);
             final Container cubeField = new ArrayField(ArrayTypeName.get(Instant[][][].class), field, matrixField);

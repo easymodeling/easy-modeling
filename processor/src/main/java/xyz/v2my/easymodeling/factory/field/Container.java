@@ -10,15 +10,10 @@ public abstract class Container extends ModelField {
 
     protected List<ModelField> nestedFields;
 
-    protected Container() {
-    }
-
     protected Container(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
         super(type, field);
         this.nestedFields = nestedFields;
     }
-
-    public abstract Container create(TypeName type, FieldWrapper field, List<ModelField> nestedFields);
 
     @Override
     public CodeBlock initialValue() {

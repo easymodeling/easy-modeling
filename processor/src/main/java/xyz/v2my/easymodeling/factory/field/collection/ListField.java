@@ -11,16 +11,8 @@ import java.util.List;
 
 public class ListField extends Container {
 
-    public ListField() {
-    }
-
-    protected ListField(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
+    public ListField(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
         super(type, field, nestedFields);
-    }
-
-    @Override
-    public ListField create(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
-        return new ListField(type, field, nestedFields);
     }
 
     @Override

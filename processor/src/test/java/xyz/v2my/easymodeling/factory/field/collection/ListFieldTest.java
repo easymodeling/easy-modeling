@@ -8,8 +8,8 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.factory.field.string.StringField;
 import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
@@ -34,9 +34,9 @@ class ListFieldTest extends FieldTest {
     void setUp() {
         typeName = ParameterizedTypeName.get(List.class, String.class);
         fieldWrapper = FieldWrapperFactory.one("field_name").string("").min(3.).max(9.).minSize(20).maxSize(50).build();
-        final List<ModelField> nestedFields = Collections.singletonList(new StringField().create(ClassName.get(String.class), fieldWrapper));
+        final List<ModelField> nestedFields = Collections.singletonList(new StringField(ClassName.get(String.class), fieldWrapper));
 
-        listField = new ListField().create(typeName, fieldWrapper, nestedFields);
+        listField = new ListField(typeName, fieldWrapper, nestedFields);
     }
 
     @Test

@@ -7,8 +7,8 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
 import xyz.v2my.easymodeling.randomizer.primitive.BooleanRandomizer;
@@ -24,7 +24,7 @@ class BooleanFieldTest extends FieldTest {
     @BeforeEach
     void setUp() {
         final FieldWrapper fieldWrapper = FieldWrapperFactory.one("booleanField").build();
-        booleanPlainField = new BooleanField().create(TypeName.BOOLEAN, fieldWrapper);
+        booleanPlainField = new BooleanField(TypeName.BOOLEAN, fieldWrapper);
     }
 
     @Test

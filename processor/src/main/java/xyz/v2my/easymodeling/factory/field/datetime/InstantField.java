@@ -12,10 +12,7 @@ import java.util.Optional;
 
 public class InstantField extends PlainField<Instant> {
 
-    public InstantField() {
-    }
-
-    private InstantField(TypeName type, FieldWrapper field) {
+    public InstantField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 
@@ -30,11 +27,6 @@ public class InstantField extends PlainField<Instant> {
         } else {
             return field.datetime().map(datetime -> CodeBlock.of("new $T($T.ofEpochMilli($L))", initializerType(), Instant.class, datetime.toEpochMilli()));
         }
-    }
-
-    @Override
-    public PlainField<Instant> create(TypeName type, FieldWrapper field) {
-        return new InstantField(type, field);
     }
 
     protected CodeBlock randomParameter() {

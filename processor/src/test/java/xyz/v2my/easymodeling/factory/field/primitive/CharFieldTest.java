@@ -21,7 +21,7 @@ class CharFieldTest extends FieldTest {
     @Test
     protected void should_generate_builder_field() {
         final FieldWrapper fieldWrapper = FieldWrapperFactory.one("aChar").build();
-        final CharField charField = new CharField().create(TypeName.CHAR, fieldWrapper);
+        final CharField charField = new CharField(TypeName.CHAR, fieldWrapper);
 
         final FieldSpec field = charField.field();
 
@@ -34,7 +34,7 @@ class CharFieldTest extends FieldTest {
     @Test
     protected void should_generate_builder_setter() {
         final FieldWrapper fieldWrapper = FieldWrapperFactory.one("aChar").build();
-        final CharField charField = new CharField().create(TypeName.CHAR, fieldWrapper);
+        final CharField charField = new CharField(TypeName.CHAR, fieldWrapper);
 
         final MethodSpec setter = charField.setter("Builder");
 
@@ -50,7 +50,7 @@ class CharFieldTest extends FieldTest {
     @Test
     void should_generate_initial_value() {
         final FieldWrapper fieldWrapper = FieldWrapperFactory.one("aChar").build();
-        final CharField charField = new CharField().create(TypeName.CHAR, fieldWrapper);
+        final CharField charField = new CharField(TypeName.CHAR, fieldWrapper);
 
         final CodeBlock initialValue = charField.initialValue();
 

@@ -9,7 +9,6 @@ import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.array.PrimitiveArrayRandomizer;
 
 import java.util.Collections;
-import java.util.List;
 
 public class PrimitiveArrayField extends Container {
 
@@ -54,10 +53,5 @@ public class PrimitiveArrayField extends Container {
             return 1 + dimensionOf(((ArrayTypeName) type).componentType);
         }
         return 0;
-    }
-
-    @Override
-    public Container create(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

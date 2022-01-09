@@ -8,17 +8,11 @@ import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.array.ArrayRandomizer;
 
 import java.util.Collections;
-import java.util.List;
 
 public class ArrayField extends Container {
 
     public ArrayField(TypeName type, FieldWrapper field, ModelField elementField) {
         super(type, field, Collections.singletonList(elementField));
-    }
-
-    @Override
-    public Container create(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
