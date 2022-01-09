@@ -1,6 +1,8 @@
 package xyz.v2my.easymodeling.factory.field;
 
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
+import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import org.junit.jupiter.api.Test;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
@@ -33,5 +35,28 @@ public abstract class FieldTest {
     }
 
     @Test
-    abstract protected void should_generate_builder_setter();
+    final void should_generate_builder_setter() {
+        final MethodSpec setter = modelField.setter();
+
+        assertThat(setter.name).isEqualTo(FIELD_NAME);
+        assertThat(setter.returnType.toString()).isEqualTo("Builder");
+        assertThat(setter.parameters).hasSize(1);
+        assertThat(setter.parameters.get(0).name).isEqualTo(FIELD_NAME);
+        assertThat(setter.parameters.get(0).type).isEqualTo(typeName);
+        final String code = "" +
+                "this." + FIELD_NAME + " = " + FIELD_NAME + ";\n" +
+                "return this;\n";
+        assertThat(setter.code.toString()).isEqualTo(code);
+    }
+
+    @Test
+    void should_generate_initial_value() {
+        final CodeBlock initializer = modelField.initializer();
+        final CodeBlock initialValue = modelField.initialValue();
+
+        assertThat(initialValue).isEqualTo(CodeBlock.of("$L.next()", initializer));
+    }
+
+    @Test
+    protected abstract void should_generate_initializer();
 }

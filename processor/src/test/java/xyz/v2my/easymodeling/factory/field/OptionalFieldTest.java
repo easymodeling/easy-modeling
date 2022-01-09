@@ -2,7 +2,6 @@ package xyz.v2my.easymodeling.factory.field;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,6 @@ import xyz.v2my.easymodeling.factory.field.string.StringField;
 import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
 import xyz.v2my.easymodeling.randomizer.OptionalRandomizer;
 
-import javax.lang.model.element.Modifier;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -24,23 +22,15 @@ class OptionalFieldTest extends FieldTest {
 
     private ClassName rawType;
 
+    private StringField stringField;
+
     @BeforeEach
     void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).min(3.).max(9.).build();
-        final List<ModelField> nestedFields = Collections.singletonList(new StringField(fieldWrapper));
+        stringField = new StringField(fieldWrapper);
         typeName = ParameterizedTypeName.get(Optional.class, Integer.class);
         rawType = ClassName.get(Integer.class);
-        modelField = new OptionalField(rawType, fieldWrapper, nestedFields);
-    }
-
-    @Override
-    @Test
-    protected void should_generate_builder_setter() {
-        final MethodSpec setter = modelField.setter();
-
-        assertThat(setter.name).isEqualTo(FIELD_NAME);
-        assertThat(setter.returnType.toString()).isEqualTo("Builder");
-        assertThat(setter.modifiers).containsExactly(Modifier.PUBLIC);
+        modelField = new OptionalField(rawType, fieldWrapper, Collections.singletonList(stringField));
     }
 
     @ParameterizedTest
@@ -53,6 +43,16 @@ class OptionalFieldTest extends FieldTest {
 
         final CodeBlock initialValue = optionalField.initialValue();
 
-        assertThat(initialValue.toString()).isEqualTo("new " + $(OptionalRandomizer.class) + "<>(" + stringField.initializer() + ", " + allowEmpty + ").next()");
+        assertThat(initialValue.toString())
+                .isEqualTo("new " + $(OptionalRandomizer.class) + "<>(" + stringField.initializer() + ", " + allowEmpty + ").next()");
+    }
+
+    @Override
+    @Test
+    protected void should_generate_initializer() {
+        final CodeBlock initializer = modelField.initializer();
+
+        assertThat(initializer.toString())
+                .isEqualTo("new " + $(OptionalRandomizer.class) + "<>(" + stringField.initializer() + ", false)");
     }
 }

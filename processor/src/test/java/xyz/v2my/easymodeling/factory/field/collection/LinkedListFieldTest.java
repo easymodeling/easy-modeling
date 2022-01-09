@@ -2,7 +2,6 @@ package xyz.v2my.easymodeling.factory.field.collection;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,24 +28,12 @@ class LinkedListFieldTest extends FieldTest {
         modelField = new LinkedListField(ClassName.get(Integer.class), fieldWrapper, Collections.singletonList(integerField));
     }
 
+    @Test
     @Override
-    @Test
-    protected void should_generate_builder_setter() {
-        final MethodSpec setter = modelField.setter();
-
-        assertThat(setter.name).isEqualTo(FIELD_NAME);
-        assertThat(setter.returnType.toString()).isEqualTo("Builder");
-        assertThat(setter.parameters).hasSize(1);
-        assertThat(setter.parameters.get(0).name).isEqualTo(FIELD_NAME);
-        assertThat(setter.parameters.get(0).type).isEqualTo(typeName);
-        assertThat(setter.code.toString()).isEqualTo("this." + FIELD_NAME + " = " + FIELD_NAME + ";\n" + "return this;\n");
-    }
-
-    @Test
-    void should_generate_initial_value() {
-        final CodeBlock codeBlock = modelField.initialValue();
+    protected void should_generate_initializer() {
+        final CodeBlock codeBlock = modelField.initializer();
 
         assertThat(codeBlock.toString())
-                .isEqualTo("new " + $(LinkedListRandomizer.class) + "<>(" + integerField.initializer() + ", 2, 5).next()");
+                .isEqualTo("new " + $(LinkedListRandomizer.class) + "<>(" + integerField.initializer() + ", 2, 5)");
     }
 }

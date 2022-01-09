@@ -2,15 +2,11 @@ package xyz.v2my.easymodeling.factory.field.primitive;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterSpec;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
 import xyz.v2my.easymodeling.randomizer.primitive.BooleanRandomizer;
-
-import javax.lang.model.element.Modifier;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,23 +21,9 @@ class BooleanFieldTest extends FieldTest {
 
     @Test
     @Override
-    protected void should_generate_builder_setter() {
-        final MethodSpec builder = modelField.setter();
+    protected void should_generate_initializer() {
+        final CodeBlock initialValue = modelField.initializer();
 
-        assertThat(builder.name).isEqualTo(FIELD_NAME);
-        assertThat(builder.returnType.toString()).isEqualTo("Builder");
-        assertThat(builder.modifiers).containsExactly(Modifier.PUBLIC);
-        assertThat(builder.parameters).hasSize(1);
-        final ParameterSpec parameter = builder.parameters.get(0);
-        assertThat(parameter.name).isEqualTo(FIELD_NAME);
-        assertThat(parameter.type).isEqualTo(ClassName.get(Boolean.class));
-        assertThat(builder.code.toString()).isEqualTo("this." + FIELD_NAME + " = " + FIELD_NAME + ";\nreturn this;\n");
-    }
-
-    @Test
-    void should_generate_initial_value() {
-        final CodeBlock initialValue = modelField.initialValue();
-
-        assertThat(initialValue.toString()).isEqualTo("new " + $(BooleanRandomizer.class) + "().next()");
+        assertThat(initialValue.toString()).isEqualTo("new " + $(BooleanRandomizer.class) + "()");
     }
 }

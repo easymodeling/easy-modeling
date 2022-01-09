@@ -2,7 +2,6 @@ package xyz.v2my.easymodeling.factory.field.array;
 
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.CodeBlock;
-import com.squareup.javapoet.MethodSpec;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -16,29 +15,29 @@ import xyz.v2my.easymodeling.randomizer.array.ArrayRandomizer;
 import xyz.v2my.easymodeling.randomizer.datetime.InstantRandomizer;
 import xyz.v2my.easymodeling.randomizer.number.IntegerRandomizer;
 
-import javax.lang.model.element.Modifier;
 import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ArrayFieldTest extends FieldTest {
 
+    private PlainField<Integer> integerField;
+
     @BeforeEach
     void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(2).maxSize(5).min(1.).max(3.).build();
-        final PlainField<Integer> integerField = new IntegerField(fieldWrapper);
+        integerField = new IntegerField(fieldWrapper);
         typeName = ArrayTypeName.of(Integer.class);
         modelField = new ArrayField(typeName, fieldWrapper, integerField);
     }
 
-    @Override
     @Test
-    protected void should_generate_builder_setter() {
-        final MethodSpec setter = modelField.setter();
+    @Override
+    protected void should_generate_initializer() {
+        final CodeBlock initializer = modelField.initializer();
 
-        assertThat(setter.name).isEqualTo(FIELD_NAME);
-        assertThat(setter.returnType.toString()).isEqualTo("Builder");
-        assertThat(setter.modifiers).containsExactly(Modifier.PUBLIC);
+        assertThat(initializer.toString())
+                .isEqualTo("new " + $(ArrayRandomizer.class) + "<>(" + integerField.initializer() + ", 2, 5)");
     }
 
     @Nested
