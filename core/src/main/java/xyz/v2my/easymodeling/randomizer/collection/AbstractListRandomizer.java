@@ -4,7 +4,8 @@ import xyz.v2my.easymodeling.randomizer.GenericRandomizer;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 
 import java.util.List;
-import java.util.stream.Collector;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public abstract class AbstractListRandomizer<C extends List<E>, E> extends GenericRandomizer<C> {
@@ -24,8 +25,9 @@ public abstract class AbstractListRandomizer<C extends List<E>, E> extends Gener
     @Override
     protected C random() {
         int size = doubleBetween(minSize, maxSize).intValue();
-        return Stream.generate(elementRandomizer::next).limit(size).collect(collector());
+        return Stream.generate(elementRandomizer::next).limit(size)
+                .collect(Collectors.toCollection(collectionFactory()));
     }
 
-    protected abstract Collector<E, ?, C> collector();
+    protected abstract Supplier<C> collectionFactory();
 }

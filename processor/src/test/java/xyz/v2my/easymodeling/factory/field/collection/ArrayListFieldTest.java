@@ -20,7 +20,7 @@ class ArrayListFieldTest extends FieldTest {
 
     @BeforeEach
     void setUp() {
-        final FieldWrapper fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).build();
+        fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).build();
         final PlainField<Integer> integerField = new IntegerField(fieldWrapper);
         typeName = ParameterizedTypeName.get(ArrayList.class, Integer.class);
         modelField = new ArrayListField(ClassName.get(Integer.class), fieldWrapper, Collections.singletonList(integerField));

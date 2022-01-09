@@ -1,8 +1,7 @@
-package xyz.v2my.easymodeling.randomizer.collection;
+package xyz.v2my.easymodeling.randomizer.array;
 
 import org.junit.jupiter.api.Test;
 import xyz.v2my.easymodeling.randomizer.RandomizerTest;
-import xyz.v2my.easymodeling.randomizer.array.ArrayRandomizer;
 import xyz.v2my.easymodeling.randomizer.number.IntegerRandomizer;
 
 import java.lang.reflect.Array;

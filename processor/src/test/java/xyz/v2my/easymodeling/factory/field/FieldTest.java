@@ -13,11 +13,11 @@ public abstract class FieldTest {
 
     public static final String FIELD_NAME = "fieldName";
 
-    protected ModelField modelField;
+    protected FieldWrapper fieldWrapper;
 
     protected TypeName typeName;
 
-    protected FieldWrapper fieldWrapper;
+    protected ModelField modelField;
 
     protected String $(Class<?> clazz) {
         return clazz.getCanonicalName();

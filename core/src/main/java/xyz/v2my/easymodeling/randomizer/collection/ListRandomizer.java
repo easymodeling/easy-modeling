@@ -2,10 +2,9 @@ package xyz.v2my.easymodeling.randomizer.collection;
 
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.function.Supplier;
 
 public class ListRandomizer<E> extends AbstractListRandomizer<List<E>, E> {
 
@@ -14,13 +13,7 @@ public class ListRandomizer<E> extends AbstractListRandomizer<List<E>, E> {
     }
 
     @Override
-    protected List<E> random() {
-        int size = doubleBetween(minSize, maxSize).intValue();
-        return Stream.generate(elementRandomizer::next).limit(size).collect(Collectors.toList());
-    }
-
-    @Override
-    protected Collector<E, ?, List<E>> collector() {
-        return Collectors.toList();
+    protected Supplier<List<E>> collectionFactory() {
+        return ArrayList::new;
     }
 }

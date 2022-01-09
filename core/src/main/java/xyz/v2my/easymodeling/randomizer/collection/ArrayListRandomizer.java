@@ -3,8 +3,7 @@ package xyz.v2my.easymodeling.randomizer.collection;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 
 import java.util.ArrayList;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+import java.util.function.Supplier;
 
 public class ArrayListRandomizer<E> extends AbstractListRandomizer<ArrayList<E>, E> {
 
@@ -13,7 +12,7 @@ public class ArrayListRandomizer<E> extends AbstractListRandomizer<ArrayList<E>,
     }
 
     @Override
-    protected Collector<E, ?, ArrayList<E>> collector() {
-        return Collectors.toCollection(ArrayList::new);
+    protected Supplier<ArrayList<E>> collectionFactory() {
+        return ArrayList::new;
     }
 }
