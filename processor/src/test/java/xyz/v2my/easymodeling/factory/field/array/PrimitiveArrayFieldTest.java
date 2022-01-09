@@ -3,11 +3,9 @@ package xyz.v2my.easymodeling.factory.field.array;
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.factory.field.number.IntegerField;
@@ -20,21 +18,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PrimitiveArrayFieldTest extends FieldTest {
 
-    public static final String FIELD_NAME = "int_field";
-    private PrimitiveArrayField primitiveArrayField;
-
     private PlainField<Integer> integerField;
 
     @BeforeEach
     void setUp() {
-        final FieldWrapper field = FieldWrapperFactory.one(FIELD_NAME).minSize(3).maxSize(8).build();
-        integerField = new IntegerField(ClassName.get(Integer.class), field);
-        primitiveArrayField = new PrimitiveArrayField(ArrayTypeName.of(int[].class), field, integerField);
+        fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(3).maxSize(8).build();
+        integerField = new IntegerField(ClassName.get(Integer.class), fieldWrapper);
+        typeName = ArrayTypeName.of(int[].class);
+        modelField = new PrimitiveArrayField((ArrayTypeName) typeName, fieldWrapper, integerField);
     }
 
     @Test
     void should_generate_initial_value() {
-        final CodeBlock initialValue = primitiveArrayField.initialValue();
+        final CodeBlock initialValue = modelField.initialValue();
 
         assertThat(initialValue.toString()).isEqualTo(
                 "(int[][]) new " + $(PrimitiveArrayRandomizer.class) + "(" + integerField.initializer().toString() + ", 2, 3, 8).next()");
@@ -42,18 +38,8 @@ class PrimitiveArrayFieldTest extends FieldTest {
 
     @Test
     @Override
-    protected void should_generate_builder_field() {
-        final FieldSpec field = primitiveArrayField.field();
-
-        assertThat(field.name).contains(FIELD_NAME);
-        assertThat(field.type).isEqualTo(ArrayTypeName.of(int[].class));
-        assertThat(field.modifiers).containsExactly(Modifier.PRIVATE);
-    }
-
-    @Test
-    @Override
     protected void should_generate_builder_setter() {
-        final MethodSpec setter = primitiveArrayField.setter("Builder");
+        final MethodSpec setter = modelField.setter("Builder");
 
         assertThat(setter.name).isEqualTo(FIELD_NAME);
         assertThat(setter.returnType.toString()).isEqualTo("Builder");

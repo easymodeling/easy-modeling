@@ -2,13 +2,10 @@ package xyz.v2my.easymodeling.factory.field.collection;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
-import com.squareup.javapoet.TypeName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.factory.field.string.StringField;
@@ -24,35 +21,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ListFieldTest extends FieldTest {
 
-    private TypeName typeName;
-
-    private FieldWrapper fieldWrapper;
-
-    private ListField listField;
-
     @BeforeEach
     void setUp() {
         typeName = ParameterizedTypeName.get(List.class, String.class);
-        fieldWrapper = FieldWrapperFactory.one("field_name").string("").min(3.).max(9.).minSize(20).maxSize(50).build();
+        fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).string("").min(3.).max(9.).minSize(20).maxSize(50).build();
         final List<ModelField> nestedFields = Collections.singletonList(new StringField(ClassName.get(String.class), fieldWrapper));
-
-        listField = new ListField(typeName, fieldWrapper, nestedFields);
-    }
-
-    @Test
-    @Override
-    protected void should_generate_builder_field() {
-        final FieldSpec field = listField.field();
-
-        assertThat(field.type).isEqualTo(typeName);
-        assertThat(field.name).contains(fieldWrapper.name());
-        assertThat(field.modifiers).containsExactly(Modifier.PRIVATE);
+        modelField = new ListField(typeName, fieldWrapper, nestedFields);
     }
 
     @Test
     @Override
     protected void should_generate_builder_setter() {
-        final MethodSpec setter = listField.setter("Some_builder_name");
+        final MethodSpec setter = modelField.setter("Some_builder_name");
 
         assertThat(setter.returnType.toString()).isEqualTo("Some_builder_name");
         assertThat(setter.name).isEqualTo(fieldWrapper.name());
@@ -64,7 +44,7 @@ class ListFieldTest extends FieldTest {
 
     @Test
     void should_generate_initializer() {
-        final CodeBlock initializer = listField.initializer();
+        final CodeBlock initializer = modelField.initializer();
 
         final String stringRandomizer = "new " + $(StringRandomizer.class) + "(3, 9, 3)";
         assertThat(initializer.toString()).isEqualTo("new " + $(ListRandomizer.class) + "<>(" + stringRandomizer + ", 20, 50)");
