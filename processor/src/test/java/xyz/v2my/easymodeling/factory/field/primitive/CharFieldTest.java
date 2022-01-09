@@ -30,7 +30,7 @@ class CharFieldTest extends FieldTest {
         final FieldWrapper fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).build();
         final CharField charField = new CharField(TypeName.CHAR, fieldWrapper);
 
-        final MethodSpec setter = charField.setter("Builder");
+        final MethodSpec setter = charField.setter();
 
         assertThat(setter.name).isEqualTo(FIELD_NAME);
         assertThat(setter.returnType.toString()).isEqualTo("Builder");

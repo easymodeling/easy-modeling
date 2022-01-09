@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static xyz.v2my.easymodeling.ClassPatterns.BUILDER_CLASS_NAME;
 
 class ListFieldTest extends FieldTest {
 
@@ -32,9 +33,9 @@ class ListFieldTest extends FieldTest {
     @Test
     @Override
     protected void should_generate_builder_setter() {
-        final MethodSpec setter = modelField.setter("Some_builder_name");
+        final MethodSpec setter = modelField.setter();
 
-        assertThat(setter.returnType.toString()).isEqualTo("Some_builder_name");
+        assertThat(setter.returnType.toString()).isEqualTo(BUILDER_CLASS_NAME);
         assertThat(setter.name).isEqualTo(fieldWrapper.name());
         assertThat(setter.modifiers).containsExactly(Modifier.PUBLIC);
         assertThat(setter.parameters).hasSize(1);

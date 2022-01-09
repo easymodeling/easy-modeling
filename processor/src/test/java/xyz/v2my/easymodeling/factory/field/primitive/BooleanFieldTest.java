@@ -26,7 +26,7 @@ class BooleanFieldTest extends FieldTest {
     @Test
     @Override
     protected void should_generate_builder_setter() {
-        final MethodSpec builder = modelField.setter("Builder");
+        final MethodSpec builder = modelField.setter();
 
         assertThat(builder.name).isEqualTo(FIELD_NAME);
         assertThat(builder.returnType.toString()).isEqualTo("Builder");

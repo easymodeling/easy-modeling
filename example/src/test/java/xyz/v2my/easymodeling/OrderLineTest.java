@@ -11,7 +11,7 @@ class OrderLineTest {
 
     @Test
     void should_generate_order_line() {
-        OrderLine orderLine = EMOrderLine.builder().id("some-id").build();
+        OrderLine orderLine = OrderLineModeler.builder().id("some-id").build();
 
         assertNotNull(orderLine);
         assertEquals(orderLine.getId(), "some-id");
@@ -19,7 +19,7 @@ class OrderLineTest {
 
     @Test
     void should_create_builder() {
-        final Order order = EMOrder.builder().id("some-id").unitPrice(BigDecimal.TEN).build();
+        final Order order = OrderModeler.builder().id("some-id").unitPrice(BigDecimal.TEN).build();
 
         assertEquals(BigDecimal.TEN, order.getUnitPrice());
     }

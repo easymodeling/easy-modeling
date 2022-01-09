@@ -10,6 +10,8 @@ import xyz.v2my.easymodeling.factory.FieldWrapper;
 
 import javax.lang.model.element.Modifier;
 
+import static xyz.v2my.easymodeling.ClassPatterns.BUILDER_CLASS_NAME;
+
 public abstract class ModelField implements InitializableType, BuilderMember, ConstructorContributor {
 
     protected TypeName type;
@@ -34,10 +36,10 @@ public abstract class ModelField implements InitializableType, BuilderMember, Co
     }
 
     @Override
-    public MethodSpec setter(String builderName) {
+    public MethodSpec setter() {
         return MethodSpec.methodBuilder(name)
                 .addModifiers(Modifier.PUBLIC)
-                .returns(ClassName.get("", builderName))
+                .returns(ClassName.get("", BUILDER_CLASS_NAME))
                 .addParameter(type, identity())
                 .addStatement("this.$N = $N", identity(), identity())
                 .addStatement("return this")

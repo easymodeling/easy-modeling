@@ -33,7 +33,7 @@ class ArrayListFieldTest extends FieldTest {
         final PlainField<Integer> integerField = new IntegerField(TypeName.get(Integer.class), fieldWrapper);
         final ArrayListField listField = new ArrayListField(ParameterizedTypeName.get(ArrayList.class, Integer.class), fieldWrapper, Collections.singletonList(integerField));
 
-        final MethodSpec builder = listField.setter("Builder");
+        final MethodSpec builder = listField.setter();
 
         assertThat(builder.name).isEqualTo("fieldName");
     }

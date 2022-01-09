@@ -36,7 +36,7 @@ class ArrayFieldTest extends FieldTest {
     @Override
     @Test
     protected void should_generate_builder_setter() {
-        final MethodSpec setter = modelField.setter("Builder");
+        final MethodSpec setter = modelField.setter();
 
         assertThat(setter.name).isEqualTo(FIELD_NAME);
         assertThat(setter.returnType.toString()).isEqualTo("Builder");

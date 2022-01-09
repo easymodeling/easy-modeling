@@ -13,11 +13,10 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static xyz.v2my.easymodeling.ClassPatterns.BUILDER_METHOD_NAME;
+import static xyz.v2my.easymodeling.ClassPatterns.FACTORY_CLASS_NAME_PATTERN;
+
 public class FactoryClass {
-
-    private static final String FACTORY_NAME_PATTERN = "EM%s";
-
-    private static final String BUILDER_METHOD_NAME = "builder";
 
     private final ModelWrapper model;
 
@@ -52,7 +51,7 @@ public class FactoryClass {
     }
 
     public TypeSpec createType() {
-        final String factoryTypeName = String.format(FACTORY_NAME_PATTERN, model.getModelTypeName().simpleName());
+        final String factoryTypeName = String.format(FACTORY_CLASS_NAME_PATTERN, model.getModelTypeName().simpleName());
         final TypeSpec.Builder factory = TypeSpec.classBuilder(factoryTypeName).addModifiers(Modifier.PUBLIC);
         final TypeSpec innerBuilder = builderClass.createType();
         factory.addType(innerBuilder);

@@ -11,7 +11,7 @@ class DatetimeModelTest {
 
     @Test
     void should_populate_datetime() {
-        DatetimeModel model = EMDatetimeModel.next();
+        DatetimeModel model = DatetimeModelModeler.next();
 
         assertNotNull(model);
         assertNotNull(model.getInstant());

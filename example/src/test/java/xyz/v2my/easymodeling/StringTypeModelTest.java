@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class StringTypeModelTest {
 
-    private final StringTypeModel model = EMStringTypeModel.next();
+    private final StringTypeModel model = StringTypeModelModeler.next();
 
     @Test
     void getCommonString() {

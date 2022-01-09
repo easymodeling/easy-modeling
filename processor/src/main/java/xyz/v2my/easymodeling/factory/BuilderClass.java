@@ -12,9 +12,9 @@ import javax.lang.model.element.Modifier;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BuilderClass {
+import static xyz.v2my.easymodeling.ClassPatterns.BUILDER_CLASS_NAME;
 
-    private static final String BUILDER_NAME_PATTERN = "Builder";
+public class BuilderClass {
 
     private final List<ModelField> builderFields;
 
@@ -26,7 +26,7 @@ public class BuilderClass {
     }
 
     public TypeSpec createType() {
-        final TypeSpec.Builder builder = TypeSpec.classBuilder(BUILDER_NAME_PATTERN)
+        final TypeSpec.Builder builder = TypeSpec.classBuilder(BUILDER_CLASS_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC);
         builder.addMethod(builderAllArgsConstructor())
                 .addMethod(buildMethod())
@@ -66,7 +66,7 @@ public class BuilderClass {
 
     private List<MethodSpec> builderSetters() {
         return builderFields.stream()
-                .map(field -> field.setter(BUILDER_NAME_PATTERN))
+                .map(ModelField::setter)
                 .collect(Collectors.toList());
     }
 }

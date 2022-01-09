@@ -26,7 +26,7 @@ class FactoryClassTest {
     void should_create_factory_with_given_class_name() {
         final TypeSpec type = factoryClass.createType();
 
-        assertThat(type.name).isEqualTo("EM" + SomeClass.class.getSimpleName());
+        assertThat(type.name).isEqualTo(SomeClass.class.getSimpleName() + "Modeler");
     }
 
     @Test

@@ -7,5 +7,5 @@ public interface BuilderMember {
 
     FieldSpec field();
 
-    MethodSpec setter(String builderTypeName);
+    MethodSpec setter();
 }

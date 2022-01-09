@@ -9,7 +9,7 @@ class PrimitiveTypeTest {
 
     @Test
     void should_create_test_model() {
-        final PrimitiveTypeModel testModel = EMPrimitiveTypeModel.builder().build();
+        final PrimitiveTypeModel testModel = PrimitiveTypeModelModeler.builder().build();
 
         assertNotNull(testModel);
         assertNotNull(testModel.getaString());
@@ -17,7 +17,7 @@ class PrimitiveTypeTest {
 
     @Test
     void should_create_test_model_and_build_string_field() {
-        final PrimitiveTypeModel testModel = EMPrimitiveTypeModel.builder().aString("some-string").build();
+        final PrimitiveTypeModel testModel = PrimitiveTypeModelModeler.builder().aString("some-string").build();
 
         assertNotNull(testModel);
         assertEquals("some-string", testModel.getaString());
@@ -25,7 +25,7 @@ class PrimitiveTypeTest {
 
     @Test
     void should_create_test_model_with_next_method() {
-        final PrimitiveTypeModel testModel = EMPrimitiveTypeModel.next();
+        final PrimitiveTypeModel testModel = PrimitiveTypeModelModeler.next();
 
         assertNotNull(testModel);
     }

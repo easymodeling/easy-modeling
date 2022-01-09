@@ -10,7 +10,7 @@ class ArrayModelTest {
 
     @Test
     void should_generate_arrays() {
-        final ArrayModel model = EMArrayModel.next();
+        final ArrayModel model = ArrayModelModeler.next();
 
         assertNotNull(model);
         assertNotNull(model.anIntArray);
@@ -119,7 +119,7 @@ class ArrayModelTest {
 
     @Test
     void should_generate_array_with_size() {
-        final ArrayModel model = EMArrayModel.next();
+        final ArrayModel model = ArrayModelModeler.next();
 
         assertTrue(model.anIntArray.length >= 2);
         assertTrue(model.anIntArray.length < 5);
@@ -129,7 +129,7 @@ class ArrayModelTest {
 
     @Test
     void should_populate_constant_string_fields() {
-        final ArrayModel model = EMArrayModel.next();
+        final ArrayModel model = ArrayModelModeler.next();
 
         for (final String s : model.aStringArray) {
             assertEquals("abc", s);
