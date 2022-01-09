@@ -10,7 +10,7 @@ public class StringRandomizer extends CharSequenceRandomizer<String> {
         super(constant);
     }
 
-    public String random() {
+    protected String random() {
         return nextStringBuilder().toString();
     }
 }
