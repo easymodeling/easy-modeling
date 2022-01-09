@@ -1,6 +1,6 @@
 package xyz.v2my.easymodeling.randomizer;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -8,8 +8,8 @@ import java.util.Random;
 
 public abstract class RandomizerTest {
 
-    @BeforeEach
-    void baseSetUp() {
+    @BeforeAll
+    protected static void baseSetUp() {
         try {
             final Field field = GenericRandomizer.class.getDeclaredField("random");
             Field modifiersField = Field.class.getDeclaredField("modifiers");

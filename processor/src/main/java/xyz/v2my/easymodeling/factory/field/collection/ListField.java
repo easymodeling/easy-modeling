@@ -10,7 +10,7 @@ import xyz.v2my.easymodeling.randomizer.collection.ListRandomizer;
 
 import java.util.List;
 
-public class ListField extends AbstractListField {
+public class ListField extends AbstractCollectionField {
 
     public ListField(TypeName elementType, FieldWrapper field, List<ModelField> nestedFields) {
         super(ParameterizedTypeName.get(ClassName.get(List.class), elementType), field, nestedFields);

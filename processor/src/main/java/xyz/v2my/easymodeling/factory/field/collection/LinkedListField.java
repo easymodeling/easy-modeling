@@ -11,7 +11,7 @@ import xyz.v2my.easymodeling.randomizer.collection.LinkedListRandomizer;
 import java.util.LinkedList;
 import java.util.List;
 
-public class LinkedListField extends AbstractListField {
+public class LinkedListField extends AbstractCollectionField {
 
     public LinkedListField(TypeName elementType, FieldWrapper field, List<ModelField> nestedFields) {
         super(ParameterizedTypeName.get(ClassName.get(LinkedList.class), elementType), field, nestedFields);

@@ -8,9 +8,9 @@ import xyz.v2my.easymodeling.factory.field.ModelField;
 
 import java.util.List;
 
-public abstract class AbstractListField extends Container {
+public abstract class AbstractCollectionField extends Container {
 
-    public AbstractListField(ParameterizedTypeName typeName, FieldWrapper field, List<ModelField> nestedFields) {
+    public AbstractCollectionField(ParameterizedTypeName typeName, FieldWrapper field, List<ModelField> nestedFields) {
         super(typeName, field, nestedFields);
     }
 

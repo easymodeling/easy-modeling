@@ -11,7 +11,7 @@ import xyz.v2my.easymodeling.randomizer.collection.ArrayListRandomizer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArrayListField extends AbstractListField {
+public class ArrayListField extends AbstractCollectionField {
 
     public ArrayListField(TypeName elementType, FieldWrapper field, List<ModelField> nestedFields) {
         super(ParameterizedTypeName.get(ClassName.get(ArrayList.class), elementType), field, nestedFields);
