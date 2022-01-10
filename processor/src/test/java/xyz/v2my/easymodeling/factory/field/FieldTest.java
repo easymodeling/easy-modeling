@@ -4,6 +4,7 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 
@@ -24,6 +25,9 @@ public abstract class FieldTest {
     protected String $(Class<?> clazz) {
         return clazz.getCanonicalName();
     }
+
+    @BeforeEach
+    protected abstract void setUp();
 
     @Test
     final void should_generate_builder_field() {

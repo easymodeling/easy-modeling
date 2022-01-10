@@ -4,6 +4,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.field.string.StringField;
 import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
@@ -19,7 +20,8 @@ class SetFieldTest extends FieldTest {
     private StringField stringField;
 
     @BeforeEach
-    void setUp() {
+    @Override
+    protected void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(30).maxSize(50).build();
         typeName = ParameterizedTypeName.get(Set.class, String.class);
         stringField = new StringField(fieldWrapper);
@@ -27,6 +29,7 @@ class SetFieldTest extends FieldTest {
     }
 
     @Override
+    @Test
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();
 

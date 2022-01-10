@@ -25,7 +25,8 @@ class OptionalFieldTest extends FieldTest {
     private StringField stringField;
 
     @BeforeEach
-    void setUp() {
+    @Override
+    protected void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).min(3.).max(9.).build();
         stringField = new StringField(fieldWrapper);
         typeName = ParameterizedTypeName.get(Optional.class, Integer.class);

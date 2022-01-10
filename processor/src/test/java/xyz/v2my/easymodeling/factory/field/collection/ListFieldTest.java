@@ -20,7 +20,8 @@ class ListFieldTest extends FieldTest {
     private StringField stringField;
 
     @BeforeEach
-    void setUp() {
+    @Override
+    protected void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).string("").min(3.).max(9.).minSize(20).maxSize(50).build();
         this.stringField = new StringField(fieldWrapper);
         typeName = ParameterizedTypeName.get(List.class, String.class);

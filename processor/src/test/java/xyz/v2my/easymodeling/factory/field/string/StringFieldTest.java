@@ -18,7 +18,8 @@ class StringFieldTest extends FieldTest {
     public static final String STRING_CONSTANT = "some-string";
 
     @BeforeEach
-    void setUp() {
+    @Override
+    protected void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).string(STRING_CONSTANT).build();
         typeName = ClassName.get(String.class);
         modelField = new StringField(fieldWrapper);

@@ -13,7 +13,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CharFieldTest extends FieldTest {
 
     @BeforeEach
-    void setUp() {
+    @Override
+    protected void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).build();
         typeName = ClassName.get(Character.class);
         modelField = new CharField(fieldWrapper);

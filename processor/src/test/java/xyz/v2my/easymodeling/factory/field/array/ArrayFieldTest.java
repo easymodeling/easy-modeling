@@ -24,7 +24,8 @@ class ArrayFieldTest extends FieldTest {
     private PlainField<Integer> integerField;
 
     @BeforeEach
-    void setUp() {
+    @Override
+    protected void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(2).maxSize(5).min(1.).max(3.).build();
         integerField = new IntegerField(fieldWrapper);
         typeName = ArrayTypeName.of(Integer.class);
@@ -82,5 +83,4 @@ class ArrayFieldTest extends FieldTest {
             assertThat(initialValue.toString()).isEqualTo(cubeRandomizer + ".next()");
         }
     }
-
 }

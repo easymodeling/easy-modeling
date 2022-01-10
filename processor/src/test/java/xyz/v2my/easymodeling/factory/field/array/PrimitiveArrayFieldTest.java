@@ -17,7 +17,8 @@ class PrimitiveArrayFieldTest extends FieldTest {
     private PlainField<Integer> integerField;
 
     @BeforeEach
-    void setUp() {
+    @Override
+    protected void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(3).maxSize(8).build();
         integerField = new IntegerField(fieldWrapper);
         typeName = ArrayTypeName.of(int[].class);

@@ -6,35 +6,34 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
-import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.factory.field.number.IntegerField;
 import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
-import xyz.v2my.easymodeling.randomizer.collection.ArrayListRandomizer;
+import xyz.v2my.easymodeling.randomizer.collection.HashSetRandomizer;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ArrayListFieldTest extends FieldTest {
+class HashSetFieldTest extends FieldTest {
 
-    private PlainField<Integer> integerField;
+    private IntegerField integerField;
 
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).build();
+        fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(50).maxSize(100).build();
         integerField = new IntegerField(fieldWrapper);
-        typeName = ParameterizedTypeName.get(ArrayList.class, Integer.class);
-        modelField = new ArrayListField(ClassName.get(Integer.class), fieldWrapper, Collections.singletonList(integerField));
+        typeName = ParameterizedTypeName.get(HashSet.class, Integer.class);
+        modelField = new HashSetField(ClassName.get(Integer.class), fieldWrapper, Collections.singletonList(integerField));
     }
 
-    @Test
     @Override
+    @Test
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();
 
         assertThat(initializer.toString()).isEqualTo(
-                "new " + $(ArrayListRandomizer.class) + "<>(" + integerField.initializer() + ", 1, 20)");
+                "new " + $(HashSetRandomizer.class) + "<>(" + integerField.initializer() + ", 50, 100)");
     }
 }

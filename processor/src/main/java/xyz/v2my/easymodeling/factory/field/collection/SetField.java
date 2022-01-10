@@ -6,7 +6,7 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.factory.field.ModelField;
-import xyz.v2my.easymodeling.randomizer.collection.AbstractSetRandomizer;
+import xyz.v2my.easymodeling.randomizer.collection.SetRandomizer;
 
 import java.util.List;
 import java.util.Set;
@@ -22,6 +22,6 @@ public class SetField extends AbstractCollectionField {
 
     @Override
     protected CodeBlock initializerType() {
-        return CodeBlock.of("$T", AbstractSetRandomizer.class);
+        return CodeBlock.of("$T", SetRandomizer.class);
     }
 }
