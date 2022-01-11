@@ -1,6 +1,5 @@
 package xyz.v2my.easymodeling.factory.field.collection;
 
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +25,7 @@ class ArrayListFieldTest extends FieldTest {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).build();
         integerField = new IntegerField(fieldWrapper);
         typeName = ParameterizedTypeName.get(ArrayList.class, Integer.class);
-        modelField = new ArrayListField(ClassName.get(Integer.class), fieldWrapper, Collections.singletonList(integerField));
+        modelField = new ArrayListField(fieldWrapper, Collections.singletonList(integerField));
     }
 
     @Test

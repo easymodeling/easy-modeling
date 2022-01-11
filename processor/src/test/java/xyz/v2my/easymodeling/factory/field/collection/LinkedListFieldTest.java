@@ -1,6 +1,5 @@
 package xyz.v2my.easymodeling.factory.field.collection;
 
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +25,7 @@ class LinkedListFieldTest extends FieldTest {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(2).maxSize(5).build();
         typeName = ParameterizedTypeName.get(LinkedList.class, Integer.class);
         integerField = new IntegerField(fieldWrapper);
-        modelField = new LinkedListField(ClassName.get(Integer.class), fieldWrapper, Collections.singletonList(integerField));
+        modelField = new LinkedListField(fieldWrapper, Collections.singletonList(integerField));
     }
 
     @Test

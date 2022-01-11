@@ -80,22 +80,22 @@ public class ModelFieldProvider {
                 .map(type -> nestedField(type, field))
                 .collect(Collectors.toList());
         if (ClassName.get(Optional.class).equals(rawType)) {
-            return new OptionalField(typeArguments.get(0), field, nestedFields);
+            return new OptionalField(field, nestedFields);
         }
         if (ClassName.get(List.class).equals(rawType)) {
-            return new ListField(typeArguments.get(0), field, nestedFields);
+            return new ListField(field, nestedFields);
         }
         if (ClassName.get(ArrayList.class).equals(rawType)) {
-            return new ArrayListField(typeArguments.get(0), field, nestedFields);
+            return new ArrayListField(field, nestedFields);
         }
         if (ClassName.get(LinkedList.class).equals(rawType)) {
-            return new LinkedListField(typeArguments.get(0), field, nestedFields);
+            return new LinkedListField(field, nestedFields);
         }
         if (ClassName.get(Set.class).equals(rawType)) {
-            return new SetField(typeArguments.get(0), field, nestedFields);
+            return new SetField(field, nestedFields);
         }
         if (ClassName.get(HashSet.class).equals(rawType)) {
-            return new HashSetField(typeArguments.get(0), field, nestedFields);
+            return new HashSetField(field, nestedFields);
         }
         throw new FieldNotSupportedException();
     }

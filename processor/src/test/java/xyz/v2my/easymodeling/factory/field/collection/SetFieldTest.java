@@ -1,6 +1,5 @@
 package xyz.v2my.easymodeling.factory.field.collection;
 
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +24,7 @@ class SetFieldTest extends FieldTest {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(30).maxSize(50).build();
         typeName = ParameterizedTypeName.get(Set.class, String.class);
         stringField = new StringField(fieldWrapper);
-        modelField = new SetField(ClassName.get(String.class), fieldWrapper, Collections.singletonList(stringField));
+        modelField = new SetField(fieldWrapper, Collections.singletonList(stringField));
     }
 
     @Override

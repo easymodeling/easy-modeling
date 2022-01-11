@@ -1,5 +1,6 @@
 package xyz.v2my.easymodeling.factory.field.collection;
 
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
@@ -10,8 +11,8 @@ import java.util.List;
 
 public abstract class AbstractCollectionField extends Container {
 
-    public AbstractCollectionField(ParameterizedTypeName typeName, FieldWrapper field, List<ModelField> nestedFields) {
-        super(typeName, field, nestedFields);
+    public AbstractCollectionField(ClassName containerClassName, FieldWrapper field, List<ModelField> nestedFields) {
+        super(ParameterizedTypeName.get(containerClassName, nestedFields.get(0).type()), field, nestedFields);
     }
 
     @Override

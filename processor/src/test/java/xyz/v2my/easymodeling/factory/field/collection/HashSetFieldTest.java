@@ -1,6 +1,5 @@
 package xyz.v2my.easymodeling.factory.field.collection;
 
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +24,7 @@ class HashSetFieldTest extends FieldTest {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(50).maxSize(100).build();
         integerField = new IntegerField(fieldWrapper);
         typeName = ParameterizedTypeName.get(HashSet.class, Integer.class);
-        modelField = new HashSetField(ClassName.get(Integer.class), fieldWrapper, Collections.singletonList(integerField));
+        modelField = new HashSetField(fieldWrapper, Collections.singletonList(integerField));
     }
 
     @Override
