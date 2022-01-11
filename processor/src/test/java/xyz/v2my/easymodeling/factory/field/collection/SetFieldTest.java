@@ -9,7 +9,6 @@ import xyz.v2my.easymodeling.factory.field.string.StringField;
 import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
 import xyz.v2my.easymodeling.randomizer.collection.SetRandomizer;
 
-import java.util.Collections;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,7 +23,7 @@ class SetFieldTest extends FieldTest {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(30).maxSize(50).build();
         typeName = ParameterizedTypeName.get(Set.class, String.class);
         stringField = new StringField(fieldWrapper);
-        modelField = new SetField(fieldWrapper, Collections.singletonList(stringField));
+        modelField = new SetField(fieldWrapper, stringField);
     }
 
     @Override

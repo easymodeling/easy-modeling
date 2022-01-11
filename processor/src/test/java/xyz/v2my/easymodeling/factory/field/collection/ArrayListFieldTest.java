@@ -11,7 +11,6 @@ import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
 import xyz.v2my.easymodeling.randomizer.collection.ArrayListRandomizer;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,7 +24,7 @@ class ArrayListFieldTest extends FieldTest {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).build();
         integerField = new IntegerField(fieldWrapper);
         typeName = ParameterizedTypeName.get(ArrayList.class, Integer.class);
-        modelField = new ArrayListField(fieldWrapper, Collections.singletonList(integerField));
+        modelField = new ArrayListField(fieldWrapper, integerField);
     }
 
     @Test

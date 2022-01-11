@@ -9,7 +9,6 @@ import xyz.v2my.easymodeling.factory.field.number.IntegerField;
 import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
 import xyz.v2my.easymodeling.randomizer.collection.HashSetRandomizer;
 
-import java.util.Collections;
 import java.util.HashSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,7 +23,7 @@ class HashSetFieldTest extends FieldTest {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(50).maxSize(100).build();
         integerField = new IntegerField(fieldWrapper);
         typeName = ParameterizedTypeName.get(HashSet.class, Integer.class);
-        modelField = new HashSetField(fieldWrapper, Collections.singletonList(integerField));
+        modelField = new HashSetField(fieldWrapper, integerField);
     }
 
     @Override

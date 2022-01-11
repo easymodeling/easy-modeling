@@ -10,8 +10,8 @@ import java.util.List;
 
 public class ListField extends AbstractCollectionField {
 
-    public ListField(FieldWrapper field, List<ModelField> nestedFields) {
-        super(ClassName.get(List.class), field, nestedFields);
+    public ListField(FieldWrapper field, ModelField nestedField) {
+        super(ClassName.get(List.class), field, nestedField);
     }
 
     @Override

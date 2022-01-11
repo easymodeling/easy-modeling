@@ -7,12 +7,11 @@ import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.collection.LinkedListRandomizer;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public class LinkedListField extends AbstractCollectionField {
 
-    public LinkedListField(FieldWrapper field, List<ModelField> nestedFields) {
-        super(ClassName.get(LinkedList.class), field, nestedFields);
+    public LinkedListField(FieldWrapper field, ModelField nestedField) {
+        super(ClassName.get(LinkedList.class), field, nestedField);
     }
 
     @Override

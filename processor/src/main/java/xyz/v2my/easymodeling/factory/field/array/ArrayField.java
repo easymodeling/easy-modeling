@@ -7,12 +7,10 @@ import xyz.v2my.easymodeling.factory.field.Container;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.array.ArrayRandomizer;
 
-import java.util.Collections;
-
 public class ArrayField extends Container {
 
     public ArrayField(TypeName type, FieldWrapper field, ModelField elementField) {
-        super(type, field, Collections.singletonList(elementField));
+        super(type, field, elementField);
     }
 
     @Override

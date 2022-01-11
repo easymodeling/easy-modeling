@@ -4,13 +4,13 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 
-import java.util.List;
+import java.util.Arrays;
 
 public abstract class Container extends ModelField {
 
-    protected List<ModelField> nestedFields;
+    protected ModelField[] nestedFields;
 
-    protected Container(TypeName type, FieldWrapper field, List<ModelField> nestedFields) {
+    protected Container(TypeName type, FieldWrapper field, ModelField... nestedFields) {
         super(type, field);
         this.nestedFields = nestedFields;
     }
@@ -26,7 +26,7 @@ public abstract class Container extends ModelField {
     }
 
     protected CodeBlock nestedRandomizers() {
-        return nestedFields.stream()
+        return Arrays.stream(nestedFields)
                 .map(ModelField::initializer)
                 .map(init -> CodeBlock.of("$L", init))
                 .collect(CodeBlock.joining(", "));

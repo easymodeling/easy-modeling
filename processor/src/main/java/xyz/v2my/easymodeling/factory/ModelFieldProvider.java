@@ -35,7 +35,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class ModelFieldProvider {
 
@@ -76,26 +75,27 @@ public class ModelFieldProvider {
     private Container containerField(ParameterizedTypeName parameterizedTypeName, FieldWrapper field) {
         final ClassName rawType = parameterizedTypeName.rawType;
         final List<TypeName> typeArguments = parameterizedTypeName.typeArguments;
-        final List<ModelField> nestedFields = typeArguments.stream()
+        final ModelField nestedField = typeArguments.stream()
                 .map(type -> nestedField(type, field))
-                .collect(Collectors.toList());
+                .findFirst()
+                .orElseThrow(FieldNotSupportedException::new);
         if (ClassName.get(Optional.class).equals(rawType)) {
-            return new OptionalField(field, nestedFields);
+            return new OptionalField(field, nestedField);
         }
         if (ClassName.get(List.class).equals(rawType)) {
-            return new ListField(field, nestedFields);
+            return new ListField(field, nestedField);
         }
         if (ClassName.get(ArrayList.class).equals(rawType)) {
-            return new ArrayListField(field, nestedFields);
+            return new ArrayListField(field, nestedField);
         }
         if (ClassName.get(LinkedList.class).equals(rawType)) {
-            return new LinkedListField(field, nestedFields);
+            return new LinkedListField(field, nestedField);
         }
         if (ClassName.get(Set.class).equals(rawType)) {
-            return new SetField(field, nestedFields);
+            return new SetField(field, nestedField);
         }
         if (ClassName.get(HashSet.class).equals(rawType)) {
-            return new HashSetField(field, nestedFields);
+            return new HashSetField(field, nestedField);
         }
         throw new FieldNotSupportedException();
     }

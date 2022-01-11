@@ -11,8 +11,6 @@ import xyz.v2my.easymodeling.factory.field.string.StringField;
 import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
 import xyz.v2my.easymodeling.randomizer.OptionalRandomizer;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,7 +25,7 @@ class OptionalFieldTest extends FieldTest {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).min(3.).max(9.).build();
         stringField = new StringField(fieldWrapper);
         typeName = ParameterizedTypeName.get(Optional.class, String.class);
-        modelField = new OptionalField(fieldWrapper, Collections.singletonList(stringField));
+        modelField = new OptionalField(fieldWrapper, stringField);
     }
 
     @ParameterizedTest
@@ -35,8 +33,7 @@ class OptionalFieldTest extends FieldTest {
     void should_generate_init_value_based_on_field_wrapper(boolean allowEmpty) {
         FieldWrapper fieldWrapper = FieldWrapperFactory.one("field_name").allowEmpty(allowEmpty).build();
         final PlainField<String> stringField = new StringField(fieldWrapper);
-        final List<ModelField> nestedFields = Collections.singletonList(stringField);
-        final OptionalField optionalField = new OptionalField(fieldWrapper, nestedFields);
+        final OptionalField optionalField = new OptionalField(fieldWrapper, stringField);
 
         final CodeBlock initialValue = optionalField.initialValue();
 

@@ -6,13 +6,12 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.randomizer.OptionalRandomizer;
 
-import java.util.List;
 import java.util.Optional;
 
 public class OptionalField extends Container {
 
-    public OptionalField(FieldWrapper field, List<ModelField> valueFields) {
-        super(ParameterizedTypeName.get(ClassName.get(Optional.class), valueFields.get(0).type()), field, valueFields);
+    public OptionalField(FieldWrapper field, ModelField valueField) {
+        super(ParameterizedTypeName.get(ClassName.get(Optional.class), valueField.type()), field, valueField);
     }
 
     @Override

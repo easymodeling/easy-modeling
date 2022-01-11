@@ -8,12 +8,10 @@ import xyz.v2my.easymodeling.factory.field.Container;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.array.PrimitiveArrayRandomizer;
 
-import java.util.Collections;
-
 public class PrimitiveArrayField extends Container {
 
     public PrimitiveArrayField(ArrayTypeName type, FieldWrapper field, ModelField elementField) {
-        super(type, field, Collections.singletonList(elementField));
+        super(type, field, elementField);
     }
 
     @Override

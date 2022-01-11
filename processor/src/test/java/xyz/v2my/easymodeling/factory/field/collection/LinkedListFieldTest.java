@@ -10,7 +10,6 @@ import xyz.v2my.easymodeling.factory.field.number.IntegerField;
 import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
 import xyz.v2my.easymodeling.randomizer.collection.LinkedListRandomizer;
 
-import java.util.Collections;
 import java.util.LinkedList;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,7 +24,7 @@ class LinkedListFieldTest extends FieldTest {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(2).maxSize(5).build();
         typeName = ParameterizedTypeName.get(LinkedList.class, Integer.class);
         integerField = new IntegerField(fieldWrapper);
-        modelField = new LinkedListField(fieldWrapper, Collections.singletonList(integerField));
+        modelField = new LinkedListField(fieldWrapper, integerField);
     }
 
     @Test

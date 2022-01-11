@@ -7,12 +7,11 @@ import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.collection.ArrayListRandomizer;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ArrayListField extends AbstractCollectionField {
 
-    public ArrayListField(FieldWrapper field, List<ModelField> nestedFields) {
-        super(ClassName.get(ArrayList.class), field, nestedFields);
+    public ArrayListField(FieldWrapper field, ModelField nestedField) {
+        super(ClassName.get(ArrayList.class), field, nestedField);
     }
 
     @Override

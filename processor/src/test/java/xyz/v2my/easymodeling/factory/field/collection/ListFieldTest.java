@@ -9,7 +9,6 @@ import xyz.v2my.easymodeling.factory.field.string.StringField;
 import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
 import xyz.v2my.easymodeling.randomizer.collection.ListRandomizer;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,7 +23,7 @@ class ListFieldTest extends FieldTest {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).string("").min(3.).max(9.).minSize(20).maxSize(50).build();
         this.stringField = new StringField(fieldWrapper);
         typeName = ParameterizedTypeName.get(List.class, String.class);
-        modelField = new ListField(fieldWrapper, Collections.singletonList(this.stringField));
+        modelField = new ListField(fieldWrapper, this.stringField);
     }
 
     @Test

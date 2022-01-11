@@ -7,12 +7,10 @@ import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.factory.field.Container;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 
-import java.util.List;
-
 public abstract class AbstractCollectionField extends Container {
 
-    public AbstractCollectionField(ClassName containerClassName, FieldWrapper field, List<ModelField> nestedFields) {
-        super(ParameterizedTypeName.get(containerClassName, nestedFields.get(0).type()), field, nestedFields);
+    public AbstractCollectionField(ClassName container, FieldWrapper field, ModelField nestedField) {
+        super(ParameterizedTypeName.get(container, nestedField.type()), field, nestedField);
     }
 
     @Override
