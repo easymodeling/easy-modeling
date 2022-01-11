@@ -12,6 +12,7 @@ import xyz.v2my.easymodeling.factory.field.UnknownField;
 import xyz.v2my.easymodeling.factory.field.array.ArrayField;
 import xyz.v2my.easymodeling.factory.field.array.PrimitiveArrayField;
 import xyz.v2my.easymodeling.factory.field.collection.ArrayListField;
+import xyz.v2my.easymodeling.factory.field.collection.HashSetField;
 import xyz.v2my.easymodeling.factory.field.collection.LinkedListField;
 import xyz.v2my.easymodeling.factory.field.collection.ListField;
 import xyz.v2my.easymodeling.factory.field.collection.SetField;
@@ -29,6 +30,7 @@ import xyz.v2my.easymodeling.factory.field.string.StringField;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -91,6 +93,9 @@ public class ModelFieldProvider {
         }
         if (ClassName.get(Set.class).equals(rawType)) {
             return new SetField(typeArguments.get(0), field, nestedFields);
+        }
+        if (ClassName.get(HashSet.class).equals(rawType)) {
+            return new HashSetField(typeArguments.get(0), field, nestedFields);
         }
         throw new FieldNotSupportedException();
     }
