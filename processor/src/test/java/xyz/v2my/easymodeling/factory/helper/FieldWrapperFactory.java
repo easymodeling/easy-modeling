@@ -51,6 +51,10 @@ public class FieldWrapperFactory {
         return decorate("numeric", numeric);
     }
 
+    public FieldWrapperFactory now(boolean now) {
+        return decorate("now", now);
+    }
+
     public static FieldWrapper any() {
         return FieldWrapperFactory.one("field_name").build();
     }
