@@ -19,6 +19,7 @@ public class ModelWrapper {
 
     private List<EnclosedField> enclosedFields;
 
+    @SuppressWarnings("unused")
     public ModelWrapper() {
     }
 

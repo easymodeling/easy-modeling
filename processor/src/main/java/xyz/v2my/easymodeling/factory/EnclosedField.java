@@ -6,9 +6,13 @@ import javax.lang.model.element.VariableElement;
 
 public class EnclosedField {
 
-    final String fieldName;
+    private String fieldName;
 
-    final TypeName typeName;
+    private TypeName typeName;
+
+    @SuppressWarnings("unused")
+    public EnclosedField() {
+    }
 
     public EnclosedField(VariableElement element) {
         this.fieldName = element.getSimpleName().toString();
