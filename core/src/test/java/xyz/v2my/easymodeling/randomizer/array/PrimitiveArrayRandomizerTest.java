@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.RandomizerTest;
+import xyz.v2my.easymodeling.randomizer.datetime.InstantRandomizer;
 import xyz.v2my.easymodeling.randomizer.number.ByteRandomizer;
 import xyz.v2my.easymodeling.randomizer.number.DoubleRandomizer;
 import xyz.v2my.easymodeling.randomizer.number.FloatRandomizer;
@@ -18,9 +19,11 @@ import xyz.v2my.easymodeling.randomizer.primitive.BooleanRandomizer;
 import xyz.v2my.easymodeling.randomizer.primitive.CharRandomizer;
 
 import java.lang.reflect.Array;
+import java.time.Instant;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 class PrimitiveArrayRandomizerTest extends RandomizerTest {
 
@@ -50,6 +53,15 @@ class PrimitiveArrayRandomizerTest extends RandomizerTest {
                 .contains(new int[]{1, 1, 1}, Index.atIndex(2))
                 .contains(new int[]{1, 1, 1}, Index.atIndex(3))
                 .contains(new int[]{1, 1, 1}, Index.atIndex(4));
+    }
+
+    @Test
+    void should_throw_when_field_type_is_not_primitive() {
+        final InstantRandomizer instantRandomizer = new InstantRandomizer(Instant.now());
+
+        final Throwable throwable = catchThrowable(() -> new PrimitiveArrayRandomizer(instantRandomizer, 1, 3, 6).next());
+
+        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest

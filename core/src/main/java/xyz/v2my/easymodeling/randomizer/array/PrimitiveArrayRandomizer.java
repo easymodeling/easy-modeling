@@ -59,8 +59,6 @@ public class PrimitiveArrayRandomizer extends GenericRandomizer<Object> {
             return double.class;
         if (clazz == Short.class)
             return short.class;
-        if (clazz == Void.class)
-            return void.class;
         throw new IllegalArgumentException("Unsupported class: " + clazz);
     }
 }
