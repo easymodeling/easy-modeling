@@ -16,6 +16,7 @@ import xyz.v2my.easymodeling.factory.field.collection.HashSetField;
 import xyz.v2my.easymodeling.factory.field.collection.LinkedListField;
 import xyz.v2my.easymodeling.factory.field.collection.ListField;
 import xyz.v2my.easymodeling.factory.field.collection.SetField;
+import xyz.v2my.easymodeling.factory.field.collection.TreeSetField;
 import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
 import xyz.v2my.easymodeling.factory.field.number.ByteField;
 import xyz.v2my.easymodeling.factory.field.number.DoubleField;
@@ -35,6 +36,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class ModelFieldProvider {
 
@@ -96,6 +98,9 @@ public class ModelFieldProvider {
         }
         if (ClassName.get(HashSet.class).equals(rawType)) {
             return new HashSetField(field, nestedField);
+        }
+        if (ClassName.get(TreeSet.class).equals(rawType)) {
+            return new TreeSetField(field, nestedField);
         }
         throw new FieldNotSupportedException();
     }
