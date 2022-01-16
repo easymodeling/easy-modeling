@@ -23,6 +23,10 @@ public class FieldWrapperFactory {
         return decorate("min", min);
     }
 
+    public FieldWrapperFactory constant(Object constant) {
+        return decorate("constant", constant);
+    }
+
     public FieldWrapperFactory max(Object max) {
         return decorate("max", max);
     }
