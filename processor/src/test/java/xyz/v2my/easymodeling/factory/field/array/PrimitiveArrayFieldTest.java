@@ -33,7 +33,6 @@ class PrimitiveArrayFieldTest extends FieldTest {
         assertThat(initialValue).isEqualTo(CodeBlock.of("(int[][]) $L.next()", initializer));
     }
 
-    @Test
     @Override
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();

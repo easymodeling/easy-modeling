@@ -42,7 +42,6 @@ class OptionalFieldTest extends FieldTest {
     }
 
     @Override
-    @Test
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();
 

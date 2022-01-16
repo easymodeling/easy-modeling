@@ -20,7 +20,6 @@ class CharFieldTest extends FieldTest {
         modelField = new CharField(fieldWrapper);
     }
 
-    @Test
     @Override
     protected void should_generate_initializer() {
         final CodeBlock initialValue = modelField.initializer();

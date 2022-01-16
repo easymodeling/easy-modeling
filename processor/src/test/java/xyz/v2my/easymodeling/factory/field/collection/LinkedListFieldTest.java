@@ -27,7 +27,6 @@ class LinkedListFieldTest extends FieldTest {
         modelField = new LinkedListField(fieldWrapper, integerField);
     }
 
-    @Test
     @Override
     protected void should_generate_initializer() {
         final CodeBlock codeBlock = modelField.initializer();

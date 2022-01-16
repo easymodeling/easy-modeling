@@ -62,5 +62,9 @@ public abstract class FieldTest {
     }
 
     @Test
+    void should_generate_initializer_() {
+        should_generate_initializer();
+    }
+
     protected abstract void should_generate_initializer();
 }

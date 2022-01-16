@@ -20,7 +20,6 @@ class BooleanFieldTest extends FieldTest {
         modelField = new BooleanField(fieldWrapper);
     }
 
-    @Test
     @Override
     protected void should_generate_initializer() {
         final CodeBlock initialValue = modelField.initializer();

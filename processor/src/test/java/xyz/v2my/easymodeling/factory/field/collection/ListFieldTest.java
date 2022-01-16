@@ -26,7 +26,6 @@ class ListFieldTest extends FieldTest {
         modelField = new ListField(fieldWrapper, this.stringField);
     }
 
-    @Test
     @Override
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();

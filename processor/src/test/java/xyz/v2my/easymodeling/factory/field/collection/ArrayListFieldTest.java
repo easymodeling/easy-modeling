@@ -27,7 +27,6 @@ class ArrayListFieldTest extends FieldTest {
         modelField = new ArrayListField(fieldWrapper, integerField);
     }
 
-    @Test
     @Override
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();
