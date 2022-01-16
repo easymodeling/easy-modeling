@@ -1,4 +1,6 @@
-package xyz.v2my.easymodeling.factory;
+package xyz.v2my.easymodeling.factory.provider;
+
+import xyz.v2my.easymodeling.factory.ModelFieldProvider;
 
 abstract class ModelFieldProviderTest {
 

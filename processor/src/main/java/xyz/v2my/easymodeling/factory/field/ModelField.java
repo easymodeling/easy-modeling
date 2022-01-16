@@ -20,7 +20,6 @@ public abstract class ModelField implements InitializableType, BuilderMember, Co
 
     protected FieldWrapper field;
 
-
     protected ModelField() {
     }
 

@@ -1,4 +1,4 @@
-package xyz.v2my.easymodeling.factory;
+package xyz.v2my.easymodeling.factory.provider;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
