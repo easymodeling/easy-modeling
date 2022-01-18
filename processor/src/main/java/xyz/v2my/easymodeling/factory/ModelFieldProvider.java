@@ -15,6 +15,7 @@ import xyz.v2my.easymodeling.factory.field.collection.ArrayListField;
 import xyz.v2my.easymodeling.factory.field.collection.HashSetField;
 import xyz.v2my.easymodeling.factory.field.collection.LinkedListField;
 import xyz.v2my.easymodeling.factory.field.collection.ListField;
+import xyz.v2my.easymodeling.factory.field.collection.MapField;
 import xyz.v2my.easymodeling.factory.field.collection.SetField;
 import xyz.v2my.easymodeling.factory.field.collection.TreeSetField;
 import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -76,31 +78,36 @@ public class ModelFieldProvider {
 
     private Container containerField(ParameterizedTypeName parameterizedTypeName, FieldWrapper field) {
         final ClassName rawType = parameterizedTypeName.rawType;
-        final List<TypeName> typeArguments = parameterizedTypeName.typeArguments;
-        final ModelField nestedField = typeArguments.stream()
+        final ModelField[] modelFields = parameterizedTypeName.typeArguments.stream()
                 .map(type -> nestedField(type, field))
-                .findFirst()
-                .orElseThrow(FieldNotSupportedException::new);
-        if (ClassName.get(Optional.class).equals(rawType)) {
-            return new OptionalField(field, nestedField);
-        }
-        if (ClassName.get(List.class).equals(rawType)) {
-            return new ListField(field, nestedField);
-        }
-        if (ClassName.get(ArrayList.class).equals(rawType)) {
-            return new ArrayListField(field, nestedField);
-        }
-        if (ClassName.get(LinkedList.class).equals(rawType)) {
-            return new LinkedListField(field, nestedField);
-        }
-        if (ClassName.get(Set.class).equals(rawType)) {
-            return new SetField(field, nestedField);
-        }
-        if (ClassName.get(HashSet.class).equals(rawType)) {
-            return new HashSetField(field, nestedField);
-        }
-        if (ClassName.get(TreeSet.class).equals(rawType)) {
-            return new TreeSetField(field, nestedField);
+                .toArray(ModelField[]::new);
+        try {
+            if (ClassName.get(Optional.class).equals(rawType)) {
+                return new OptionalField(field, modelFields[0]);
+            }
+            if (ClassName.get(List.class).equals(rawType)) {
+                return new ListField(field, modelFields[0]);
+            }
+            if (ClassName.get(ArrayList.class).equals(rawType)) {
+                return new ArrayListField(field, modelFields[0]);
+            }
+            if (ClassName.get(LinkedList.class).equals(rawType)) {
+                return new LinkedListField(field, modelFields[0]);
+            }
+            if (ClassName.get(Set.class).equals(rawType)) {
+                return new SetField(field, modelFields[0]);
+            }
+            if (ClassName.get(HashSet.class).equals(rawType)) {
+                return new HashSetField(field, modelFields[0]);
+            }
+            if (ClassName.get(TreeSet.class).equals(rawType)) {
+                return new TreeSetField(field, modelFields[0]);
+            }
+            if (ClassName.get(Map.class).equals(rawType)) {
+                return new MapField(field, modelFields[0], modelFields[1]);
+            }
+        } catch (ArrayIndexOutOfBoundsException obe) {
+            throw new FieldNotSupportedException();
         }
         throw new FieldNotSupportedException();
     }
