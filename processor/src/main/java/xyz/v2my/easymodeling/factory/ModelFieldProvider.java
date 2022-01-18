@@ -12,11 +12,13 @@ import xyz.v2my.easymodeling.factory.field.UnknownField;
 import xyz.v2my.easymodeling.factory.field.array.ArrayField;
 import xyz.v2my.easymodeling.factory.field.array.PrimitiveArrayField;
 import xyz.v2my.easymodeling.factory.field.collection.ArrayListField;
+import xyz.v2my.easymodeling.factory.field.collection.HashMapField;
 import xyz.v2my.easymodeling.factory.field.collection.HashSetField;
 import xyz.v2my.easymodeling.factory.field.collection.LinkedListField;
 import xyz.v2my.easymodeling.factory.field.collection.ListField;
 import xyz.v2my.easymodeling.factory.field.collection.MapField;
 import xyz.v2my.easymodeling.factory.field.collection.SetField;
+import xyz.v2my.easymodeling.factory.field.collection.TreeMapField;
 import xyz.v2my.easymodeling.factory.field.collection.TreeSetField;
 import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
 import xyz.v2my.easymodeling.factory.field.number.ByteField;
@@ -32,12 +34,14 @@ import xyz.v2my.easymodeling.factory.field.string.StringField;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 public class ModelFieldProvider {
@@ -105,6 +109,12 @@ public class ModelFieldProvider {
             }
             if (ClassName.get(Map.class).equals(rawType)) {
                 return new MapField(field, modelFields[0], modelFields[1]);
+            }
+            if (ClassName.get(HashMap.class).equals(rawType)) {
+                return new HashMapField(field, modelFields[0], modelFields[1]);
+            }
+            if (ClassName.get(TreeMap.class).equals(rawType)) {
+                return new TreeMapField(field, modelFields[0], modelFields[1]);
             }
         } catch (ArrayIndexOutOfBoundsException obe) {
             throw new FieldNotSupportedException();
