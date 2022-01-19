@@ -10,8 +10,19 @@ import java.util.TreeMap;
 
 public class TreeMapField extends AbstractMapField {
 
-    public TreeMapField(FieldWrapper field, ModelField keyField, ModelField valueField) {
-        super(ClassName.get(TreeMap.class), field, keyField, valueField);
+    public static final ClassName TYPE = ClassName.get(TreeMap.class);
+
+    public TreeMapField() {
+        this.type = TYPE;
+    }
+
+    @Override
+    public TreeMapField create(FieldWrapper field, ModelField... nestedFields) {
+        return new TreeMapField(field, nestedFields[0], nestedFields[1]);
+    }
+
+    private TreeMapField(FieldWrapper field, ModelField keyField, ModelField valueField) {
+        super(TYPE, field, keyField, valueField);
     }
 
     @Override

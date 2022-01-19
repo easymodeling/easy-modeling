@@ -10,8 +10,19 @@ import java.util.Map;
 
 public class MapField extends AbstractMapField {
 
-    public MapField(FieldWrapper field, ModelField keyField, ModelField valueField) {
-        super(ClassName.get(Map.class), field, keyField, valueField);
+    public static final ClassName TYPE = ClassName.get(Map.class);
+
+    public MapField() {
+        this.type = TYPE;
+    }
+
+    @Override
+    public MapField create(FieldWrapper field, ModelField... nestedFields) {
+        return new MapField(field, nestedFields[0], nestedFields[1]);
+    }
+
+    private MapField(FieldWrapper field, ModelField keyField, ModelField valueField) {
+        super(TYPE, field, keyField, valueField);
     }
 
     @Override

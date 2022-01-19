@@ -22,9 +22,9 @@ class ArrayListFieldTest extends FieldTest {
     @Override
     protected void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).build();
-        integerField = new IntegerField(fieldWrapper);
+        integerField = new IntegerField().create(fieldWrapper);
         typeName = ParameterizedTypeName.get(ArrayList.class, Integer.class);
-        modelField = new ArrayListField(fieldWrapper, integerField);
+        modelField = new ArrayListField().create(fieldWrapper, integerField);
     }
 
     @Override

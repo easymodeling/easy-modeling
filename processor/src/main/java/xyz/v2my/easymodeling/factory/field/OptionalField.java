@@ -10,8 +10,19 @@ import java.util.Optional;
 
 public class OptionalField extends Container {
 
-    public OptionalField(FieldWrapper field, ModelField valueField) {
-        super(ParameterizedTypeName.get(ClassName.get(Optional.class), valueField.type()), field, valueField);
+    public static final ClassName TYPE = ClassName.get(Optional.class);
+
+    public OptionalField() {
+        this.type = TYPE;
+    }
+
+    @Override
+    public OptionalField create(FieldWrapper field, ModelField... valueFields) {
+        return new OptionalField(field, valueFields[0]);
+    }
+
+    private OptionalField(FieldWrapper field, ModelField valueField) {
+        super(ParameterizedTypeName.get(TYPE, valueField.type()), field, valueField);
     }
 
     @Override

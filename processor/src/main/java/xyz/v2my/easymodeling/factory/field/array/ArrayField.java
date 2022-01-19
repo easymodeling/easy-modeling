@@ -30,4 +30,9 @@ public class ArrayField extends Container {
     private int minSize() {
         return field.minSize().orElse(1);
     }
+
+    @Override
+    public Container create(FieldWrapper field, ModelField... valueFields) {
+        throw new UnsupportedOperationException("Create ArrayField with constructor");
+    }
 }

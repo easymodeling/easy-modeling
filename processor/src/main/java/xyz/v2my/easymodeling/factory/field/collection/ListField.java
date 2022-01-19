@@ -10,8 +10,19 @@ import java.util.List;
 
 public class ListField extends AbstractCollectionField {
 
-    public ListField(FieldWrapper field, ModelField nestedField) {
-        super(ClassName.get(List.class), field, nestedField);
+    public static final ClassName TYPE = ClassName.get(List.class);
+
+    public ListField() {
+        this.type = TYPE;
+    }
+
+    @Override
+    public ListField create(FieldWrapper field, ModelField... nestedFields) {
+        return new ListField(field, nestedFields[0]);
+    }
+
+    private ListField(FieldWrapper field, ModelField nestedFields) {
+        super(TYPE, field, nestedFields);
     }
 
     @Override

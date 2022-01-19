@@ -21,9 +21,9 @@ class ListFieldTest extends FieldTest {
     @Override
     protected void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).string("").min(3.).max(9.).minSize(20).maxSize(50).build();
-        this.stringField = new StringField(fieldWrapper);
+        this.stringField = new StringField().create(fieldWrapper);
         typeName = ParameterizedTypeName.get(List.class, String.class);
-        modelField = new ListField(fieldWrapper, this.stringField);
+        modelField = new ListField().create(fieldWrapper, this.stringField);
     }
 
     @Override

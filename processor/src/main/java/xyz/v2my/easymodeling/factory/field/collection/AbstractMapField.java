@@ -9,7 +9,10 @@ import xyz.v2my.easymodeling.factory.field.ModelField;
 
 public abstract class AbstractMapField extends Container {
 
-    public AbstractMapField(ClassName container, FieldWrapper field, ModelField keyField, ModelField valueField) {
+    public AbstractMapField() {
+    }
+
+    protected AbstractMapField(ClassName container, FieldWrapper field, ModelField keyField, ModelField valueField) {
         super(ParameterizedTypeName.get(container, keyField.type(), valueField.type()), field, keyField, valueField);
     }
 

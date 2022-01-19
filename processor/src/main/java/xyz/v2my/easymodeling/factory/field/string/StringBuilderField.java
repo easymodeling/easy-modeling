@@ -7,8 +7,19 @@ import xyz.v2my.easymodeling.randomizer.string.StringBuilderRandomizer;
 
 public class StringBuilderField extends CharSequenceField<StringBuilder> {
 
-    public StringBuilderField(FieldWrapper field) {
-        super(ClassName.get(StringBuilder.class), field);
+    public static final ClassName TYPE = ClassName.get(StringBuilder.class);
+
+    public StringBuilderField() {
+        this.type = TYPE;
+    }
+
+    @Override
+    public StringBuilderField create(FieldWrapper field) {
+        return new StringBuilderField(field);
+    }
+
+    private StringBuilderField(FieldWrapper field) {
+        super(TYPE, field);
     }
 
     @Override

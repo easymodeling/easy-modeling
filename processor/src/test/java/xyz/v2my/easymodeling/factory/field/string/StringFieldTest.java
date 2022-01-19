@@ -24,7 +24,7 @@ class StringFieldTest extends FieldTest {
     protected void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).string(STRING_CONSTANT).build();
         typeName = ClassName.get(String.class);
-        modelField = new StringField(fieldWrapper);
+        modelField = new StringField().create(fieldWrapper);
     }
 
     @Override
@@ -41,7 +41,7 @@ class StringFieldTest extends FieldTest {
         @Test
         protected void should_generate_initializer_with_min_max_and_charset() {
             FieldWrapper fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).min(2.).max(40.).numeric(true).build();
-            ModelField modelField = new StringField(fieldWrapper);
+            ModelField modelField = new StringField().create(fieldWrapper);
             final CodeBlock initializer = modelField.initializer();
 
             assertThat(initializer.toString())
@@ -51,7 +51,7 @@ class StringFieldTest extends FieldTest {
         @Test
         void should_throw_when_charset_now_set_well() {
             FieldWrapper fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).numeric(true).alphabetic(true).build();
-            ModelField modelField = new StringField(fieldWrapper);
+            ModelField modelField = new StringField().create(fieldWrapper);
 
             //noinspection Convert2MethodRef
             final Throwable throwable = catchThrowable(() -> modelField.initializer());

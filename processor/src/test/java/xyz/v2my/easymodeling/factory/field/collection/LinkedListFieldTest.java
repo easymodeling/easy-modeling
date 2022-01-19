@@ -23,8 +23,8 @@ class LinkedListFieldTest extends FieldTest {
     protected void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(2).maxSize(5).build();
         typeName = ParameterizedTypeName.get(LinkedList.class, Integer.class);
-        integerField = new IntegerField(fieldWrapper);
-        modelField = new LinkedListField(fieldWrapper, integerField);
+        integerField = new IntegerField().create(fieldWrapper);
+        modelField = new LinkedListField().create(fieldWrapper, integerField);
     }
 
     @Override

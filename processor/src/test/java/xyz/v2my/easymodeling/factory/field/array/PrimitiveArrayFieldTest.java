@@ -20,7 +20,7 @@ class PrimitiveArrayFieldTest extends FieldTest {
     @Override
     protected void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(3).maxSize(8).build();
-        integerField = new IntegerField(fieldWrapper);
+        integerField = new IntegerField().create(fieldWrapper);
         typeName = ArrayTypeName.of(int[].class);
         modelField = new PrimitiveArrayField((ArrayTypeName) typeName, fieldWrapper, integerField);
     }

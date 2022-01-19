@@ -10,8 +10,19 @@ import java.util.ArrayList;
 
 public class ArrayListField extends AbstractCollectionField {
 
-    public ArrayListField(FieldWrapper field, ModelField nestedField) {
-        super(ClassName.get(ArrayList.class), field, nestedField);
+    public static final ClassName TYPE = ClassName.get(ArrayList.class);
+
+    public ArrayListField() {
+        this.type = TYPE;
+    }
+
+    @Override
+    public ArrayListField create(FieldWrapper field, ModelField... nestedFields) {
+        return new ArrayListField(field, nestedFields[0]);
+    }
+
+    private ArrayListField(FieldWrapper field, ModelField nestedField) {
+        super(TYPE, field, nestedField);
     }
 
     @Override

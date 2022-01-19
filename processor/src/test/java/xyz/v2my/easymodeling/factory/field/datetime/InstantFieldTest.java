@@ -21,7 +21,7 @@ class InstantFieldTest extends FieldTest {
     protected void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).build();
         typeName = ClassName.get(Instant.class);
-        modelField = new InstantField(fieldWrapper);
+        modelField = new InstantField().create(fieldWrapper);
     }
 
     @Override
@@ -37,7 +37,7 @@ class InstantFieldTest extends FieldTest {
         @Test
         void should_create_initializer_as_now() {
             final FieldWrapper fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).now(true).build();
-            modelField = new InstantField(fieldWrapper);
+            modelField = new InstantField().create(fieldWrapper);
 
             final CodeBlock initializer = modelField.initializer();
 

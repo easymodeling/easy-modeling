@@ -8,8 +8,19 @@ import xyz.v2my.easymodeling.randomizer.number.IntegerRandomizer;
 
 public class IntegerField extends NumericField<Integer> {
 
-    public IntegerField(FieldWrapper field) {
-        super(ClassName.get(Integer.class), field);
+    public static final ClassName TYPE = ClassName.get(Integer.class);
+
+    public IntegerField() {
+        this.type = TYPE;
+    }
+
+    @Override
+    public IntegerField create(FieldWrapper field) {
+        return new IntegerField(field);
+    }
+
+    private IntegerField(FieldWrapper field) {
+        super(TYPE, field);
     }
 
     @Override

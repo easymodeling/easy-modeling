@@ -10,8 +10,19 @@ import java.util.HashMap;
 
 public class HashMapField extends AbstractMapField {
 
-    public HashMapField(FieldWrapper field, ModelField keyField, ModelField valueField) {
-        super(ClassName.get(HashMap.class), field, keyField, valueField);
+    public static final ClassName TYPE = ClassName.get(HashMap.class);
+
+    public HashMapField() {
+        this.type = TYPE;
+    }
+
+    @Override
+    public HashMapField create(FieldWrapper field, ModelField... nestedFields) {
+        return new HashMapField(field, nestedFields[0], nestedFields[1]);
+    }
+
+    private HashMapField(FieldWrapper field, ModelField keyField, ModelField valueField) {
+        super(TYPE, field, keyField, valueField);
     }
 
     @Override

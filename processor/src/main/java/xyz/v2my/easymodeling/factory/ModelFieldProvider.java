@@ -32,19 +32,49 @@ import xyz.v2my.easymodeling.factory.field.primitive.CharField;
 import xyz.v2my.easymodeling.factory.field.string.StringBuilderField;
 import xyz.v2my.easymodeling.factory.field.string.StringField;
 
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class ModelFieldProvider {
+
+    private static final ModelField[] MODEL_FIELDS = {
+            // primitive
+            new ByteField(),
+            new ShortField(),
+            new IntegerField(),
+            new LongField(),
+            new FloatField(),
+            new DoubleField(),
+            new BooleanField(),
+            new CharField(),
+
+            // string
+            new StringField(),
+            new StringBuilderField(),
+
+            // datetime
+            new InstantField(),
+
+            // containers
+            new OptionalField(),
+            new ListField(),
+            new ArrayListField(),
+            new LinkedListField(),
+            new SetField(),
+            new HashSetField(),
+            new TreeSetField(),
+            new MapField(),
+            new HashMapField(),
+            new TreeMapField(),
+    };
+
+    private static final Map<TypeName, PlainField<?>> PLAIN_FIELDS = Arrays.stream(MODEL_FIELDS)
+            .filter(PlainField.class::isInstance).map(f -> (PlainField<?>) f).collect(Collectors.toMap(ModelField::type, f -> f));
+
+    private static final Map<TypeName, Container> CONTAINERS = Arrays.stream(MODEL_FIELDS)
+            .filter(Container.class::isInstance).map(Container.class::cast).collect(Collectors.toMap(ModelField::type, f -> f));
 
     public ModelField provide(TypeName type, FieldWrapper field) {
         try {
@@ -86,77 +116,18 @@ public class ModelFieldProvider {
                 .map(type -> nestedField(type, field))
                 .toArray(ModelField[]::new);
         try {
-            if (ClassName.get(Optional.class).equals(rawType)) {
-                return new OptionalField(field, modelFields[0]);
-            }
-            if (ClassName.get(List.class).equals(rawType)) {
-                return new ListField(field, modelFields[0]);
-            }
-            if (ClassName.get(ArrayList.class).equals(rawType)) {
-                return new ArrayListField(field, modelFields[0]);
-            }
-            if (ClassName.get(LinkedList.class).equals(rawType)) {
-                return new LinkedListField(field, modelFields[0]);
-            }
-            if (ClassName.get(Set.class).equals(rawType)) {
-                return new SetField(field, modelFields[0]);
-            }
-            if (ClassName.get(HashSet.class).equals(rawType)) {
-                return new HashSetField(field, modelFields[0]);
-            }
-            if (ClassName.get(TreeSet.class).equals(rawType)) {
-                return new TreeSetField(field, modelFields[0]);
-            }
-            if (ClassName.get(Map.class).equals(rawType)) {
-                return new MapField(field, modelFields[0], modelFields[1]);
-            }
-            if (ClassName.get(HashMap.class).equals(rawType)) {
-                return new HashMapField(field, modelFields[0], modelFields[1]);
-            }
-            if (ClassName.get(TreeMap.class).equals(rawType)) {
-                return new TreeMapField(field, modelFields[0], modelFields[1]);
-            }
+            return Optional.ofNullable(CONTAINERS.get(rawType)).orElseThrow(FieldNotSupportedException::new)
+                    .create(field, modelFields);
         } catch (ArrayIndexOutOfBoundsException obe) {
             throw new FieldNotSupportedException();
         }
-        throw new FieldNotSupportedException();
     }
 
     private PlainField<?> plainField(TypeName type, FieldWrapper field) {
-        if (TypeName.BYTE.equals(type) || ClassName.get(Byte.class).equals(type)) {
-            return new ByteField(field);
-        }
-        if (TypeName.SHORT.equals(type) || ClassName.get(Short.class).equals(type)) {
-            return new ShortField(field);
-        }
-        if (TypeName.INT.equals(type) || ClassName.get(Integer.class).equals(type)) {
-            return new IntegerField(field);
-        }
-        if (TypeName.LONG.equals(type) || ClassName.get(Long.class).equals(type)) {
-            return new LongField(field);
-        }
-        if (TypeName.FLOAT.equals(type) || ClassName.get(Float.class).equals(type)) {
-            return new FloatField(field);
-        }
-        if (TypeName.DOUBLE.equals(type) || ClassName.get(Double.class).equals(type)) {
-            return new DoubleField(field);
-        }
-        if (TypeName.BOOLEAN.equals(type) || ClassName.get(Boolean.class).equals(type)) {
-            return new BooleanField(field);
-        }
-        if (TypeName.CHAR.equals(type) || ClassName.get(Character.class).equals(type)) {
-            return new CharField(field);
-        }
-        if (type.equals(ClassName.get(String.class))) {
-            return new StringField(field);
-        }
-        if (type.equals(ClassName.get(StringBuilder.class))) {
-            return new StringBuilderField(field);
-        }
-        if (type.equals(ClassName.get(Instant.class))) {
-            return new InstantField(field);
-        }
-        throw new FieldNotSupportedException();
+        TypeName boxedType = type.isPrimitive() ? type.box() : type;
+        return Optional.ofNullable(PLAIN_FIELDS.get(boxedType))
+                .orElseThrow(FieldNotSupportedException::new)
+                .create(field);
     }
 
     private TypeName rawType(TypeName type) {

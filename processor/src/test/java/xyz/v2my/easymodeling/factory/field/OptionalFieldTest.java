@@ -3,7 +3,6 @@ package xyz.v2my.easymodeling.factory.field;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
@@ -23,17 +22,17 @@ class OptionalFieldTest extends FieldTest {
     @Override
     protected void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).min(3.).max(9.).build();
-        stringField = new StringField(fieldWrapper);
+        stringField = new StringField().create(fieldWrapper);
         typeName = ParameterizedTypeName.get(Optional.class, String.class);
-        modelField = new OptionalField(fieldWrapper, stringField);
+        modelField = new OptionalField().create(fieldWrapper, stringField);
     }
 
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
     void should_generate_init_value_based_on_field_wrapper(boolean allowEmpty) {
         FieldWrapper fieldWrapper = FieldWrapperFactory.one("field_name").allowEmpty(allowEmpty).build();
-        final PlainField<String> stringField = new StringField(fieldWrapper);
-        final OptionalField optionalField = new OptionalField(fieldWrapper, stringField);
+        final PlainField<String> stringField = new StringField().create(fieldWrapper);
+        final OptionalField optionalField = new OptionalField().create(fieldWrapper, stringField);
 
         final CodeBlock initialValue = optionalField.initialValue();
 

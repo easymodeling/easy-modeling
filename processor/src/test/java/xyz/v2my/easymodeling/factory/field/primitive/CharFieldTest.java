@@ -3,7 +3,6 @@ package xyz.v2my.easymodeling.factory.field.primitive;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
 import xyz.v2my.easymodeling.randomizer.primitive.CharRandomizer;
@@ -17,7 +16,7 @@ class CharFieldTest extends FieldTest {
     protected void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).build();
         typeName = ClassName.get(Character.class);
-        modelField = new CharField(fieldWrapper);
+        modelField = new CharField().create(fieldWrapper);
     }
 
     @Override

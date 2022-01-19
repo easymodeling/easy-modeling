@@ -24,9 +24,9 @@ class HashMapFieldTest extends FieldTest {
     protected void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).min(3.).max(8.).minSize(10).maxSize(20).build();
         typeName = ParameterizedTypeName.get(HashMap.class, String.class, Integer.class);
-        keyField = new StringField(fieldWrapper);
-        valueField = new IntegerField(fieldWrapper);
-        modelField = new HashMapField(fieldWrapper, keyField, valueField);
+        keyField = new StringField().create(fieldWrapper);
+        valueField = new IntegerField().create(fieldWrapper);
+        modelField = new HashMapField().create(fieldWrapper, keyField, valueField);
     }
 
     @Override

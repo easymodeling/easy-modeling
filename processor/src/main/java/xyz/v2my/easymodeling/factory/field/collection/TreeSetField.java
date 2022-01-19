@@ -10,8 +10,19 @@ import java.util.TreeSet;
 
 public class TreeSetField extends AbstractCollectionField {
 
-    public TreeSetField(FieldWrapper field, ModelField nestedField) {
-        super(ClassName.get(TreeSet.class), field, nestedField);
+    public static final ClassName TYPE = ClassName.get(TreeSet.class);
+
+    public TreeSetField() {
+        this.type = TYPE;
+    }
+
+    @Override
+    public TreeSetField create(FieldWrapper field, ModelField... nestedFields) {
+        return new TreeSetField(field, nestedFields[0]);
+    }
+
+    private TreeSetField(FieldWrapper field, ModelField nestedField) {
+        super(TYPE, field, nestedField);
     }
 
     @Override

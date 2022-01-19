@@ -10,8 +10,19 @@ import java.util.LinkedList;
 
 public class LinkedListField extends AbstractCollectionField {
 
-    public LinkedListField(FieldWrapper field, ModelField nestedField) {
-        super(ClassName.get(LinkedList.class), field, nestedField);
+    public static final ClassName TYPE = ClassName.get(LinkedList.class);
+
+    public LinkedListField() {
+        this.type = TYPE;
+    }
+
+    @Override
+    public LinkedListField create(FieldWrapper field, ModelField... nestedFields) {
+        return new LinkedListField(field, nestedFields[0]);
+    }
+
+    private LinkedListField(FieldWrapper field, ModelField nestedField) {
+        super(TYPE, field, nestedField);
     }
 
     @Override

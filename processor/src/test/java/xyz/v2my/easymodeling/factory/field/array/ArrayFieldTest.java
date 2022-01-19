@@ -27,7 +27,7 @@ class ArrayFieldTest extends FieldTest {
     @Override
     protected void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(2).maxSize(5).min(1.).max(3.).build();
-        integerField = new IntegerField(fieldWrapper);
+        integerField = new IntegerField().create(fieldWrapper);
         typeName = ArrayTypeName.of(Integer.class);
         modelField = new ArrayField(typeName, fieldWrapper, integerField);
     }
@@ -45,7 +45,7 @@ class ArrayFieldTest extends FieldTest {
 
         @Test
         void should_generate_statement_of_array() {
-            final PlainField<Integer> integerField = new IntegerField(fieldWrapper);
+            final PlainField<Integer> integerField = new IntegerField().create(fieldWrapper);
             final Container arrayField = new ArrayField(ArrayTypeName.of(Integer.class), fieldWrapper, integerField);
 
             final CodeBlock initialValue = arrayField.initialValue();
@@ -56,7 +56,7 @@ class ArrayFieldTest extends FieldTest {
 
         @Test
         void should_generate_statement_of_matrix() {
-            final PlainField<Integer> integerField = new IntegerField(fieldWrapper);
+            final PlainField<Integer> integerField = new IntegerField().create(fieldWrapper);
             final Container arrayField = new ArrayField(ArrayTypeName.get(Integer[].class), fieldWrapper, integerField);
             final Container matrixField = new ArrayField(ArrayTypeName.get(Integer[][].class), fieldWrapper, arrayField);
 
@@ -69,7 +69,7 @@ class ArrayFieldTest extends FieldTest {
 
         @Test
         void should_generate_statement_of_cube() {
-            final PlainField<Instant> instantField = new InstantField(fieldWrapper);
+            final PlainField<Instant> instantField = new InstantField().create(fieldWrapper);
             final Container arrayField = new ArrayField(ArrayTypeName.get(Instant[].class), fieldWrapper, instantField);
             final Container matrixField = new ArrayField(ArrayTypeName.get(Instant[][].class), fieldWrapper, arrayField);
             final Container cubeField = new ArrayField(ArrayTypeName.get(Instant[][][].class), fieldWrapper, matrixField);

@@ -8,8 +8,19 @@ import xyz.v2my.easymodeling.randomizer.number.FloatRandomizer;
 
 public class FloatField extends NumericField<Float> {
 
-    public FloatField(FieldWrapper field) {
-        super(ClassName.get(Float.class), field);
+    public static final ClassName TYPE = ClassName.get(Float.class);
+
+    public FloatField() {
+        this.type = TYPE;
+    }
+
+    @Override
+    public FloatField create(FieldWrapper field) {
+        return new FloatField(field);
+    }
+
+    private FloatField(FieldWrapper field) {
+        super(TYPE, field);
     }
 
     @Override

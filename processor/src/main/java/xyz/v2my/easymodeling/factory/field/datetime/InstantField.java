@@ -12,8 +12,19 @@ import java.util.Optional;
 
 public class InstantField extends PlainField<Instant> {
 
-    public InstantField(FieldWrapper field) {
-        super(ClassName.get(Instant.class), field);
+    public static final ClassName TYPE = ClassName.get(Instant.class);
+
+    public InstantField() {
+        this.type = TYPE;
+    }
+
+    @Override
+    public InstantField create(FieldWrapper field) {
+        return new InstantField(field);
+    }
+
+    private InstantField(FieldWrapper field) {
+        super(TYPE, field);
     }
 
     @Override

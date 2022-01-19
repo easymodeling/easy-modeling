@@ -22,7 +22,7 @@ class StringBuilderFieldTest extends FieldTest {
     protected void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).string(STRING_CONSTANT).build();
         typeName = ClassName.get(StringBuilder.class);
-        modelField = new StringBuilderField(fieldWrapper);
+        modelField = new StringBuilderField().create(fieldWrapper);
     }
 
     @Override
@@ -36,7 +36,7 @@ class StringBuilderFieldTest extends FieldTest {
     @Test
     protected void should_generate_initializer_with_min_max_and_charset() {
         FieldWrapper fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).min(2.).max(40.).alphabetic(true).build();
-        ModelField modelField = new StringBuilderField(fieldWrapper);
+        ModelField modelField = new StringBuilderField().create(fieldWrapper);
         final CodeBlock initializer = modelField.initializer();
 
         assertThat(initializer.toString())

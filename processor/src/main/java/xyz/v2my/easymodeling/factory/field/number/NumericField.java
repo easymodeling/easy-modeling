@@ -9,6 +9,9 @@ import java.util.Optional;
 
 public abstract class NumericField<T extends Number> extends PlainField<T> {
 
+    protected NumericField() {
+    }
+
     protected NumericField(TypeName type, FieldWrapper field) {
         super(type, field);
     }

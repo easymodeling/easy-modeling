@@ -26,7 +26,7 @@ class LongFieldTest {
         protected void setUp() {
             fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).min(-2.).max(9.).build();
             typeName = ClassName.get(Long.class);
-            modelField = new LongField(fieldWrapper);
+            modelField = new LongField().create(fieldWrapper);
         }
 
         @Override
@@ -45,7 +45,7 @@ class LongFieldTest {
         protected void setUp() {
             fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).constant(12.).build();
             typeName = ClassName.get(Long.class);
-            modelField = new LongField(fieldWrapper);
+            modelField = new LongField().create(fieldWrapper);
         }
 
         @Override
@@ -64,7 +64,7 @@ class LongFieldTest {
         protected void setUp() {
             fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).min(0.).max(2.).build();
             typeName = TypeName.LONG;
-            modelField = new LongField(fieldWrapper);
+            modelField = new LongField().create(fieldWrapper);
         }
 
         @Override

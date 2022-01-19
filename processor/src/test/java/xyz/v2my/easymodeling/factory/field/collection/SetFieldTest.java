@@ -22,8 +22,8 @@ class SetFieldTest extends FieldTest {
     protected void setUp() {
         fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(30).maxSize(50).build();
         typeName = ParameterizedTypeName.get(Set.class, String.class);
-        stringField = new StringField(fieldWrapper);
-        modelField = new SetField(fieldWrapper, stringField);
+        stringField = new StringField().create(fieldWrapper);
+        modelField = new SetField().create(fieldWrapper, stringField);
     }
 
     @Override

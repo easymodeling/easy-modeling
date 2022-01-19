@@ -52,4 +52,9 @@ public class PrimitiveArrayField extends Container {
         }
         return 0;
     }
+
+    @Override
+    public Container create(FieldWrapper field, ModelField... valueFields) {
+        throw new UnsupportedOperationException("Create primitive array with constructor");
+    }
 }

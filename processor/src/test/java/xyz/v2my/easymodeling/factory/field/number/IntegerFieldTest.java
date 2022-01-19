@@ -26,7 +26,7 @@ class IntegerFieldTest {
         protected void setUp() {
             fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).min(-2.).max(9.).build();
             typeName = ClassName.get(Integer.class);
-            modelField = new IntegerField(fieldWrapper);
+            modelField = new IntegerField().create(fieldWrapper);
         }
 
         @Override
@@ -45,7 +45,7 @@ class IntegerFieldTest {
         protected void setUp() {
             fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).constant(12.).build();
             typeName = ClassName.get(Integer.class);
-            modelField = new IntegerField(fieldWrapper);
+            modelField = new IntegerField().create(fieldWrapper);
         }
 
         @Override
@@ -64,7 +64,7 @@ class IntegerFieldTest {
         protected void setUp() {
             fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).min(0.).max(2.).build();
             typeName = TypeName.INT;
-            modelField = new IntegerField(fieldWrapper);
+            modelField = new IntegerField().create(fieldWrapper);
         }
 
         @Override

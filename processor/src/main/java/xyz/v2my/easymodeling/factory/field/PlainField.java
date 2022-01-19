@@ -7,6 +7,11 @@ import xyz.v2my.easymodeling.randomizer.Randomizer;
 
 public abstract class PlainField<T> extends ModelField {
 
+    protected PlainField() {
+    }
+
+    public abstract PlainField<T> create(FieldWrapper field);
+
     protected PlainField(TypeName type, FieldWrapper field) {
         super(type, field);
     }

@@ -8,8 +8,19 @@ import xyz.v2my.easymodeling.randomizer.number.ByteRandomizer;
 
 public class ByteField extends NumericField<Byte> {
 
-    public ByteField(FieldWrapper field) {
-        super(ClassName.get(Byte.class), field);
+    public static final ClassName TYPE = ClassName.get(Byte.class);
+
+    public ByteField() {
+        this.type = TYPE;
+    }
+
+    @Override
+    public ByteField create(FieldWrapper field) {
+        return new ByteField(field);
+    }
+
+    private ByteField(FieldWrapper field) {
+        super(TYPE, field);
     }
 
     @Override

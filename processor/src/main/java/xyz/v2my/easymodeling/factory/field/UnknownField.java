@@ -30,4 +30,9 @@ public class UnknownField extends PlainField<Void> {
     protected CodeBlock initializerParameter() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public PlainField<Void> create(FieldWrapper field) {
+        throw new UnsupportedOperationException("Create UnknownField with constructor");
+    }
 }

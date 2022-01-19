@@ -8,8 +8,19 @@ import xyz.v2my.easymodeling.randomizer.number.LongRandomizer;
 
 public class LongField extends NumericField<Long> {
 
-    public LongField(FieldWrapper field) {
-        super(ClassName.get(Long.class), field);
+    public static final ClassName TYPE = ClassName.get(Long.class);
+
+    public LongField() {
+        this.type = TYPE;
+    }
+
+    @Override
+    public LongField create(FieldWrapper field) {
+        return new LongField(field);
+    }
+
+    private LongField(FieldWrapper field) {
+        super(TYPE, field);
     }
 
     @Override

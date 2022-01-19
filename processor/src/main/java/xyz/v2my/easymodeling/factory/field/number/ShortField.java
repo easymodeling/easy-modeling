@@ -8,8 +8,19 @@ import xyz.v2my.easymodeling.randomizer.number.ShortRandomizer;
 
 public class ShortField extends NumericField<Short> {
 
-    public ShortField(FieldWrapper field) {
-        super(ClassName.get(Short.class), field);
+    public static final ClassName TYPE = ClassName.get(Short.class);
+
+    public ShortField() {
+        this.type = TYPE;
+    }
+
+    @Override
+    public ShortField create(FieldWrapper field) {
+        return new ShortField(field);
+    }
+
+    private ShortField(FieldWrapper field) {
+        super(TYPE, field);
     }
 
     @Override
