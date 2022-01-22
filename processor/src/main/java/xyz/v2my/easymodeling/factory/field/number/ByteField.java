@@ -3,6 +3,7 @@ package xyz.v2my.easymodeling.factory.field.number;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.number.ByteRandomizer;
 
@@ -15,7 +16,7 @@ public class ByteField extends NumericField<Byte> {
     }
 
     @Override
-    public ByteField create(FieldWrapper field) {
+    public ByteField create(FieldWrapper field, ModelField... valueFields) {
         return new ByteField(field);
     }
 

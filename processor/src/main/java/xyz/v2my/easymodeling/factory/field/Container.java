@@ -13,8 +13,6 @@ public abstract class Container extends ModelField {
     protected Container() {
     }
 
-    public abstract Container create(FieldWrapper field, ModelField... valueFields);
-
     protected Container(TypeName type, FieldWrapper field, ModelField... nestedFields) {
         super(type, field);
         this.nestedFields = nestedFields;

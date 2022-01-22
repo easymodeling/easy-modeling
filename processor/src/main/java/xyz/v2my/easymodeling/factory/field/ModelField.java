@@ -23,6 +23,8 @@ public abstract class ModelField implements InitializableType, BuilderMember, Co
     protected ModelField() {
     }
 
+    public abstract ModelField create(FieldWrapper field, ModelField... valueFields);
+
     protected ModelField(TypeName type, FieldWrapper field) {
         this.type = type;
         this.name = field.name();

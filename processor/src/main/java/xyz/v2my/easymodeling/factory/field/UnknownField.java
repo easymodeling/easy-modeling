@@ -32,7 +32,7 @@ public class UnknownField extends PlainField<Void> {
     }
 
     @Override
-    public PlainField<Void> create(FieldWrapper field) {
+    public PlainField<Void> create(FieldWrapper field, ModelField... valueFields) {
         throw new UnsupportedOperationException("Create UnknownField with constructor");
     }
 }

@@ -3,6 +3,7 @@ package xyz.v2my.easymodeling.factory.field.number;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.number.IntegerRandomizer;
 
@@ -15,7 +16,7 @@ public class IntegerField extends NumericField<Integer> {
     }
 
     @Override
-    public IntegerField create(FieldWrapper field) {
+    public IntegerField create(FieldWrapper field, ModelField... valueFields) {
         return new IntegerField(field);
     }
 

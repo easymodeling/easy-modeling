@@ -2,6 +2,7 @@ package xyz.v2my.easymodeling.factory.field.string;
 
 import com.squareup.javapoet.ClassName;
 import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.string.StringRandomizer;
 
@@ -14,7 +15,7 @@ public class StringField extends CharSequenceField<String> {
     }
 
     @Override
-    public StringField create(FieldWrapper field) {
+    public StringField create(FieldWrapper field, ModelField... valueFields) {
         return new StringField(field);
     }
 

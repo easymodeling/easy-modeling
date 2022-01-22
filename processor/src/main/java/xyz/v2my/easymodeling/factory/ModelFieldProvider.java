@@ -60,7 +60,7 @@ public class ModelFieldProvider {
         return new ArrayField(type, field, nestedField(type.componentType, field));
     }
 
-    private Container containerField(ParameterizedTypeName parameterizedTypeName, FieldWrapper field) {
+    private ModelField containerField(ParameterizedTypeName parameterizedTypeName, FieldWrapper field) {
         final ClassName rawType = parameterizedTypeName.rawType;
         final ModelField[] modelFields = parameterizedTypeName.typeArguments.stream()
                 .map(type -> nestedField(type, field))
@@ -73,7 +73,7 @@ public class ModelFieldProvider {
         }
     }
 
-    private PlainField<?> plainField(TypeName type, FieldWrapper field) {
+    private ModelField plainField(TypeName type, FieldWrapper field) {
         TypeName boxedType = type.isPrimitive() ? type.box() : type;
         return Optional.ofNullable(PLAIN_FIELDS.get(boxedType))
                 .orElseThrow(FieldNotSupportedException::new)

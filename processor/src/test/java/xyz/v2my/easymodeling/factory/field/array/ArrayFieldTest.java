@@ -18,6 +18,7 @@ import xyz.v2my.easymodeling.randomizer.number.IntegerRandomizer;
 import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 class ArrayFieldTest extends FieldTest {
 
@@ -38,6 +39,13 @@ class ArrayFieldTest extends FieldTest {
 
         assertThat(initializer.toString())
                 .isEqualTo("new " + $(ArrayRandomizer.class) + "<>(" + integerField.initializer() + ", 2, 5)");
+    }
+
+    @Test
+    void should_not_invoke_create() {
+        final Throwable throwable = catchThrowable(() -> new ArrayField(typeName, fieldWrapper, integerField).create(fieldWrapper));
+
+        assertThat(throwable).isInstanceOf(UnsupportedOperationException.class);
     }
 
     @Nested
