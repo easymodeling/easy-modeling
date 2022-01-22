@@ -3,37 +3,20 @@ package xyz.v2my.easymodeling;
 import lombok.AllArgsConstructor;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 public class DatetimeModel {
 
-    private Instant instant;
+    public Instant instant;
 
-    private Instant now;
+    public Instant now;
 
-    private Instant before;
+    public Instant before;
 
-    private Instant after;
+    public Instant after;
 
-    private String[] strings;
+    public String[] strings;
 
-    public Instant getInstant() {
-        return instant;
-    }
-
-    public Instant getNow() {
-        return now;
-    }
-
-    public Instant getBefore() {
-        return before;
-    }
-
-    public Instant getAfter() {
-        return after;
-    }
-
-    public String[] getStrings() {
-        return strings;
-    }
+    public LocalDate localDate;
 }

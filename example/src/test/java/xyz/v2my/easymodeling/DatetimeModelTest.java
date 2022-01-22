@@ -14,11 +14,13 @@ class DatetimeModelTest {
         DatetimeModel model = DatetimeModelModeler.next();
 
         assertNotNull(model);
-        assertNotNull(model.getInstant());
-        assertNotNull(model.getNow());
-        assertTrue(model.getBefore().isBefore(Instant.parse("2000-01-01T00:00:00Z")));
-        assertTrue(model.getAfter().isAfter(Instant.parse("2000-01-01T00:00:00Z")));
+        assertNotNull(model.instant);
+        assertNotNull(model.now);
+        assertTrue(model.before.isBefore(Instant.parse("2000-01-01T00:00:00Z")));
+        assertTrue(model.after.isAfter(Instant.parse("2000-01-01T00:00:00Z")));
 
-        assertTrue(model.getStrings().length > 0);
+        assertTrue(model.strings.length > 0);
+
+        assertNotNull(model.localDate);
     }
 }
