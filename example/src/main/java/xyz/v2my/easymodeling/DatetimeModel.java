@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @AllArgsConstructor
 public class DatetimeModel {
@@ -19,4 +21,8 @@ public class DatetimeModel {
     public String[] strings;
 
     public LocalDate localDate;
+
+    public LocalTime localTime;
+
+    public LocalDateTime localDateTime;
 }

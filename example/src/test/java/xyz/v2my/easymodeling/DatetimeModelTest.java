@@ -22,5 +22,7 @@ class DatetimeModelTest {
         assertTrue(model.strings.length > 0);
 
         assertNotNull(model.localDate);
+        assertNotNull(model.localTime);
+        assertNotNull(model.localDateTime);
     }
 }
