@@ -15,6 +15,7 @@ import xyz.v2my.easymodeling.factory.field.collection.LinkedListField;
 import xyz.v2my.easymodeling.factory.field.collection.ListField;
 import xyz.v2my.easymodeling.factory.field.collection.SetField;
 import xyz.v2my.easymodeling.factory.field.collection.TreeSetField;
+import xyz.v2my.easymodeling.factory.field.stream.StreamField;
 import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
 
 import java.util.ArrayList;
@@ -53,7 +54,9 @@ public class ContainerFieldProviderTest extends ModelFieldProviderTest {
 
                 Arguments.of(ClassName.get(Set.class), SetField.class),
                 Arguments.of(ClassName.get(HashSet.class), HashSetField.class),
-                Arguments.of(ClassName.get(TreeSet.class), TreeSetField.class)
+                Arguments.of(ClassName.get(TreeSet.class), TreeSetField.class),
+
+                Arguments.of(ClassName.get(Stream.class), StreamField.class)
         );
     }
 }
