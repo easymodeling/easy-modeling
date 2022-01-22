@@ -2,6 +2,7 @@ package xyz.v2my.easymodeling.randomizer.datetime;
 
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+import xyz.v2my.easymodeling.randomizer.RandomizerTest;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -9,7 +10,7 @@ import java.time.ZoneId;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class LocalDateRandomizerTest {
+class LocalDateRandomizerTest extends RandomizerTest {
 
     @RepeatedTest(100)
     void should_generate_random_local_date_within_range() {
