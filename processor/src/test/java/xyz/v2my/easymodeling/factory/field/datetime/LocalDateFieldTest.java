@@ -3,10 +3,14 @@ package xyz.v2my.easymodeling.factory.field.datetime;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import xyz.v2my.easymodeling.factory.FieldWrapper;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
 import xyz.v2my.easymodeling.randomizer.datetime.LocalDateRandomizer;
 
+import java.time.Instant;
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,5 +30,29 @@ class LocalDateFieldTest extends FieldTest {
         final CodeBlock initializer = modelField.initializer();
 
         assertThat(initializer).isEqualTo(CodeBlock.of("new " + $(LocalDateRandomizer.class) + "(664588800000L, 667180800000L)"));
+    }
+
+    @Nested
+    class LocalDateFieldConfigurationTest {
+
+        @Test
+        void should_create_initializer_as_now() {
+            final FieldWrapper fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).now(true).build();
+            modelField = new LocalDateField().create(fieldWrapper);
+
+            final CodeBlock initializer = modelField.initializer();
+
+            assertThat(initializer).isEqualTo(CodeBlock.of("new " + $(LocalDateRandomizer.class) + "(" + $(Instant.class) + ".now())"));
+        }
+
+        @Test
+        void should_create_initializer_as_constant() {
+            final FieldWrapper fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).datetime("2000-01-01T00:00:00Z").build();
+            modelField = new LocalDateField().create(fieldWrapper);
+
+            final CodeBlock initializer = modelField.initializer();
+
+            assertThat(initializer).isEqualTo(CodeBlock.of("new " + $(LocalDateRandomizer.class) + "(" + $(Instant.class) + ".ofEpochMilli(946684800000L))"));
+        }
     }
 }

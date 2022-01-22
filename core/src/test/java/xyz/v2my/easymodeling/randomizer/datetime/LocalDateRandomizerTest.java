@@ -24,11 +24,11 @@ class LocalDateRandomizerTest {
 
     @Test
     void should_generate_constant_local_date() {
-        final LocalDate constant = LocalDate.now();
+        final Instant constant = Instant.now();
         final LocalDateRandomizer localDateRandomizer = new LocalDateRandomizer(constant);
 
         final LocalDate next = localDateRandomizer.next();
 
-        assertThat(next).isEqualTo(constant);
+        assertThat(next).isEqualTo(constant.atZone(ZoneId.of("UTC")).toLocalDate());
     }
 }

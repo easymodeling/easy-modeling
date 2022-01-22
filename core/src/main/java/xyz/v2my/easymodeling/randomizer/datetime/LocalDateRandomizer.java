@@ -1,5 +1,6 @@
 package xyz.v2my.easymodeling.randomizer.datetime;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
@@ -9,8 +10,8 @@ public class LocalDateRandomizer extends AbstractDateTimeRandomizer<LocalDate> {
         super(min, max);
     }
 
-    public LocalDateRandomizer(LocalDate constant) {
-        super(constant);
+    public LocalDateRandomizer(Instant constant) {
+        super(constant.atZone(ZoneId.of("UTC")).toLocalDate());
     }
 
     @Override

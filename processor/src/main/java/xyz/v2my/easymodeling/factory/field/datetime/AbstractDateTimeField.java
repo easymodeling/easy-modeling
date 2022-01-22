@@ -24,9 +24,9 @@ public abstract class AbstractDateTimeField<T> extends PlainField<T> {
 
     protected Optional<CodeBlock> constantParameter() {
         if (field.now()) {
-            return Optional.of(CodeBlock.of("$L.now()", type()));
+            return Optional.of(CodeBlock.of("$T.now()", Instant.class));
         } else {
-            return field.datetime().map(datetime -> CodeBlock.of("new $T($T.ofEpochMilli($L))", initializerType(), Instant.class, datetime.toEpochMilli()));
+            return field.datetime().map(datetime -> CodeBlock.of("$T.ofEpochMilli($LL)", Instant.class, datetime.toEpochMilli()));
         }
     }
 

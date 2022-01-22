@@ -43,6 +43,16 @@ class InstantFieldTest extends FieldTest {
 
             assertThat(initializer).isEqualTo(CodeBlock.of("new " + $(InstantRandomizer.class) + "(" + $(Instant.class) + ".now())"));
         }
+
+        @Test
+        void should_create_initializer_as_constant() {
+            final FieldWrapper fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).datetime("2000-01-01T00:00:00Z").build();
+            modelField = new InstantField().create(fieldWrapper);
+
+            final CodeBlock initializer = modelField.initializer();
+
+            assertThat(initializer).isEqualTo(CodeBlock.of("new " + $(InstantRandomizer.class) + "(" + $(Instant.class) + ".ofEpochMilli(946684800000L))"));
+        }
     }
 
     // TODO: 16.01.22 more tests for field configurations

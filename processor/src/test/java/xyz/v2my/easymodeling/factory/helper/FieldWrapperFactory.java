@@ -59,6 +59,10 @@ public class FieldWrapperFactory {
         return decorate("before", before);
     }
 
+    public FieldWrapperFactory datetime(String datetime) {
+        return decorate("datetime", datetime);
+    }
+
     public FieldWrapperFactory after(String after) {
         return decorate("after", after);
     }
