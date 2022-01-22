@@ -1,18 +1,11 @@
 package xyz.v2my.easymodeling.randomizer.datetime;
 
-import xyz.v2my.easymodeling.randomizer.GenericRandomizer;
-
 import java.time.Instant;
 
-public class InstantRandomizer extends GenericRandomizer<Instant> {
-
-    protected long min;
-
-    protected long max;
+public class InstantRandomizer extends AbstractDateTimeRandomizer<Instant> {
 
     public InstantRandomizer(long min, long max) {
-        this.min = min;
-        this.max = max;
+        super(min, max);
     }
 
     public InstantRandomizer(Instant constant) {
@@ -21,7 +14,6 @@ public class InstantRandomizer extends GenericRandomizer<Instant> {
 
     @Override
     public Instant random() {
-        final long milli = doubleBetween(min, max).longValue();
-        return Instant.ofEpochMilli(milli);
+        return instant();
     }
 }
