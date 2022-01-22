@@ -29,6 +29,7 @@ import xyz.v2my.easymodeling.factory.field.number.LongField;
 import xyz.v2my.easymodeling.factory.field.number.ShortField;
 import xyz.v2my.easymodeling.factory.field.primitive.BooleanField;
 import xyz.v2my.easymodeling.factory.field.primitive.CharField;
+import xyz.v2my.easymodeling.factory.field.stream.IntStreamField;
 import xyz.v2my.easymodeling.factory.field.stream.StreamField;
 import xyz.v2my.easymodeling.factory.field.string.StringBuilderField;
 import xyz.v2my.easymodeling.factory.field.string.StringField;
@@ -74,6 +75,7 @@ public class ModelFieldProvider {
 
             // stream
             new StreamField(),
+            new IntStreamField(),
     };
 
     private static final Map<TypeName, PlainField<?>> PLAIN_FIELDS = Arrays.stream(MODEL_FIELDS)
