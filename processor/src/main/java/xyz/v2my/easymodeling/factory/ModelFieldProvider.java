@@ -16,15 +16,21 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static xyz.v2my.easymodeling.factory.ModelFields.MODEL_FIELDS;
+import static xyz.v2my.easymodeling.factory.ModelFieldRegistry.MODEL_FIELDS;
 
 public class ModelFieldProvider {
 
     private static final Map<TypeName, PlainField<?>> PLAIN_FIELDS = Arrays.stream(MODEL_FIELDS)
-            .filter(PlainField.class::isInstance).map(f -> (PlainField<?>) f).collect(Collectors.toMap(ModelField::type, f -> f));
+            .filter(PlainField.class::isInstance)
+            .distinct()
+            .map(f -> (PlainField<?>) f)
+            .collect(Collectors.toMap(ModelField::type, f -> f));
 
     private static final Map<TypeName, Container> CONTAINERS = Arrays.stream(MODEL_FIELDS)
-            .filter(Container.class::isInstance).map(Container.class::cast).collect(Collectors.toMap(ModelField::type, f -> f));
+            .filter(Container.class::isInstance)
+            .distinct()
+            .map(Container.class::cast)
+            .collect(Collectors.toMap(ModelField::type, f -> f));
 
     public ModelField provide(TypeName type, FieldWrapper field) {
         try {

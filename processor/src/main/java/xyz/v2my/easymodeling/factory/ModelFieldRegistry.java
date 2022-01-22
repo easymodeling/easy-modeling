@@ -12,6 +12,7 @@ import xyz.v2my.easymodeling.factory.field.collection.SetField;
 import xyz.v2my.easymodeling.factory.field.collection.TreeMapField;
 import xyz.v2my.easymodeling.factory.field.collection.TreeSetField;
 import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
+import xyz.v2my.easymodeling.factory.field.datetime.LocalDateField;
 import xyz.v2my.easymodeling.factory.field.number.ByteField;
 import xyz.v2my.easymodeling.factory.field.number.DoubleField;
 import xyz.v2my.easymodeling.factory.field.number.FloatField;
@@ -27,7 +28,7 @@ import xyz.v2my.easymodeling.factory.field.stream.StreamField;
 import xyz.v2my.easymodeling.factory.field.string.StringBuilderField;
 import xyz.v2my.easymodeling.factory.field.string.StringField;
 
-public class ModelFields {
+public class ModelFieldRegistry {
 
     static final ModelField[] MODEL_FIELDS = {
             // primitive
@@ -46,6 +47,7 @@ public class ModelFields {
 
             // datetime
             new InstantField(),
+            new LocalDateField(),
 
             // containers
             new OptionalField(),

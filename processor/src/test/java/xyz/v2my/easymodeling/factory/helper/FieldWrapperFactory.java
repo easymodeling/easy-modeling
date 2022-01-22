@@ -55,6 +55,14 @@ public class FieldWrapperFactory {
         return decorate("now", now);
     }
 
+    public FieldWrapperFactory before(String before) {
+        return decorate("before", before);
+    }
+
+    public FieldWrapperFactory after(String after) {
+        return decorate("after", after);
+    }
+
     public static FieldWrapper any() {
         return FieldWrapperFactory.one("field_name").build();
     }
