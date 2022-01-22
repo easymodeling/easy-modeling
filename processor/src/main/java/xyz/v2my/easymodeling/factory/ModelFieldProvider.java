@@ -6,77 +6,19 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.field.Container;
 import xyz.v2my.easymodeling.factory.field.ModelField;
-import xyz.v2my.easymodeling.factory.field.OptionalField;
 import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.factory.field.UnknownField;
 import xyz.v2my.easymodeling.factory.field.array.ArrayField;
 import xyz.v2my.easymodeling.factory.field.array.PrimitiveArrayField;
-import xyz.v2my.easymodeling.factory.field.collection.ArrayListField;
-import xyz.v2my.easymodeling.factory.field.collection.HashMapField;
-import xyz.v2my.easymodeling.factory.field.collection.HashSetField;
-import xyz.v2my.easymodeling.factory.field.collection.LinkedListField;
-import xyz.v2my.easymodeling.factory.field.collection.ListField;
-import xyz.v2my.easymodeling.factory.field.collection.MapField;
-import xyz.v2my.easymodeling.factory.field.collection.SetField;
-import xyz.v2my.easymodeling.factory.field.collection.TreeMapField;
-import xyz.v2my.easymodeling.factory.field.collection.TreeSetField;
-import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
-import xyz.v2my.easymodeling.factory.field.number.ByteField;
-import xyz.v2my.easymodeling.factory.field.number.DoubleField;
-import xyz.v2my.easymodeling.factory.field.number.FloatField;
-import xyz.v2my.easymodeling.factory.field.number.IntegerField;
-import xyz.v2my.easymodeling.factory.field.number.LongField;
-import xyz.v2my.easymodeling.factory.field.number.ShortField;
-import xyz.v2my.easymodeling.factory.field.primitive.BooleanField;
-import xyz.v2my.easymodeling.factory.field.primitive.CharField;
-import xyz.v2my.easymodeling.factory.field.stream.IntStreamField;
-import xyz.v2my.easymodeling.factory.field.stream.StreamField;
-import xyz.v2my.easymodeling.factory.field.string.StringBuilderField;
-import xyz.v2my.easymodeling.factory.field.string.StringField;
 
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static xyz.v2my.easymodeling.factory.ModelFields.MODEL_FIELDS;
+
 public class ModelFieldProvider {
-
-    private static final ModelField[] MODEL_FIELDS = {
-            // primitive
-            new ByteField(),
-            new ShortField(),
-            new IntegerField(),
-            new LongField(),
-            new FloatField(),
-            new DoubleField(),
-            new BooleanField(),
-            new CharField(),
-
-            // string
-            new StringField(),
-            new StringBuilderField(),
-
-            // datetime
-            new InstantField(),
-
-            // containers
-            new OptionalField(),
-
-            // collection
-            new ListField(),
-            new ArrayListField(),
-            new LinkedListField(),
-            new SetField(),
-            new HashSetField(),
-            new TreeSetField(),
-            new MapField(),
-            new HashMapField(),
-            new TreeMapField(),
-
-            // stream
-            new StreamField(),
-            new IntStreamField(),
-    };
 
     private static final Map<TypeName, PlainField<?>> PLAIN_FIELDS = Arrays.stream(MODEL_FIELDS)
             .filter(PlainField.class::isInstance).map(f -> (PlainField<?>) f).collect(Collectors.toMap(ModelField::type, f -> f));

@@ -16,5 +16,9 @@ class StreamModelTest {
         assertNotNull(next.streamOfIntStreams);
         assertNotNull(next.intStreamArray);
         assertNotNull(next.intStreamMatrix);
+        assertNotNull(next.longStream);
+        assertNotNull(next.streamOfLongStreams);
+        assertNotNull(next.longStreamArray);
+        assertNotNull(next.longStreamMatrix);
     }
 }
