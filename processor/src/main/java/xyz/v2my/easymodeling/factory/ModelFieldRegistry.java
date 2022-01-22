@@ -15,6 +15,7 @@ import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
 import xyz.v2my.easymodeling.factory.field.datetime.LocalDateField;
 import xyz.v2my.easymodeling.factory.field.datetime.LocalDateTimeField;
 import xyz.v2my.easymodeling.factory.field.datetime.LocalTimeField;
+import xyz.v2my.easymodeling.factory.field.datetime.ZonedDateTimeField;
 import xyz.v2my.easymodeling.factory.field.number.ByteField;
 import xyz.v2my.easymodeling.factory.field.number.DoubleField;
 import xyz.v2my.easymodeling.factory.field.number.FloatField;
@@ -55,6 +56,7 @@ public class ModelFieldRegistry {
             new LocalDateField(),
             new LocalTimeField(),
             new LocalDateTimeField(),
+            new ZonedDateTimeField(),
 
             // containers
             new OptionalField(),
