@@ -20,6 +20,7 @@ import xyz.v2my.easymodeling.factory.field.number.LongField;
 import xyz.v2my.easymodeling.factory.field.number.ShortField;
 import xyz.v2my.easymodeling.factory.field.primitive.BooleanField;
 import xyz.v2my.easymodeling.factory.field.primitive.CharField;
+import xyz.v2my.easymodeling.factory.field.stream.DoubleStreamField;
 import xyz.v2my.easymodeling.factory.field.stream.IntStreamField;
 import xyz.v2my.easymodeling.factory.field.stream.LongStreamField;
 import xyz.v2my.easymodeling.factory.field.stream.StreamField;
@@ -64,5 +65,6 @@ public class ModelFields {
             new StreamField(),
             new IntStreamField(),
             new LongStreamField(),
+            new DoubleStreamField(),
     };
 }

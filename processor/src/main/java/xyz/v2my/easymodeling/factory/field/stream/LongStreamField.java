@@ -10,7 +10,7 @@ import xyz.v2my.easymodeling.randomizer.stream.LongStreamRandomizer;
 
 import java.util.stream.LongStream;
 
-public class LongStreamField extends TypedStreamField<LongStream, Long> {
+public class LongStreamField extends PrimitiveTypeStreamField<LongStream, Long> {
 
     public static final ClassName TYPE = ClassName.get(LongStream.class);
 

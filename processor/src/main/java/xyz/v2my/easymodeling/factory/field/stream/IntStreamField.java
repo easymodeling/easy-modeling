@@ -10,7 +10,7 @@ import xyz.v2my.easymodeling.randomizer.stream.IntStreamRandomizer;
 
 import java.util.stream.IntStream;
 
-public class IntStreamField extends TypedStreamField<IntStream, Integer> {
+public class IntStreamField extends PrimitiveTypeStreamField<IntStream, Integer> {
 
     public static final ClassName TYPE = ClassName.get(IntStream.class);
 

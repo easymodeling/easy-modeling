@@ -8,12 +8,12 @@ import xyz.v2my.easymodeling.factory.field.number.NumericField;
 
 import java.util.stream.BaseStream;
 
-public abstract class TypedStreamField<S extends BaseStream<E, S>, E extends Number> extends PlainField<S> {
+public abstract class PrimitiveTypeStreamField<S extends BaseStream<E, S>, E extends Number> extends PlainField<S> {
 
-    protected TypedStreamField() {
+    protected PrimitiveTypeStreamField() {
     }
 
-    public TypedStreamField(TypeName type, FieldWrapper field) {
+    public PrimitiveTypeStreamField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 

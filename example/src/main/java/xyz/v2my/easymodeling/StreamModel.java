@@ -2,6 +2,7 @@ package xyz.v2my.easymodeling;
 
 import lombok.AllArgsConstructor;
 
+import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
@@ -26,4 +27,12 @@ public class StreamModel {
     public LongStream[] longStreamArray;
 
     public LongStream[][] longStreamMatrix;
+
+    public DoubleStream doubleStream;
+
+    public Stream<DoubleStream> streamOfDoubleStreams;
+
+    public DoubleStream[] doubleStreamArray;
+
+    public DoubleStream[][] doubleStreamMatrix;
 }
