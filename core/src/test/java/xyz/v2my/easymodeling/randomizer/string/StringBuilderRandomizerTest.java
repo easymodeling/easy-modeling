@@ -20,7 +20,7 @@ class StringBuilderRandomizerTest extends RandomizerTest {
 
         final StringBuilder nextString = randomizer.next();
 
-        assertThat(nextString.toString()).isEqualTo(constantString);
+        assertThat(nextString).hasToString(constantString);
     }
 
     @RepeatedTest(100)

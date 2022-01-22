@@ -36,15 +36,15 @@ class OptionalFieldTest extends FieldTest {
 
         final CodeBlock initialValue = optionalField.initialValue();
 
-        assertThat(initialValue.toString())
-                .isEqualTo("new " + $(OptionalRandomizer.class) + "<>(" + stringField.initializer() + ", " + allowEmpty + ").next()");
+        assertThat(initialValue)
+                .hasToString("new " + $(OptionalRandomizer.class) + "<>(" + stringField.initializer() + ", " + allowEmpty + ").next()");
     }
 
     @Override
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();
 
-        assertThat(initializer.toString())
-                .isEqualTo("new " + $(OptionalRandomizer.class) + "<>(" + stringField.initializer() + ", false)");
+        assertThat(initializer)
+                .hasToString("new " + $(OptionalRandomizer.class) + "<>(" + stringField.initializer() + ", false)");
     }
 }

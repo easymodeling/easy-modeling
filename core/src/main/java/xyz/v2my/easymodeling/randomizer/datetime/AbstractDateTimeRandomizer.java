@@ -10,12 +10,12 @@ public abstract class AbstractDateTimeRandomizer<T> extends GenericRandomizer<T>
 
     private long max;
 
-    public AbstractDateTimeRandomizer(long min, long max) {
+    protected AbstractDateTimeRandomizer(long min, long max) {
         this.min = min;
         this.max = max;
     }
 
-    public AbstractDateTimeRandomizer(T constant) {
+    protected AbstractDateTimeRandomizer(T constant) {
         super(constant);
     }
 

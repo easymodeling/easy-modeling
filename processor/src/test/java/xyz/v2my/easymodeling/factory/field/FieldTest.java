@@ -43,14 +43,14 @@ public abstract class FieldTest {
         final MethodSpec setter = modelField.setter();
 
         assertThat(setter.name).isEqualTo(FIELD_NAME);
-        assertThat(setter.returnType.toString()).isEqualTo("Builder");
+        assertThat(setter.returnType).hasToString("Builder");
         assertThat(setter.parameters).hasSize(1);
         assertThat(setter.parameters.get(0).name).isEqualTo(FIELD_NAME);
         assertThat(setter.parameters.get(0).type).isEqualTo(typeName);
         final String code = "" +
                 "this." + FIELD_NAME + " = " + FIELD_NAME + ";\n" +
                 "return this;\n";
-        assertThat(setter.code.toString()).isEqualTo(code);
+        assertThat(setter.code).hasToString(code);
     }
 
     @Test

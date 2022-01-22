@@ -37,8 +37,8 @@ class ArrayFieldTest extends FieldTest {
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();
 
-        assertThat(initializer.toString())
-                .isEqualTo("new " + $(ArrayRandomizer.class) + "<>(" + integerField.initializer() + ", 2, 5)");
+        assertThat(initializer)
+                .hasToString("new " + $(ArrayRandomizer.class) + "<>(" + integerField.initializer() + ", 2, 5)");
     }
 
     @Test
@@ -59,7 +59,7 @@ class ArrayFieldTest extends FieldTest {
             final CodeBlock initialValue = arrayField.initialValue();
 
             final String arrayRandomizer = "new " + $(ArrayRandomizer.class) + "<>(new " + $(IntegerRandomizer.class) + "(1.0, 3.0), 2, 5)";
-            assertThat(initialValue.toString()).isEqualTo(arrayRandomizer + ".next()");
+            assertThat(initialValue).hasToString(arrayRandomizer + ".next()");
         }
 
         @Test
@@ -72,7 +72,7 @@ class ArrayFieldTest extends FieldTest {
 
             final String arrayRandomizer = "new " + $(ArrayRandomizer.class) + "<>(new " + $(IntegerRandomizer.class) + "(1.0, 3.0), 2, 5)";
             final String matrixRandomizer = "new " + $(ArrayRandomizer.class) + "<>(" + arrayRandomizer + ", 2, 5)";
-            assertThat(initialValue.toString()).isEqualTo(matrixRandomizer + ".next()");
+            assertThat(initialValue).hasToString(matrixRandomizer + ".next()");
         }
 
         @Test
@@ -87,7 +87,7 @@ class ArrayFieldTest extends FieldTest {
             final String arrayRandomizer = "new " + $(ArrayRandomizer.class) + "<>(new " + $(InstantRandomizer.class) + "(0L, 2147483647000L), 2, 5)";
             final String matrixRandomizer = "new " + $(ArrayRandomizer.class) + "<>(" + arrayRandomizer + ", 2, 5)";
             final String cubeRandomizer = "new " + $(ArrayRandomizer.class) + "<>(" + matrixRandomizer + ", 2, 5)";
-            assertThat(initialValue.toString()).isEqualTo(cubeRandomizer + ".next()");
+            assertThat(initialValue).hasToString(cubeRandomizer + ".next()");
         }
     }
 }

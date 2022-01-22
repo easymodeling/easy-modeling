@@ -23,6 +23,6 @@ class CharFieldTest extends FieldTest {
     protected void should_generate_initializer() {
         final CodeBlock initialValue = modelField.initializer();
 
-        assertThat(initialValue.toString()).isEqualTo("new " + $(CharRandomizer.class) + "()");
+        assertThat(initialValue).hasToString("new " + $(CharRandomizer.class) + "()");
     }
 }

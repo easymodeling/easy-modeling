@@ -30,7 +30,7 @@ class StreamFieldTest extends FieldTest {
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();
 
-        assertThat(initializer.toString())
-                .isEqualTo("new " + $(StreamRandomizer.class) + "<>(" + integerField.initializer() + ", 2, 9)");
+        assertThat(initializer)
+                .hasToString("new " + $(StreamRandomizer.class) + "<>(" + integerField.initializer() + ", 2, 9)");
     }
 }

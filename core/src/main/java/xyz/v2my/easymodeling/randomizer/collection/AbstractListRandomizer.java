@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 public abstract class AbstractListRandomizer<C extends List<E>, E> extends CollectionRandomizer<C, E> {
 
-    public AbstractListRandomizer(Randomizer<E> elementRandomizer, int minSize, int maxSize) {
+    protected AbstractListRandomizer(Randomizer<E> elementRandomizer, int minSize, int maxSize) {
         super(elementRandomizer, minSize, maxSize);
     }
 

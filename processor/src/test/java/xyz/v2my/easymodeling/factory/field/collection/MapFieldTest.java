@@ -33,7 +33,7 @@ class MapFieldTest extends FieldTest {
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();
 
-        assertThat(initializer.toString())
-                .isEqualTo("new " + $(MapRandomizer.class) + "<>(" + keyField.initializer() + ", " + valueField.initializer() + ", 10, 20)");
+        assertThat(initializer)
+                .hasToString("new " + $(MapRandomizer.class) + "<>(" + keyField.initializer() + ", " + valueField.initializer() + ", 10, 20)");
     }
 }

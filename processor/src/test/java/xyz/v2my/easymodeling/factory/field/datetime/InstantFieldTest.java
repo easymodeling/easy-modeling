@@ -28,7 +28,7 @@ class InstantFieldTest extends FieldTest {
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();
 
-        assertThat(initializer).isEqualTo(CodeBlock.of("new " + $(InstantRandomizer.class) + "(0L, 2147483647000L)"));
+        assertThat(initializer).hasToString("new " + $(InstantRandomizer.class) + "(0L, 2147483647000L)");
     }
 
     @Nested
@@ -41,7 +41,7 @@ class InstantFieldTest extends FieldTest {
 
             final CodeBlock initializer = modelField.initializer();
 
-            assertThat(initializer).isEqualTo(CodeBlock.of("new " + $(InstantRandomizer.class) + "(" + $(Instant.class) + ".now())"));
+            assertThat(initializer).hasToString("new " + $(InstantRandomizer.class) + "(" + $(Instant.class) + ".now())");
         }
 
         @Test
@@ -51,7 +51,7 @@ class InstantFieldTest extends FieldTest {
 
             final CodeBlock initializer = modelField.initializer();
 
-            assertThat(initializer).isEqualTo(CodeBlock.of("new " + $(InstantRandomizer.class) + "(" + $(Instant.class) + ".ofEpochMilli(946684800000L))"));
+            assertThat(initializer).hasToString("new " + $(InstantRandomizer.class) + "(" + $(Instant.class) + ".ofEpochMilli(946684800000L))");
         }
     }
 

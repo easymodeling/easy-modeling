@@ -29,7 +29,7 @@ class LocalDateTimeFieldTest extends FieldTest {
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();
 
-        assertThat(initializer).isEqualTo(CodeBlock.of("new " + $(LocalDateTimeRandomizer.class) + "(664588800000L, 667180800000L)"));
+        assertThat(initializer).hasToString("new " + $(LocalDateTimeRandomizer.class) + "(664588800000L, 667180800000L)");
     }
 
     @Nested
@@ -42,7 +42,7 @@ class LocalDateTimeFieldTest extends FieldTest {
 
             final CodeBlock initializer = modelField.initializer();
 
-            assertThat(initializer).isEqualTo(CodeBlock.of("new " + $(LocalDateTimeRandomizer.class) + "(" + $(Instant.class) + ".now())"));
+            assertThat(initializer).hasToString("new " + $(LocalDateTimeRandomizer.class) + "(" + $(Instant.class) + ".now())");
         }
 
         @Test
@@ -52,7 +52,7 @@ class LocalDateTimeFieldTest extends FieldTest {
 
             final CodeBlock initializer = modelField.initializer();
 
-            assertThat(initializer).isEqualTo(CodeBlock.of("new " + $(LocalDateTimeRandomizer.class) + "(" + $(Instant.class) + ".ofEpochMilli(946684800000L))"));
+            assertThat(initializer).hasToString("new " + $(LocalDateTimeRandomizer.class) + "(" + $(Instant.class) + ".ofEpochMilli(946684800000L))");
         }
     }
 }

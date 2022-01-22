@@ -65,12 +65,12 @@ class FactoryClassTest {
         @Test
         void should_return_given_type_and_take_no_parameter() {
             assertThat(nextMethod.returnType).isEqualTo(ClassName.get(SomeClass.class));
-            assertThat(nextMethod.parameters).hasSize(0);
+            assertThat(nextMethod.parameters).isEmpty();
         }
 
         @Test
         void should_invoke_builder_build() {
-            assertThat(nextMethod.code.toString()).isEqualTo("return builder().build();\n");
+            assertThat(nextMethod.code).hasToString("return builder().build();\n");
         }
     }
 
@@ -95,13 +95,13 @@ class FactoryClassTest {
 
         @Test
         void should_return_given_type_and_take_no_parameter() {
-            assertThat(nextMethod.returnType.toString()).isEqualTo("Builder");
-            assertThat(nextMethod.parameters).hasSize(0);
+            assertThat(nextMethod.returnType).hasToString("Builder");
+            assertThat(nextMethod.parameters).isEmpty();
         }
 
         @Test
         void should_invoke_constructor_of_builder() {
-            assertThat(nextMethod.code.toString()).isEqualTo("return new Builder();\n");
+            assertThat(nextMethod.code).hasToString("return new Builder();\n");
         }
     }
 

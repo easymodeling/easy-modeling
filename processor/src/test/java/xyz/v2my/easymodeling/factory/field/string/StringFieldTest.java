@@ -31,8 +31,8 @@ class StringFieldTest extends FieldTest {
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();
 
-        assertThat(initializer.toString())
-                .isEqualTo("new " + $(StringRandomizer.class) + "(\"" + STRING_CONSTANT + "\")");
+        assertThat(initializer)
+                .hasToString("new " + $(StringRandomizer.class) + "(\"" + STRING_CONSTANT + "\")");
     }
 
     @Nested
@@ -44,8 +44,8 @@ class StringFieldTest extends FieldTest {
             ModelField modelField = new StringField().create(fieldWrapper);
             final CodeBlock initializer = modelField.initializer();
 
-            assertThat(initializer.toString())
-                    .isEqualTo("new " + $(StringRandomizer.class) + "(2, 40, " + NUMERIC + ")");
+            assertThat(initializer)
+                    .hasToString("new " + $(StringRandomizer.class) + "(2, 40, " + NUMERIC + ")");
         }
 
         @Test

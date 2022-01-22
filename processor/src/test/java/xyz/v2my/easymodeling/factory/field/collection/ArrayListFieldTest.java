@@ -31,7 +31,7 @@ class ArrayListFieldTest extends FieldTest {
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();
 
-        assertThat(initializer.toString()).isEqualTo(
+        assertThat(initializer).hasToString(
                 "new " + $(ArrayListRandomizer.class) + "<>(" + integerField.initializer() + ", 1, 20)");
     }
 }

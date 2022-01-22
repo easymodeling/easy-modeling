@@ -13,7 +13,7 @@ public abstract class PrimitiveTypeStreamField<S extends BaseStream<E, S>, E ext
     protected PrimitiveTypeStreamField() {
     }
 
-    public PrimitiveTypeStreamField(TypeName type, FieldWrapper field) {
+    protected PrimitiveTypeStreamField(TypeName type, FieldWrapper field) {
         super(type, field);
     }
 

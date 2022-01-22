@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public abstract class AbstractDateTimeField<T> extends PlainField<T> {
 
-    public AbstractDateTimeField() {
+    protected AbstractDateTimeField() {
     }
 
     protected AbstractDateTimeField(TypeName type, FieldWrapper field) {

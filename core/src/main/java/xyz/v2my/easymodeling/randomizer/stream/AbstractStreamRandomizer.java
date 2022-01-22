@@ -14,7 +14,7 @@ public abstract class AbstractStreamRandomizer<S extends BaseStream<E, S>, E> ex
 
     protected int maxSize;
 
-    public AbstractStreamRandomizer(Randomizer<E> elementRandomizer, int minSize, int maxSize) {
+    protected AbstractStreamRandomizer(Randomizer<E> elementRandomizer, int minSize, int maxSize) {
         this.elementRandomizer = elementRandomizer;
         this.minSize = minSize;
         this.maxSize = maxSize;

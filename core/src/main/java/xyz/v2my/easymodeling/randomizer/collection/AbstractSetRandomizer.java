@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 public abstract class AbstractSetRandomizer<C extends Set<E>, E> extends CollectionRandomizer<C, E> {
 
-    public AbstractSetRandomizer(Randomizer<E> elementRandomizer, int minSize, int maxSize) {
+    protected AbstractSetRandomizer(Randomizer<E> elementRandomizer, int minSize, int maxSize) {
         this.elementRandomizer = elementRandomizer;
         this.minSize = minSize;
         this.maxSize = maxSize;

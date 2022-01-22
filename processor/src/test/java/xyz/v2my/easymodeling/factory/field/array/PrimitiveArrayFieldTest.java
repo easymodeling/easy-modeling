@@ -37,7 +37,7 @@ class PrimitiveArrayFieldTest extends FieldTest {
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();
 
-        assertThat(initializer.toString()).isEqualTo(
+        assertThat(initializer).hasToString(
                 "new " + $(PrimitiveArrayRandomizer.class) + "(" + integerField.initializer() + ", 2, 3, 8)");
     }
 }

@@ -16,13 +16,13 @@ public abstract class CollectionRandomizer<C extends Collection<E>, E> extends G
 
     protected int maxSize;
 
-    public CollectionRandomizer(Randomizer<E> elementRandomizer, int minSize, int maxSize) {
+    protected CollectionRandomizer(Randomizer<E> elementRandomizer, int minSize, int maxSize) {
         this.elementRandomizer = elementRandomizer;
         this.minSize = minSize;
         this.maxSize = maxSize;
     }
 
-    public CollectionRandomizer() {
+    protected CollectionRandomizer() {
     }
 
     @Override

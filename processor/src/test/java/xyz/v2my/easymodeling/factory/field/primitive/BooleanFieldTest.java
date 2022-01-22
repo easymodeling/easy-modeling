@@ -23,6 +23,6 @@ class BooleanFieldTest extends FieldTest {
     protected void should_generate_initializer() {
         final CodeBlock initialValue = modelField.initializer();
 
-        assertThat(initialValue.toString()).isEqualTo("new " + $(BooleanRandomizer.class) + "()");
+        assertThat(initialValue).hasToString("new " + $(BooleanRandomizer.class) + "()");
     }
 }

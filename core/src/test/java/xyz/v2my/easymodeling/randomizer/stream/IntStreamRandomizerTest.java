@@ -17,7 +17,8 @@ class IntStreamRandomizerTest extends RandomizerTest {
 
         final List<Integer> ints = randomizer.next().boxed().collect(Collectors.toList());
 
-        assertThat(ints).hasSizeBetween(100, 109);
-        assertThat(ints).allMatch(i -> i >= -5 && i < 10);
+        assertThat(ints)
+                .hasSizeBetween(100, 109)
+                .allMatch(i -> i >= -5 && i < 10);
     }
 }

@@ -32,6 +32,9 @@ import xyz.v2my.easymodeling.factory.field.string.StringField;
 
 public class ModelFieldRegistry {
 
+    private ModelFieldRegistry() {
+    }
+
     static final ModelField[] MODEL_FIELDS = {
             // primitive
             new ByteField(),

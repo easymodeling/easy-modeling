@@ -26,7 +26,7 @@ class LongStreamFieldTest extends FieldTest {
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();
 
-        assertThat(initializer.toString()).isEqualTo(
+        assertThat(initializer).hasToString(
                 "new " + $(LongStreamRandomizer.class) + "(" + new LongField().create(fieldWrapper).initializer() + ", 10, 15)");
     }
 }

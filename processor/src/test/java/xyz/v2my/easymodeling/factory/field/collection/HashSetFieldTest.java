@@ -30,7 +30,7 @@ class HashSetFieldTest extends FieldTest {
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();
 
-        assertThat(initializer.toString()).isEqualTo(
+        assertThat(initializer).hasToString(
                 "new " + $(HashSetRandomizer.class) + "<>(" + integerField.initializer() + ", 50, 100)");
     }
 }

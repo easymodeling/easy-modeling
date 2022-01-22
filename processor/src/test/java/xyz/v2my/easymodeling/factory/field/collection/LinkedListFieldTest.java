@@ -31,7 +31,7 @@ class LinkedListFieldTest extends FieldTest {
     protected void should_generate_initializer() {
         final CodeBlock codeBlock = modelField.initializer();
 
-        assertThat(codeBlock.toString())
-                .isEqualTo("new " + $(LinkedListRandomizer.class) + "<>(" + integerField.initializer() + ", 2, 5)");
+        assertThat(codeBlock)
+                .hasToString("new " + $(LinkedListRandomizer.class) + "<>(" + integerField.initializer() + ", 2, 5)");
     }
 }

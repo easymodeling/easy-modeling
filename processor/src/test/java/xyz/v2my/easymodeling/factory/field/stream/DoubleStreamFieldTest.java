@@ -26,7 +26,7 @@ class DoubleStreamFieldTest extends FieldTest {
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();
 
-        assertThat(initializer.toString()).isEqualTo(
+        assertThat(initializer).hasToString(
                 "new " + $(DoubleStreamRandomizer.class) + "(" + new DoubleField().create(fieldWrapper).initializer() + ", 10, 15)");
     }
 }

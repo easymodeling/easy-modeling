@@ -16,7 +16,8 @@ class LongStreamRandomizerTest {
 
         final List<Long> longs = randomizer.next().boxed().collect(Collectors.toList());
 
-        assertThat(longs).hasSizeBetween(2, 7);
-        assertThat(longs).allMatch(i -> i >= 1 && i < 10);
+        assertThat(longs)
+                .hasSizeBetween(2, 7)
+                .allMatch(i -> i >= 1 && i < 10);
     }
 }

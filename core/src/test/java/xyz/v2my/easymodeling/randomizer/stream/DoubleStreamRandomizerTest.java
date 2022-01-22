@@ -17,7 +17,8 @@ class DoubleStreamRandomizerTest extends RandomizerTest {
 
         final List<Double> doubles = randomizer.next().boxed().collect(Collectors.toList());
 
-        assertThat(doubles).hasSizeBetween(2, 6);
-        assertThat(doubles).allMatch(i -> i >= -0.1 && i < 1.1);
+        assertThat(doubles)
+                .hasSizeBetween(2, 6)
+                .allMatch(i -> i >= -0.1 && i < 1.1);
     }
 }

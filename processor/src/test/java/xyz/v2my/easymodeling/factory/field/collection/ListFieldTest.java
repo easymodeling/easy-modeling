@@ -30,7 +30,7 @@ class ListFieldTest extends FieldTest {
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();
 
-        assertThat(initializer.toString())
-                .isEqualTo("new " + $(ListRandomizer.class) + "<>(" + stringField.initializer() + ", 20, 50)");
+        assertThat(initializer)
+                .hasToString("new " + $(ListRandomizer.class) + "<>(" + stringField.initializer() + ", 20, 50)");
     }
 }

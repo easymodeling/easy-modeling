@@ -12,7 +12,7 @@ public abstract class AbstractMapRandomizer<M extends Map<K, V>, K, V> extends G
 
     protected Randomizer<V> valueRandomizer;
 
-    public AbstractMapRandomizer(Randomizer<K> keyRandomizer, Randomizer<V> valueRandomizer, int minSize, int maxSize) {
+    protected AbstractMapRandomizer(Randomizer<K> keyRandomizer, Randomizer<V> valueRandomizer, int minSize, int maxSize) {
         this.keyRandomizer = new SetRandomizer<>(keyRandomizer, minSize, maxSize);
         this.valueRandomizer = valueRandomizer;
     }

@@ -19,8 +19,9 @@ class OptionalRandomizerTest extends RandomizerTest {
         OptionalRandomizer<Integer> randomizer = new OptionalRandomizer<>(new IntegerRandomizer(1), allowEmpty);
 
         final Map<Boolean, Long> collect = Stream.generate(randomizer::next).limit(100).collect(Collectors.groupingBy(Optional::isPresent, Collectors.counting()));
-        assertThat(collect.get(true)).isEqualTo(67);
-        assertThat(collect.get(false)).isEqualTo(33);
+        assertThat(collect)
+                .containsEntry(true, 67L)
+                .containsEntry(false, 33L);
     }
 
     @RepeatedTest(100)

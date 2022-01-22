@@ -16,7 +16,8 @@ class SetRandomizerTest extends RandomizerTest {
 
         final Set<Integer> set = randomizer.next();
 
-        assertThat(set).hasSizeBetween(3, 6);
-        assertThat(set).allMatch(i -> i >= -2 && i < 300);
+        assertThat(set)
+                .hasSizeBetween(3, 6)
+                .allMatch(i -> i >= -2 && i < 300);
     }
 }

@@ -33,7 +33,7 @@ class IntegerFieldTest {
         protected void should_generate_initializer() {
             final CodeBlock initializer = modelField.initializer();
 
-            assertThat(initializer.toString()).isEqualTo("new " + $(IntegerRandomizer.class) + "(-2.0, 9.0)");
+            assertThat(initializer).hasToString("new " + $(IntegerRandomizer.class) + "(-2.0, 9.0)");
         }
     }
 
@@ -52,7 +52,7 @@ class IntegerFieldTest {
         protected void should_generate_initializer() {
             final CodeBlock initializer = modelField.initializer();
 
-            assertThat(initializer.toString()).isEqualTo("new " + $(IntegerRandomizer.class) + "(12)");
+            assertThat(initializer).hasToString("new " + $(IntegerRandomizer.class) + "(12)");
         }
     }
 
@@ -71,7 +71,7 @@ class IntegerFieldTest {
         protected void should_generate_initializer() {
             final CodeBlock initializer = modelField.initializer();
 
-            assertThat(initializer.toString()).isEqualTo("new " + $(IntegerRandomizer.class) + "(0.0, 2.0)");
+            assertThat(initializer).hasToString("new " + $(IntegerRandomizer.class) + "(0.0, 2.0)");
         }
 
         @Test
@@ -88,14 +88,14 @@ class IntegerFieldTest {
             final MethodSpec setter = modelField.setter();
 
             assertThat(setter.name).isEqualTo(FIELD_NAME);
-            assertThat(setter.returnType.toString()).isEqualTo("Builder");
+            assertThat(setter.returnType).hasToString("Builder");
             assertThat(setter.parameters).hasSize(1);
             assertThat(setter.parameters.get(0).name).isEqualTo(FIELD_NAME);
             assertThat(setter.parameters.get(0).type).isEqualTo(ClassName.get(Integer.class));
             final String code = "" +
                     "this." + FIELD_NAME + " = " + FIELD_NAME + ";\n" +
                     "return this;\n";
-            assertThat(setter.code.toString()).isEqualTo(code);
+            assertThat(setter.code).hasToString(code);
         }
     }
 }

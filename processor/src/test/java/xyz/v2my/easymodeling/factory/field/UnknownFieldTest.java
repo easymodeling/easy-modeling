@@ -22,7 +22,7 @@ class UnknownFieldTest {
     void should_generate_null_as_init_value() {
         final CodeBlock initialValue = unknownField.initialValue();
 
-        assertThat(initialValue.toString()).isEqualTo("null");
+        assertThat(initialValue).hasToString("null");
     }
 
     @Test

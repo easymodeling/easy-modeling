@@ -16,7 +16,8 @@ class ArrayListRandomizerTest extends RandomizerTest {
 
         final ArrayList<Integer> list = randomizer.next();
 
-        assertThat(list).hasSizeBetween(3, 6);
-        assertThat(list).allMatch(i -> i >= -2 && i < 3);
+        assertThat(list)
+                .hasSizeBetween(3, 6)
+                .allMatch(i -> i >= -2 && i < 3);
     }
 }

@@ -15,7 +15,8 @@ class TreeSetRandomizerTest {
 
         final Set<Integer> set = randomizer.next();
 
-        assertThat(set).hasSizeBetween(20, 33 - 1);
-        assertThat(set).allMatch(i -> i >= -200 && i < 300);
+        assertThat(set)
+                .hasSizeBetween(20, 33 - 1)
+                .allMatch(i -> i >= -200 && i < 300);
     }
 }

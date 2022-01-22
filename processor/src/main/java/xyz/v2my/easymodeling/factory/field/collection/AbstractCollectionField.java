@@ -9,7 +9,7 @@ import xyz.v2my.easymodeling.factory.field.ModelField;
 
 public abstract class AbstractCollectionField extends Container {
 
-    public AbstractCollectionField() {
+    protected AbstractCollectionField() {
     }
 
     protected AbstractCollectionField(ClassName container, FieldWrapper field, ModelField nestedField) {
