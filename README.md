@@ -32,24 +32,34 @@ Please feel free to raise an issue if you have a type you'd like to see added.
 - Boxed Primitive types `Boolean`, `Byte`, `Character`, `Double`, `Float`, `Integer`, `Long`, `Short`
 - Strings `java.lang.String`, `java.lang.StringBuilder`
 
-### Arrays
+### Date Time Types
 
-Arrays of any primitive types and reference types listed here are supported, including multidimensional arrays,
-regardless of the number of dimensions. However, primitive arrays as type parameters are [not supported](#Unsupported-Primitive-Array-As-Type-Parameters).
+- Java 8 Date Time types `java.time.Instant` `java.time.LocalDate` `java.time.LocalTime`
+  `java.time.LocalDateTime` `java.time.ZonedDateTime`
 
-### Collections
-
-- Collections `java.util.List`
-
-### Commonly used Types
-
-- Date Time `java.time.Instant`
+- Legacy Date Time types `java.util.Date` `java.sql.Date` `java.sql.Timestamp`
 
 ### Generic Utils
 
 - Optional `java.util.Optional`
 
-### Unsupported Primitive Array As Type Parameters
+### Collections
+
+- Lists `java.util.List` `java.util.ArrayList` `java.util.LinkedList`
+- Sets  `java.util.Set` `java.util.HashSet` `java.util.TreeSet`
+- Maps  `java.util.Map` `java.util.HastMap` `java.util.TreeMap`
+
+### Streams
+
+Stream and primitive streams `java.util.stream.Stream` `java.util.stream.IntStream`
+`java.util.stream.LongStream` `java.util.stream.DoubleStream`
+
+### Arrays
+
+Arrays of any primitive types and reference types listed here are supported, including multidimensional arrays,
+regardless of the number of dimensions. However, primitive arrays as type parameters are not supported.
+
+#### Primitive Array As Type Parameters Are Not Supported
 
 Primitive arrays as type parameters of any generic types will not be supported, which means any field typed as any
 generic type that holding primitive arrays, like `List<int[]>`, `Optional<double[]>`
