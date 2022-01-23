@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Date;
 
 @AllArgsConstructor
 public class DatetimeModel {
@@ -25,4 +26,10 @@ public class DatetimeModel {
     public LocalTime localTime;
 
     public LocalDateTime localDateTime;
+
+    public Date date;
+
+    public Date nowDate;
+
+    public Date constantDate;
 }

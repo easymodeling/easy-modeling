@@ -6,6 +6,8 @@ package xyz.v2my.easymodeling;
         @Field(name = "before", before = "2000-01-01T00:00:00Z"),
         @Field(name = "after", after = "2000-01-01T00:00:00Z"),
         @Field(name = "localDate", datetime = "2000-01-01T00:00:00Z"),
+        @Field(name = "nowDate", now = true),
+        @Field(name = "constantDate", datetime = "2000-01-01T00:00:00Z"),
 })
 public class DatetimeModelConfig {
 }
