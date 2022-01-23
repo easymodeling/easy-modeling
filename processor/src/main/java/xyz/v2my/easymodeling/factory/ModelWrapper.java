@@ -13,36 +13,36 @@ import java.util.stream.Collectors;
 
 public class ModelWrapper {
 
-    private List<FieldWrapper> annotatedFields;
-
     private ClassName modelTypeName;
 
-    private List<EnclosedField> enclosedFields;
+    private List<FieldPattern> fieldPatterns;
+
+    private List<FieldDeclaration> fieldDeclarations;
 
     @SuppressWarnings("unused")
     public ModelWrapper() {
     }
 
     public ModelWrapper(Model model, TypeElement typeElement) {
-        this.annotatedFields = Arrays.stream(model.fields()).map(FieldWrapper::of).collect(Collectors.toList());
+        this.fieldPatterns = Arrays.stream(model.fields()).map(FieldPattern::of).collect(Collectors.toList());
         this.modelTypeName = ClassName.get(typeElement);
-        this.enclosedFields = typeElement.getEnclosedElements().stream()
+        this.fieldDeclarations = typeElement.getEnclosedElements().stream()
                 .filter(element -> element.getKind().equals(ElementKind.FIELD))
                 .filter(element -> !element.getModifiers().contains(Modifier.STATIC))
                 .map(VariableElement.class::cast)
-                .map(EnclosedField::new)
+                .map(FieldDeclaration::new)
                 .collect(Collectors.toList());
     }
 
-    public List<FieldWrapper> getFields() {
-        return annotatedFields;
+    public List<FieldPattern> getFields() {
+        return fieldPatterns;
     }
 
     public ClassName getModelTypeName() {
         return modelTypeName;
     }
 
-    public List<EnclosedField> getEnclosedFields() {
-        return enclosedFields;
+    public List<FieldDeclaration> getEnclosedFields() {
+        return fieldDeclarations;
     }
 }

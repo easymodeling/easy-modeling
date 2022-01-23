@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.field.number.IntegerField;
 import xyz.v2my.easymodeling.factory.field.string.StringField;
-import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
+import xyz.v2my.easymodeling.factory.helper.FieldPatternFactory;
 import xyz.v2my.easymodeling.randomizer.collection.MapRandomizer;
 
 import java.util.Map;
@@ -22,11 +22,11 @@ class MapFieldTest extends FieldTest {
     @Override
     @BeforeEach
     protected void setUp() {
-        fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).min(3.).max(8.).minSize(10).maxSize(20).build();
+        fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(3.).max(8.).minSize(10).maxSize(20).build();
         typeName = ParameterizedTypeName.get(Map.class, String.class, Integer.class);
-        keyField = new StringField().create(fieldWrapper);
-        valueField = new IntegerField().create(fieldWrapper);
-        modelField = new MapField().create(fieldWrapper, keyField, valueField);
+        keyField = new StringField().create(fieldPattern);
+        valueField = new IntegerField().create(fieldPattern);
+        modelField = new MapField().create(fieldPattern, keyField, valueField);
     }
 
     @Override

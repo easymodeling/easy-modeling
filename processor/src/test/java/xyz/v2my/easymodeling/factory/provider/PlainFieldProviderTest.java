@@ -5,7 +5,7 @@ import com.squareup.javapoet.TypeName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
 import xyz.v2my.easymodeling.factory.field.number.DoubleField;
@@ -17,7 +17,7 @@ import xyz.v2my.easymodeling.factory.field.primitive.BooleanField;
 import xyz.v2my.easymodeling.factory.field.primitive.CharField;
 import xyz.v2my.easymodeling.factory.field.string.StringBuilderField;
 import xyz.v2my.easymodeling.factory.field.string.StringField;
-import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
+import xyz.v2my.easymodeling.factory.helper.FieldPatternFactory;
 
 import java.time.Instant;
 import java.util.stream.Stream;
@@ -29,9 +29,9 @@ public class PlainFieldProviderTest extends ModelFieldProviderTest {
     @ParameterizedTest
     @MethodSource({"plainFields", "unboxedFields"})
     void should_provide_field(TypeName typeName, Class<? extends ModelField> fieldClass) {
-        final FieldWrapper fieldWrapper = FieldWrapperFactory.any();
+        final FieldPattern fieldPattern = FieldPatternFactory.any();
 
-        final ModelField plainField = modelFieldProvider.provide(typeName, fieldWrapper);
+        final ModelField plainField = modelFieldProvider.provide(typeName, fieldPattern);
 
         assertThat(plainField).isInstanceOf(fieldClass);
     }

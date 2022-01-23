@@ -3,7 +3,7 @@ package xyz.v2my.easymodeling.factory.field.stream;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 import xyz.v2my.easymodeling.factory.field.Container;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.stream.StreamRandomizer;
@@ -19,11 +19,11 @@ public class StreamField extends Container {
     }
 
     @Override
-    public StreamField create(FieldWrapper field, ModelField... valueFields) {
+    public StreamField create(FieldPattern field, ModelField... valueFields) {
         return new StreamField(field, valueFields[0]);
     }
 
-    private StreamField(FieldWrapper field, ModelField nestedField) {
+    private StreamField(FieldPattern field, ModelField nestedField) {
         super(ParameterizedTypeName.get(TYPE, nestedField.type()), field, nestedField);
     }
 

@@ -4,7 +4,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import org.junit.jupiter.api.BeforeEach;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
-import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
+import xyz.v2my.easymodeling.factory.helper.FieldPatternFactory;
 import xyz.v2my.easymodeling.randomizer.datetime.SqlDateRandomizer;
 
 import java.sql.Date;
@@ -16,9 +16,9 @@ class SqlDateFieldTest extends FieldTest {
     @Override
     @BeforeEach
     protected void setUp() {
-        fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).after("1991-01-23T00:00:00Z").before("1991-02-22T00:00:00Z").build();
+        fieldPattern = FieldPatternFactory.one(FIELD_NAME).after("1991-01-23T00:00:00Z").before("1991-02-22T00:00:00Z").build();
         typeName = ClassName.get(Date.class);
-        modelField = new SqlDateField().create(fieldWrapper);
+        modelField = new SqlDateField().create(fieldPattern);
     }
 
     @Override

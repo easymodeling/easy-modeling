@@ -5,7 +5,7 @@ import com.squareup.javapoet.CodeBlock;
 import org.junit.jupiter.api.BeforeEach;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.field.number.LongField;
-import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
+import xyz.v2my.easymodeling.factory.helper.FieldPatternFactory;
 import xyz.v2my.easymodeling.randomizer.stream.LongStreamRandomizer;
 
 import java.util.stream.LongStream;
@@ -17,9 +17,9 @@ class LongStreamFieldTest extends FieldTest {
     @Override
     @BeforeEach
     protected void setUp() {
-        fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).min(2.).max(9.).minSize(10).maxSize(15).build();
+        fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(2.).max(9.).minSize(10).maxSize(15).build();
         typeName = ClassName.get(LongStream.class);
-        modelField = new LongStreamField().create(fieldWrapper);
+        modelField = new LongStreamField().create(fieldPattern);
     }
 
     @Override
@@ -27,6 +27,6 @@ class LongStreamFieldTest extends FieldTest {
         final CodeBlock initializer = modelField.initializer();
 
         assertThat(initializer).hasToString(
-                "new " + $(LongStreamRandomizer.class) + "(" + new LongField().create(fieldWrapper).initializer() + ", 10, 15)");
+                "new " + $(LongStreamRandomizer.class) + "(" + new LongField().create(fieldPattern).initializer() + ", 10, 15)");
     }
 }

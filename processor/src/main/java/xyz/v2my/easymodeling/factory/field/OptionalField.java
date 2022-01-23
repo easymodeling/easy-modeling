@@ -3,7 +3,7 @@ package xyz.v2my.easymodeling.factory.field;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 import xyz.v2my.easymodeling.randomizer.OptionalRandomizer;
 
 import java.util.Optional;
@@ -17,11 +17,11 @@ public class OptionalField extends Container {
     }
 
     @Override
-    public OptionalField create(FieldWrapper field, ModelField... valueFields) {
+    public OptionalField create(FieldPattern field, ModelField... valueFields) {
         return new OptionalField(field, valueFields[0]);
     }
 
-    private OptionalField(FieldWrapper field, ModelField valueField) {
+    private OptionalField(FieldPattern field, ModelField valueField) {
         super(ParameterizedTypeName.get(TYPE, valueField.type()), field, valueField);
     }
 

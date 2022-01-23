@@ -3,11 +3,10 @@ package xyz.v2my.easymodeling.factory.field.collection;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.factory.field.number.IntegerField;
-import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
+import xyz.v2my.easymodeling.factory.helper.FieldPatternFactory;
 import xyz.v2my.easymodeling.randomizer.collection.LinkedListRandomizer;
 
 import java.util.LinkedList;
@@ -21,10 +20,10 @@ class LinkedListFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(2).maxSize(5).build();
+        fieldPattern = FieldPatternFactory.one(FIELD_NAME).minSize(2).maxSize(5).build();
         typeName = ParameterizedTypeName.get(LinkedList.class, Integer.class);
-        integerField = new IntegerField().create(fieldWrapper);
-        modelField = new LinkedListField().create(fieldWrapper, integerField);
+        integerField = new IntegerField().create(fieldPattern);
+        modelField = new LinkedListField().create(fieldPattern, integerField);
     }
 
     @Override

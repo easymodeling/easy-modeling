@@ -4,17 +4,17 @@ import com.squareup.javapoet.TypeName;
 
 import javax.lang.model.element.VariableElement;
 
-public class EnclosedField {
+public class FieldDeclaration {
 
     private String fieldName;
 
     private TypeName typeName;
 
     @SuppressWarnings("unused")
-    public EnclosedField() {
+    public FieldDeclaration() {
     }
 
-    public EnclosedField(VariableElement element) {
+    public FieldDeclaration(VariableElement element) {
         this.fieldName = element.getSimpleName().toString();
         this.typeName = TypeName.get(element.asType());
     }

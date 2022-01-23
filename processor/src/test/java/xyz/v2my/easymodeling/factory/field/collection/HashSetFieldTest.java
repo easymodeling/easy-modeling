@@ -3,10 +3,9 @@ package xyz.v2my.easymodeling.factory.field.collection;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.field.number.IntegerField;
-import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
+import xyz.v2my.easymodeling.factory.helper.FieldPatternFactory;
 import xyz.v2my.easymodeling.randomizer.collection.HashSetRandomizer;
 
 import java.util.HashSet;
@@ -20,10 +19,10 @@ class HashSetFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(50).maxSize(100).build();
-        integerField = new IntegerField().create(fieldWrapper);
+        fieldPattern = FieldPatternFactory.one(FIELD_NAME).minSize(50).maxSize(100).build();
+        integerField = new IntegerField().create(fieldPattern);
         typeName = ParameterizedTypeName.get(HashSet.class, Integer.class);
-        modelField = new HashSetField().create(fieldWrapper, integerField);
+        modelField = new HashSetField().create(fieldPattern, integerField);
     }
 
     @Override

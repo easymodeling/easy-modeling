@@ -5,7 +5,7 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import org.junit.jupiter.api.BeforeEach;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.field.number.IntegerField;
-import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
+import xyz.v2my.easymodeling.factory.helper.FieldPatternFactory;
 import xyz.v2my.easymodeling.randomizer.collection.TreeSetRandomizer;
 
 import java.util.TreeSet;
@@ -19,10 +19,10 @@ class TreeSetFieldTest extends FieldTest {
     @Override
     @BeforeEach
     protected void setUp() {
-        fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(50).maxSize(100).build();
-        integerField = new IntegerField().create(fieldWrapper);
+        fieldPattern = FieldPatternFactory.one(FIELD_NAME).minSize(50).maxSize(100).build();
+        integerField = new IntegerField().create(fieldPattern);
         typeName = ParameterizedTypeName.get(TreeSet.class, Integer.class);
-        modelField = new TreeSetField().create(fieldWrapper, integerField);
+        modelField = new TreeSetField().create(fieldPattern, integerField);
     }
 
     @Override

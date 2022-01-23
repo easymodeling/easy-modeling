@@ -2,7 +2,7 @@ package xyz.v2my.easymodeling.factory.field.stream;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.factory.field.number.NumericField;
 
@@ -13,7 +13,7 @@ public abstract class PrimitiveTypeStreamField<S extends BaseStream<E, S>, E ext
     protected PrimitiveTypeStreamField() {
     }
 
-    protected PrimitiveTypeStreamField(TypeName type, FieldWrapper field) {
+    protected PrimitiveTypeStreamField(TypeName type, FieldPattern field) {
         super(type, field);
     }
 

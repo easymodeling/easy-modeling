@@ -1,7 +1,7 @@
 package xyz.v2my.easymodeling.factory.field.datetime;
 
 import com.squareup.javapoet.ClassName;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.datetime.DateRandomizer;
@@ -17,11 +17,11 @@ public class DateField extends AbstractDateTimeField<Date> {
     }
 
     @Override
-    public DateField create(FieldWrapper field, ModelField... valueFields) {
+    public DateField create(FieldPattern field, ModelField... valueFields) {
         return new DateField(field);
     }
 
-    private DateField(FieldWrapper field) {
+    private DateField(FieldPattern field) {
         super(TYPE, field);
     }
 

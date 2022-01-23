@@ -6,7 +6,7 @@ import java.time.Instant;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
 
-public class FieldWrapper {
+public class FieldPattern {
 
     private final String name;
 
@@ -44,19 +44,19 @@ public class FieldWrapper {
 
     boolean allowEmpty = false;
 
-    public static FieldWrapper of(String name) {
-        return new FieldWrapper(name);
+    public static FieldPattern of(String name) {
+        return new FieldPattern(name);
     }
 
-    private FieldWrapper(String name) {
+    private FieldPattern(String name) {
         this.name = name;
     }
 
-    public static FieldWrapper of(Field field) {
-        return new FieldWrapper(field);
+    public static FieldPattern of(Field field) {
+        return new FieldPattern(field);
     }
 
-    private FieldWrapper(Field annotation) {
+    private FieldPattern(Field annotation) {
         this.name = annotation.name();
         this.max = annotation.max();
         this.min = annotation.min();

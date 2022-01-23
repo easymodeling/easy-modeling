@@ -2,7 +2,7 @@ package xyz.v2my.easymodeling.factory.field.datetime;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 import xyz.v2my.easymodeling.factory.field.PlainField;
 
 import java.time.Instant;
@@ -13,7 +13,7 @@ public abstract class AbstractDateTimeField<T> extends PlainField<T> {
     protected AbstractDateTimeField() {
     }
 
-    protected AbstractDateTimeField(TypeName type, FieldWrapper field) {
+    protected AbstractDateTimeField(TypeName type, FieldPattern field) {
         super(type, field);
     }
 

@@ -6,7 +6,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 
 import javax.lang.model.element.Modifier;
 
@@ -16,7 +16,7 @@ public abstract class FieldTest {
 
     public static final String FIELD_NAME = "fieldName";
 
-    protected FieldWrapper fieldWrapper;
+    protected FieldPattern fieldPattern;
 
     protected TypeName typeName;
 

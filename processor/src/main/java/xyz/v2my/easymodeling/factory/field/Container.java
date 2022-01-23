@@ -2,7 +2,7 @@ package xyz.v2my.easymodeling.factory.field;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 
 import java.util.Arrays;
 
@@ -13,7 +13,7 @@ public abstract class Container extends ModelField {
     protected Container() {
     }
 
-    protected Container(TypeName type, FieldWrapper field, ModelField... nestedFields) {
+    protected Container(TypeName type, FieldPattern field, ModelField... nestedFields) {
         super(type, field);
         this.nestedFields = nestedFields;
     }

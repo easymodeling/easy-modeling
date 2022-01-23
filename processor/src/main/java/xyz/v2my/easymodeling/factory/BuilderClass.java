@@ -12,7 +12,7 @@ import javax.lang.model.element.Modifier;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static xyz.v2my.easymodeling.ClassPatterns.BUILDER_CLASS_NAME;
+import static xyz.v2my.easymodeling.GenerationPatterns.BUILDER_CLASS_NAME;
 
 public class BuilderClass {
 

@@ -1,7 +1,7 @@
 package xyz.v2my.easymodeling.factory.field.stream;
 
 import com.squareup.javapoet.ClassName;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.factory.field.number.IntegerField;
@@ -20,11 +20,11 @@ public class IntStreamField extends PrimitiveTypeStreamField<IntStream, Integer>
     }
 
     @Override
-    public PlainField<IntStream> create(FieldWrapper field, ModelField... valueFields) {
+    public PlainField<IntStream> create(FieldPattern field, ModelField... valueFields) {
         return new IntStreamField(field);
     }
 
-    private IntStreamField(FieldWrapper field) {
+    private IntStreamField(FieldPattern field) {
         super(TYPE, field);
     }
 

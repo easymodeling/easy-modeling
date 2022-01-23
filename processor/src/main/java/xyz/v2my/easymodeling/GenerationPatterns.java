@@ -1,8 +1,8 @@
 package xyz.v2my.easymodeling;
 
-public class ClassPatterns {
+public class GenerationPatterns {
 
-    private ClassPatterns() {
+    private GenerationPatterns() {
     }
 
     public static final String BUILDER_CLASS_NAME = "Builder";

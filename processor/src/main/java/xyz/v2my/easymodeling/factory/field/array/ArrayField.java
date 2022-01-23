@@ -2,14 +2,14 @@ package xyz.v2my.easymodeling.factory.field.array;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 import xyz.v2my.easymodeling.factory.field.Container;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.array.ArrayRandomizer;
 
 public class ArrayField extends Container {
 
-    public ArrayField(TypeName type, FieldWrapper field, ModelField elementField) {
+    public ArrayField(TypeName type, FieldPattern field, ModelField elementField) {
         super(type, field, elementField);
     }
 
@@ -32,7 +32,7 @@ public class ArrayField extends Container {
     }
 
     @Override
-    public Container create(FieldWrapper field, ModelField... valueFields) {
+    public Container create(FieldPattern field, ModelField... valueFields) {
         throw new UnsupportedOperationException("Create ArrayField with constructor");
     }
 }

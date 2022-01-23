@@ -3,11 +3,10 @@ package xyz.v2my.easymodeling.factory.field.collection;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.factory.field.number.IntegerField;
-import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
+import xyz.v2my.easymodeling.factory.helper.FieldPatternFactory;
 import xyz.v2my.easymodeling.randomizer.collection.ArrayListRandomizer;
 
 import java.util.ArrayList;
@@ -21,10 +20,10 @@ class ArrayListFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).build();
-        integerField = new IntegerField().create(fieldWrapper);
+        fieldPattern = FieldPatternFactory.one(FIELD_NAME).build();
+        integerField = new IntegerField().create(fieldPattern);
         typeName = ParameterizedTypeName.get(ArrayList.class, Integer.class);
-        modelField = new ArrayListField().create(fieldWrapper, integerField);
+        modelField = new ArrayListField().create(fieldPattern, integerField);
     }
 
     @Override

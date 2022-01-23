@@ -4,7 +4,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import org.junit.jupiter.api.BeforeEach;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
-import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
+import xyz.v2my.easymodeling.factory.helper.FieldPatternFactory;
 import xyz.v2my.easymodeling.randomizer.primitive.BooleanRandomizer;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,9 +14,9 @@ class BooleanFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).build();
+        fieldPattern = FieldPatternFactory.one(FIELD_NAME).build();
         typeName = ClassName.get(Boolean.class);
-        modelField = new BooleanField().create(fieldWrapper);
+        modelField = new BooleanField().create(fieldPattern);
     }
 
     @Override

@@ -4,7 +4,7 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
+import xyz.v2my.easymodeling.factory.helper.FieldPatternFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -15,7 +15,7 @@ class UnknownFieldTest {
 
     @BeforeEach
     void setUp() {
-        unknownField = new UnknownField(TypeName.VOID, FieldWrapperFactory.any());
+        unknownField = new UnknownField(TypeName.VOID, FieldPatternFactory.any());
     }
 
     @Test
@@ -48,7 +48,7 @@ class UnknownFieldTest {
 
     @Test
     void should_not_invoke_create() {
-        final Throwable throwable = catchThrowable(() -> unknownField.create(FieldWrapperFactory.any()));
+        final Throwable throwable = catchThrowable(() -> unknownField.create(FieldPatternFactory.any()));
 
         assertThat(throwable).isInstanceOf(UnsupportedOperationException.class);
     }

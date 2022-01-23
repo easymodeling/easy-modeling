@@ -1,7 +1,7 @@
 package xyz.v2my.easymodeling.factory.field.datetime;
 
 import com.squareup.javapoet.ClassName;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.datetime.InstantRandomizer;
@@ -17,11 +17,11 @@ public class InstantField extends AbstractDateTimeField<Instant> {
     }
 
     @Override
-    public InstantField create(FieldWrapper field, ModelField... valueFields) {
+    public InstantField create(FieldPattern field, ModelField... valueFields) {
         return new InstantField(field);
     }
 
-    private InstantField(FieldWrapper field) {
+    private InstantField(FieldPattern field) {
         super(TYPE, field);
     }
 

@@ -10,7 +10,7 @@ import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.factory.field.datetime.InstantField;
 import xyz.v2my.easymodeling.factory.field.number.IntegerField;
-import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
+import xyz.v2my.easymodeling.factory.helper.FieldPatternFactory;
 import xyz.v2my.easymodeling.randomizer.array.ArrayRandomizer;
 import xyz.v2my.easymodeling.randomizer.datetime.InstantRandomizer;
 import xyz.v2my.easymodeling.randomizer.number.IntegerRandomizer;
@@ -27,10 +27,10 @@ class ArrayFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(2).maxSize(5).min(1.).max(3.).build();
-        integerField = new IntegerField().create(fieldWrapper);
+        fieldPattern = FieldPatternFactory.one(FIELD_NAME).minSize(2).maxSize(5).min(1.).max(3.).build();
+        integerField = new IntegerField().create(fieldPattern);
         typeName = ArrayTypeName.of(Integer.class);
-        modelField = new ArrayField(typeName, fieldWrapper, integerField);
+        modelField = new ArrayField(typeName, fieldPattern, integerField);
     }
 
     @Override
@@ -43,7 +43,7 @@ class ArrayFieldTest extends FieldTest {
 
     @Test
     void should_not_invoke_create() {
-        final Throwable throwable = catchThrowable(() -> new ArrayField(typeName, fieldWrapper, integerField).create(fieldWrapper));
+        final Throwable throwable = catchThrowable(() -> new ArrayField(typeName, fieldPattern, integerField).create(fieldPattern));
 
         assertThat(throwable).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -53,8 +53,8 @@ class ArrayFieldTest extends FieldTest {
 
         @Test
         void should_generate_statement_of_array() {
-            final PlainField<Integer> integerField = new IntegerField().create(fieldWrapper);
-            final Container arrayField = new ArrayField(ArrayTypeName.of(Integer.class), fieldWrapper, integerField);
+            final PlainField<Integer> integerField = new IntegerField().create(fieldPattern);
+            final Container arrayField = new ArrayField(ArrayTypeName.of(Integer.class), fieldPattern, integerField);
 
             final CodeBlock initialValue = arrayField.initialValue();
 
@@ -64,9 +64,9 @@ class ArrayFieldTest extends FieldTest {
 
         @Test
         void should_generate_statement_of_matrix() {
-            final PlainField<Integer> integerField = new IntegerField().create(fieldWrapper);
-            final Container arrayField = new ArrayField(ArrayTypeName.get(Integer[].class), fieldWrapper, integerField);
-            final Container matrixField = new ArrayField(ArrayTypeName.get(Integer[][].class), fieldWrapper, arrayField);
+            final PlainField<Integer> integerField = new IntegerField().create(fieldPattern);
+            final Container arrayField = new ArrayField(ArrayTypeName.get(Integer[].class), fieldPattern, integerField);
+            final Container matrixField = new ArrayField(ArrayTypeName.get(Integer[][].class), fieldPattern, arrayField);
 
             final CodeBlock initialValue = matrixField.initialValue();
 
@@ -77,10 +77,10 @@ class ArrayFieldTest extends FieldTest {
 
         @Test
         void should_generate_statement_of_cube() {
-            final PlainField<Instant> instantField = new InstantField().create(fieldWrapper);
-            final Container arrayField = new ArrayField(ArrayTypeName.get(Instant[].class), fieldWrapper, instantField);
-            final Container matrixField = new ArrayField(ArrayTypeName.get(Instant[][].class), fieldWrapper, arrayField);
-            final Container cubeField = new ArrayField(ArrayTypeName.get(Instant[][][].class), fieldWrapper, matrixField);
+            final PlainField<Instant> instantField = new InstantField().create(fieldPattern);
+            final Container arrayField = new ArrayField(ArrayTypeName.get(Instant[].class), fieldPattern, instantField);
+            final Container matrixField = new ArrayField(ArrayTypeName.get(Instant[][].class), fieldPattern, arrayField);
+            final Container cubeField = new ArrayField(ArrayTypeName.get(Instant[][][].class), fieldPattern, matrixField);
 
             final CodeBlock initialValue = cubeField.initialValue();
 

@@ -2,7 +2,7 @@ package xyz.v2my.easymodeling.factory.field;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 
 public abstract class PlainField<T> extends ModelField {
@@ -10,7 +10,7 @@ public abstract class PlainField<T> extends ModelField {
     protected PlainField() {
     }
 
-    protected PlainField(TypeName type, FieldWrapper field) {
+    protected PlainField(TypeName type, FieldPattern field) {
         super(type, field);
     }
 

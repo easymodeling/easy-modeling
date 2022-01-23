@@ -6,7 +6,7 @@ import com.squareup.javapoet.TypeName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.factory.field.OptionalField;
 import xyz.v2my.easymodeling.factory.field.collection.ArrayListField;
@@ -16,7 +16,7 @@ import xyz.v2my.easymodeling.factory.field.collection.ListField;
 import xyz.v2my.easymodeling.factory.field.collection.SetField;
 import xyz.v2my.easymodeling.factory.field.collection.TreeSetField;
 import xyz.v2my.easymodeling.factory.field.stream.StreamField;
-import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
+import xyz.v2my.easymodeling.factory.helper.FieldPatternFactory;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -35,11 +35,11 @@ public class ContainerFieldProviderTest extends ModelFieldProviderTest {
     @ParameterizedTest
     @MethodSource("containerFields")
     void should_provide_container_field_containing_plain_field(ClassName rawType, Class<SetField> containerField) {
-        final FieldWrapper fieldWrapper = FieldWrapperFactory.any();
+        final FieldPattern fieldPattern = FieldPatternFactory.any();
 
         plainFields().map(a -> a.get()[0])
                 .map(TypeName.class::cast).forEach(typeName -> {
-                    final ModelField container = modelFieldProvider.provide(ParameterizedTypeName.get(rawType, typeName), fieldWrapper);
+                    final ModelField container = modelFieldProvider.provide(ParameterizedTypeName.get(rawType, typeName), fieldPattern);
                     assertThat(container).isInstanceOf(containerField);
                 });
     }

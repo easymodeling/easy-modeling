@@ -2,7 +2,7 @@ package xyz.v2my.easymodeling.factory.field.collection;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.collection.HashSetRandomizer;
 
@@ -17,11 +17,11 @@ public class HashSetField extends AbstractCollectionField {
     }
 
     @Override
-    public HashSetField create(FieldWrapper field, ModelField... nestedFields) {
+    public HashSetField create(FieldPattern field, ModelField... nestedFields) {
         return new HashSetField(field, nestedFields[0]);
     }
 
-    private HashSetField(FieldWrapper field, ModelField nestedField) {
+    private HashSetField(FieldPattern field, ModelField nestedField) {
         super(TYPE, field, nestedField);
     }
 

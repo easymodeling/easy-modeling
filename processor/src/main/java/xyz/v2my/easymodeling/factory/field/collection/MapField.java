@@ -2,7 +2,7 @@ package xyz.v2my.easymodeling.factory.field.collection;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.collection.MapRandomizer;
 
@@ -17,11 +17,11 @@ public class MapField extends AbstractMapField {
     }
 
     @Override
-    public MapField create(FieldWrapper field, ModelField... nestedFields) {
+    public MapField create(FieldPattern field, ModelField... nestedFields) {
         return new MapField(field, nestedFields[0], nestedFields[1]);
     }
 
-    private MapField(FieldWrapper field, ModelField keyField, ModelField valueField) {
+    private MapField(FieldPattern field, ModelField keyField, ModelField valueField) {
         super(TYPE, field, keyField, valueField);
     }
 

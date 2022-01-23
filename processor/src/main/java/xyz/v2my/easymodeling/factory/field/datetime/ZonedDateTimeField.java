@@ -1,7 +1,7 @@
 package xyz.v2my.easymodeling.factory.field.datetime;
 
 import com.squareup.javapoet.ClassName;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.datetime.ZonedDateTimeRandomizer;
@@ -17,11 +17,11 @@ public class ZonedDateTimeField extends AbstractDateTimeField<ZonedDateTime> {
     }
 
     @Override
-    public ZonedDateTimeField create(FieldWrapper field, ModelField... valueFields) {
+    public ZonedDateTimeField create(FieldPattern field, ModelField... valueFields) {
         return new ZonedDateTimeField(field);
     }
 
-    private ZonedDateTimeField(FieldWrapper field) {
+    private ZonedDateTimeField(FieldPattern field) {
         super(TYPE, field);
     }
 

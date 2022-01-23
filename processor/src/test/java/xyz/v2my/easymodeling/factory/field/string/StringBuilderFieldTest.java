@@ -4,10 +4,10 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.field.ModelField;
-import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
+import xyz.v2my.easymodeling.factory.helper.FieldPatternFactory;
 import xyz.v2my.easymodeling.randomizer.string.StringBuilderRandomizer;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,9 +20,9 @@ class StringBuilderFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).string(STRING_CONSTANT).build();
+        fieldPattern = FieldPatternFactory.one(FIELD_NAME).string(STRING_CONSTANT).build();
         typeName = ClassName.get(StringBuilder.class);
-        modelField = new StringBuilderField().create(fieldWrapper);
+        modelField = new StringBuilderField().create(fieldPattern);
     }
 
     @Override
@@ -35,8 +35,8 @@ class StringBuilderFieldTest extends FieldTest {
 
     @Test
     protected void should_generate_initializer_with_min_max_and_charset() {
-        FieldWrapper fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).min(2.).max(40.).alphabetic(true).build();
-        ModelField modelField = new StringBuilderField().create(fieldWrapper);
+        FieldPattern fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(2.).max(40.).alphabetic(true).build();
+        ModelField modelField = new StringBuilderField().create(fieldPattern);
         final CodeBlock initializer = modelField.initializer();
 
         assertThat(initializer)

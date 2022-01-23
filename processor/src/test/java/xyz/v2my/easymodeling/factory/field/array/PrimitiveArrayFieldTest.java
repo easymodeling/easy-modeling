@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.factory.field.number.IntegerField;
-import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
+import xyz.v2my.easymodeling.factory.helper.FieldPatternFactory;
 import xyz.v2my.easymodeling.randomizer.array.PrimitiveArrayRandomizer;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,10 +19,10 @@ class PrimitiveArrayFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(3).maxSize(8).build();
-        integerField = new IntegerField().create(fieldWrapper);
+        fieldPattern = FieldPatternFactory.one(FIELD_NAME).minSize(3).maxSize(8).build();
+        integerField = new IntegerField().create(fieldPattern);
         typeName = ArrayTypeName.of(int[].class);
-        modelField = new PrimitiveArrayField((ArrayTypeName) typeName, fieldWrapper, integerField);
+        modelField = new PrimitiveArrayField((ArrayTypeName) typeName, fieldPattern, integerField);
     }
 
     @Test

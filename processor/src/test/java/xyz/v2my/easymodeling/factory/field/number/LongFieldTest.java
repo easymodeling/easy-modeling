@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
-import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
+import xyz.v2my.easymodeling.factory.helper.FieldPatternFactory;
 import xyz.v2my.easymodeling.randomizer.number.LongRandomizer;
 
 import javax.lang.model.element.Modifier;
@@ -24,9 +24,9 @@ class LongFieldTest {
         @Override
         @BeforeEach
         protected void setUp() {
-            fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).min(-2.).max(9.).build();
+            fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(-2.).max(9.).build();
             typeName = ClassName.get(Long.class);
-            modelField = new LongField().create(fieldWrapper);
+            modelField = new LongField().create(fieldPattern);
         }
 
         @Override
@@ -43,9 +43,9 @@ class LongFieldTest {
         @Override
         @BeforeEach
         protected void setUp() {
-            fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).constant(12.).build();
+            fieldPattern = FieldPatternFactory.one(FIELD_NAME).constant(12.).build();
             typeName = ClassName.get(Long.class);
-            modelField = new LongField().create(fieldWrapper);
+            modelField = new LongField().create(fieldPattern);
         }
 
         @Override
@@ -62,9 +62,9 @@ class LongFieldTest {
         @Override
         @BeforeEach
         protected void setUp() {
-            fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).min(0.).max(2.).build();
+            fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(0.).max(2.).build();
             typeName = TypeName.LONG;
-            modelField = new LongField().create(fieldWrapper);
+            modelField = new LongField().create(fieldPattern);
         }
 
         @Override

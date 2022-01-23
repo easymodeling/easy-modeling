@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.factory.field.number.IntegerField;
-import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
+import xyz.v2my.easymodeling.factory.helper.FieldPatternFactory;
 import xyz.v2my.easymodeling.randomizer.stream.StreamRandomizer;
 
 import java.util.stream.Stream;
@@ -20,10 +20,10 @@ class StreamFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).minSize(2).maxSize(9).build();
-        integerField = new IntegerField().create(fieldWrapper);
+        fieldPattern = FieldPatternFactory.one(FIELD_NAME).minSize(2).maxSize(9).build();
+        integerField = new IntegerField().create(fieldPattern);
         typeName = ParameterizedTypeName.get(Stream.class, Integer.class);
-        modelField = new StreamField().create(fieldWrapper, integerField);
+        modelField = new StreamField().create(fieldPattern, integerField);
     }
 
     @Override

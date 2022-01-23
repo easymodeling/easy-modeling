@@ -2,7 +2,7 @@ package xyz.v2my.easymodeling.factory.field.collection;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.collection.SetRandomizer;
 
@@ -17,11 +17,11 @@ public class SetField extends AbstractCollectionField {
     }
 
     @Override
-    public SetField create(FieldWrapper field, ModelField... nestedFields) {
+    public SetField create(FieldPattern field, ModelField... nestedFields) {
         return new SetField(field, nestedFields[0]);
     }
 
-    private SetField(FieldWrapper field, ModelField nestedField) {
+    private SetField(FieldPattern field, ModelField nestedField) {
         super(TYPE, field, nestedField);
         // TODO: 09.01.22 check elementType space size when constructing Field
         //  for example, if elementType is Integer between 0 and 3, when the set size is greater than 5,

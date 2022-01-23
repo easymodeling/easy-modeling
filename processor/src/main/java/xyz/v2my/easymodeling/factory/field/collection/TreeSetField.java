@@ -2,7 +2,7 @@ package xyz.v2my.easymodeling.factory.field.collection;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.collection.TreeSetRandomizer;
 
@@ -17,11 +17,11 @@ public class TreeSetField extends AbstractCollectionField {
     }
 
     @Override
-    public TreeSetField create(FieldWrapper field, ModelField... nestedFields) {
+    public TreeSetField create(FieldPattern field, ModelField... nestedFields) {
         return new TreeSetField(field, nestedFields[0]);
     }
 
-    private TreeSetField(FieldWrapper field, ModelField nestedField) {
+    private TreeSetField(FieldPattern field, ModelField nestedField) {
         super(TYPE, field, nestedField);
     }
 

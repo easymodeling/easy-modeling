@@ -1,7 +1,7 @@
 package xyz.v2my.easymodeling.factory.field.datetime;
 
 import com.squareup.javapoet.ClassName;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.Randomizer;
 import xyz.v2my.easymodeling.randomizer.datetime.LocalTimeRandomizer;
@@ -17,11 +17,11 @@ public class LocalTimeField extends AbstractDateTimeField<LocalTime> {
     }
 
     @Override
-    public LocalTimeField create(FieldWrapper field, ModelField... valueFields) {
+    public LocalTimeField create(FieldPattern field, ModelField... valueFields) {
         return new LocalTimeField(field);
     }
 
-    private LocalTimeField(FieldWrapper field) {
+    private LocalTimeField(FieldPattern field) {
         super(TYPE, field);
     }
 

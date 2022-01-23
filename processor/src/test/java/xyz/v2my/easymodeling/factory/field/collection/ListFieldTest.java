@@ -3,10 +3,9 @@ package xyz.v2my.easymodeling.factory.field.collection;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import xyz.v2my.easymodeling.factory.field.FieldTest;
 import xyz.v2my.easymodeling.factory.field.string.StringField;
-import xyz.v2my.easymodeling.factory.helper.FieldWrapperFactory;
+import xyz.v2my.easymodeling.factory.helper.FieldPatternFactory;
 import xyz.v2my.easymodeling.randomizer.collection.ListRandomizer;
 
 import java.util.List;
@@ -20,10 +19,10 @@ class ListFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldWrapper = FieldWrapperFactory.one(FIELD_NAME).string("").min(3.).max(9.).minSize(20).maxSize(50).build();
-        this.stringField = new StringField().create(fieldWrapper);
+        fieldPattern = FieldPatternFactory.one(FIELD_NAME).string("").min(3.).max(9.).minSize(20).maxSize(50).build();
+        this.stringField = new StringField().create(fieldPattern);
         typeName = ParameterizedTypeName.get(List.class, String.class);
-        modelField = new ListField().create(fieldWrapper, this.stringField);
+        modelField = new ListField().create(fieldPattern, this.stringField);
     }
 
     @Override

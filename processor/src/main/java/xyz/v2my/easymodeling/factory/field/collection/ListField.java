@@ -2,7 +2,7 @@ package xyz.v2my.easymodeling.factory.field.collection;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.randomizer.collection.ListRandomizer;
 
@@ -17,11 +17,11 @@ public class ListField extends AbstractCollectionField {
     }
 
     @Override
-    public ListField create(FieldWrapper field, ModelField... nestedFields) {
+    public ListField create(FieldPattern field, ModelField... nestedFields) {
         return new ListField(field, nestedFields[0]);
     }
 
-    private ListField(FieldWrapper field, ModelField nestedFields) {
+    private ListField(FieldPattern field, ModelField nestedFields) {
         super(TYPE, field, nestedFields);
     }
 

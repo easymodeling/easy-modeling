@@ -32,58 +32,58 @@ public class ModelFieldProvider {
             .map(Container.class::cast)
             .collect(Collectors.toMap(ModelField::type, f -> f));
 
-    public ModelField provide(TypeName type, FieldWrapper field) {
+    public ModelField provide(TypeName type, FieldPattern fieldPattern) {
         try {
-            return findField(type, field);
+            return findField(type, fieldPattern);
         } catch (FieldNotSupportedException e) {
-            return new UnknownField(type, field);
+            return new UnknownField(type, fieldPattern);
         }
     }
 
-    private ModelField findField(TypeName type, FieldWrapper field) {
+    private ModelField findField(TypeName type, FieldPattern fieldPattern) {
         if (type instanceof ArrayTypeName) {
-            return arrayField((ArrayTypeName) type, field);
+            return arrayField((ArrayTypeName) type, fieldPattern);
         }
         if (type instanceof ParameterizedTypeName) {
-            return containerField((ParameterizedTypeName) type, field);
+            return containerField((ParameterizedTypeName) type, fieldPattern);
         }
-        return plainField(type, field);
+        return plainField(type, fieldPattern);
     }
 
-    private ModelField nestedField(TypeName type, FieldWrapper field) {
-        final ModelField nestedField = findField(type, field);
+    private ModelField nestedField(TypeName type, FieldPattern fieldPattern) {
+        final ModelField nestedField = findField(type, fieldPattern);
         if (nestedField instanceof PrimitiveArrayField) {
             throw new FieldNotSupportedException();
         }
         return nestedField;
     }
 
-    private Container arrayField(ArrayTypeName type, FieldWrapper field) {
+    private Container arrayField(ArrayTypeName type, FieldPattern fieldPattern) {
         final TypeName rawType = rawType(type);
         if (rawType.isPrimitive()) {
-            return new PrimitiveArrayField(type, field, plainField(rawType, field));
+            return new PrimitiveArrayField(type, fieldPattern, plainField(rawType, fieldPattern));
         }
-        return new ArrayField(type, field, nestedField(type.componentType, field));
+        return new ArrayField(type, fieldPattern, nestedField(type.componentType, fieldPattern));
     }
 
-    private ModelField containerField(ParameterizedTypeName parameterizedTypeName, FieldWrapper field) {
+    private ModelField containerField(ParameterizedTypeName parameterizedTypeName, FieldPattern fieldPattern) {
         final ClassName rawType = parameterizedTypeName.rawType;
         final ModelField[] modelFields = parameterizedTypeName.typeArguments.stream()
-                .map(type -> nestedField(type, field))
+                .map(type -> nestedField(type, fieldPattern))
                 .toArray(ModelField[]::new);
         try {
             return Optional.ofNullable(CONTAINERS.get(rawType)).orElseThrow(FieldNotSupportedException::new)
-                    .create(field, modelFields);
+                    .create(fieldPattern, modelFields);
         } catch (ArrayIndexOutOfBoundsException obe) {
             throw new FieldNotSupportedException();
         }
     }
 
-    private ModelField plainField(TypeName type, FieldWrapper field) {
+    private ModelField plainField(TypeName type, FieldPattern fieldPattern) {
         TypeName boxedType = type.isPrimitive() ? type.box() : type;
         return Optional.ofNullable(PLAIN_FIELDS.get(boxedType))
                 .orElseThrow(FieldNotSupportedException::new)
-                .create(field);
+                .create(fieldPattern);
     }
 
     private TypeName rawType(TypeName type) {

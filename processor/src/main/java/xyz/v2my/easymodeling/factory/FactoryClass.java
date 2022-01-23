@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static xyz.v2my.easymodeling.ClassPatterns.BUILDER_METHOD_NAME;
-import static xyz.v2my.easymodeling.ClassPatterns.FACTORY_CLASS_NAME_PATTERN;
+import static xyz.v2my.easymodeling.GenerationPatterns.BUILDER_METHOD_NAME;
+import static xyz.v2my.easymodeling.GenerationPatterns.FACTORY_CLASS_NAME_PATTERN;
 
 public class FactoryClass {
 
@@ -32,9 +32,9 @@ public class FactoryClass {
     }
 
     private List<ModelField> initBuilderFields() {
-        final Map<String, FieldWrapper> declaredFieldsMap;
+        final Map<String, FieldPattern> declaredFieldsMap;
         try {
-            declaredFieldsMap = model.getFields().stream().collect(Collectors.toMap(FieldWrapper::name, Function.identity()));
+            declaredFieldsMap = model.getFields().stream().collect(Collectors.toMap(FieldPattern::name, Function.identity()));
             // TODO: 29.12.21 merge multiple field declarations
         } catch (IllegalStateException e) {
             throw new ProcessingException("Duplicated fields declaration: " + e.getMessage());
@@ -44,8 +44,8 @@ public class FactoryClass {
                 .stream()
                 .map(element -> {
                     final String fieldName = element.getFieldName();
-                    final FieldWrapper field = declaredFieldsMap.getOrDefault(fieldName, FieldWrapper.of(fieldName));
-                    return modelFieldProvider.provide(element.getTypeName(), field);
+                    final FieldPattern fieldPattern = declaredFieldsMap.getOrDefault(fieldName, FieldPattern.of(fieldName));
+                    return modelFieldProvider.provide(element.getTypeName(), fieldPattern);
                 })
                 .collect(Collectors.toList());
     }

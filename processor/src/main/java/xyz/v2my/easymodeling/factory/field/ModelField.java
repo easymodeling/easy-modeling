@@ -6,11 +6,11 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
-import xyz.v2my.easymodeling.factory.FieldWrapper;
+import xyz.v2my.easymodeling.factory.FieldPattern;
 
 import javax.lang.model.element.Modifier;
 
-import static xyz.v2my.easymodeling.ClassPatterns.BUILDER_CLASS_NAME;
+import static xyz.v2my.easymodeling.GenerationPatterns.BUILDER_CLASS_NAME;
 
 public abstract class ModelField implements InitializableType, BuilderMember, ConstructorContributor {
 
@@ -18,14 +18,14 @@ public abstract class ModelField implements InitializableType, BuilderMember, Co
 
     protected String name;
 
-    protected FieldWrapper field;
+    protected FieldPattern field;
 
     protected ModelField() {
     }
 
-    public abstract ModelField create(FieldWrapper field, ModelField... valueFields);
+    public abstract ModelField create(FieldPattern field, ModelField... valueFields);
 
-    protected ModelField(TypeName type, FieldWrapper field) {
+    protected ModelField(TypeName type, FieldPattern field) {
         this.type = type;
         this.name = field.name();
         this.field = field;
