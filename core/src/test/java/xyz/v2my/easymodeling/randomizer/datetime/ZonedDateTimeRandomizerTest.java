@@ -30,6 +30,6 @@ class ZonedDateTimeRandomizerTest extends RandomizerTest {
 
         final ZonedDateTime next = zonedDateTimeRandomizer.next();
 
-        assertThat(next).isEqualTo(constant.atZone(ZoneId.of("UTC")));
+        assertThat(next).isEqualTo(constant.atZone(ZoneId.systemDefault()));
     }
 }

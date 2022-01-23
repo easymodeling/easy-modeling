@@ -20,7 +20,7 @@ class LocalTimeRandomizerTest extends RandomizerTest {
 
         final LocalTime next = localTimeRandomizer.next();
 
-        assertThat(next).isBetween(LocalTime.parse("10:59:35"), LocalTime.parse("11:01:01"));
+        assertThat(next).isBetween(min.atZone(ZoneId.systemDefault()).toLocalTime(), max.atZone(ZoneId.systemDefault()).toLocalTime());
     }
 
     @Test
@@ -30,6 +30,6 @@ class LocalTimeRandomizerTest extends RandomizerTest {
 
         final LocalTime next = localTimeRandomizer.next();
 
-        assertThat(next).isEqualTo(constant.atZone(ZoneId.of("UTC")).toLocalTime());
+        assertThat(next).isEqualTo(constant.atZone(ZoneId.systemDefault()).toLocalTime());
     }
 }

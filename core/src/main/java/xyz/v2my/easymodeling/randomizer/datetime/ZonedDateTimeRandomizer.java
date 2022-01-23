@@ -11,11 +11,11 @@ public class ZonedDateTimeRandomizer extends AbstractDateTimeRandomizer<ZonedDat
     }
 
     public ZonedDateTimeRandomizer(Instant constant) {
-        super(constant.atZone(ZoneId.of("UTC")));
+        super(constant.atZone(ZoneId.systemDefault()));
     }
 
     @Override
     public ZonedDateTime random() {
-        return instant().atZone(ZoneId.of("UTC"));
+        return instant().atZone(ZoneId.systemDefault());
     }
 }

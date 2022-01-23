@@ -12,7 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class LocalDateTimeRandomizerTest extends RandomizerTest {
 
-
     @RepeatedTest(100)
     void should_generate_random_local_time_within_range() {
         final Instant min = Instant.parse("2020-01-01T10:59:35Z");
@@ -21,7 +20,7 @@ class LocalDateTimeRandomizerTest extends RandomizerTest {
 
         final LocalDateTime next = localDateTimeRandomizer.next();
 
-        assertThat(next).isBetween(LocalDateTime.parse("2020-01-01T10:59:35"), LocalDateTime.parse("2020-01-01T11:01:01"));
+        assertThat(next).isBetween(min.atZone(ZoneId.systemDefault()).toLocalDateTime(), max.atZone(ZoneId.systemDefault()).toLocalDateTime());
     }
 
     @Test
@@ -31,6 +30,6 @@ class LocalDateTimeRandomizerTest extends RandomizerTest {
 
         final LocalDateTime next = localDateTimeRandomizer.next();
 
-        assertThat(next).isEqualTo(constant.atZone(ZoneId.of("UTC")).toLocalDateTime());
+        assertThat(next).isEqualTo(constant.atZone(ZoneId.systemDefault()).toLocalDateTime());
     }
 }

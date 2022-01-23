@@ -20,7 +20,7 @@ class LocalDateRandomizerTest extends RandomizerTest {
 
         final LocalDate next = localDateRandomizer.next();
 
-        assertThat(next).isBetween(min.atZone(ZoneId.of("UTC")).toLocalDate(), max.atZone(ZoneId.of("UTC")).toLocalDate());
+        assertThat(next).isBetween(min.atZone(ZoneId.systemDefault()).toLocalDate(), max.atZone(ZoneId.systemDefault()).toLocalDate());
     }
 
     @Test
@@ -30,6 +30,6 @@ class LocalDateRandomizerTest extends RandomizerTest {
 
         final LocalDate next = localDateRandomizer.next();
 
-        assertThat(next).isEqualTo(constant.atZone(ZoneId.of("UTC")).toLocalDate());
+        assertThat(next).isEqualTo(constant.atZone(ZoneId.systemDefault()).toLocalDate());
     }
 }

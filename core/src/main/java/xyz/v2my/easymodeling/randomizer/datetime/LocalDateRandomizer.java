@@ -11,11 +11,11 @@ public class LocalDateRandomizer extends AbstractDateTimeRandomizer<LocalDate> {
     }
 
     public LocalDateRandomizer(Instant constant) {
-        super(constant.atZone(ZoneId.of("UTC")).toLocalDate());
+        super(constant.atZone(ZoneId.systemDefault()).toLocalDate());
     }
 
     @Override
     public LocalDate random() {
-        return instant().atZone(ZoneId.of("UTC")).toLocalDate();
+        return instant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 }
