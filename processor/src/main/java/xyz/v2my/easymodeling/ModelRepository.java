@@ -9,7 +9,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class ModelRepository {
 
-    public static ModelRepository MODEL_REPOSITORY;
+    public static ModelRepository INSTANCE;
 
     private final Queue<ModelWrapper> modelToBeProcessed;
 
@@ -21,10 +21,10 @@ public class ModelRepository {
     }
 
     public static ModelRepository instance() {
-        if (MODEL_REPOSITORY == null) {
-            MODEL_REPOSITORY = new ModelRepository(new LinkedBlockingQueue<>(), new CopyOnWriteArraySet<>());
+        if (INSTANCE == null) {
+            INSTANCE = new ModelRepository(new LinkedBlockingQueue<>(), new CopyOnWriteArraySet<>());
         }
-        return MODEL_REPOSITORY;
+        return INSTANCE;
     }
 
     public ModelWrapper next() {

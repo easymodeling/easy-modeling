@@ -1,14 +1,23 @@
 package xyz.v2my.easymodeling;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import xyz.v2my.easymodeling.factory.ModelWrapper;
 import xyz.v2my.easymodeling.factory.helper.ModelWrapperFactory;
 
+import java.lang.reflect.Field;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ModelRepositoryTest {
+
+    @BeforeEach
+    void setUp() throws NoSuchFieldException, IllegalAccessException {
+        final Field repository = ModelRepository.class.getDeclaredField("INSTANCE");
+        repository.setAccessible(true);
+        repository.set(null, null);
+    }
 
     @Test
     void should_get_singleton_with_instance_method() {
