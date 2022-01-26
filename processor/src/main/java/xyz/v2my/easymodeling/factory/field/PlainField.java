@@ -15,11 +15,6 @@ public abstract class PlainField<T> extends ModelField {
     }
 
     @Override
-    public CodeBlock initialValue() {
-        return CodeBlock.of("$L.next()", initializer());
-    }
-
-    @Override
     public CodeBlock initializer() {
         return CodeBlock.of("new $T($L)", initializerType(), initializerParameter());
     }

@@ -19,11 +19,6 @@ public abstract class Container extends ModelField {
     }
 
     @Override
-    public CodeBlock initialValue() {
-        return CodeBlock.of("$L.next()", initializer());
-    }
-
-    @Override
     public CodeBlock initializer() {
         return CodeBlock.of("new $L<>($L, $L)", initializerType(), nestedRandomizers(), initializerParameter());
     }

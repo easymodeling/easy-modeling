@@ -32,6 +32,11 @@ public abstract class ModelField implements InitializableType, BuilderMember, Co
     }
 
     @Override
+    public CodeBlock initialValue() {
+        return CodeBlock.of("$L.next()", initializer());
+    }
+
+    @Override
     public FieldSpec field() {
         return FieldSpec.builder(type, identity(), Modifier.PRIVATE).build();
     }

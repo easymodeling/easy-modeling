@@ -33,20 +33,6 @@ class UnknownFieldTest {
     }
 
     @Test
-    void should_not_invoke_initializerType() {
-        final Throwable throwable = catchThrowable(() -> unknownField.initializerType());
-
-        assertThat(throwable).isInstanceOf(UnsupportedOperationException.class);
-    }
-
-    @Test
-    void should_not_invoke_initializerParameter() {
-        final Throwable throwable = catchThrowable(() -> unknownField.initializerParameter());
-
-        assertThat(throwable).isInstanceOf(UnsupportedOperationException.class);
-    }
-
-    @Test
     void should_not_invoke_create() {
         final Throwable throwable = catchThrowable(() -> unknownField.create(FieldPatternFactory.any()));
 
