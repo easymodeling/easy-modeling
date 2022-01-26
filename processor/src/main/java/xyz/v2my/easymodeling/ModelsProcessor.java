@@ -15,7 +15,6 @@ import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
-import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.MirroredTypeException;
@@ -35,12 +34,15 @@ public class ModelsProcessor extends AbstractProcessor {
 
     private Filer filer;
 
+    private ModelRepository modelRepository;
+
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
         log.setMessager(processingEnv.getMessager());
         elementUtils = processingEnv.getElementUtils();
         filer = processingEnv.getFiler();
+        modelRepository = ModelRepository.instance();
     }
 
     @Override
@@ -49,7 +51,8 @@ public class ModelsProcessor extends AbstractProcessor {
             return false;
         }
         try {
-            process(roundEnv);
+            collectAnnotatedModels(roundEnv);
+            processModels();
             return true;
         } catch (ProcessingException e) {
             // TODO: 19.12.21 move Diagnostic.Kind to exception
@@ -58,27 +61,40 @@ public class ModelsProcessor extends AbstractProcessor {
         }
     }
 
-    private void process(RoundEnvironment roundEnv) throws ProcessingException {
+    private void collectAnnotatedModels(RoundEnvironment roundEnv) throws ProcessingException {
         final Set<? extends Element> elementsAnnotatedWithModels = roundEnv.getElementsAnnotatedWith(Models.class);
         final Set<? extends Element> elementsAnnotatedWithModel = roundEnv.getElementsAnnotatedWith(Model.class);
         Stream.concat(
-                elementsAnnotatedWithModels.stream()
-                        .map(models -> models.getAnnotation(Models.class))
-                        .map(Models::value)
-                        .flatMap(Arrays::stream),
-                elementsAnnotatedWithModel.stream()
-                        .map(model -> model.getAnnotation(Model.class))
-        ).forEach(this::process);
+                        elementsAnnotatedWithModels.stream()
+                                .map(models -> models.getAnnotation(Models.class))
+                                .map(Models::value)
+                                .flatMap(Arrays::stream),
+                        elementsAnnotatedWithModel.stream()
+                                .map(model -> model.getAnnotation(Model.class))
+                )
+                .map(model -> {
+                    TypeElement type = getTypeElementOf(model);
+                    return new ModelWrapper(model, type);
+                })
+                .forEach(modelRepository::add);
     }
 
-    private void process(Model model) throws ProcessingException {
-        TypeElement type = getTypeElementOf(model);
-        final ModelWrapper modelWrapper = new ModelWrapper(model, type);
+    private void processModels() {
+        while (true) {
+            ModelWrapper modelWrapper = modelRepository.next();
+            if (null == modelWrapper) {
+                break;
+            }
+            processModel(modelWrapper);
+        }
+    }
+
+    private void processModel(ModelWrapper modelWrapper) throws ProcessingException {
         final FactoryClass modelFactory = new FactoryClass(modelWrapper);
         final TypeSpec factory = modelFactory.createType();
         try {
-            final PackageElement pkg = elementUtils.getPackageOf(type);
-            JavaFile.builder(pkg.toString(), factory).build()
+            final String pkg = modelWrapper.getModelPackage();
+            JavaFile.builder(pkg, factory).build()
                     .writeTo(filer);
         } catch (IOException e) {
             // TODO: 19.12.21 throw exceptions with elaborate messages

@@ -42,6 +42,10 @@ public class ModelWrapper {
         return modelTypeName;
     }
 
+    public String getModelPackage() {
+        return modelTypeName.packageName();
+    }
+
     public List<FieldDeclaration> getEnclosedFields() {
         return fieldDeclarations;
     }
