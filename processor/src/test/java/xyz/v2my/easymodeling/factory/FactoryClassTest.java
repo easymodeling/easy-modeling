@@ -6,7 +6,7 @@ import com.squareup.javapoet.TypeSpec;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import xyz.v2my.easymodeling.factory.helper.ModelAnnotationFactory;
+import xyz.v2my.easymodeling.factory.helper.ModelWrapperFactory;
 
 import javax.lang.model.element.Modifier;
 
@@ -18,7 +18,7 @@ class FactoryClassTest {
 
     @BeforeEach
     void setUp() {
-        final ModelWrapper modelWrapper = ModelAnnotationFactory.create(SomeClass.class).build();
+        final ModelWrapper modelWrapper = ModelWrapperFactory.create(SomeClass.class).build();
         factoryClass = new FactoryClass(modelWrapper);
     }
 

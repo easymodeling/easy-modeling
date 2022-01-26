@@ -45,4 +45,23 @@ public class ModelWrapper {
     public List<FieldDeclaration> getEnclosedFields() {
         return fieldDeclarations;
     }
+
+    @Override
+    public int hashCode() {
+        return modelTypeName.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+        if (!(o instanceof ModelWrapper)) {
+            return false;
+        }
+        return modelTypeName.equals(((ModelWrapper) o).modelTypeName);
+    }
 }
