@@ -4,7 +4,7 @@ import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
-import xyz.v2my.easymodeling.ModelRepository;
+import xyz.v2my.easymodeling.ModelUniqueQueue;
 import xyz.v2my.easymodeling.NamedModel;
 import xyz.v2my.easymodeling.factory.field.Container;
 import xyz.v2my.easymodeling.factory.field.CustomerField;
@@ -23,10 +23,10 @@ import static xyz.v2my.easymodeling.factory.ModelFieldRegistry.MODEL_FIELDS;
 
 public class ModelFieldProvider {
 
-    private final ModelRepository modelRepository;
+    private final ModelUniqueQueue modelUniqueQueue;
 
     public ModelFieldProvider() {
-        this.modelRepository = ModelRepository.instance();
+        this.modelUniqueQueue = ModelUniqueQueue.instance();
     }
 
     private static final Map<TypeName, PlainField<?>> PLAIN_FIELDS = Arrays.stream(MODEL_FIELDS)
@@ -60,7 +60,7 @@ public class ModelFieldProvider {
             return containerField((ParameterizedTypeName) type, fieldPattern);
         }
         if (!type.toString().startsWith("java.")) {
-            modelRepository.add(new NamedModel(type.toString()));
+            modelUniqueQueue.add(new NamedModel(type.toString()));
             return new CustomerField(type, fieldPattern);
         }
         return plainField(type, fieldPattern);

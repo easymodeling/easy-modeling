@@ -34,7 +34,7 @@ public class ModelsProcessor extends AbstractProcessor {
 
     private Filer filer;
 
-    private ModelRepository modelRepository;
+    private ModelUniqueQueue modelUniqueQueue;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -43,7 +43,7 @@ public class ModelsProcessor extends AbstractProcessor {
         processingEnv.getTypeUtils();
         elementUtils = processingEnv.getElementUtils();
         filer = processingEnv.getFiler();
-        modelRepository = ModelRepository.instance();
+        modelUniqueQueue = ModelUniqueQueue.instance();
     }
 
     @Override
@@ -77,12 +77,12 @@ public class ModelsProcessor extends AbstractProcessor {
                     String className = classNameOf(model);
                     return new NamedModel(className, model);
                 })
-                .forEach(modelRepository::add);
+                .forEach(modelUniqueQueue::add);
     }
 
     private void processModels() {
         while (true) {
-            NamedModel namedModel = modelRepository.next();
+            NamedModel namedModel = modelUniqueQueue.poll();
             if (null == namedModel) {
                 break;
             }

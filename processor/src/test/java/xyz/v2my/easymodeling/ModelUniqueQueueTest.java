@@ -8,40 +8,40 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ModelRepositoryTest {
+class ModelUniqueQueueTest {
 
     @BeforeEach
     void setUp() throws NoSuchFieldException, IllegalAccessException {
-        final Field repository = ModelRepository.class.getDeclaredField("INSTANCE");
+        final Field repository = ModelUniqueQueue.class.getDeclaredField("INSTANCE");
         repository.setAccessible(true);
         repository.set(null, null);
     }
 
     @Test
     void should_get_singleton_with_instance_method() {
-        ModelRepository modelRepository = ModelRepository.instance();
-        ModelRepository modelRepository2 = ModelRepository.instance();
+        ModelUniqueQueue modelUniqueQueue = ModelUniqueQueue.instance();
+        ModelUniqueQueue modelUniqueQueue2 = ModelUniqueQueue.instance();
 
-        assertThat(modelRepository).isEqualTo(modelRepository2).isNotNull();
+        assertThat(modelUniqueQueue).isEqualTo(modelUniqueQueue2).isNotNull();
     }
 
     @Test
     void should_add_element_to_the_queue_and_poll_saved_elements() {
-        ModelRepository repository = ModelRepository.instance();
+        ModelUniqueQueue repository = ModelUniqueQueue.instance();
         final NamedModel string = new NamedModel(String.class.getCanonicalName());
         final NamedModel optional = new NamedModel(Optional.class.getCanonicalName());
 
         repository.add(string);
         repository.add(optional);
 
-        assertThat(repository.next()).isEqualTo(string);
-        assertThat(repository.next()).isEqualTo(optional);
-        assertThat(repository.next()).isNull();
+        assertThat(repository.poll()).isEqualTo(string);
+        assertThat(repository.poll()).isEqualTo(optional);
+        assertThat(repository.poll()).isNull();
     }
 
     @Test
     void should_avoid_duplicated_element_to_be_added() {
-        ModelRepository repository = ModelRepository.instance();
+        ModelUniqueQueue repository = ModelUniqueQueue.instance();
         final NamedModel string = new NamedModel(String.class.getCanonicalName());
         final NamedModel optional = new NamedModel(Optional.class.getCanonicalName());
         final NamedModel anotherString = new NamedModel(Optional.class.getCanonicalName());
@@ -50,8 +50,8 @@ class ModelRepositoryTest {
         repository.add(optional);
         repository.add(anotherString);
 
-        assertThat(repository.next()).isEqualTo(string);
-        assertThat(repository.next()).isEqualTo(optional);
-        assertThat(repository.next()).isNull();
+        assertThat(repository.poll()).isEqualTo(string);
+        assertThat(repository.poll()).isEqualTo(optional);
+        assertThat(repository.poll()).isNull();
     }
 }
