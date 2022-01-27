@@ -40,6 +40,7 @@ public class ModelsProcessor extends AbstractProcessor {
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
         log.setMessager(processingEnv.getMessager());
+        processingEnv.getTypeUtils();
         elementUtils = processingEnv.getElementUtils();
         filer = processingEnv.getFiler();
         modelRepository = ModelRepository.instance();
@@ -73,18 +74,20 @@ public class ModelsProcessor extends AbstractProcessor {
                                 .map(model -> model.getAnnotation(Model.class))
                 )
                 .map(model -> {
-                    TypeElement type = getTypeElementOf(model);
-                    return new ModelWrapper(model, type);
+                    String className = classNameOf(model);
+                    return new NamedModel(className, model);
                 })
                 .forEach(modelRepository::add);
     }
 
     private void processModels() {
         while (true) {
-            ModelWrapper modelWrapper = modelRepository.next();
-            if (null == modelWrapper) {
+            NamedModel namedModel = modelRepository.next();
+            if (null == namedModel) {
                 break;
             }
+            TypeElement type = getTypeElementOf(namedModel.getCanonicalName());
+            final ModelWrapper modelWrapper = new ModelWrapper(namedModel.getModel(), type);
             processModel(modelWrapper);
         }
     }
@@ -112,9 +115,8 @@ public class ModelsProcessor extends AbstractProcessor {
         return Sets.newHashSet(Models.class.getCanonicalName(), Model.class.getCanonicalName());
     }
 
-    private TypeElement getTypeElementOf(Model model) {
-        String className = classNameOf(model);
-        TypeElement type = elementUtils.getTypeElement(className);
+    private TypeElement getTypeElementOf(String canonicalName) {
+        TypeElement type = elementUtils.getTypeElement(canonicalName);
         if (type.getAnnotation(AllArgsConstructor.class) == null) {
             // TODO: 25.12.21 decouple from lombok
             throw new RuntimeException();

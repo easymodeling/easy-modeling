@@ -2,6 +2,7 @@ package xyz.v2my.easymodeling.factory.provider;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,16 +21,10 @@ public class ProvideUnknownFieldTest extends ModelFieldProviderTest {
     @Nested
     class GenerateUnknownFieldTest {
 
-        @Test
-        void should_get_unknown_field_for_unsupported_type() {
-            final ModelField field = modelFieldProvider.provide(ClassName.get(SomeType.class), FieldPatternFactory.any());
-
-            assertThat(field).isInstanceOf(UnknownField.class);
-        }
-
-        @Test
-        void should_get_unknown_field_for_unsupported_generic_type() {
-            final ModelField field = modelFieldProvider.provide(ClassName.get(SomeType.class), FieldPatternFactory.any());
+        @ParameterizedTest
+        @ValueSource(classes = {void.class, Void.class})
+        void should_get_unknown_field_for_unsupported_built_in_type(Class<?> unsupportedClass) {
+            final ModelField field = modelFieldProvider.provide(TypeName.get(unsupportedClass), FieldPatternFactory.any());
 
             assertThat(field).isInstanceOf(UnknownField.class);
         }
@@ -39,10 +34,6 @@ public class ProvideUnknownFieldTest extends ModelFieldProviderTest {
             final ModelField field = modelFieldProvider.provide(ParameterizedTypeName.get(SomeGeneric.class, int[].class), FieldPatternFactory.any());
 
             assertThat(field).isInstanceOf(UnknownField.class);
-        }
-
-        @SuppressWarnings("InnerClassMayBeStatic")
-        private class SomeType {
         }
 
         @SuppressWarnings("InnerClassMayBeStatic")
@@ -59,6 +50,17 @@ public class ProvideUnknownFieldTest extends ModelFieldProviderTest {
             final ModelField field = modelFieldProvider.provide(ParameterizedTypeName.get(Optional.class, type), FieldPatternFactory.any());
 
             assertThat(field).isNotInstanceOf(UnknownField.class);
+        }
+
+        @Test
+        void should_not_generate_unknown_field_for_customer_type() {
+            final ModelField field = modelFieldProvider.provide(ClassName.get(SomeType.class), FieldPatternFactory.any());
+
+            assertThat(field).isNotInstanceOf(UnknownField.class);
+        }
+
+        @SuppressWarnings("InnerClassMayBeStatic")
+        private class SomeType {
         }
     }
 }

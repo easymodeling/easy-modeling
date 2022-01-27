@@ -2,8 +2,6 @@ package xyz.v2my.easymodeling;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import xyz.v2my.easymodeling.factory.ModelWrapper;
-import xyz.v2my.easymodeling.factory.helper.ModelWrapperFactory;
 
 import java.lang.reflect.Field;
 import java.util.Optional;
@@ -30,8 +28,8 @@ class ModelRepositoryTest {
     @Test
     void should_add_element_to_the_queue_and_poll_saved_elements() {
         ModelRepository repository = ModelRepository.instance();
-        final ModelWrapper string = ModelWrapperFactory.create(String.class).build();
-        final ModelWrapper optional = ModelWrapperFactory.create(Optional.class).build();
+        final NamedModel string = new NamedModel(String.class.getCanonicalName());
+        final NamedModel optional = new NamedModel(Optional.class.getCanonicalName());
 
         repository.add(string);
         repository.add(optional);
@@ -44,12 +42,13 @@ class ModelRepositoryTest {
     @Test
     void should_avoid_duplicated_element_to_be_added() {
         ModelRepository repository = ModelRepository.instance();
-        final ModelWrapper string = ModelWrapperFactory.create(String.class).build();
-        final ModelWrapper optional = ModelWrapperFactory.create(Optional.class).build();
+        final NamedModel string = new NamedModel(String.class.getCanonicalName());
+        final NamedModel optional = new NamedModel(Optional.class.getCanonicalName());
+        final NamedModel anotherString = new NamedModel(Optional.class.getCanonicalName());
 
         repository.add(string);
         repository.add(optional);
-        repository.add(string);
+        repository.add(anotherString);
 
         assertThat(repository.next()).isEqualTo(string);
         assertThat(repository.next()).isEqualTo(optional);

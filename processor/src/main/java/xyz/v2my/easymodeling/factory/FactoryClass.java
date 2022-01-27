@@ -69,7 +69,7 @@ public class FactoryClass {
         return MethodSpec.methodBuilder(BUILDER_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(ClassName.get("", builderName))
-                .addStatement("return new $2N($1L)", builderParameters, builderName)
+                .addStatement("return new $N($L)", builderName, builderParameters)
                 .build();
     }
 

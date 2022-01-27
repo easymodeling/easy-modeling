@@ -4,7 +4,10 @@ import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
+import xyz.v2my.easymodeling.ModelRepository;
+import xyz.v2my.easymodeling.NamedModel;
 import xyz.v2my.easymodeling.factory.field.Container;
+import xyz.v2my.easymodeling.factory.field.CustomerField;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.factory.field.UnknownField;
@@ -19,6 +22,12 @@ import java.util.stream.Collectors;
 import static xyz.v2my.easymodeling.factory.ModelFieldRegistry.MODEL_FIELDS;
 
 public class ModelFieldProvider {
+
+    private final ModelRepository modelRepository;
+
+    public ModelFieldProvider() {
+        this.modelRepository = ModelRepository.instance();
+    }
 
     private static final Map<TypeName, PlainField<?>> PLAIN_FIELDS = Arrays.stream(MODEL_FIELDS)
             .filter(PlainField.class::isInstance)
@@ -44,8 +53,15 @@ public class ModelFieldProvider {
         if (type instanceof ArrayTypeName) {
             return arrayField((ArrayTypeName) type, fieldPattern);
         }
+        if (type.isPrimitive() || type == TypeName.VOID) {
+            return plainField(type, fieldPattern);
+        }
         if (type instanceof ParameterizedTypeName) {
             return containerField((ParameterizedTypeName) type, fieldPattern);
+        }
+        if (!type.toString().startsWith("java.")) {
+            modelRepository.add(new NamedModel(type.toString()));
+            return new CustomerField(type, fieldPattern);
         }
         return plainField(type, fieldPattern);
     }
@@ -80,8 +96,7 @@ public class ModelFieldProvider {
     }
 
     private ModelField plainField(TypeName type, FieldPattern fieldPattern) {
-        TypeName boxedType = type.isPrimitive() ? type.box() : type;
-        return Optional.ofNullable(PLAIN_FIELDS.get(boxedType))
+        return Optional.ofNullable(PLAIN_FIELDS.get(type.box()))
                 .orElseThrow(FieldNotSupportedException::new)
                 .create(fieldPattern);
     }
