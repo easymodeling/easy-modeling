@@ -7,7 +7,7 @@ import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.ModelUniqueQueue;
 import xyz.v2my.easymodeling.NamedModel;
 import xyz.v2my.easymodeling.factory.field.Container;
-import xyz.v2my.easymodeling.factory.field.CustomerField;
+import xyz.v2my.easymodeling.factory.field.CustomField;
 import xyz.v2my.easymodeling.factory.field.ModelField;
 import xyz.v2my.easymodeling.factory.field.PlainField;
 import xyz.v2my.easymodeling.factory.field.UnknownField;
@@ -61,7 +61,7 @@ public class ModelFieldProvider {
         }
         if (!type.toString().startsWith("java.")) {
             modelUniqueQueue.add(new NamedModel(type.toString()));
-            return new CustomerField(type, fieldPattern);
+            return new CustomField(type, fieldPattern);
         }
         return plainField(type, fieldPattern);
     }

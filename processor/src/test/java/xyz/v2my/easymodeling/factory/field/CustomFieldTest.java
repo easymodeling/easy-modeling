@@ -7,14 +7,14 @@ import xyz.v2my.easymodeling.factory.helper.FieldPatternFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CustomerFieldTest extends FieldTest {
+class CustomFieldTest extends FieldTest {
 
     @Override
     @BeforeEach
     protected void setUp() {
         fieldPattern = FieldPatternFactory.one(FIELD_NAME).build();
         typeName = ClassName.get(SomeTest.class);
-        modelField = new CustomerField(typeName, fieldPattern);
+        modelField = new CustomField(typeName, fieldPattern);
     }
 
     @Override
