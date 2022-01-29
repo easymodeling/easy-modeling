@@ -21,7 +21,7 @@ class CustomFieldTest extends FieldTest {
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();
 
-        assertThat(initializer).hasToString("new " + $(SomeTest.class) + "Modeler()");
+        assertThat(initializer).hasToString($(SomeTest.class) + "Modeler");
     }
 
     @SuppressWarnings("InnerClassMayBeStatic")

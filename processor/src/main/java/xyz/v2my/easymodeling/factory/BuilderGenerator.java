@@ -14,13 +14,13 @@ import java.util.stream.Collectors;
 
 import static xyz.v2my.easymodeling.GenerationPatterns.BUILDER_CLASS_NAME;
 
-public class BuilderClass {
+public class BuilderGenerator {
 
     private final List<ModelField> builderFields;
 
     private final ClassName returnType;
 
-    public BuilderClass(List<ModelField> builderFields, ClassName builtTypeName) {
+    public BuilderGenerator(List<ModelField> builderFields, ClassName builtTypeName) {
         this.builderFields = builderFields;
         this.returnType = builtTypeName;
     }

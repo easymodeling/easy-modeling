@@ -13,8 +13,12 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static xyz.v2my.easymodeling.GenerationPatterns.BUILDER_METHOD_NAME;
+import static xyz.v2my.easymodeling.GenerationPatterns.BUILDER_CLASS_NAME;
+import static xyz.v2my.easymodeling.GenerationPatterns.MEMBER_BUILDER_METHOD_NAME;
+import static xyz.v2my.easymodeling.GenerationPatterns.MEMBER_NEXT_METHOD_NAME;
 import static xyz.v2my.easymodeling.GenerationPatterns.MODELER_NAME_PATTERN;
+import static xyz.v2my.easymodeling.GenerationPatterns.STATIC_BUILDER_METHOD_NAME;
+import static xyz.v2my.easymodeling.GenerationPatterns.STATIC_NEXT_METHOD_NAME;
 
 public class ModelerGenerator {
 
@@ -22,13 +26,9 @@ public class ModelerGenerator {
 
     private final List<ModelField> fields;
 
-    private final BuilderClass builderClass;
-
     public ModelerGenerator(ModelWrapper model) {
         this.model = model;
-        final List<ModelField> fields = initBuilderFields();
-        this.fields = fields;
-        this.builderClass = new BuilderClass(fields, model.getModelTypeName());
+        this.fields = initBuilderFields();
     }
 
     private List<ModelField> initBuilderFields() {
@@ -51,33 +51,55 @@ public class ModelerGenerator {
     }
 
     public TypeSpec createType() {
-        final String modelerName = String.format(MODELER_NAME_PATTERN, model.getModelTypeName().simpleName());
-        final TypeSpec.Builder modeler = TypeSpec.classBuilder(modelerName).addModifiers(Modifier.PUBLIC);
-        final TypeSpec innerBuilder = builderClass.createType();
-        modeler.addType(innerBuilder);
+        final TypeSpec.Builder modeler = TypeSpec.classBuilder(modelerName()).addModifiers(Modifier.PUBLIC);
+        final BuilderGenerator builderGenerator = new BuilderGenerator(fields, model.getModelTypeName());
+        final TypeSpec builder = builderGenerator.createType();
+        modeler.addType(builder);
 
-        modeler.addMethod(nextMethod());
-        modeler.addMethod(builderMethod(innerBuilder.name));
+        modeler.addMethod(staticNextMethod());
+        modeler.addMethod(staticBuilderMethod());
+        modeler.addMethod(memberNextMethod());
+        modeler.addMethod(memberBuilderMethod());
 
         return modeler.build();
     }
 
-    private MethodSpec builderMethod(String builderName) {
-        final CodeBlock builderParameters = fields.stream()
-                .map(ModelField::initialValue)
-                .collect(CodeBlock.joining(", "));
-        return MethodSpec.methodBuilder(BUILDER_METHOD_NAME)
+    private MethodSpec staticNextMethod() {
+        return MethodSpec.methodBuilder(STATIC_NEXT_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .returns(ClassName.get("", builderName))
-                .addStatement("return new $N($L)", builderName, builderParameters)
+                .returns(model.getModelTypeName())
+                .addStatement("return new $N().$N()", modelerName(), MEMBER_NEXT_METHOD_NAME)
                 .build();
     }
 
-    private MethodSpec nextMethod() {
-        return MethodSpec.methodBuilder("next")
+    private MethodSpec staticBuilderMethod() {
+        return MethodSpec.methodBuilder(STATIC_BUILDER_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .returns(model.getModelTypeName())
-                .addStatement("return $N().build()", BUILDER_METHOD_NAME)
+                .returns(ClassName.get("", BUILDER_CLASS_NAME))
+                .addStatement("return new $N().$N()", modelerName(), MEMBER_BUILDER_METHOD_NAME)
                 .build();
+    }
+
+    private MethodSpec memberNextMethod() {
+        return MethodSpec.methodBuilder(MEMBER_NEXT_METHOD_NAME)
+                .addModifiers(Modifier.PROTECTED)
+                .returns(model.getModelTypeName())
+                .addStatement("return $N().build()", MEMBER_BUILDER_METHOD_NAME)
+                .build();
+    }
+
+    private MethodSpec memberBuilderMethod() {
+        final CodeBlock builderParameters = fields.stream()
+                .map(ModelField::initialValue)
+                .collect(CodeBlock.joining(", "));
+        return MethodSpec.methodBuilder(MEMBER_BUILDER_METHOD_NAME)
+                .addModifiers(Modifier.PROTECTED)
+                .returns(ClassName.get("", BUILDER_CLASS_NAME))
+                .addStatement("return new $N($L)", BUILDER_CLASS_NAME, builderParameters)
+                .build();
+    }
+
+    private String modelerName() {
+        return String.format(MODELER_NAME_PATTERN, model.getModelTypeName().simpleName());
     }
 }

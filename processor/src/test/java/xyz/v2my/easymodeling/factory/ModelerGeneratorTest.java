@@ -11,6 +11,11 @@ import xyz.v2my.easymodeling.factory.helper.ModelWrapperFactory;
 import javax.lang.model.element.Modifier;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static xyz.v2my.easymodeling.GenerationPatterns.BUILDER_CLASS_NAME;
+import static xyz.v2my.easymodeling.GenerationPatterns.MEMBER_BUILDER_METHOD_NAME;
+import static xyz.v2my.easymodeling.GenerationPatterns.MEMBER_NEXT_METHOD_NAME;
+import static xyz.v2my.easymodeling.GenerationPatterns.STATIC_BUILDER_METHOD_NAME;
+import static xyz.v2my.easymodeling.GenerationPatterns.STATIC_NEXT_METHOD_NAME;
 
 class ModelerGeneratorTest {
 
@@ -33,7 +38,7 @@ class ModelerGeneratorTest {
     void should_generate_factory_methods() {
         final TypeSpec type = modelerGenerator.createType();
 
-        assertThat(type.methodSpecs).hasSize(2);
+        assertThat(type.methodSpecs).hasSize(4);
     }
 
     @Test
@@ -44,7 +49,7 @@ class ModelerGeneratorTest {
     }
 
     @Nested
-    class NextMethodTest {
+    class StaticNextMethodTest {
 
         private MethodSpec nextMethod;
 
@@ -52,14 +57,14 @@ class ModelerGeneratorTest {
         void setUp() {
             final TypeSpec type = modelerGenerator.createType();
             nextMethod = type.methodSpecs.stream()
-                    .filter(methodSpec -> methodSpec.name.equals("next"))
-                    .findFirst().orElseThrow(() -> new RuntimeException("next method not found"));
+                    .filter(methodSpec -> methodSpec.name.equals(STATIC_NEXT_METHOD_NAME))
+                    .findFirst().orElseThrow(() -> new RuntimeException("static next method not found"));
         }
 
         @Test
         void should_be_public_static_and_named_as_next() {
             assertThat(nextMethod.modifiers).containsExactly(Modifier.PUBLIC, Modifier.STATIC);
-            assertThat(nextMethod.name).isEqualTo("next");
+            assertThat(nextMethod.name).isEqualTo(STATIC_NEXT_METHOD_NAME);
         }
 
         @Test
@@ -70,12 +75,12 @@ class ModelerGeneratorTest {
 
         @Test
         void should_invoke_builder_build() {
-            assertThat(nextMethod.code).hasToString("return builder().build();\n");
+            assertThat(nextMethod.code).hasToString("return new SomeClassModeler().$next();\n");
         }
     }
 
     @Nested
-    class BuilderMethodTest {
+    class StaticBuilderMethodTest {
 
         private MethodSpec nextMethod;
 
@@ -83,19 +88,81 @@ class ModelerGeneratorTest {
         void setUp() {
             final TypeSpec type = modelerGenerator.createType();
             nextMethod = type.methodSpecs.stream()
-                    .filter(methodSpec -> methodSpec.name.equals("builder"))
-                    .findFirst().orElseThrow(() -> new RuntimeException("builder method not found"));
+                    .filter(methodSpec -> methodSpec.name.equals(STATIC_BUILDER_METHOD_NAME))
+                    .findFirst().orElseThrow(() -> new RuntimeException("static builder method not found"));
         }
 
         @Test
         void should_be_public_static_and_named_as_builder() {
             assertThat(nextMethod.modifiers).containsExactly(Modifier.PUBLIC, Modifier.STATIC);
-            assertThat(nextMethod.name).isEqualTo("builder");
+            assertThat(nextMethod.name).isEqualTo(STATIC_BUILDER_METHOD_NAME);
         }
 
         @Test
         void should_return_given_type_and_take_no_parameter() {
-            assertThat(nextMethod.returnType).hasToString("Builder");
+            assertThat(nextMethod.returnType).hasToString(BUILDER_CLASS_NAME);
+            assertThat(nextMethod.parameters).isEmpty();
+        }
+
+        @Test
+        void should_invoke_constructor_of_builder() {
+            assertThat(nextMethod.code).hasToString("return new SomeClassModeler().$builder();\n");
+        }
+    }
+
+    @Nested
+    class MemberNextMethodTest {
+
+        private MethodSpec nextMethod;
+
+        @BeforeEach
+        void setUp() {
+            final TypeSpec type = modelerGenerator.createType();
+            nextMethod = type.methodSpecs.stream()
+                    .filter(methodSpec -> methodSpec.name.equals(MEMBER_NEXT_METHOD_NAME))
+                    .findFirst().orElseThrow(() -> new RuntimeException("member next method not found"));
+        }
+
+        @Test
+        void should_be_public_static_and_named_as_next() {
+            assertThat(nextMethod.modifiers).containsExactly(Modifier.PROTECTED);
+            assertThat(nextMethod.name).isEqualTo(MEMBER_NEXT_METHOD_NAME);
+        }
+
+        @Test
+        void should_return_given_type_and_take_no_parameter() {
+            assertThat(nextMethod.returnType).isEqualTo(ClassName.get(SomeClass.class));
+            assertThat(nextMethod.parameters).isEmpty();
+        }
+
+        @Test
+        void should_invoke_builder_build() {
+            assertThat(nextMethod.code).hasToString("return " + MEMBER_BUILDER_METHOD_NAME + "().build();\n");
+        }
+    }
+
+    @Nested
+    class MemberBuilderMethodTest {
+
+        private MethodSpec nextMethod;
+
+        @BeforeEach
+        void setUp() {
+            final TypeSpec type = modelerGenerator.createType();
+            nextMethod = type.methodSpecs.stream()
+                    .filter(methodSpec -> methodSpec.name.equals(MEMBER_BUILDER_METHOD_NAME))
+                    .findFirst().orElseThrow(() -> new RuntimeException("member builder method not found"));
+        }
+
+        @Test
+        void should_be_public_and_named_as_builder() {
+            assertThat(nextMethod.modifiers).containsExactly(Modifier.PROTECTED);
+            assertThat(nextMethod.name).isEqualTo(MEMBER_BUILDER_METHOD_NAME);
+        }
+
+        @Test
+        void should_return_given_type_and_take_no_parameter() {
+            assertThat(nextMethod.returnType).hasToString(BUILDER_CLASS_NAME);
             assertThat(nextMethod.parameters).isEmpty();
         }
 
@@ -106,7 +173,7 @@ class ModelerGeneratorTest {
     }
 
     @Nested
-    class BuilderClassTest {
+    class BuilderGeneratorTest {
 
         TypeSpec builder;
 
