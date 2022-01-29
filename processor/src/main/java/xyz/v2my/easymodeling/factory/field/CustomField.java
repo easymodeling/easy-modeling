@@ -4,7 +4,7 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.factory.FieldPattern;
 
-import static xyz.v2my.easymodeling.GenerationPatterns.FACTORY_CLASS_NAME_PATTERN;
+import static xyz.v2my.easymodeling.GenerationPatterns.MODELER_NAME_PATTERN;
 
 public class CustomField extends ModelField {
 
@@ -14,8 +14,8 @@ public class CustomField extends ModelField {
 
     @Override
     public CodeBlock initializer() {
-        final String factoryTypeName = String.format(FACTORY_CLASS_NAME_PATTERN, type);
-        return CodeBlock.builder().add("new $L()", factoryTypeName).build();
+        final String factoryTypeName = String.format(MODELER_NAME_PATTERN, type);
+        return CodeBlock.builder().add("$L", factoryTypeName).build();
     }
 
     @Override

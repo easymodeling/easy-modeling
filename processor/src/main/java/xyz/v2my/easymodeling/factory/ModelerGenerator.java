@@ -14,9 +14,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static xyz.v2my.easymodeling.GenerationPatterns.BUILDER_METHOD_NAME;
-import static xyz.v2my.easymodeling.GenerationPatterns.FACTORY_CLASS_NAME_PATTERN;
+import static xyz.v2my.easymodeling.GenerationPatterns.MODELER_NAME_PATTERN;
 
-public class FactoryClass {
+public class ModelerGenerator {
 
     private final ModelWrapper model;
 
@@ -24,7 +24,7 @@ public class FactoryClass {
 
     private final BuilderClass builderClass;
 
-    public FactoryClass(ModelWrapper model) {
+    public ModelerGenerator(ModelWrapper model) {
         this.model = model;
         final List<ModelField> fields = initBuilderFields();
         this.fields = fields;
@@ -51,15 +51,15 @@ public class FactoryClass {
     }
 
     public TypeSpec createType() {
-        final String factoryTypeName = String.format(FACTORY_CLASS_NAME_PATTERN, model.getModelTypeName().simpleName());
-        final TypeSpec.Builder factory = TypeSpec.classBuilder(factoryTypeName).addModifiers(Modifier.PUBLIC);
+        final String modelerName = String.format(MODELER_NAME_PATTERN, model.getModelTypeName().simpleName());
+        final TypeSpec.Builder modeler = TypeSpec.classBuilder(modelerName).addModifiers(Modifier.PUBLIC);
         final TypeSpec innerBuilder = builderClass.createType();
-        factory.addType(innerBuilder);
+        modeler.addType(innerBuilder);
 
-        factory.addMethod(nextMethod());
-        factory.addMethod(builderMethod(innerBuilder.name));
+        modeler.addMethod(nextMethod());
+        modeler.addMethod(builderMethod(innerBuilder.name));
 
-        return factory.build();
+        return modeler.build();
     }
 
     private MethodSpec builderMethod(String builderName) {

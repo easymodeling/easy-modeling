@@ -12,33 +12,33 @@ import javax.lang.model.element.Modifier;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class FactoryClassTest {
+class ModelerGeneratorTest {
 
-    private FactoryClass factoryClass;
+    private ModelerGenerator modelerGenerator;
 
     @BeforeEach
     void setUp() {
         final ModelWrapper modelWrapper = ModelWrapperFactory.create(SomeClass.class).build();
-        factoryClass = new FactoryClass(modelWrapper);
+        modelerGenerator = new ModelerGenerator(modelWrapper);
     }
 
     @Test
     void should_create_factory_with_given_class_name() {
-        final TypeSpec type = factoryClass.createType();
+        final TypeSpec type = modelerGenerator.createType();
 
         assertThat(type.name).isEqualTo(SomeClass.class.getSimpleName() + "Modeler");
     }
 
     @Test
     void should_generate_factory_methods() {
-        final TypeSpec type = factoryClass.createType();
+        final TypeSpec type = modelerGenerator.createType();
 
         assertThat(type.methodSpecs).hasSize(2);
     }
 
     @Test
     void should_generate_builder_inner_class() {
-        final TypeSpec type = factoryClass.createType();
+        final TypeSpec type = modelerGenerator.createType();
 
         assertThat(type.typeSpecs).hasSize(1);
     }
@@ -50,7 +50,7 @@ class FactoryClassTest {
 
         @BeforeEach
         void setUp() {
-            final TypeSpec type = factoryClass.createType();
+            final TypeSpec type = modelerGenerator.createType();
             nextMethod = type.methodSpecs.stream()
                     .filter(methodSpec -> methodSpec.name.equals("next"))
                     .findFirst().orElseThrow(() -> new RuntimeException("next method not found"));
@@ -81,7 +81,7 @@ class FactoryClassTest {
 
         @BeforeEach
         void setUp() {
-            final TypeSpec type = factoryClass.createType();
+            final TypeSpec type = modelerGenerator.createType();
             nextMethod = type.methodSpecs.stream()
                     .filter(methodSpec -> methodSpec.name.equals("builder"))
                     .findFirst().orElseThrow(() -> new RuntimeException("builder method not found"));
@@ -112,7 +112,7 @@ class FactoryClassTest {
 
         @BeforeEach
         void setUp() {
-            final TypeSpec type = factoryClass.createType();
+            final TypeSpec type = modelerGenerator.createType();
             builder = type.typeSpecs.stream().findAny().orElseThrow(() -> new RuntimeException("builder class not found"));
         }
 

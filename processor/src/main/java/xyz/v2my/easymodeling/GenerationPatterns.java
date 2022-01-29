@@ -9,5 +9,5 @@ public class GenerationPatterns {
 
     public static final String BUILDER_METHOD_NAME = "builder";
 
-    public static final String FACTORY_CLASS_NAME_PATTERN = "%sModeler";
+    public static final String MODELER_NAME_PATTERN = "%sModeler";
 }
