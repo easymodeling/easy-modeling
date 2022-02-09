@@ -11,5 +11,5 @@ public class SomeModel {
 
     public Instant instant;
 
-    public SomeNestedModel someNestedModel;
+//    public SomeNestedModel someNestedModel;
 }
