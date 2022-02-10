@@ -1,5 +1,6 @@
 package xyz.v2my.modeler;
 
+import xyz.v2my.easymodeling.BaseBuilder;
 import xyz.v2my.easymodeling.SomeNestedModel;
 import xyz.v2my.easymodeling.randomizer.CustomTypeRandomizer;
 import xyz.v2my.easymodeling.randomizer.ModelCache;

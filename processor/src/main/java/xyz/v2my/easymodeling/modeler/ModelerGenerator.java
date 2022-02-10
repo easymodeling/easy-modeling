@@ -1,11 +1,15 @@
 package xyz.v2my.easymodeling.modeler;
 
 import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import xyz.v2my.easymodeling.ProcessingException;
 import xyz.v2my.easymodeling.modeler.field.ModelField;
+import xyz.v2my.easymodeling.randomizer.ModelCache;
+import xyz.v2my.easymodeling.randomizer.Modeler;
 
 import javax.lang.model.element.Modifier;
 import java.util.List;
@@ -13,12 +17,13 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static xyz.v2my.easymodeling.GenerationPatterns.BASE_MODELER_NEXT_METHOD_NAME;
 import static xyz.v2my.easymodeling.GenerationPatterns.BUILDER_CLASS_NAME;
-import static xyz.v2my.easymodeling.GenerationPatterns.MEMBER_BUILDER_METHOD_NAME;
-import static xyz.v2my.easymodeling.GenerationPatterns.MEMBER_NEXT_METHOD_NAME;
+import static xyz.v2my.easymodeling.GenerationPatterns.MEMBER_POPULATE_METHOD_NAME;
 import static xyz.v2my.easymodeling.GenerationPatterns.MODELER_NAME_PATTERN;
 import static xyz.v2my.easymodeling.GenerationPatterns.STATIC_BUILDER_METHOD_NAME;
 import static xyz.v2my.easymodeling.GenerationPatterns.STATIC_NEXT_METHOD_NAME;
+import static xyz.v2my.easymodeling.GenerationPatterns.TYPE_METHOD_NAME;
 
 public class ModelerGenerator {
 
@@ -51,15 +56,16 @@ public class ModelerGenerator {
     }
 
     public TypeSpec createType() {
-        final TypeSpec.Builder modeler = TypeSpec.classBuilder(modelerName()).addModifiers(Modifier.PUBLIC);
-        final BuilderGenerator builderGenerator = new BuilderGenerator(fields, model.getModelTypeName());
-        final TypeSpec builder = builderGenerator.createType();
+        final TypeSpec.Builder modeler = TypeSpec.classBuilder(modelerName())
+                .addModifiers(Modifier.PUBLIC)
+                .superclass(ParameterizedTypeName.get(ClassName.get(Modeler.class), model.getModelTypeName()));
+        final TypeSpec builder = new BuilderGenerator(fields, model.getModelTypeName()).createBuilder();
         modeler.addType(builder);
 
         modeler.addMethod(staticNextMethod());
         modeler.addMethod(staticBuilderMethod());
-        modeler.addMethod(memberNextMethod());
-        modeler.addMethod(memberBuilderMethod());
+        modeler.addMethod(populateMethod());
+        modeler.addMethod(typeMethod());
 
         return modeler.build();
     }
@@ -68,7 +74,7 @@ public class ModelerGenerator {
         return MethodSpec.methodBuilder(STATIC_NEXT_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(model.getModelTypeName())
-                .addStatement("return new $N().$N()", modelerName(), MEMBER_NEXT_METHOD_NAME)
+                .addStatement("return new $N().$N(null)", modelerName(), BASE_MODELER_NEXT_METHOD_NAME)
                 .build();
     }
 
@@ -76,27 +82,31 @@ public class ModelerGenerator {
         return MethodSpec.methodBuilder(STATIC_BUILDER_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(ClassName.get("", BUILDER_CLASS_NAME))
-                .addStatement("return new $N().$N()", modelerName(), MEMBER_BUILDER_METHOD_NAME)
+                .addStatement("return new $N.$N($N())", modelerName(), BUILDER_CLASS_NAME, STATIC_NEXT_METHOD_NAME)
                 .build();
     }
 
-    private MethodSpec memberNextMethod() {
-        return MethodSpec.methodBuilder(MEMBER_NEXT_METHOD_NAME)
+    private MethodSpec typeMethod() {
+        return MethodSpec.methodBuilder(TYPE_METHOD_NAME)
+                .addAnnotation(Override.class)
                 .addModifiers(Modifier.PROTECTED)
-                .returns(model.getModelTypeName())
-                .addStatement("return $N().build()", MEMBER_BUILDER_METHOD_NAME)
+                .returns(ParameterizedTypeName.get(ClassName.get(Class.class), model.getModelTypeName()))
+                .addStatement("return $T.class", model.getModelTypeName())
                 .build();
     }
 
-    private MethodSpec memberBuilderMethod() {
-        final CodeBlock builderParameters = fields.stream()
-                .map(ModelField::initialValue)
-                .collect(CodeBlock.joining(", "));
-        return MethodSpec.methodBuilder(MEMBER_BUILDER_METHOD_NAME)
+    private MethodSpec populateMethod() {
+        final MethodSpec.Builder builder = MethodSpec.methodBuilder(MEMBER_POPULATE_METHOD_NAME)
+                .addAnnotation(Override.class)
                 .addModifiers(Modifier.PROTECTED)
-                .returns(ClassName.get("", BUILDER_CLASS_NAME))
-                .addStatement("return new $N($L)", BUILDER_CLASS_NAME, builderParameters)
-                .build();
+                .returns(TypeName.VOID)
+                .addParameter(ParameterSpec.builder(model.getModelTypeName(), "model").build())
+                .addParameter(ParameterSpec.builder(ModelCache.class, "modelCache").build())
+                .addException(TypeName.get(NoSuchFieldException.class))
+                .addException(TypeName.get(IllegalAccessException.class));
+        fields.stream().map(ModelField::populateStatement)
+                .forEach(builder::addStatement);
+        return builder.build();
     }
 
     private String modelerName() {

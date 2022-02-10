@@ -1,4 +1,4 @@
-package xyz.v2my.modeler;
+package xyz.v2my.easymodeling;
 
 import java.lang.reflect.Field;
 
@@ -13,5 +13,4 @@ public class BaseBuilder<T> {
             throw new RuntimeException(e);
         }
     }
-
 }
