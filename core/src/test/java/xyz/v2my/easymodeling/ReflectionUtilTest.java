@@ -3,40 +3,79 @@ package xyz.v2my.easymodeling;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 class ReflectionUtilTest {
 
-    @Test
-    void should_set_fields() throws NoSuchFieldException, IllegalAccessException {
-        final SomeClass someClass = new SomeClass();
+    @Nested
+    class TestSetFields {
 
-        ReflectionUtil.setField(someClass, "anInt", 123);
-        ReflectionUtil.setField(someClass, "bigDecimal", BigDecimal.valueOf(123));
+        @Test
+        void should_set_fields() {
+            final SomeClass someClass = new SomeClass();
 
-        assertThat(someClass.getAnInt()).isEqualTo(123);
-        assertThat(someClass.getBigDecimal()).isEqualTo(BigDecimal.valueOf(123));
+            ReflectionUtil.setField(someClass, "anInt", 123);
+            ReflectionUtil.setField(someClass, "bigDecimal", BigDecimal.valueOf(123));
+
+            assertThat(someClass.getAnInt()).isEqualTo(123);
+            assertThat(someClass.getBigDecimal()).isEqualTo(BigDecimal.valueOf(123));
+        }
+
+        @Test
+        void should_throw_specific_exception_when_setting_illegal_argument() {
+            final SomeClass someClass = new SomeClass();
+
+            final Throwable throwable = catchThrowable(() -> ReflectionUtil.setField(someClass, "anInt", "123"));
+
+            assertThat(throwable).isInstanceOf(EasyModelingException.class);
+        }
+
+        @Test
+        void should_throw_specific_exception_when_accessing_unknown_field() {
+            final SomeClass someClass = new SomeClass();
+
+            final Throwable throwable = catchThrowable(() -> ReflectionUtil.setField(someClass, "someUnknownFieldName", "123"));
+
+            assertThat(throwable).isInstanceOf(EasyModelingException.class);
+        }
     }
 
-    @Test
-    void should_get_fields() {
-        final SomeClass someClass = new SomeClass();
+    @Nested
+    class TestGetFields {
 
-        someClass.setAnInt(123);
-        someClass.setBigDecimal(BigDecimal.valueOf(123));
+        @Test
+        void should_get_fields() {
+            final SomeClass someClass = new SomeClass();
+            someClass.setAnInt(123);
+            someClass.setBigDecimal(BigDecimal.valueOf(123));
 
-        assertThat(ReflectionUtil.getField(someClass, "anInt")).isEqualTo(123);
-        assertThat(ReflectionUtil.getField(someClass, "bigDecimal")).isEqualTo(BigDecimal.valueOf(123));
+            final Object anInt = ReflectionUtil.getField(someClass, "anInt");
+            final Object bigDecimal = ReflectionUtil.getField(someClass, "bigDecimal");
+
+            assertThat(anInt).isEqualTo(123);
+            assertThat(bigDecimal).isEqualTo(BigDecimal.valueOf(123));
+        }
+
+        @Test
+        void should_throw_specific_exception() {
+            final SomeClass someClass = new SomeClass();
+            someClass.setAnInt(123);
+            someClass.setBigDecimal(BigDecimal.valueOf(123));
+
+            final Throwable throwable = catchThrowable(() -> ReflectionUtil.getField(someClass, "someUnknownFieldName"));
+
+            assertThat(throwable).isInstanceOf(EasyModelingException.class);
+        }
     }
 
     @Nested
     class TestCreateModel {
 
         @Test
-        void should_create_model_and_set_default_values() throws InvocationTargetException, InstantiationException, IllegalAccessException {
+        void should_create_model_and_set_default_values() {
             final SomeClass someClass = ReflectionUtil.createModelOf(SomeClass.class);
 
             assertThat(someClass.getAnInt()).isEqualTo(0);
@@ -51,9 +90,26 @@ class ReflectionUtilTest {
         }
 
         @Test
-        void should_create_model_with_only_private_constructor() throws InvocationTargetException, InstantiationException, IllegalAccessException {
+        void should_create_model_with_only_private_constructor() {
             ReflectionUtil.createModelOf(ClassWithPrivateConstructor.class);
         }
+
+        @Test
+        void should_throw_specific_exception() {
+            final Throwable throwable = catchThrowable(() -> ReflectionUtil.createModelOf(AbstractClass.class));
+
+            assertThat(throwable).isInstanceOf(EasyModelingException.class);
+        }
+    }
+
+    public static abstract class AbstractClass {
+
+        private AbstractClass(int anInt) {
+            this.anInt = anInt;
+        }
+
+        private int anInt;
+
     }
 
     public static class ClassWithPrivateConstructor {

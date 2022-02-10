@@ -1,7 +1,6 @@
 package xyz.v2my.easymodeling.modeler;
 
 import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
@@ -10,10 +9,8 @@ import xyz.v2my.easymodeling.ReflectionUtil;
 import xyz.v2my.easymodeling.modeler.field.ModelField;
 
 import javax.lang.model.element.Modifier;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static xyz.v2my.easymodeling.GenerationPatterns.BUILDER_CLASS_NAME;
 
@@ -53,22 +50,11 @@ public class BuilderGenerator {
         final MethodSpec.Builder builder = MethodSpec.methodBuilder("build")
                 .addModifiers(Modifier.PUBLIC)
                 .returns(builtTypeName);
-        builder.beginControlFlow("try");
         builder.addStatement("final $T model = $T.createModelOf($T.class)", builtTypeName, ReflectionUtil.class, builtTypeName);
         builderFields.stream()
                 .map(ModelField::buildStatement)
                 .forEach(builder::addStatement);
         builder.addStatement("return model");
-        final CodeBlock exceptions = Stream.of(
-                        InvocationTargetException.class,
-                        InstantiationException.class,
-                        IllegalAccessException.class,
-                        NoSuchFieldException.class)
-                .map(e -> CodeBlock.of("$T", e))
-                .collect(CodeBlock.joining(" | "));
-        builder.nextControlFlow("catch ($L e)", exceptions);
-        builder.addStatement(CodeBlock.of("throw new $T(e)", RuntimeException.class));
-        builder.endControlFlow();
         return builder.build();
     }
 

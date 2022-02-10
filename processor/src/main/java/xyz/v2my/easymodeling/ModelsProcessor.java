@@ -115,6 +115,7 @@ public class ModelsProcessor extends AbstractProcessor {
     }
 
     private TypeElement getTypeElementOf(String canonicalName) {
+        // TODO: 10.02.22 should avoid abstract classes and interfaces
         return elementUtils.getTypeElement(canonicalName);
     }
 

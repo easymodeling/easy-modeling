@@ -1,7 +1,5 @@
 package xyz.v2my.easymodeling.randomizer;
 
-import java.lang.reflect.InvocationTargetException;
-
 import static xyz.v2my.easymodeling.ReflectionUtil.createModelOf;
 
 public abstract class Modeler<T> {
@@ -14,14 +12,10 @@ public abstract class Modeler<T> {
         if (modelCache.avoidInfinity(clazz)) {
             return modelCache.first(clazz);
         }
-        try {
-            return createModel(modelCache);
-        } catch (InstantiationException | IllegalAccessException | NoSuchFieldException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
+        return createModel(modelCache);
     }
 
-    private T createModel(ModelCache modelCache) throws InstantiationException, IllegalAccessException, NoSuchFieldException, InvocationTargetException {
+    private T createModel(ModelCache modelCache) {
         final Class<T> clazz = type();
         final T model = createModelOf(clazz);
         modelCache.push(model);
@@ -30,7 +24,7 @@ public abstract class Modeler<T> {
         return model;
     }
 
-    protected abstract void populate(T model, ModelCache modelCache) throws NoSuchFieldException, IllegalAccessException;
+    protected abstract void populate(T model, ModelCache modelCache);
 
     protected abstract Class<T> type();
 }

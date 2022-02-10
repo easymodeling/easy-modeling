@@ -103,9 +103,7 @@ public class ModelerGenerator {
                 .addModifiers(Modifier.PROTECTED)
                 .returns(TypeName.VOID)
                 .addParameter(ParameterSpec.builder(model.getModelTypeName(), MODEL_PARAMETER_NAME).build())
-                .addParameter(ParameterSpec.builder(ModelCache.class, MODEL_CACHE_PARAMETER_NAME).build())
-                .addException(TypeName.get(NoSuchFieldException.class))
-                .addException(TypeName.get(IllegalAccessException.class));
+                .addParameter(ParameterSpec.builder(ModelCache.class, MODEL_CACHE_PARAMETER_NAME).build());
         fields.stream().map(ModelField::populateStatement)
                 .forEach(builder::addStatement);
         return builder.build();
