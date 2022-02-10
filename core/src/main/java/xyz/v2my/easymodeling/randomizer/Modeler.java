@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 public abstract class Modeler<T> {
 
     protected void setField(T model, String fieldName, Object value) throws IllegalAccessException, NoSuchFieldException {
-        final Field field = model.getClass().getDeclaredField(fieldName);
+        final Field field = type().getDeclaredField(fieldName);
         field.setAccessible(true);
         field.set(model, value);
     }

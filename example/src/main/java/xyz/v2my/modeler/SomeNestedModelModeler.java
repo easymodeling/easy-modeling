@@ -15,6 +15,10 @@ public class SomeNestedModelModeler extends Modeler<SomeNestedModel> {
         return new SomeNestedModelModeler().next(null);
     }
 
+    public static SomeNestedModelModeler.Builder builder() {
+        return new SomeNestedModelModeler.Builder(next());
+    }
+
     @Override
     protected void populate(SomeNestedModel model, ModelCache modelCache) throws NoSuchFieldException, IllegalAccessException {
         setField(model, "string", new StringRandomizer(6, 20, 3).next());
@@ -26,5 +30,47 @@ public class SomeNestedModelModeler extends Modeler<SomeNestedModel> {
     @Override
     protected Class<SomeNestedModel> type() {
         return SomeNestedModel.class;
+    }
+
+    public static class Builder extends BaseBuilder<SomeNestedModel> {
+
+        private String string;
+
+        private Integer integer;
+
+        private SomeNestedModel nestedModel;
+
+        private SomeNestedModel[] arrayOfNestedModel;
+
+        private Builder(SomeNestedModel model) {
+            this.string = (String) getField(model, "string");
+            this.integer = (Integer) getField(model, "integer");
+            this.nestedModel = (SomeNestedModel) getField(model, "nestedModel");
+            this.arrayOfNestedModel = (SomeNestedModel[]) getField(model, "arrayOfNestedModel");
+        }
+
+        public SomeNestedModel build() {
+            return new SomeNestedModel(string, integer, nestedModel, arrayOfNestedModel);
+        }
+
+        public SomeNestedModelModeler.Builder string(String string) {
+            this.string = string;
+            return this;
+        }
+
+        public SomeNestedModelModeler.Builder integer(Integer integer) {
+            this.integer = integer;
+            return this;
+        }
+
+        public SomeNestedModelModeler.Builder nestedModel(SomeNestedModel nestedModel) {
+            this.nestedModel = nestedModel;
+            return this;
+        }
+
+        public SomeNestedModelModeler.Builder arrayOfNestedModel(SomeNestedModel[] arrayOfNestedModel) {
+            this.arrayOfNestedModel = arrayOfNestedModel;
+            return this;
+        }
     }
 }
