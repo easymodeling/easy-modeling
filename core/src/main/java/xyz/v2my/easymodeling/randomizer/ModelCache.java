@@ -14,20 +14,12 @@ public class ModelCache {
 
     public <T> void push(T obj) {
         final Class<?> clazz = obj.getClass();
-        Stack<T> stack = (Stack<T>) cache.get(clazz);
-        if (stack == null) {
-            stack = new Stack<>();
-            cache.put(clazz, stack);
-        }
+        Stack<T> stack = (Stack<T>) cache.computeIfAbsent(clazz, k -> new Stack<>());
         stack.push(obj);
     }
 
     public <T> void pop(Class<T> clazz) {
-        Stack<T> stack = (Stack<T>) cache.get(clazz);
-        if (stack == null) {
-            throw new IllegalStateException("No stack for class " + clazz);
-        }
-        stack.pop();
+        this.<T>stackOf(clazz).pop();
     }
 
     public boolean avoidInfinity(Class<?> clazz) {
@@ -35,10 +27,14 @@ public class ModelCache {
     }
 
     public <T> T first(Class<?> clazz) {
+        return this.<T>stackOf(clazz).firstElement();
+    }
+
+    private <T> Stack<T> stackOf(Class<?> clazz) {
         Stack<T> stack = (Stack<T>) cache.get(clazz);
         if (stack == null) {
             throw new IllegalStateException("No stack for class " + clazz);
         }
-        return stack.firstElement();
+        return stack;
     }
 }

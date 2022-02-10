@@ -12,7 +12,7 @@ class ModelUniqueQueueTest {
 
     @BeforeEach
     void setUp() throws NoSuchFieldException, IllegalAccessException {
-        final Field repository = ModelUniqueQueue.class.getDeclaredField("INSTANCE");
+        final Field repository = ModelUniqueQueue.class.getDeclaredField("instance");
         repository.setAccessible(true);
         repository.set(null, null);
     }

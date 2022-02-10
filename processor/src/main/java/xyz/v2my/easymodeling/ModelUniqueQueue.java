@@ -7,7 +7,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class ModelUniqueQueue {
 
-    public static ModelUniqueQueue INSTANCE;
+    private static ModelUniqueQueue instance;
 
     private final Queue<NamedModel> modelToBeProcessed;
 
@@ -19,10 +19,10 @@ public class ModelUniqueQueue {
     }
 
     public static ModelUniqueQueue instance() {
-        if (INSTANCE == null) {
-            INSTANCE = new ModelUniqueQueue(new LinkedBlockingQueue<>(), new CopyOnWriteArraySet<>());
+        if (instance == null) {
+            instance = new ModelUniqueQueue(new LinkedBlockingQueue<>(), new CopyOnWriteArraySet<>());
         }
-        return INSTANCE;
+        return instance;
     }
 
     public NamedModel poll() {
