@@ -18,4 +18,8 @@ public class GenerationPatterns {
     public static final String MEMBER_POPULATE_METHOD_NAME = "populate";
 
     public static final String MODELER_NAME_PATTERN = "%sModeler";
+
+    public static final String MODEL_CACHE_PARAMETER_NAME = "modelCache";
+
+    public static final String MODEL_PARAMETER_NAME = "model";
 }

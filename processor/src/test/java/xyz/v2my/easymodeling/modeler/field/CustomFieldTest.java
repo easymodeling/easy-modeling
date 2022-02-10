@@ -4,6 +4,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import org.junit.jupiter.api.BeforeEach;
 import xyz.v2my.easymodeling.modeler.helper.FieldPatternFactory;
+import xyz.v2my.easymodeling.randomizer.CustomTypeRandomizer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,7 +22,7 @@ class CustomFieldTest extends FieldTest {
     protected void should_generate_initializer() {
         final CodeBlock initializer = modelField.initializer();
 
-        assertThat(initializer).hasToString($(SomeTest.class) + "Modeler");
+        assertThat(initializer).hasToString("new " + $(CustomTypeRandomizer.class) + "<>(new " + $(SomeTest.class) + "Modeler(), modelCache)");
     }
 
     @SuppressWarnings("InnerClassMayBeStatic")

@@ -21,6 +21,8 @@ import static xyz.v2my.easymodeling.GenerationPatterns.BASE_MODELER_NEXT_METHOD_
 import static xyz.v2my.easymodeling.GenerationPatterns.BUILDER_CLASS_NAME;
 import static xyz.v2my.easymodeling.GenerationPatterns.MEMBER_POPULATE_METHOD_NAME;
 import static xyz.v2my.easymodeling.GenerationPatterns.MODELER_NAME_PATTERN;
+import static xyz.v2my.easymodeling.GenerationPatterns.MODEL_CACHE_PARAMETER_NAME;
+import static xyz.v2my.easymodeling.GenerationPatterns.MODEL_PARAMETER_NAME;
 import static xyz.v2my.easymodeling.GenerationPatterns.STATIC_BUILDER_METHOD_NAME;
 import static xyz.v2my.easymodeling.GenerationPatterns.STATIC_NEXT_METHOD_NAME;
 import static xyz.v2my.easymodeling.GenerationPatterns.TYPE_METHOD_NAME;
@@ -100,8 +102,8 @@ public class ModelerGenerator {
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PROTECTED)
                 .returns(TypeName.VOID)
-                .addParameter(ParameterSpec.builder(model.getModelTypeName(), "model").build())
-                .addParameter(ParameterSpec.builder(ModelCache.class, "modelCache").build())
+                .addParameter(ParameterSpec.builder(model.getModelTypeName(), MODEL_PARAMETER_NAME).build())
+                .addParameter(ParameterSpec.builder(ModelCache.class, MODEL_CACHE_PARAMETER_NAME).build())
                 .addException(TypeName.get(NoSuchFieldException.class))
                 .addException(TypeName.get(IllegalAccessException.class));
         fields.stream().map(ModelField::populateStatement)
