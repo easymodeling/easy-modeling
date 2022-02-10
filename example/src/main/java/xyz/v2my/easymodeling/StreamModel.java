@@ -1,13 +1,10 @@
 package xyz.v2my.easymodeling;
 
-import lombok.AllArgsConstructor;
-
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
-@AllArgsConstructor
 public class StreamModel {
 
     public Stream<String> streamOfStrings;

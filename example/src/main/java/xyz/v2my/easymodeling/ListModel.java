@@ -1,11 +1,8 @@
 package xyz.v2my.easymodeling;
 
-import lombok.AllArgsConstructor;
-
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
 public class ListModel {
 
     public List<List<Integer[]>> listOfListOfArrayOfInts;

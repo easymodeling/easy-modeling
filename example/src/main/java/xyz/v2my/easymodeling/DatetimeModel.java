@@ -1,14 +1,11 @@
 package xyz.v2my.easymodeling;
 
-import lombok.AllArgsConstructor;
-
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 
-@AllArgsConstructor
 public class DatetimeModel {
 
     public Instant instant;

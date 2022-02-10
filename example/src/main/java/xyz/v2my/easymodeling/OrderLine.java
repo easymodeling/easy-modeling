@@ -1,10 +1,7 @@
 package xyz.v2my.easymodeling;
 
-import lombok.AllArgsConstructor;
-
 import java.math.BigDecimal;
 
-@AllArgsConstructor
 public class OrderLine {
 
     private String id;

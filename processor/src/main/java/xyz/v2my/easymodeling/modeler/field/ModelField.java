@@ -5,6 +5,7 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
+import xyz.v2my.easymodeling.ReflectionUtil;
 import xyz.v2my.easymodeling.modeler.FieldPattern;
 
 import javax.lang.model.element.Modifier;
@@ -57,7 +58,15 @@ public abstract class ModelField implements InitializableType, BuilderMember, Co
     }
 
     public CodeBlock populateStatement() {
-        return CodeBlock.of("setField(model, $S, $L)", identity(), initialValue());
+        return CodeBlock.of("$T.setField(model, $S, $L)", ReflectionUtil.class, identity(), initialValue());
+    }
+
+    public CodeBlock buildStatement() {
+        return setFieldStatement(CodeBlock.of("$L", identity()));
+    }
+
+    private CodeBlock setFieldStatement(CodeBlock value) {
+        return CodeBlock.of("$T.setField(model, $S, $L)", ReflectionUtil.class, identity(), value);
     }
 
     public String identity() {

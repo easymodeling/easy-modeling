@@ -1,11 +1,8 @@
 package xyz.v2my.easymodeling;
 
-import lombok.AllArgsConstructor;
-
 import java.time.Instant;
 import java.util.Optional;
 
-@AllArgsConstructor
 public class OptionalModel {
 
     public Optional<Optional<Instant[]>[]> optionalOfArrayOfOptionalInstantArray;

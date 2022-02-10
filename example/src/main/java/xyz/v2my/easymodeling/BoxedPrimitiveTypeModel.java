@@ -1,8 +1,5 @@
 package xyz.v2my.easymodeling;
 
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
 public class BoxedPrimitiveTypeModel {
 
     private Integer anInt;

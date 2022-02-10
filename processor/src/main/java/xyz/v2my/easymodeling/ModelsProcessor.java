@@ -4,9 +4,8 @@ import com.google.auto.service.AutoService;
 import com.google.common.collect.Sets;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
-import lombok.AllArgsConstructor;
-import xyz.v2my.easymodeling.modeler.ModelerGenerator;
 import xyz.v2my.easymodeling.modeler.ModelWrapper;
+import xyz.v2my.easymodeling.modeler.ModelerGenerator;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
@@ -116,12 +115,7 @@ public class ModelsProcessor extends AbstractProcessor {
     }
 
     private TypeElement getTypeElementOf(String canonicalName) {
-        TypeElement type = elementUtils.getTypeElement(canonicalName);
-        if (type.getAnnotation(AllArgsConstructor.class) == null) {
-            // TODO: 25.12.21 decouple from lombok
-            throw new RuntimeException();
-        }
-        return type;
+        return elementUtils.getTypeElement(canonicalName);
     }
 
     private String classNameOf(Model model) {
