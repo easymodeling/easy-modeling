@@ -14,10 +14,21 @@ public class ReflectionUtil {
         field.set(model, value);
     }
 
+    public static Object getField(Object model, String fieldName) {
+        try {
+            final Field field = model.getClass().getDeclaredField(fieldName);
+            field.setAccessible(true);
+            return field.get(model);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static <T> T createModelOf(Class<T> clazz) throws InstantiationException, IllegalAccessException, InvocationTargetException {
-        final Constructor<?> constructor = Arrays.stream(clazz.getConstructors())
+        final Constructor<?> constructor = Arrays.stream(clazz.getDeclaredConstructors())
                 .min(Comparator.comparingInt(Constructor::getParameterCount))
                 .orElseThrow(() -> new IllegalAccessException("No constructor found for " + clazz.getName()));
+        constructor.setAccessible(true);
         final Object[] parameters = Arrays.stream(constructor.getParameters())
                 .map(p -> defaultValue(p.getType()))
                 .toArray();

@@ -54,11 +54,11 @@ public abstract class ModelField implements InitializableType, BuilderMember, Co
 
     @Override
     public CodeBlock constructorStatement() {
-        return CodeBlock.of("this.$N = ($T) getField(model, $S)", identity(), type(), identity());
+        return CodeBlock.of("this.$N = ($T) $T.getField(model, $S)", identity(), type(), ReflectionUtil.class, identity());
     }
 
     public CodeBlock populateStatement() {
-        return CodeBlock.of("$T.setField(model, $S, $L)", ReflectionUtil.class, identity(), initialValue());
+        return setFieldStatement(initialValue());
     }
 
     public CodeBlock buildStatement() {

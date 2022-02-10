@@ -5,9 +5,7 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
-import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
-import xyz.v2my.easymodeling.BaseBuilder;
 import xyz.v2my.easymodeling.ReflectionUtil;
 import xyz.v2my.easymodeling.modeler.field.ModelField;
 
@@ -33,7 +31,6 @@ public class BuilderGenerator {
     public TypeSpec createBuilder() {
         final TypeSpec.Builder builder = TypeSpec.classBuilder(BUILDER_CLASS_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .superclass(ParameterizedTypeName.get(ClassName.get(BaseBuilder.class), builtTypeName))
                 .addMethod(builderConstructor())
                 .addMethod(buildMethod())
                 .addFields(builderFields())
