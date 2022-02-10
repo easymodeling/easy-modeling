@@ -6,7 +6,9 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
 import xyz.v2my.easymodeling.ReflectionUtil;
+import xyz.v2my.easymodeling.modeler.field.BuilderMember;
 import xyz.v2my.easymodeling.modeler.field.ModelField;
+import xyz.v2my.easymodeling.modeler.field.StatementProvider;
 
 import javax.lang.model.element.Modifier;
 import java.util.List;
@@ -41,7 +43,7 @@ public class BuilderGenerator {
                 .addModifiers(Modifier.PRIVATE)
                 .addParameter(constructorParameter);
         builderFields.stream()
-                .map(ModelField::constructorStatement)
+                .map(StatementProvider::constructorStatement)
                 .forEach(builder::addStatement);
         return builder.build();
     }
@@ -52,19 +54,19 @@ public class BuilderGenerator {
                 .returns(builtTypeName);
         builder.addStatement("final $T model = $T.createModelOf($T.class)", builtTypeName, ReflectionUtil.class, builtTypeName);
         builderFields.stream()
-                .map(ModelField::buildStatement)
+                .map(StatementProvider::buildStatement)
                 .forEach(builder::addStatement);
         builder.addStatement("return model");
         return builder.build();
     }
 
     private List<FieldSpec> builderFields() {
-        return builderFields.stream().map(ModelField::field).collect(Collectors.toList());
+        return builderFields.stream().map(BuilderMember::field).collect(Collectors.toList());
     }
 
     private List<MethodSpec> builderSetters() {
         return builderFields.stream()
-                .map(ModelField::setter)
+                .map(BuilderMember::setter)
                 .collect(Collectors.toList());
     }
 }

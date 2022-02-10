@@ -2,9 +2,11 @@ package xyz.v2my.easymodeling.modeler.field;
 
 import com.squareup.javapoet.CodeBlock;
 
-public interface ConstructorContributor {
-
-    // TODO: 10.02.22 consider remove this base
+public interface StatementProvider {
 
     CodeBlock constructorStatement();
+
+    CodeBlock populateStatement();
+
+    CodeBlock buildStatement();
 }

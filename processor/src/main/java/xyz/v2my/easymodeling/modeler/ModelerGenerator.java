@@ -8,6 +8,7 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import xyz.v2my.easymodeling.ProcessingException;
 import xyz.v2my.easymodeling.modeler.field.ModelField;
+import xyz.v2my.easymodeling.modeler.field.StatementProvider;
 import xyz.v2my.easymodeling.randomizer.ModelCache;
 import xyz.v2my.easymodeling.randomizer.Modeler;
 
@@ -104,7 +105,7 @@ public class ModelerGenerator {
                 .returns(TypeName.VOID)
                 .addParameter(ParameterSpec.builder(model.getModelTypeName(), MODEL_PARAMETER_NAME).build())
                 .addParameter(ParameterSpec.builder(ModelCache.class, MODEL_CACHE_PARAMETER_NAME).build());
-        fields.stream().map(ModelField::populateStatement)
+        fields.stream().map(StatementProvider::populateStatement)
                 .forEach(builder::addStatement);
         return builder.build();
     }

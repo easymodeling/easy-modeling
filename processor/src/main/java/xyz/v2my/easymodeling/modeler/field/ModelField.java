@@ -12,7 +12,7 @@ import javax.lang.model.element.Modifier;
 
 import static xyz.v2my.easymodeling.GenerationPatterns.BUILDER_CLASS_NAME;
 
-public abstract class ModelField implements InitializableType, BuilderMember, ConstructorContributor {
+public abstract class ModelField implements Initializable, BuilderMember, StatementProvider {
 
     protected TypeName type;
 
@@ -31,7 +31,6 @@ public abstract class ModelField implements InitializableType, BuilderMember, Co
         this.field = field;
     }
 
-    @Override
     public CodeBlock initialValue() {
         return CodeBlock.of("$L.next()", initializer());
     }
@@ -57,16 +56,14 @@ public abstract class ModelField implements InitializableType, BuilderMember, Co
         return CodeBlock.of("this.$N = ($T) $T.getField(model, $S)", identity(), type(), ReflectionUtil.class, identity());
     }
 
+    @Override
     public CodeBlock populateStatement() {
         return setFieldStatement(initialValue());
     }
 
+    @Override
     public CodeBlock buildStatement() {
         return setFieldStatement(CodeBlock.of("$L", identity()));
-    }
-
-    private CodeBlock setFieldStatement(CodeBlock value) {
-        return CodeBlock.of("$T.setField(model, $S, $L)", ReflectionUtil.class, identity(), value);
     }
 
     public String identity() {
@@ -75,5 +72,9 @@ public abstract class ModelField implements InitializableType, BuilderMember, Co
 
     public TypeName type() {
         return type;
+    }
+
+    private CodeBlock setFieldStatement(CodeBlock value) {
+        return CodeBlock.of("$T.setField(model, $S, $L)", ReflectionUtil.class, identity(), value);
     }
 }
