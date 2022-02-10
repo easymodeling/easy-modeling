@@ -91,7 +91,9 @@ class ReflectionUtilTest {
 
         @Test
         void should_create_model_with_only_private_constructor() {
-            ReflectionUtil.createModelOf(ClassWithPrivateConstructor.class);
+            final ClassWithPrivateConstructor model = ReflectionUtil.createModelOf(ClassWithPrivateConstructor.class);
+
+            assertThat(model).isNotNull();
         }
 
         @Test

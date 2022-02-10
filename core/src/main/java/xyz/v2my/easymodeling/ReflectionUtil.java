@@ -8,6 +8,9 @@ import java.util.Comparator;
 
 public class ReflectionUtil {
 
+    private ReflectionUtil() {
+    }
+
     public static void setField(Object model, String fieldName, Object value) {
         try {
             final Field field = model.getClass().getDeclaredField(fieldName);
@@ -44,31 +47,11 @@ public class ReflectionUtil {
     }
 
     private static Object defaultValue(Class<?> type) {
+        if (boolean.class.equals(type)) {
+            return false;
+        }
         if (type.isPrimitive()) {
-            if (type == int.class) {
-                return 0;
-            }
-            if (type == long.class) {
-                return 0L;
-            }
-            if (type == double.class) {
-                return 0.0;
-            }
-            if (type == float.class) {
-                return 0.0f;
-            }
-            if (type == short.class) {
-                return (short) 0;
-            }
-            if (type == byte.class) {
-                return (byte) 0;
-            }
-            if (type == boolean.class) {
-                return false;
-            }
-            if (type == char.class) {
-                return '\u0000';
-            }
+            return 0;
         }
         return null;
     }
