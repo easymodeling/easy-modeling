@@ -6,6 +6,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import xyz.v2my.easymodeling.ReflectionUtil;
 import xyz.v2my.easymodeling.modeler.FieldPattern;
 
 import javax.lang.model.element.Modifier;
@@ -51,6 +52,30 @@ public abstract class FieldTest {
                 "this." + FIELD_NAME + " = " + FIELD_NAME + ";\n" +
                 "return this;\n";
         assertThat(setter.code).hasToString(code);
+    }
+
+    @Test
+    void should_generate_constructor_statement() {
+        final CodeBlock codeBlock = modelField.constructorStatement();
+
+        final String code = "" + "this." + FIELD_NAME + " = (" + typeName.box() + ") " + $(ReflectionUtil.class) + ".getField(model, \"" + FIELD_NAME + "\")";
+        assertThat(codeBlock).hasToString(code);
+    }
+
+    @Test
+    void should_generate_populate_statement() {
+        final CodeBlock codeBlock = modelField.populateStatement();
+
+        final String code = $(ReflectionUtil.class) + ".setField(model, \"" + FIELD_NAME + "\", " + modelField.initialValue() + ")";
+        assertThat(codeBlock).hasToString(code);
+    }
+
+    @Test
+    void should_generate_build_statement() {
+        final CodeBlock codeBlock = modelField.buildStatement();
+
+        final String code = $(ReflectionUtil.class) + ".setField(model, \"" + FIELD_NAME + "\", " + FIELD_NAME + ")";
+        assertThat(codeBlock).hasToString(code);
     }
 
     @Test
