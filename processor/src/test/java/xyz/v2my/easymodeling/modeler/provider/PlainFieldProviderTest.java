@@ -19,6 +19,7 @@ import xyz.v2my.easymodeling.modeler.field.string.StringBuilderField;
 import xyz.v2my.easymodeling.modeler.field.string.StringField;
 import xyz.v2my.easymodeling.modeler.helper.FieldPatternFactory;
 
+import javax.lang.model.type.TypeMirror;
 import java.time.Instant;
 import java.util.stream.Stream;
 
@@ -31,7 +32,8 @@ public class PlainFieldProviderTest extends ModelFieldProviderTest {
     void should_provide_field(TypeName typeName, Class<? extends ModelField> fieldClass) {
         final FieldPattern fieldPattern = FieldPatternFactory.any();
 
-        final ModelField plainField = modelFieldProvider.provide(typeName, fieldPattern);
+        final TypeMirrorMock typeMirror = new TypeMirrorMock();
+        final ModelField plainField = modelFieldProvider.provide(typeName, typeMirror, fieldPattern);
 
         assertThat(plainField).isInstanceOf(fieldClass);
     }

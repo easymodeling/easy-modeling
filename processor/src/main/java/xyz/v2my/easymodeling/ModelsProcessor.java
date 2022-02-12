@@ -15,9 +15,6 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.type.DeclaredType;
-import javax.lang.model.type.MirroredTypeException;
-import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import java.io.IOException;
 import java.util.Arrays;
@@ -72,10 +69,7 @@ public class ModelsProcessor extends AbstractProcessor {
                         elementsAnnotatedWithModel.stream()
                                 .map(model -> model.getAnnotation(Model.class))
                 )
-                .map(model -> {
-                    String className = classNameOf(model);
-                    return new NamedModel(className, model);
-                })
+                .map(NamedModel::new)
                 .forEach(modelUniqueQueue::add);
     }
 
@@ -117,16 +111,5 @@ public class ModelsProcessor extends AbstractProcessor {
     private TypeElement getTypeElementOf(String canonicalName) {
         // TODO: 10.02.22 should avoid abstract classes and interfaces
         return elementUtils.getTypeElement(canonicalName);
-    }
-
-    private String classNameOf(Model model) {
-        try {
-            return model.type().getCanonicalName();
-        } catch (MirroredTypeException mte) {
-            final TypeMirror typeMirror = mte.getTypeMirror();
-            final DeclaredType declaredType = (DeclaredType) typeMirror;
-            final TypeElement typeElement = (TypeElement) declaredType.asElement();
-            return typeElement.getQualifiedName().toString();
-        }
     }
 }

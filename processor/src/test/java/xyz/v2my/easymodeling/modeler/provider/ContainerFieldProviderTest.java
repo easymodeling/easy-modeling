@@ -39,7 +39,8 @@ public class ContainerFieldProviderTest extends ModelFieldProviderTest {
 
         plainFields().map(a -> a.get()[0])
                 .map(TypeName.class::cast).forEach(typeName -> {
-                    final ModelField container = modelFieldProvider.provide(ParameterizedTypeName.get(rawType, typeName), fieldPattern);
+                    final TypeMirrorMock typeMirror = new TypeMirrorMock();
+                    final ModelField container = modelFieldProvider.provide(ParameterizedTypeName.get(rawType, typeName), typeMirror, fieldPattern);
                     assertThat(container).isInstanceOf(containerField);
                 });
     }

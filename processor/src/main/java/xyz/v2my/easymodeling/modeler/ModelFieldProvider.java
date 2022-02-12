@@ -14,6 +14,7 @@ import xyz.v2my.easymodeling.modeler.field.UnknownField;
 import xyz.v2my.easymodeling.modeler.field.array.ArrayField;
 import xyz.v2my.easymodeling.modeler.field.array.PrimitiveArrayField;
 
+import javax.lang.model.type.TypeMirror;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
@@ -41,7 +42,7 @@ public class ModelFieldProvider {
             .map(Container.class::cast)
             .collect(Collectors.toMap(ModelField::type, f -> f));
 
-    public ModelField provide(TypeName type, FieldPattern fieldPattern) {
+    public ModelField provide(TypeName type, TypeMirror typeMirror, FieldPattern fieldPattern) {
         try {
             return findField(type, fieldPattern);
         } catch (FieldNotSupportedException e) {

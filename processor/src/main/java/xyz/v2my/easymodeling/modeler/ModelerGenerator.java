@@ -13,6 +13,7 @@ import xyz.v2my.easymodeling.randomizer.ModelCache;
 import xyz.v2my.easymodeling.randomizer.Modeler;
 
 import javax.lang.model.element.Modifier;
+import javax.lang.model.type.TypeMirror;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -52,8 +53,9 @@ public class ModelerGenerator {
                 .stream()
                 .map(element -> {
                     final String fieldName = element.getFieldName();
+                    final TypeMirror typeMirror = element.getTypeMirror();
                     final FieldPattern fieldPattern = declaredFieldsMap.getOrDefault(fieldName, FieldPattern.of(fieldName));
-                    return modelFieldProvider.provide(element.getTypeName(), fieldPattern);
+                    return modelFieldProvider.provide(element.getTypeName(), element.getTypeMirror(), fieldPattern);
                 })
                 .collect(Collectors.toList());
     }

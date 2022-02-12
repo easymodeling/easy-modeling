@@ -24,14 +24,18 @@ public class ProvideUnknownFieldTest extends ModelFieldProviderTest {
         @ParameterizedTest
         @ValueSource(classes = {void.class, Void.class})
         void should_get_unknown_field_for_unsupported_built_in_type(Class<?> unsupportedClass) {
-            final ModelField field = modelFieldProvider.provide(TypeName.get(unsupportedClass), FieldPatternFactory.any());
+            final TypeName typeName = TypeName.get(unsupportedClass);
+            final TypeMirrorMock typeMirror = new TypeMirrorMock();
+            final ModelField field = modelFieldProvider.provide(typeName, typeMirror, FieldPatternFactory.any());
 
             assertThat(field).isInstanceOf(UnknownField.class);
         }
 
         @Test
         void should_get_unknown_field_for_supported_generic_type_with_primitive_array_as_type_parameter() {
-            final ModelField field = modelFieldProvider.provide(ParameterizedTypeName.get(SomeGeneric.class, int[].class), FieldPatternFactory.any());
+            final ParameterizedTypeName typeName = ParameterizedTypeName.get(SomeGeneric.class, int[].class);
+            final TypeMirrorMock typeMirror = new TypeMirrorMock();
+            final ModelField field = modelFieldProvider.provide(typeName, typeMirror, FieldPatternFactory.any());
 
             assertThat(field).isInstanceOf(UnknownField.class);
         }
@@ -47,14 +51,18 @@ public class ProvideUnknownFieldTest extends ModelFieldProviderTest {
         @ParameterizedTest
         @ValueSource(classes = {Integer.class, Instant.class, Integer[].class, Double[][].class})
         void should_not_generate_unknown_field_for_generic_type_with_type_parameters_other_than_primitive_array(Class<?> type) {
-            final ModelField field = modelFieldProvider.provide(ParameterizedTypeName.get(Optional.class, type), FieldPatternFactory.any());
+            final ParameterizedTypeName typeName = ParameterizedTypeName.get(Optional.class, type);
+            final TypeMirrorMock typeMirror = new TypeMirrorMock();
+            final ModelField field = modelFieldProvider.provide(typeName, typeMirror, FieldPatternFactory.any());
 
             assertThat(field).isNotInstanceOf(UnknownField.class);
         }
 
         @Test
         void should_not_generate_unknown_field_for_customer_type() {
-            final ModelField field = modelFieldProvider.provide(ClassName.get(SomeType.class), FieldPatternFactory.any());
+            final ClassName typeName = ClassName.get(SomeType.class);
+            final TypeMirrorMock typeMirror = new TypeMirrorMock();
+            final ModelField field = modelFieldProvider.provide(typeName, typeMirror, FieldPatternFactory.any());
 
             assertThat(field).isNotInstanceOf(UnknownField.class);
         }
