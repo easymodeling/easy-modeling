@@ -8,7 +8,6 @@ import xyz.v2my.easymodeling.NamedModel;
 import xyz.v2my.easymodeling.modeler.field.Container;
 import xyz.v2my.easymodeling.modeler.field.CustomField;
 import xyz.v2my.easymodeling.modeler.field.ModelField;
-import xyz.v2my.easymodeling.modeler.field.PlainField;
 import xyz.v2my.easymodeling.modeler.field.UnknownField;
 import xyz.v2my.easymodeling.modeler.field.array.ArrayField;
 import xyz.v2my.easymodeling.modeler.field.array.PrimitiveArrayField;
@@ -18,14 +17,10 @@ import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static xyz.v2my.easymodeling.log.ProcessorLogger.log;
-import static xyz.v2my.easymodeling.modeler.ModelFieldRegistry.MODEL_FIELDS;
+import static xyz.v2my.easymodeling.modeler.ModelFieldRegistry.container;
 
 public class ModelFieldProvider {
 
@@ -34,18 +29,6 @@ public class ModelFieldProvider {
     public ModelFieldProvider() {
         this.modelUniqueQueue = ModelUniqueQueue.instance();
     }
-
-    private static final Map<TypeName, PlainField<?>> PLAIN_FIELDS = Arrays.stream(MODEL_FIELDS)
-            .filter(PlainField.class::isInstance)
-            .distinct()
-            .map(f -> (PlainField<?>) f)
-            .collect(Collectors.toMap(ModelField::type, f -> f));
-
-    private static final Map<TypeName, Container> CONTAINERS = Arrays.stream(MODEL_FIELDS)
-            .filter(Container.class::isInstance)
-            .distinct()
-            .map(Container.class::cast)
-            .collect(Collectors.toMap(ModelField::type, f -> f));
 
     public ModelField provide(TypeMirror typeMirror, FieldPattern fieldPattern) {
         try {
@@ -111,7 +94,7 @@ public class ModelFieldProvider {
                 .map(typeMirror -> nestedField(typeMirror, fieldPattern))
                 .toArray(ModelField[]::new);
         try {
-            return Optional.ofNullable(CONTAINERS.get(rawType)).orElseThrow(FieldNotSupportedException::new)
+            return container(rawType).orElseThrow(FieldNotSupportedException::new)
                     .create(fieldPattern, modelFields);
         } catch (ArrayIndexOutOfBoundsException obe) {
             throw new FieldNotSupportedException();
@@ -120,7 +103,7 @@ public class ModelFieldProvider {
 
     private ModelField plainField(TypeMirror typeMirror, FieldPattern fieldPattern) {
         TypeName type = TypeName.get(typeMirror);
-        return Optional.ofNullable(PLAIN_FIELDS.get(type.box()))
+        return ModelFieldRegistry.plainField(type)
                 .orElseThrow(FieldNotSupportedException::new)
                 .create(fieldPattern);
     }

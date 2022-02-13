@@ -1,7 +1,10 @@
 package xyz.v2my.easymodeling.modeler;
 
+import com.squareup.javapoet.TypeName;
+import xyz.v2my.easymodeling.modeler.field.Container;
 import xyz.v2my.easymodeling.modeler.field.ModelField;
 import xyz.v2my.easymodeling.modeler.field.OptionalField;
+import xyz.v2my.easymodeling.modeler.field.PlainField;
 import xyz.v2my.easymodeling.modeler.field.collection.ArrayListField;
 import xyz.v2my.easymodeling.modeler.field.collection.HashMapField;
 import xyz.v2my.easymodeling.modeler.field.collection.HashSetField;
@@ -34,12 +37,25 @@ import xyz.v2my.easymodeling.modeler.field.stream.StreamField;
 import xyz.v2my.easymodeling.modeler.field.string.StringBuilderField;
 import xyz.v2my.easymodeling.modeler.field.string.StringField;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 public class ModelFieldRegistry {
 
     private ModelFieldRegistry() {
     }
 
-    static final ModelField[] MODEL_FIELDS = {
+    static Optional<? extends PlainField<?>> plainField(TypeName type) {
+        return Optional.ofNullable(ModelFieldRegistry.PLAIN_FIELDS.get(type.box()));
+    }
+
+    static Optional<Container> container(TypeName rawType) {
+        return Optional.ofNullable(ModelFieldRegistry.CONTAINERS.get(rawType));
+    }
+
+    private static final ModelField[] MODEL_FIELDS = {
             // primitive
             new ByteField(),
             new ShortField(),
@@ -84,4 +100,16 @@ public class ModelFieldRegistry {
             new LongStreamField(),
             new DoubleStreamField(),
     };
+
+    private static final Map<TypeName, Container> CONTAINERS = Arrays.stream(MODEL_FIELDS)
+            .filter(Container.class::isInstance)
+            .distinct()
+            .map(Container.class::cast)
+            .collect(Collectors.toMap(ModelField::type, f -> f));
+
+    private static final Map<TypeName, PlainField<?>> PLAIN_FIELDS = Arrays.stream(MODEL_FIELDS)
+            .filter(PlainField.class::isInstance)
+            .distinct()
+            .map(f -> (PlainField<?>) f)
+            .collect(Collectors.toMap(ModelField::type, f -> f));
 }
