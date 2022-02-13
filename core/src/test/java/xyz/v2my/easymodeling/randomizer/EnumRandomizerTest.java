@@ -25,9 +25,10 @@ class EnumRandomizerTest extends RandomizerTest {
                 .limit(100)
                 .collect(Collectors.groupingBy(SomeEnum::name, Collectors.counting()));
 
-        assertThat(collect.get("A")).isEqualTo(33);
-        assertThat(collect.get("B")).isEqualTo(31);
-        assertThat(collect.get("C")).isEqualTo(36);
+        assertThat(collect)
+                .containsEntry("A", 33L)
+                .containsEntry("B", 31L)
+                .containsEntry("C", 36L);
     }
 
     enum SomeEnum {

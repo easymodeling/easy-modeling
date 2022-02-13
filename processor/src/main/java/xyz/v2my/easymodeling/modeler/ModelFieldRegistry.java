@@ -47,7 +47,7 @@ public class ModelFieldRegistry {
     private ModelFieldRegistry() {
     }
 
-    static Optional<? extends PlainField<?>> plainField(TypeName type) {
+    static Optional<PlainField<?>> plainField(TypeName type) {
         return Optional.ofNullable(ModelFieldRegistry.PLAIN_FIELDS.get(type.box()));
     }
 
