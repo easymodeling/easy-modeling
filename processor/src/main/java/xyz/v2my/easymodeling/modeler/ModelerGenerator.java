@@ -55,7 +55,7 @@ public class ModelerGenerator {
                     final String fieldName = element.getFieldName();
                     final TypeMirror typeMirror = element.getTypeMirror();
                     final FieldPattern fieldPattern = declaredFieldsMap.getOrDefault(fieldName, FieldPattern.of(fieldName));
-                    return modelFieldProvider.provide(element.getTypeName(), element.getTypeMirror(), fieldPattern);
+                    return modelFieldProvider.provide(typeMirror, fieldPattern);
                 })
                 .collect(Collectors.toList());
     }
