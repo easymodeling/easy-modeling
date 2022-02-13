@@ -7,6 +7,7 @@ import xyz.v2my.easymodeling.ModelUniqueQueue;
 import xyz.v2my.easymodeling.NamedModel;
 import xyz.v2my.easymodeling.modeler.field.Container;
 import xyz.v2my.easymodeling.modeler.field.CustomField;
+import xyz.v2my.easymodeling.modeler.field.EnumField;
 import xyz.v2my.easymodeling.modeler.field.ModelField;
 import xyz.v2my.easymodeling.modeler.field.UnknownField;
 import xyz.v2my.easymodeling.modeler.field.array.ArrayField;
@@ -53,8 +54,7 @@ public class ModelFieldProvider {
             final DeclaredType declaredType = (DeclaredType) typeMirror;
             final TypeName typeName = TypeName.get(declaredType);
             if (declaredType.asElement().getKind().equals(ElementKind.ENUM)) {
-                // TODO: 12.02.22 support enum
-                throw new FieldNotSupportedException();
+                return new EnumField(typeName, fieldPattern);
             }
             final String typeCanonicalName = typeName.toString();
             if (!typeCanonicalName.startsWith("java.")) {
