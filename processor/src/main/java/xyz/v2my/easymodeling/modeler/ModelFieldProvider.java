@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static xyz.v2my.easymodeling.log.ProcessorLogger.log;
 import static xyz.v2my.easymodeling.modeler.ModelFieldRegistry.MODEL_FIELDS;
 
 public class ModelFieldProvider {
@@ -48,13 +49,17 @@ public class ModelFieldProvider {
 
     public ModelField provide(TypeMirror typeMirror, FieldPattern fieldPattern) {
         try {
-            return findField(typeMirror, fieldPattern);
+            final ModelField field = findField(typeMirror, fieldPattern);
+            log.debug("Model field created for [%s] is %s", fieldPattern.name(), field);
+            return field;
         } catch (FieldNotSupportedException e) {
             return new UnknownField(TypeName.get(typeMirror), fieldPattern);
         }
     }
 
     private ModelField findField(TypeMirror typeMirror, FieldPattern fieldPattern) {
+        log.debug("field [%s] with type %s as %s", fieldPattern.name(), typeMirror, typeMirror.getKind());
+
         if (typeMirror.getKind().isPrimitive()) {
             return plainField(typeMirror, fieldPattern);
         }
@@ -75,6 +80,7 @@ public class ModelFieldProvider {
             }
             final List<? extends TypeMirror> typeArguments = declaredType.getTypeArguments();
             if (!typeArguments.isEmpty()) {
+                log.debug("nested types: %s", typeArguments);
                 return containerField(declaredType, fieldPattern);
             }
             return plainField(typeMirror, fieldPattern);

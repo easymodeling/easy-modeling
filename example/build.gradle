@@ -4,6 +4,10 @@ java {
     }
 }
 
+compileJava {
+    options.compilerArgs << "-Aeasymodeling.log.model=DEBUG"
+}
+
 dependencies {
     implementation project(':core')
     annotationProcessor project(':processor')

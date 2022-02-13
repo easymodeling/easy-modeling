@@ -5,6 +5,7 @@ import com.squareup.javapoet.TypeName;
 import xyz.v2my.easymodeling.modeler.FieldPattern;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public abstract class Container extends ModelField {
 
@@ -34,4 +35,8 @@ public abstract class Container extends ModelField {
 
     protected abstract CodeBlock initializerParameter();
 
+    @Override
+    public String toString() {
+        return String.format("%s<%s>", this.getClass().getSimpleName(), Arrays.stream(nestedFields).map(ModelField::toString).collect(Collectors.joining(", ")));
+    }
 }

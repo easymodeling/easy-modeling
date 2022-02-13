@@ -77,4 +77,9 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
     private CodeBlock setFieldStatement(CodeBlock value) {
         return CodeBlock.of("$T.setField(model, $S, $L)", ReflectionUtil.class, identity(), value);
     }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }

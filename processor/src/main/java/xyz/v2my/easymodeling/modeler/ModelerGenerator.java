@@ -28,6 +28,7 @@ import static xyz.v2my.easymodeling.GenerationPatterns.MODEL_PARAMETER_NAME;
 import static xyz.v2my.easymodeling.GenerationPatterns.STATIC_BUILDER_METHOD_NAME;
 import static xyz.v2my.easymodeling.GenerationPatterns.STATIC_NEXT_METHOD_NAME;
 import static xyz.v2my.easymodeling.GenerationPatterns.TYPE_METHOD_NAME;
+import static xyz.v2my.easymodeling.log.ProcessorLogger.log;
 
 public class ModelerGenerator {
 
@@ -48,14 +49,14 @@ public class ModelerGenerator {
         } catch (IllegalStateException e) {
             throw new ProcessingException("Duplicated fields declaration: " + e.getMessage());
         }
-        final ModelFieldProvider modelFieldProvider = new ModelFieldProvider();
+        log.info("Create modeler for " + model.getModelTypeName());
         return model.getEnclosedFields()
                 .stream()
                 .map(element -> {
                     final String fieldName = element.getFieldName();
                     final TypeMirror typeMirror = element.getTypeMirror();
                     final FieldPattern fieldPattern = declaredFieldsMap.getOrDefault(fieldName, FieldPattern.of(fieldName));
-                    return modelFieldProvider.provide(typeMirror, fieldPattern);
+                    return new ModelFieldProvider().provide(typeMirror, fieldPattern);
                 })
                 .collect(Collectors.toList());
     }

@@ -12,6 +12,7 @@ import javax.annotation.processing.Filer;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
+import javax.annotation.processing.SupportedOptions;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
@@ -21,10 +22,15 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static xyz.v2my.easymodeling.ProcessorLogger.log;
+import static xyz.v2my.easymodeling.log.ProcessorLogger.log;
 
 @AutoService(Processor.class)
+@SupportedOptions({
+        ModelsProcessor.LOG_MODEL,
+})
 public class ModelsProcessor extends AbstractProcessor {
+
+    public static final String LOG_MODEL = "easymodeling.log.model";
 
     private Elements elementUtils;
 
@@ -35,8 +41,7 @@ public class ModelsProcessor extends AbstractProcessor {
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
-        log.setMessager(processingEnv.getMessager());
-        processingEnv.getTypeUtils();
+        log.setMessager(processingEnv.getMessager(), processingEnv.getOptions().get(LOG_MODEL));
         elementUtils = processingEnv.getElementUtils();
         filer = processingEnv.getFiler();
         modelUniqueQueue = ModelUniqueQueue.instance();
