@@ -16,5 +16,15 @@ class OrderTest {
         assertNotNull(order);
         assertEquals(BigDecimal.TEN, order.getUnitPrice());
         assertNotNull(order.getCreationTime());
+
+        assertNotNull(order.orderLines);
+        assertEquals(order.orderLines.get(0),
+                order.orderLines.get(0)
+                        .order.orderLines.get(0)
+                        .order.orderLines.get(0)
+                        .order.orderLines.get(0)
+                        .order.orderLines.get(0)
+                        .order.orderLines.get(0)
+        );
     }
 }

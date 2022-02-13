@@ -33,4 +33,7 @@ public class OrderLine {
     public BigDecimal getTaxRate() {
         return taxRate;
     }
+
+    // @ManyToOne
+    public Order order;
 }

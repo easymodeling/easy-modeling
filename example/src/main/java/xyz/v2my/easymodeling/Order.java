@@ -2,6 +2,7 @@ package xyz.v2my.easymodeling;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 
 public class Order {
 
@@ -28,4 +29,7 @@ public class Order {
     public Instant getCreationTime() {
         return creationTime;
     }
+
+    // @OneToMany
+    public List<OrderLine> orderLines;
 }
