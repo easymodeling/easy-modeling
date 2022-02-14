@@ -5,7 +5,7 @@ plugins {
 }
 
 ext {
-    projectGroup = 'xyz.v2my'
+    projectGroup = 'io.github'
     projectVersion = '0.0.1-SNAPSHOT'
 }
 
@@ -16,7 +16,7 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
 
-    group 'xyz.v2my'
+    group 'io.github'
     version projectVersion
 
     repositories {
