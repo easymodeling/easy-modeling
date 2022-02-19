@@ -5,18 +5,45 @@ plugins {
 }
 
 ext {
-    projectGroup = 'io.github'
+    projectGroup = 'io.github.easymodeling'
     projectVersion = '0.0.1-SNAPSHOT'
+
+    publicationPom = {
+        name = 'Easy Modeling'
+        description = 'A Java library that generates randomly populated models for test use'
+        url = 'https://github.com/easymodeling/easy-modeling'
+        licenses {
+            license {
+                name = 'The Apache License, Version 2.0'
+                url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            }
+        }
+        developers {
+            developer {
+                name = 'Zhe Zhang'
+                email = 'zhezhang@outlook.de'
+            }
+        }
+        scm {
+            url = 'https://github.com/easymodeling/easy-modeling/'
+        }
+    }
+
+    releasesRepoUrl = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+    snapshotsRepoUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+    publicationCredentials = {
+        username ossrhUsername
+        password ossrhPassword
+    }
 }
 
 group ext.projectGroup
 version ext.projectVersion
 
 subprojects {
-    apply plugin: 'java'
     apply plugin: 'jacoco'
 
-    group 'io.github'
+    group projectGroup
     version projectVersion
 
     repositories {
