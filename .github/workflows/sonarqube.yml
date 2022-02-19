@@ -8,8 +8,8 @@ on:
     types: [ opened, synchronize, reopened ]
 
 env:
-  OSSRH_USERNAME: ''
-  OSSRH_PASSWORD: ''
+  OSSRH_USERNAME: 'OSSRH_USERNAME'
+  OSSRH_PASSWORD: 'OSSRH_PASSWORD'
 
 jobs:
   sonarqube:

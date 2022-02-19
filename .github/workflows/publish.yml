@@ -3,14 +3,13 @@ name: PUBLISH
 on:
   workflow_dispatch:
 
-env:
-  OSSRH_USERNAME: ${{secrets.OSSRH_USERNAME}}
-  OSSRH_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
-
 jobs:
   publish:
     name: Publish
     runs-on: ubuntu-latest
+    env:
+      OSSRH_USERNAME: ${{secrets.OSSRH_USERNAME}}
+      OSSRH_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
     steps:
       - name: 'Checkout repository'
         uses: actions/checkout@v2

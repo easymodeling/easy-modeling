@@ -6,8 +6,8 @@ on:
       - master
 
 env:
-  OSSRH_USERNAME: ''
-  OSSRH_PASSWORD: ''
+  OSSRH_USERNAME: 'OSSRH_USERNAME'
+  OSSRH_PASSWORD: 'OSSRH_PASSWORD'
 
 jobs:
   test:
