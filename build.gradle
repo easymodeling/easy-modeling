@@ -31,10 +31,6 @@ ext {
 
     releasesRepoUrl = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
     snapshotsRepoUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
-    publicationCredentials = {
-        username ossrhUsername
-        password ossrhPassword
-    }
 }
 
 group ext.projectGroup
