@@ -1,10 +1,16 @@
 name: SONARQUBE
+
 on:
   push:
     branches:
       - master
   pull_request:
     types: [ opened, synchronize, reopened ]
+
+env:
+  OSSRH_USERNAME: ''
+  OSSRH_PASSWORD: ''
+
 jobs:
   sonarqube:
     name: Sonarqube

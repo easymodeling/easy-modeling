@@ -1,0 +1,43 @@
+name: PUBLISH
+
+on:
+  workflow_dispatch:
+
+env:
+  OSSRH_USERNAME: ${{secrets.OSSRH_USERNAME}}
+  OSSRH_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v2
+      - name: 'Cache gradle dependencies'
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: 'Set up JDK 8'
+        uses: actions/setup-java@v2
+        with:
+          java-version: 8
+          distribution: 'zulu'
+      - name: 'Build'
+        shell: bash
+        run: ./gradlew clean build
+      - name: 'Decode Secret'
+        run: |
+          echo "${{secrets.SIGNING_SECRET_KEY_RING_B64}}" > ~/.gradle/secring.gpg.b64
+          base64 -d ~/.gradle/secring.gpg.b64 > ~/.gradle/secring.gpg
+      - name: 'Publish Artifact'
+        run: |
+          ./gradlew publish \
+            -Psigning.keyId=${{secrets.SIGNING_KEY_ID}} \
+            -Psigning.password=${{secrets.SIGNING_KEY_ID}} \
+            -Psigning.secretKeyRingFile=$(echo ~/.gradle/secring.gpg)
