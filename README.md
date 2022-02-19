@@ -6,17 +6,17 @@
 
 EasyModeling is a Java library that generates randomly populated models for test use.
 
-[test-badge]: https://github.com/zhezhangz/easy-modeling/actions/workflows/test.yml/badge.svg?branch=master
+[test-badge]: https://github.com/easymodeling/easy-modeling/actions/workflows/test.yml/badge.svg?branch=master
 
-[test-link]: https://github.com/zhezhangz/easy-modeling/actions/workflows/test.yml
+[test-link]: https://github.com/easymodeling/easy-modeling/actions/workflows/test.yml
 
-[sonar-badge]: https://sonarcloud.io/api/project_badges/measure?project=zhezhangz_easy-modeling&metric=alert_status
+[sonar-badge]: https://sonarcloud.io/api/project_badges/measure?project=easymodeling_easy-modeling&metric=alert_status
 
-[sonar-link]: https://sonarcloud.io/summary/new_code?id=zhezhangz_easy-modeling
+[sonar-link]: https://sonarcloud.io/summary/new_code?id=easymodeling_easy-modeling
 
-[coverage-badge]: https://sonarcloud.io/api/project_badges/measure?project=zhezhangz_easy-modeling&metric=coverage
+[coverage-badge]: https://sonarcloud.io/api/project_badges/measure?project=easymodeling_easy-modeling&metric=coverage
 
-[coverage-link]: https://sonarcloud.io/summary/overall?id=zhezhangz_easy-modeling
+[coverage-link]: https://sonarcloud.io/summary/overall?id=easymodeling_easy-modeling
 
 ## What is EasyModeling?
 
