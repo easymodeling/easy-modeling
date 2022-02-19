@@ -39,13 +39,7 @@ publishing {
         }
     }
     repositories {
-        maven {
-            url = project.hasProperty('release') ? releasesRepoUrl : snapshotsRepoUrl
-            credentials {
-                username ossrhUsername
-                password ossrhPassword
-            }
-        }
+        maven mavenCentral
     }
 }
 

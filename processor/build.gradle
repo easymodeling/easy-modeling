@@ -42,17 +42,11 @@ publishing {
         mavenJava(MavenPublication) {
             artifactId = "${project.parent.name}-${project.name}"
             from components.java
-            pom  publicationPom
+            pom publicationPom
         }
     }
     repositories {
-        maven {
-            url = project.hasProperty('release') ? releasesRepoUrl : snapshotsRepoUrl
-            credentials {
-                username ossrhUsername
-                password ossrhPassword
-            }
-        }
+        maven mavenCentral
     }
 }
 

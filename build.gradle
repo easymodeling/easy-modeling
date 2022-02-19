@@ -29,8 +29,15 @@ ext {
         }
     }
 
-    releasesRepoUrl = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
-    snapshotsRepoUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+    mavenCentral = {
+        def releasesRepoUrl = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+        def snapshotsRepoUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+        url = project.version.endsWith("-SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
+        credentials {
+            username ossrhUsername ?: System.getenv("OSSRH_USERNAME")
+            password ossrhPassword ?: System.getenv("OSSRH_PASSWORD")
+        }
+    }
 }
 
 group ext.projectGroup
