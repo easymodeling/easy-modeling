@@ -34,8 +34,8 @@ ext {
         def snapshotsRepoUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
         url = project.version.endsWith("-SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
         credentials {
-            username ossrhUsername ?: System.getenv("OSSRH_USERNAME")
-            password ossrhPassword ?: System.getenv("OSSRH_PASSWORD")
+            username System.getenv("OSSRH_USERNAME") ?: ossrhUsername
+            password System.getenv("OSSRH_PASSWORD") ?: ossrhPassword
         }
     }
 }
