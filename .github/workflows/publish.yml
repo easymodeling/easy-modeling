@@ -38,5 +38,5 @@ jobs:
         run: |
           ./gradlew publish \
             -Psigning.keyId=${{secrets.SIGNING_KEY_ID}} \
-            -Psigning.password=${{secrets.SIGNING_KEY_ID}} \
+            -Psigning.password="${{secrets.SIGNING_KEY_PASSWORD}}" \
             -Psigning.secretKeyRingFile=$(echo ~/.gradle/secring.gpg)
