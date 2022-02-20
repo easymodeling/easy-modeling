@@ -1,13 +1,13 @@
 package io.github.easymodeling;
 
+import org.assertj.core.data.TemporalUnitWithinOffset;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DatetimeModelTest {
 
@@ -16,23 +16,24 @@ class DatetimeModelTest {
     void should_populate_datetime() {
         DatetimeModel model = DatetimeModelModeler.next();
 
-        assertNotNull(model);
-        assertNotNull(model.instant);
-        assertNotNull(model.now);
-        assertTrue(model.before.isBefore(Instant.parse("2000-01-01T00:00:00Z")));
-        assertTrue(model.after.isAfter(Instant.parse("2000-01-01T00:00:00Z")));
+        assertThat(model).isNotNull();
 
-        assertTrue(model.strings.length > 0);
+        assertThat(model.instant).isNotNull();
+        assertThat(model.now).isNotNull();
+        assertThat(model.before).isBefore(Instant.parse("2000-01-01T00:00:00Z"));
+        assertThat(model.after).isAfter(Instant.parse("2000-01-01T00:00:00Z"));
 
-        assertNotNull(model.localDate);
-        assertNotNull(model.localTime);
-        assertNotNull(model.localDateTime);
+        assertThat(model.strings).isNotEmpty();
 
-        assertNotNull(model.date);
-        assertNotNull(model.nowDate);
-        assertNotNull(model.constantDate);
+        assertThat(model.localDate).isNotNull();
+        assertThat(model.localTime).isNotNull();
+        assertThat(model.localDateTime).isNotNull();
 
-        assertEquals(model.nowDate.toInstant().getEpochSecond(), Instant.now().getEpochSecond(), 3);
-        assertEquals(model.constantDate.toInstant(), Instant.parse("2000-01-01T00:00:00Z"));
+        assertThat(model.date).isNotNull();
+        assertThat(model.nowDate).isNotNull();
+        assertThat(model.constantDate).isNotNull();
+
+        assertThat(model.nowDate.toInstant()).isCloseTo(Instant.now(), new TemporalUnitWithinOffset(3, ChronoUnit.SECONDS));
+        assertThat(model.constantDate.toInstant()).isEqualTo(Instant.parse("2000-01-01T00:00:00Z"));
     }
 }

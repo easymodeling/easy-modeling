@@ -1,7 +1,8 @@
 package io.github.easymodeling;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class NumericalTypeModelTest {
 
@@ -9,7 +10,7 @@ class NumericalTypeModelTest {
     void should_create_numerical_type_model() {
         final NumericalTypeModel model = NumericalTypeModelModeler.builder().build();
 
-        Assertions.assertEquals(11, model.getAnInt());
-        Assertions.assertEquals(11, (short) model.getaShort());
+        assertThat(model.getAnInt()).isEqualTo(11);
+        assertThat(model.getaShort()).isEqualTo((short) 11);
     }
 }

@@ -2,7 +2,7 @@ package io.github.easymodeling;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class MapModelTest {
 
@@ -10,6 +10,6 @@ class MapModelTest {
     void should_populate_map() {
         final MapModel next = MapModelModeler.next();
 
-        assertNotNull(next);
+        assertThat(next).isNotNull();
     }
 }

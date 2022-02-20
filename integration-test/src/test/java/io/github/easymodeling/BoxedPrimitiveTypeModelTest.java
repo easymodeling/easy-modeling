@@ -2,7 +2,7 @@ package io.github.easymodeling;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BoxedPrimitiveTypeModelTest {
 
@@ -10,7 +10,7 @@ class BoxedPrimitiveTypeModelTest {
     void should_create_test_model_and_build_string_field() {
         final BoxedPrimitiveTypeModel model = BoxedPrimitiveTypeModelModeler.builder().build();
 
-        assertNotNull(model);
-        assertNotNull(model.getAnInt());
+        assertThat(model).isNotNull();
+        assertThat(model.getAnInt()).isNotNull();
     }
 }

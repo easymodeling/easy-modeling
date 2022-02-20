@@ -2,7 +2,7 @@ package io.github.easymodeling;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class EnumModelTest {
 
@@ -10,10 +10,10 @@ class EnumModelTest {
     void should_generate_enum_field() {
         final EnumModel next = EnumModelModeler.next();
 
-        assertNotNull(next);
-        assertNotNull(next.enumExample);
-        assertNotNull(next.enumExamples);
-        assertNotNull(next.listOfEnumExamples);
-        assertNotNull(next.node);
+        assertThat(next).isNotNull();
+        assertThat(next.enumExample).isNotNull();
+        assertThat(next.enumExamples).isNotNull();
+        assertThat(next.listOfEnumExamples).isNotNull();
+        assertThat(next.node).isNotNull();
     }
 }

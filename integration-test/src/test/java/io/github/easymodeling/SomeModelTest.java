@@ -2,7 +2,7 @@ package io.github.easymodeling;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class SomeModelTest {
 
@@ -10,8 +10,8 @@ class SomeModelTest {
     void should_populate_nested_model() {
         final SomeModel next = SomeModelModeler.next();
 
-        assertNotNull(next);
-//        assertNotNull(next.someNestedModel);
-//        assertNotNull(next.someNestedModel.string);
+        assertThat(next).isNotNull();
+        assertThat(next.someNestedModel).isNotNull();
+        assertThat(next.someNestedModel.string).isNotNull();
     }
 }

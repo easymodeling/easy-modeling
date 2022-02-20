@@ -2,8 +2,7 @@ package io.github.easymodeling;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PrimitiveTypeTest {
 
@@ -11,22 +10,22 @@ class PrimitiveTypeTest {
     void should_create_test_model() {
         final PrimitiveTypeModel testModel = PrimitiveTypeModelModeler.builder().build();
 
-        assertNotNull(testModel);
-        assertNotNull(testModel.getaString());
+        assertThat(testModel).isNotNull();
+        assertThat(testModel.getaString()).isNotNull();
     }
 
     @Test
     void should_create_test_model_and_build_string_field() {
         final PrimitiveTypeModel testModel = PrimitiveTypeModelModeler.builder().aString("some-string").build();
 
-        assertNotNull(testModel);
-        assertEquals("some-string", testModel.getaString());
+        assertThat(testModel).isNotNull();
+        assertThat(testModel.getaString()).isEqualTo("some-string");
     }
 
     @Test
     void should_create_test_model_with_next_method() {
         final PrimitiveTypeModel testModel = PrimitiveTypeModelModeler.next();
 
-        assertNotNull(testModel);
+        assertThat(testModel).isNotNull();
     }
 }

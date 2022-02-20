@@ -2,7 +2,7 @@ package io.github.easymodeling;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class StreamModelTest {
 
@@ -10,19 +10,19 @@ class StreamModelTest {
     void should_create_fields() {
         final StreamModel next = StreamModelModeler.next();
 
-        assertNotNull(next);
-        assertNotNull(next.streamOfStrings);
-        assertNotNull(next.intStream);
-        assertNotNull(next.streamOfIntStreams);
-        assertNotNull(next.intStreamArray);
-        assertNotNull(next.intStreamMatrix);
-        assertNotNull(next.longStream);
-        assertNotNull(next.streamOfLongStreams);
-        assertNotNull(next.longStreamArray);
-        assertNotNull(next.longStreamMatrix);
-        assertNotNull(next.doubleStream);
-        assertNotNull(next.streamOfDoubleStreams);
-        assertNotNull(next.doubleStreamArray);
-        assertNotNull(next.doubleStreamMatrix);
+        assertThat(next).isNotNull();
+        assertThat(next.streamOfStrings).isNotNull();
+        assertThat(next.intStream).isNotNull();
+        assertThat(next.streamOfIntStreams).isNotNull();
+        assertThat(next.intStreamArray).isNotNull();
+        assertThat(next.intStreamMatrix).isNotNull();
+        assertThat(next.longStream).isNotNull();
+        assertThat(next.streamOfLongStreams).isNotNull();
+        assertThat(next.longStreamArray).isNotNull();
+        assertThat(next.longStreamMatrix).isNotNull();
+        assertThat(next.doubleStream).isNotNull();
+        assertThat(next.streamOfDoubleStreams).isNotNull();
+        assertThat(next.doubleStreamArray).isNotNull();
+        assertThat(next.doubleStreamMatrix).isNotNull();
     }
 }

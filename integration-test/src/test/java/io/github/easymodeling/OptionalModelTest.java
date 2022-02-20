@@ -2,7 +2,7 @@ package io.github.easymodeling;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class OptionalModelTest {
 
@@ -10,8 +10,7 @@ class OptionalModelTest {
     void should_populate_optional_model() {
         final OptionalModel model = OptionalModelModeler.next();
 
-        assertNotNull(model);
-        assertNotNull(model.optionalInteger);
-        assertNotNull(model.optionalInteger.get());
+        assertThat(model).isNotNull();
+        assertThat(model.optionalInteger).isNotNull().isNotEmpty();
     }
 }

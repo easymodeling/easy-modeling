@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class OrderLineTest {
 
@@ -13,14 +12,14 @@ class OrderLineTest {
     void should_generate_order_line() {
         OrderLine orderLine = OrderLineModeler.builder().id("some-id").build();
 
-        assertNotNull(orderLine);
-        assertEquals(orderLine.getId(), "some-id");
+        assertThat(orderLine).isNotNull();
+        assertThat(orderLine.getId()).isEqualTo("some-id");
     }
 
     @Test
     void should_create_builder() {
         final Order order = OrderModeler.builder().id("some-id").unitPrice(BigDecimal.TEN).build();
 
-        assertEquals(BigDecimal.TEN, order.getUnitPrice());
+        assertThat(order.getUnitPrice()).isEqualTo(BigDecimal.TEN);
     }
 }

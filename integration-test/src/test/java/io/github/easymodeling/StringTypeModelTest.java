@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.regex.Pattern;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class StringTypeModelTest {
 
@@ -13,33 +12,34 @@ class StringTypeModelTest {
 
     @Test
     void getCommonString() {
-        final int length = model.getCommonString().length();
-        assertTrue(length >= 10 && length < 20);
+        final String commonString = model.getCommonString();
+
+        assertThat(commonString).hasSizeGreaterThanOrEqualTo(10).hasSizeLessThan(20);
     }
 
     @Test
     void getAlphanumericString() {
         Pattern alphanumericPattern = Pattern.compile("^[a-zA-Z0-9]+$");
 
-        assertTrue(alphanumericPattern.matcher(model.getAlphanumericString()).matches());
+        assertThat(model.getAlphanumericString()).containsPattern(alphanumericPattern);
     }
 
     @Test
     void getAlphabeticString() {
         Pattern alphabeticPattern = Pattern.compile("^[a-zA-Z]+$");
 
-        assertTrue(alphabeticPattern.matcher(model.getAlphabeticString()).matches());
+        assertThat(model.getAlphabeticString()).containsPattern(alphabeticPattern);
     }
 
     @Test
     void getNumericString() {
         Pattern numericPattern = Pattern.compile("^[0-9]+$");
 
-        assertTrue(numericPattern.matcher(model.getNumericString()).matches());
+        assertThat(model.getNumericString()).containsPattern(numericPattern);
     }
 
     @Test
     void getConstString() {
-        assertEquals("constString", model.getConstString());
+        assertThat(model.getConstString()).isEqualTo("constString");
     }
 }
