@@ -59,8 +59,8 @@ sonarqube {
         property "sonar.projectKey", "easymodeling_easy-modeling"
         property "sonar.organization", "easymodeling"
         property "sonar.host.url", "https://sonarcloud.io"
-        // ignore the example project
-        property "sonar.exclusions", "example/**"
+        // ignore the integration-test project
+        property "sonar.exclusions", "integration-test/**"
     }
 }
 
