@@ -55,10 +55,10 @@ public class ModelFieldRegistry {
         return Optional.ofNullable(ModelFieldRegistry.CONTAINERS.get(rawType));
     }
 
-    public static boolean basicTypeContains(String canonicalName) {
+    public static boolean basicTypeContains(TypeName typeName) {
         return Arrays.stream(MODEL_FIELDS)
                 .map(ModelField::type)
-                .anyMatch(type -> type.toString().equals(canonicalName));
+                .anyMatch(type -> type.equals(typeName));
     }
 
     private static final ModelField[] MODEL_FIELDS = {

@@ -3,6 +3,7 @@ package io.github.easymodeling;
 import com.google.auto.service.AutoService;
 import com.google.common.collect.Sets;
 import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import io.github.easymodeling.modeler.ModelWrapper;
 import io.github.easymodeling.modeler.ModelerGenerator;
@@ -15,6 +16,8 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedOptions;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.MirroredTypeException;
@@ -61,7 +64,6 @@ public class ModelsProcessor extends AbstractProcessor {
             processModels();
             return true;
         } catch (ProcessingException e) {
-            // TODO: 19.12.21 move Diagnostic.Kind to exception
             log.error(e.getMessage());
             return false;
         }
@@ -84,13 +86,22 @@ public class ModelsProcessor extends AbstractProcessor {
     private void collectModel(Model model) {
         try {
             final String canonicalName = classNameOf(model);
-            if (basicTypeContains(canonicalName)) {
-                throw new BasicTypeModelerException(canonicalName);
-            }
+            avoidModelerFor(canonicalName);
             final NamedModel namedModel = new NamedModel(canonicalName, model);
             modelUniqueQueue.add(namedModel);
         } catch (BasicTypeModelerException e) {
             log.warning(e.getMessage());
+        }
+    }
+
+    private void avoidModelerFor(String canonicalName) {
+        final TypeElement typeElement = getTypeElementOf(canonicalName);
+        final TypeName typeName = TypeName.get(typeElement.asType());
+        final boolean abuseModeler = basicTypeContains(typeName)
+                || typeElement.getKind().equals(ElementKind.INTERFACE)
+                || typeElement.getModifiers().contains(Modifier.ABSTRACT);
+        if (abuseModeler) {
+            throw new BasicTypeModelerException(canonicalName);
         }
     }
 
@@ -114,8 +125,7 @@ public class ModelsProcessor extends AbstractProcessor {
             JavaFile.builder(pkg, factory).build()
                     .writeTo(filer);
         } catch (IOException e) {
-            // TODO: 19.12.21 throw exceptions with elaborate messages
-            throw new ProcessingException("Error when generate factory");
+            throw new ProcessingException("Error when generate factory: " + e.getMessage(), e);
         }
     }
 
@@ -148,7 +158,6 @@ public class ModelsProcessor extends AbstractProcessor {
     }
 
     private TypeElement getTypeElementOf(String canonicalName) {
-        // TODO: 10.02.22 should avoid abstract classes and interfaces
         return elementUtils.getTypeElement(canonicalName);
     }
 }
