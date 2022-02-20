@@ -8,11 +8,7 @@ package io.github.easymodeling;
         @Field(name = "constString", string = "constString"),
         @Field(name = "builder"),
 })
+@Model(type = Integer.class)
+@Model(type = int.class)
 public class StringTypeModelConfig {
-
-    private String commonString;
-    private String alphanumericString;
-    private String alphabeticString;
-    private String numericString;
-    private String constString;
 }

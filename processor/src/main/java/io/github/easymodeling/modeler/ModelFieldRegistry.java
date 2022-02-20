@@ -2,6 +2,8 @@ package io.github.easymodeling.modeler;
 
 import com.squareup.javapoet.TypeName;
 import io.github.easymodeling.modeler.field.Container;
+import io.github.easymodeling.modeler.field.ModelField;
+import io.github.easymodeling.modeler.field.OptionalField;
 import io.github.easymodeling.modeler.field.PlainField;
 import io.github.easymodeling.modeler.field.collection.ArrayListField;
 import io.github.easymodeling.modeler.field.collection.HashMapField;
@@ -34,8 +36,6 @@ import io.github.easymodeling.modeler.field.stream.LongStreamField;
 import io.github.easymodeling.modeler.field.stream.StreamField;
 import io.github.easymodeling.modeler.field.string.StringBuilderField;
 import io.github.easymodeling.modeler.field.string.StringField;
-import io.github.easymodeling.modeler.field.ModelField;
-import io.github.easymodeling.modeler.field.OptionalField;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -53,6 +53,12 @@ public class ModelFieldRegistry {
 
     static Optional<Container> container(TypeName rawType) {
         return Optional.ofNullable(ModelFieldRegistry.CONTAINERS.get(rawType));
+    }
+
+    public static boolean basicTypeContains(String canonicalName) {
+        return Arrays.stream(MODEL_FIELDS)
+                .map(ModelField::type)
+                .anyMatch(type -> type.toString().equals(canonicalName));
     }
 
     private static final ModelField[] MODEL_FIELDS = {

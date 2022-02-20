@@ -16,6 +16,9 @@ import javax.annotation.processing.SupportedOptions;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.MirroredTypeException;
+import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import java.io.IOException;
 import java.util.Arrays;
@@ -23,6 +26,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static io.github.easymodeling.log.ProcessorLogger.log;
+import static io.github.easymodeling.modeler.ModelFieldRegistry.basicTypeContains;
 
 @AutoService(Processor.class)
 @SupportedOptions({
@@ -74,8 +78,20 @@ public class ModelsProcessor extends AbstractProcessor {
                         elementsAnnotatedWithModel.stream()
                                 .map(model -> model.getAnnotation(Model.class))
                 )
-                .map(NamedModel::new)
-                .forEach(modelUniqueQueue::add);
+                .forEach(this::collectModel);
+    }
+
+    private void collectModel(Model model) {
+        try {
+            final String canonicalName = classNameOf(model);
+            if (basicTypeContains(canonicalName)) {
+                throw new BasicTypeModelerException(canonicalName);
+            }
+            final NamedModel namedModel = new NamedModel(canonicalName, model);
+            modelUniqueQueue.add(namedModel);
+        } catch (BasicTypeModelerException e) {
+            log.warning(e.getMessage());
+        }
     }
 
     private void processModels() {
@@ -101,6 +117,24 @@ public class ModelsProcessor extends AbstractProcessor {
             // TODO: 19.12.21 throw exceptions with elaborate messages
             throw new ProcessingException("Error when generate factory");
         }
+    }
+
+    private String classNameOf(Model model) {
+        try {
+            return model.type().getCanonicalName();
+        } catch (MirroredTypeException mte) {
+            return classNameOf(mte);
+        }
+    }
+
+    private String classNameOf(MirroredTypeException mte) {
+        final TypeMirror typeMirror = mte.getTypeMirror();
+        if (!(typeMirror instanceof DeclaredType)) {
+            throw new BasicTypeModelerException(typeMirror.toString());
+        }
+        final DeclaredType declaredType = (DeclaredType) typeMirror;
+        final TypeElement typeElement = (TypeElement) declaredType.asElement();
+        return typeElement.getQualifiedName().toString();
     }
 
     @Override
