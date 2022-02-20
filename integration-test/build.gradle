@@ -11,8 +11,8 @@ compileJava {
 }
 
 dependencies {
-    implementation project(':core')
-    annotationProcessor project(':processor')
+    testImplementation project(':core')
+    testAnnotationProcessor project(':processor')
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
