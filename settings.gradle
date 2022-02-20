@@ -1,5 +1,5 @@
 rootProject.name = 'easy-modeling'
 include 'core'
 include 'processor'
-include 'example'
+include 'integration-test'
 
