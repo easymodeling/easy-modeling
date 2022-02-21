@@ -37,8 +37,9 @@ public class ModelerGenerator {
         final Map<String, FieldPattern> declaredFieldsMap;
         try {
             declaredFieldsMap = model.getFields().stream().collect(Collectors.toMap(FieldPattern::name, Function.identity()));
-            // TODO: 29.12.21 merge multiple field declarations
         } catch (IllegalStateException e) {
+            // Do not support multiple declarations of the same field,
+            // let's see if it is possible or necessary to support it in the future
             throw new ProcessingException("Duplicated fields declaration: " + e.getMessage());
         }
         log.info("Create modeler for " + model.getModelTypeName());

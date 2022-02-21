@@ -29,7 +29,6 @@ public abstract class CharSequenceField<T extends CharSequence> extends PlainFie
     public CodeBlock randomParameter() {
         final int charset = alphabetic() & numeric() & alphaNumeric();
         if (charset == 0) {
-            // TODO: 28.12.21 switch to more specific exception
             throw new IllegalArgumentException("No charset specified");
         }
         return CodeBlock.of("$L, $L, $L", min(), max(), charset);
@@ -47,10 +46,9 @@ public abstract class CharSequenceField<T extends CharSequence> extends PlainFie
     }
 
     private long max() {
-        // FIXME: 28.12.21 should limit the reasonable string length in validation
         return field.max()
                 .map(Double::longValue)
-                .filter(min -> min < Integer.MAX_VALUE)
+                .filter(max -> max < Integer.MAX_VALUE)
                 .orElse(20L);
     }
 
