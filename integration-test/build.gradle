@@ -6,10 +6,6 @@ java {
     }
 }
 
-compileJava {
-    options.compilerArgs << "-Aeasymodeling.log.model=DEBUG"
-}
-
 dependencies {
     testImplementation project(':core')
     testAnnotationProcessor project(':processor')
@@ -17,6 +13,10 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     testImplementation 'org.assertj:assertj-core:3.21.0'
+}
+
+compileTestJava {
+    options.compilerArgs << "-Aeasymodeling.log.model=DEBUG"
 }
 
 test {

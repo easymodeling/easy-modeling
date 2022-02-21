@@ -84,6 +84,7 @@ public class ModelsProcessor extends AbstractProcessor {
     }
 
     private void collectModel(Model model) {
+        log.debug("collect @Model: %s", model);
         try {
             final String canonicalName = classNameOf(model);
             avoidModelerFor(canonicalName);
