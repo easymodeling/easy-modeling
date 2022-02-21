@@ -39,7 +39,7 @@ class StringFieldTest extends FieldTest {
     class ConfigurationTest {
 
         @Test
-        void should_generate_initializer_with_min_max_and_charset() {
+        void should_generate_initializer_with_min_max_and_char_range() {
             FieldPattern fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(2.).max(40.).numeric(true).build();
             ModelField modelField = new StringField().create(fieldPattern);
             final CodeBlock initializer = modelField.initializer();
@@ -49,7 +49,7 @@ class StringFieldTest extends FieldTest {
         }
 
         @Test
-        void should_throw_when_charset_now_set_well() {
+        void should_throw_when_char_range_now_set_well() {
             FieldPattern fieldPattern = FieldPatternFactory.one(FIELD_NAME).numeric(true).alphabetic(true).build();
             ModelField modelField = new StringField().create(fieldPattern);
 

@@ -49,8 +49,8 @@ class StringBuilderRandomizerTest extends RandomizerTest {
 
     @ParameterizedTest
     @ValueSource(ints = {CharSequenceRandomizer.ALPHANUMERIC, CharSequenceRandomizer.ALPHABETIC | CharSequenceRandomizer.NUMERIC})
-    void should_generate_random_string_contains_only_letter_and_digits(int charSet) {
-        StringBuilderRandomizer randomizer = new StringBuilderRandomizer(3, 20, charSet);
+    void should_generate_random_string_contains_only_letter_and_digits(int charRange) {
+        StringBuilderRandomizer randomizer = new StringBuilderRandomizer(3, 20, charRange);
 
         final StringBuilder nextString = randomizer.next();
 

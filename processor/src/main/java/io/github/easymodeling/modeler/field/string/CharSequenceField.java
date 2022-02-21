@@ -27,11 +27,11 @@ public abstract class CharSequenceField<T extends CharSequence> extends PlainFie
     }
 
     public CodeBlock randomParameter() {
-        final int charset = alphabetic() & numeric() & alphaNumeric();
-        if (charset == 0) {
-            throw new IllegalArgumentException("No charset specified");
+        final int charRange = alphabetic() & numeric() & alphaNumeric();
+        if (charRange == 0) {
+            throw new IllegalArgumentException("No char range specified");
         }
-        return CodeBlock.of("$L, $L, $L", min(), max(), charset);
+        return CodeBlock.of("$L, $L, $L", min(), max(), charRange);
     }
 
     protected Optional<CodeBlock> constantParameter() {

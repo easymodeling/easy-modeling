@@ -2,8 +2,8 @@ package io.github.easymodeling.randomizer.string;
 
 public class StringBuilderRandomizer extends CharSequenceRandomizer<StringBuilder> {
 
-    public StringBuilderRandomizer(long min, long max, int charset) {
-        super(min, max, charset);
+    public StringBuilderRandomizer(long min, long max, int charRange) {
+        super(min, max, charRange);
     }
 
     public StringBuilderRandomizer(StringBuilder constant) {

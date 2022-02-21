@@ -34,7 +34,7 @@ class StringBuilderFieldTest extends FieldTest {
     }
 
     @Test
-    void should_generate_initializer_with_min_max_and_charset() {
+    void should_generate_initializer_with_min_max_and_char_range() {
         FieldPattern fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(2.).max(40.).alphabetic(true).build();
         ModelField modelField = new StringBuilderField().create(fieldPattern);
         final CodeBlock initializer = modelField.initializer();

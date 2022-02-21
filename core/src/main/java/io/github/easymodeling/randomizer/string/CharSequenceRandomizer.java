@@ -12,10 +12,10 @@ public abstract class CharSequenceRandomizer<T extends CharSequence> extends Gen
     public static final int ANY           = 0b0111;
     // @formatter:on
 
-    protected CharSequenceRandomizer(long min, long max, int charset) {
+    protected CharSequenceRandomizer(long min, long max, int charRange) {
         this.min = min;
         this.max = max;
-        this.charset = charset;
+        this.charRange = charRange;
     }
 
     protected CharSequenceRandomizer(T constant) {
@@ -26,7 +26,7 @@ public abstract class CharSequenceRandomizer<T extends CharSequence> extends Gen
 
     protected long max;
 
-    protected int charset;
+    protected int charRange;
 
     private static int isAlphabet(int c) {
         return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ? ALPHABETIC : 0;
@@ -38,7 +38,7 @@ public abstract class CharSequenceRandomizer<T extends CharSequence> extends Gen
 
     protected StringBuilder nextStringBuilder() {
         return random.ints(0x00, 0x7F + 1)
-                .filter(c -> ((CharSequenceRandomizer.isAlphabet(c) | CharSequenceRandomizer.isNumeric(c) | ELSE) & this.charset) != 0)
+                .filter(c -> ((CharSequenceRandomizer.isAlphabet(c) | CharSequenceRandomizer.isNumeric(c) | ELSE) & this.charRange) != 0)
                 .limit(doubleBetween(this.min, this.max).longValue())
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append);
     }
