@@ -4,7 +4,7 @@
 [![Quality Gate Status][sonar-badge]][sonar-link]
 [![Coverage][coverage-badge]][coverage-link]
 
-EasyModeling is a Java library that generates randomly populated models for test use.
+A Java annotation processor that generates randomly populated objects for test use.
 
 [test-badge]: https://github.com/easymodeling/easy-modeling/actions/workflows/test.yml/badge.svg?branch=master
 
@@ -19,6 +19,69 @@ EasyModeling is a Java library that generates randomly populated models for test
 [coverage-link]: https://sonarcloud.io/summary/overall?id=easymodeling_easy-modeling
 
 ## What is EasyModeling?
+
+EasyModeling is a Java [annotation processor][java-atp-link] that generates randomly populated objects for test use. It
+could save you from writing tedious code to prepare objects under test, making your unit tests clearer and more
+readable. The idea of EasyModeling comes from Martin Fowler's blog [ObjectMother][object-mother-link]. In addition to
+the concept of ObjectMother, EasyModeling also provides builders of your models so that you can easily customize
+generated objects for different test scenarios.
+
+[java-atp-link]: https://docs.oracle.com/javase/6/docs/technotes/guides/apt/index.html
+
+[object-mother-link]: https://martinfowler.com/bliki/ObjectMother.html
+
+## What does EasyModeling provide?
+
+EasyModeling provides a set of API to help you generate objects for your test, including:
+
+- An annotation ```@Model``` to tell EasyModeling for which classes you would like to generate objects.
+- An annotation ```@Field``` and a lot of annotation attributes, which is however totally optional, to customize the
+  generated objects.
+- A ```next()``` method for each class that returns randomly populated objects.
+- A ```builder()``` method for each class that returns randomly populated builders of the objects.
+
+### Simple Example
+
+For example, if you have a class ```Employee``` under test so that you want to generate objects for it, you can firstly
+have a modeler configuration like this:
+
+```java
+@Model(Employee.class)
+public class Modelers {
+}
+```
+
+Then, EasyModeling will create a modeler named ```EmployeeModeler``` for you, so that you can use the
+static ```next()``` method to generate objects:
+
+[//]: # (@formatter:off)
+```java
+Employee employee = EmployeeModeler.next();
+```
+[//]: # (@formatter:on)
+
+For specific test scenario, let's say for a test caring employee's age and marital status, by using
+static ```builder()``` method, you have the chance to customize the generated objects:
+
+[//]: # (@formatter:off)
+```java
+Employee employee = EmployeeModeler.builder().age(30).maritalStatus(SINGLE).build();
+```
+[//]: # (@formatter:on)
+
+## Using EasyModeling
+
+### Maven
+
+-- TBD --
+
+### Gradle
+
+-- TBD --
+
+## Requirements
+
+Java 1.8 or later is required.
 
 ## Supported Field Types
 
