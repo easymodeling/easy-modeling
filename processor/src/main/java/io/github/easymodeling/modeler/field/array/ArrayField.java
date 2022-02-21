@@ -2,10 +2,10 @@ package io.github.easymodeling.modeler.field.array;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.modeler.field.Container;
-import io.github.easymodeling.randomizer.array.ArrayRandomizer;
 import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.field.Container;
 import io.github.easymodeling.modeler.field.ModelField;
+import io.github.easymodeling.randomizer.array.ArrayRandomizer;
 
 public class ArrayField extends Container {
 

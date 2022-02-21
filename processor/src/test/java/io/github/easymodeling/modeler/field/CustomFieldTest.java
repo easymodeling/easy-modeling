@@ -2,9 +2,9 @@ package io.github.easymodeling.modeler.field;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
+import io.github.easymodeling.modeler.helper.FieldPatternFactory;
 import io.github.easymodeling.randomizer.CustomTypeRandomizer;
 import org.junit.jupiter.api.BeforeEach;
-import io.github.easymodeling.modeler.helper.FieldPatternFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,8 +1,8 @@
 package io.github.easymodeling.randomizer.number;
 
+import io.github.easymodeling.randomizer.RandomizerTest;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-import io.github.easymodeling.randomizer.RandomizerTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

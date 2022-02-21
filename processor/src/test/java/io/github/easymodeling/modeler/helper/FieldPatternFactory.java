@@ -1,7 +1,7 @@
 package io.github.easymodeling.modeler.helper;
 
-import org.apache.commons.lang3.reflect.FieldUtils;
 import io.github.easymodeling.modeler.FieldPattern;
+import org.apache.commons.lang3.reflect.FieldUtils;
 
 public class FieldPatternFactory {
 

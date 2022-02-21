@@ -1,10 +1,10 @@
 package io.github.easymodeling.randomizer.string;
 
+import io.github.easymodeling.randomizer.RandomizerTest;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import io.github.easymodeling.randomizer.RandomizerTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

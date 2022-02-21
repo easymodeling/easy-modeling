@@ -1,7 +1,7 @@
 package io.github.easymodeling.randomizer.stream;
 
-import org.junit.jupiter.api.RepeatedTest;
 import io.github.easymodeling.randomizer.number.LongRandomizer;
+import org.junit.jupiter.api.RepeatedTest;
 
 import java.util.List;
 import java.util.stream.Collectors;

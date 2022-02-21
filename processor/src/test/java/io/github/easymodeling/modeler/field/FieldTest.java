@@ -5,9 +5,9 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import io.github.easymodeling.ReflectionUtil;
+import io.github.easymodeling.modeler.FieldPattern;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import io.github.easymodeling.modeler.FieldPattern;
 
 import javax.lang.model.element.Modifier;
 

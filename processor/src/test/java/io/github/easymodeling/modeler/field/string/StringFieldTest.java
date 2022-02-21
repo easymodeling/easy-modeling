@@ -2,18 +2,18 @@ package io.github.easymodeling.modeler.field.string;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
 import io.github.easymodeling.modeler.FieldPattern;
 import io.github.easymodeling.modeler.field.FieldTest;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
 import io.github.easymodeling.randomizer.string.StringRandomizer;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
+import static io.github.easymodeling.randomizer.string.CharSequenceRandomizer.NUMERIC;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static io.github.easymodeling.randomizer.string.CharSequenceRandomizer.NUMERIC;
 
 class StringFieldTest extends FieldTest {
 

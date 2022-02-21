@@ -2,8 +2,8 @@ package io.github.easymodeling.modeler.field.number;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.modeler.field.PlainField;
 import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.field.PlainField;
 
 import java.util.Optional;
 

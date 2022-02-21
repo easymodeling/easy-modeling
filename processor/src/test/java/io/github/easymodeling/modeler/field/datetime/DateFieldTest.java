@@ -2,10 +2,10 @@ package io.github.easymodeling.modeler.field.datetime;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import org.junit.jupiter.api.BeforeEach;
 import io.github.easymodeling.modeler.field.FieldTest;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
 import io.github.easymodeling.randomizer.datetime.DateRandomizer;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.Date;
 

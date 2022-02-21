@@ -1,8 +1,8 @@
 package io.github.easymodeling.randomizer.datetime;
 
+import io.github.easymodeling.randomizer.RandomizerTest;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-import io.github.easymodeling.randomizer.RandomizerTest;
 
 import java.time.Instant;
 import java.time.ZoneId;

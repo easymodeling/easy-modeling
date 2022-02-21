@@ -2,11 +2,11 @@ package io.github.easymodeling.modeler.field.stream;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import org.junit.jupiter.api.BeforeEach;
 import io.github.easymodeling.modeler.field.FieldTest;
 import io.github.easymodeling.modeler.field.number.IntegerField;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
 import io.github.easymodeling.randomizer.stream.IntStreamRandomizer;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.stream.IntStream;
 

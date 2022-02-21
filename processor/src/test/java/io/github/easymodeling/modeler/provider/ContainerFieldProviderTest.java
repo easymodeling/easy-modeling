@@ -1,8 +1,5 @@
 package io.github.easymodeling.modeler.provider;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import io.github.easymodeling.modeler.FieldPattern;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.modeler.field.OptionalField;
@@ -15,6 +12,9 @@ import io.github.easymodeling.modeler.field.collection.TreeSetField;
 import io.github.easymodeling.modeler.field.stream.StreamField;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
 import io.github.easymodeling.modeler.provider.mock.Factory;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import javax.lang.model.type.TypeMirror;
 import java.util.ArrayList;
@@ -26,8 +26,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static io.github.easymodeling.modeler.provider.PlainFieldProviderTest.plainFields;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ContainerFieldProviderTest extends ModelFieldProviderTest {
 

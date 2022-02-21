@@ -1,8 +1,8 @@
 package io.github.easymodeling.randomizer.stream;
 
-import org.junit.jupiter.api.RepeatedTest;
 import io.github.easymodeling.randomizer.RandomizerTest;
 import io.github.easymodeling.randomizer.number.IntegerRandomizer;
+import org.junit.jupiter.api.RepeatedTest;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -2,11 +2,11 @@ package io.github.easymodeling.modeler.field.collection;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
-import org.junit.jupiter.api.BeforeEach;
 import io.github.easymodeling.modeler.field.FieldTest;
 import io.github.easymodeling.modeler.field.string.StringField;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
 import io.github.easymodeling.randomizer.collection.ListRandomizer;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.List;
 

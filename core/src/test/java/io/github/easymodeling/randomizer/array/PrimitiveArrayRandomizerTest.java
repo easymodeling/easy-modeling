@@ -1,11 +1,5 @@
 package io.github.easymodeling.randomizer.array;
 
-import org.assertj.core.data.Index;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import io.github.easymodeling.randomizer.Randomizer;
 import io.github.easymodeling.randomizer.RandomizerTest;
 import io.github.easymodeling.randomizer.datetime.InstantRandomizer;
@@ -17,6 +11,12 @@ import io.github.easymodeling.randomizer.number.LongRandomizer;
 import io.github.easymodeling.randomizer.number.ShortRandomizer;
 import io.github.easymodeling.randomizer.primitive.BooleanRandomizer;
 import io.github.easymodeling.randomizer.primitive.CharRandomizer;
+import org.assertj.core.data.Index;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.lang.reflect.Array;
 import java.time.Instant;

@@ -1,8 +1,8 @@
 package io.github.easymodeling.randomizer.collection;
 
-import org.junit.jupiter.api.RepeatedTest;
 import io.github.easymodeling.randomizer.number.IntegerRandomizer;
 import io.github.easymodeling.randomizer.string.StringRandomizer;
+import org.junit.jupiter.api.RepeatedTest;
 
 import java.util.TreeMap;
 

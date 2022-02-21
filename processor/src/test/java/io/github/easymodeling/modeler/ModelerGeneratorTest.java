@@ -7,11 +7,11 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import io.github.easymodeling.GenerationPatterns;
+import io.github.easymodeling.modeler.helper.ModelWrapperFactory;
 import io.github.easymodeling.randomizer.ModelCache;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import io.github.easymodeling.modeler.helper.ModelWrapperFactory;
 
 import javax.lang.model.element.Modifier;
 

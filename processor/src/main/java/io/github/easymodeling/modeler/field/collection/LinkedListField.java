@@ -2,9 +2,9 @@ package io.github.easymodeling.modeler.field.collection;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import io.github.easymodeling.randomizer.collection.LinkedListRandomizer;
 import io.github.easymodeling.modeler.FieldPattern;
 import io.github.easymodeling.modeler.field.ModelField;
+import io.github.easymodeling.randomizer.collection.LinkedListRandomizer;
 
 import java.util.LinkedList;
 

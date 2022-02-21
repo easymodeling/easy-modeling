@@ -3,15 +3,15 @@ package io.github.easymodeling.modeler;
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.modeler.field.Container;
-import io.github.easymodeling.modeler.field.array.ArrayField;
-import io.github.easymodeling.modeler.field.array.PrimitiveArrayField;
 import io.github.easymodeling.ModelUniqueQueue;
 import io.github.easymodeling.NamedModel;
+import io.github.easymodeling.modeler.field.Container;
 import io.github.easymodeling.modeler.field.CustomField;
 import io.github.easymodeling.modeler.field.EnumField;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.modeler.field.UnknownField;
+import io.github.easymodeling.modeler.field.array.ArrayField;
+import io.github.easymodeling.modeler.field.array.PrimitiveArrayField;
 
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.type.ArrayType;

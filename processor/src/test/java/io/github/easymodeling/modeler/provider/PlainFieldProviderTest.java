@@ -1,9 +1,6 @@
 package io.github.easymodeling.modeler.provider;
 
 import com.squareup.javapoet.TypeName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import io.github.easymodeling.modeler.FieldPattern;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.modeler.field.datetime.InstantField;
@@ -18,6 +15,9 @@ import io.github.easymodeling.modeler.field.string.StringBuilderField;
 import io.github.easymodeling.modeler.field.string.StringField;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
 import io.github.easymodeling.modeler.provider.mock.Factory;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import javax.lang.model.type.TypeMirror;
 import java.time.Instant;
