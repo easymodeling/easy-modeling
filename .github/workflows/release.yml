@@ -1,0 +1,49 @@
+name: RELEASE
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  OSSRH_USERNAME: 'OSSRH_USERNAME'
+  OSSRH_PASSWORD: 'OSSRH_PASSWORD'
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v2
+      - name: 'Cache gradle dependencies'
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: 'Set up JDK 8'
+        uses: actions/setup-java@v2
+        with:
+          java-version: 8
+          distribution: 'zulu'
+      - name: 'Artifacts version'
+        id: artifacts-version
+        run: echo "::set-output name=VERSION::$(./gradlew properties -q | grep "version:" | awk '{print $2}')"
+      - name: 'Release tag'
+        id: release-tag
+        run: echo "::set-output name=TAG::${GITHUB_REF#refs/*/}"
+      - name: 'Compare version'
+        shell: bash
+        run: |
+          [[ "${{ steps.artifacts-version.outputs.VERSION }}" == "${{ steps.release-tag.outputs.TAG }}" ]]
+      - if: ${{ success() }}
+        name: 'Create release draft'
+        uses: ncipollo/release-action@v1
+        with:
+          draft: true
+          prerelease: true
+          token: ${{ github.token }}
