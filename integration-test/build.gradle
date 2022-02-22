@@ -7,8 +7,8 @@ java {
 }
 
 dependencies {
-    testImplementation project(':core')
-    testAnnotationProcessor project(':processor')
+    testImplementation 'io.github.easymodeling:easy-modeling:0.1.0-Alpha1'
+    testAnnotationProcessor 'io.github.easymodeling:easy-modeling-processor:0.1.0-Alpha1'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'

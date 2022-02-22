@@ -10,7 +10,7 @@ ext {
 
     publicationPom = {
         name = 'Easy Modeling'
-        description = 'A Java library that generates randomly populated models for test use'
+        description = 'A Java annotation processor that generates randomly populated objects for test use'
         url = 'https://github.com/easymodeling/easy-modeling'
         licenses {
             license {

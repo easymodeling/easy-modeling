@@ -1,10 +1,22 @@
 # EasyModeling
 
+[![version][release-badge]][release-link]
+[![maven][maven-badge]][search-maven]
+[![license][license-badge]][license-2.0]
+
 [![TEST][test-badge]][test-link]
 [![Quality Gate Status][sonar-badge]][sonar-link]
 [![Coverage][coverage-badge]][coverage-link]
 
 A Java annotation processor that generates randomly populated objects for test use.
+
+[release-badge]: https://img.shields.io/github/v/release/easymodeling/easy-modeling?color=informational&include_prereleases&label=latest%20release
+
+[release-link]: https://github.com/easymodeling/easy-modeling/releases
+
+[maven-badge]: https://img.shields.io/maven-central/v/io.github.easymodeling/easy-modeling?color=green
+
+[license-badge]: https://img.shields.io/github/license/easymodeling/easy-modeling?color=yellow
 
 [test-badge]: https://github.com/easymodeling/easy-modeling/actions/workflows/test.yml/badge.svg?branch=master
 
@@ -46,6 +58,7 @@ For example, if you have a class ```Employee``` under test so that you want to g
 have a modeler configuration like this:
 
 ```java
+
 @Model(Employee.class)
 public class Modelers {
 }
@@ -71,13 +84,64 @@ Employee employee = EmployeeModeler.builder().age(30).maritalStatus(SINGLE).buil
 
 ## Using EasyModeling
 
+EasyModeling is available in [Maven Central][search-maven], so it's easy to ask build tools like Maven or Gradle to
+integrate it into your projects.
+
+[search-maven]: https://search.maven.org/search?q=g:io.github.easymodeling
+
 ### Maven
 
--- TBD --
+For Maven-based projects, add the following to your POM file:
+
+[//]: # (@formatter:off)
+```xml
+<dependencies>
+    <dependency>
+        <groupId>io.github.easymodeling</groupId>
+        <artifactId>easy-modeling</artifactId>
+        <version>0.1.0-Alpha1</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+...
+<build>
+<plugins>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+            <annotationProcessorPaths>
+                <path>
+                    <groupId>io.github.easymodeling</groupId>
+                    <artifactId>easy-modeling-processor</artifactId>
+                    <version>0.1.0-Alpha1</version>
+                </path>
+            </annotationProcessorPaths>
+        </configuration>
+    </plugin>
+</plugins>
+</build>
+...
+```
+[//]: # (@formatter:on)
 
 ### Gradle
 
--- TBD --
+For Gradle users, put the following into your build.gradle file:
+
+[//]: # (@formatter:off)
+```groovy
+dependencies {
+    ...
+    testImplementation 'io.github.easymodeling:easy-modeling:0.1.0-Alpha1'
+    testAnnotationProcessor 'io.github.easymodeling:easy-modeling-processor:0.1.0-Alpha1'
+    ...
+}
+```
+[//]: # (@formatter:on)
 
 ## Requirements
 
@@ -129,3 +193,9 @@ generic type that holding primitive arrays, like `List<int[]>`, `Optional<double
 or `CompletableFuture<boolean[][]>`, will not be recognized so that it will always be set to `null` value. However,
 their corresponding boxed reference arrays as type parameters, like `List<Integer[]>`, `Optional<Double[]>`
 and `CompletableFuture<Boolean[][]>`, are, of course, well-supported.
+
+## License
+
+EasyModeling is Open Source software licensed under the [APACHE LICENSE, VERSION 2.0][license-2.0].
+
+[license-2.0]: https://www.apache.org/licenses/LICENSE-2.0.html
