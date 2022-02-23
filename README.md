@@ -42,20 +42,20 @@ generated objects for different test scenarios.
 
 [object-mother-link]: https://martinfowler.com/bliki/ObjectMother.html
 
-## What does EasyModeling provide?
+## What can EasyModeling do?
 
-EasyModeling provides a set of API to help you generate objects for your test, including:
+EasyModeling provides a set of APIs to help you generate objects for your test, including:
 
-- An annotation ```@Model``` to tell EasyModeling for which classes you would like to generate objects.
-- An annotation ```@Field``` and a lot of annotation attributes, which is however totally optional, to customize the
-  generated objects.
-- A ```next()``` method for each class that returns randomly populated objects.
-- A ```builder()``` method for each class that returns randomly populated builders of the objects.
+- An annotation `@Model` to tell EasyModeling for which classes you would like to generate objects.
+- An annotation `@Field` and many annotation attributes, which is however totally optional, to customize the generated
+  objects.
+- A `next()` method for each class returns randomly populated objects.
+- A `builder()` method for each class returns randomly populated builders of the objects.
 
 ### Simple Example
 
-For example, if you have a class ```Employee``` under test so that you want to generate objects for it, you can firstly
-have a modeler configuration like this:
+For example, if you have a class `Employee` under test so that you want to generate objects for it, you can firstly have
+a modeler configuration like this:
 
 ```java
 
@@ -64,8 +64,8 @@ public class Modelers {
 }
 ```
 
-Then, EasyModeling will create a modeler named ```EmployeeModeler``` for you, so that you can use the
-static ```next()``` method to generate objects:
+Then, EasyModeling will create a modeler named `EmployeeModeler` for you so that you can use the static `next()`
+method to generate objects:
 
 [//]: # (@formatter:off)
 ```java
@@ -73,14 +73,18 @@ Employee employee = EmployeeModeler.next();
 ```
 [//]: # (@formatter:on)
 
-For specific test scenario, let's say for a test caring employee's age and marital status, by using
-static ```builder()``` method, you have the chance to customize the generated objects:
+For a specific test scenario, let's say for a test caring employee's age and marital status, by using static `builder()`
+method, you have the chance to customize the generated objects:
 
 [//]: # (@formatter:off)
 ```java
 Employee employee = EmployeeModeler.builder().age(30).maritalStatus(SINGLE).build();
 ```
 [//]: # (@formatter:on)
+
+## Requirements
+
+Java 1.8 or later is required.
 
 ## Using EasyModeling
 
@@ -143,56 +147,32 @@ dependencies {
 ```
 [//]: # (@formatter:on)
 
-## Requirements
+### Note
 
-Java 1.8 or later is required.
+Please be aware that EasyModeling is designed for test use, so think twice before using it in production. Using
+EasyModeling in production will introduce a lot of side effects, such as:
 
-## Supported Field Types
+- Security risks: Since EasyModeling generates randoms by using `java.util.Random`, which is not secure enough compared
+  to more advanced random generators.
+- Performance: EasyModeling is not optimized for performance. It generates objects by using reflection to achieve the
+  convenience and simplicity of writing tests, regardless of the runtime performance.
+- NPE risk: EasyModeling won't promise to populate all fields of the generated objects, although it always tries its
+  best to do so. It's possible that some fields are not populated, which may cause NPE.
 
-All types listed below, as well as arrays of them and their combinations via generics type parameters, are supported.
+## Next Steps
 
-Please feel free to raise an issue if you have a type you'd like to see added.
+Some next steps are in consideration to improve EasyModeling:
 
-### Basic Types
+- Support some annotations from [Bean Validation 2.0][bean-validation-2.0] as the customizations of value ranges for
+  generated objects.
+- Groovy support.
+- Support more widely used data types as basic types of objects population.
 
-- Primitive types `boolean`, `byte`, `char`, `double`, `float`, `int`, `long`, `short`
-- Boxed Primitive types `Boolean`, `Byte`, `Character`, `Double`, `Float`, `Integer`, `Long`, `Short`
-- Strings `java.lang.String`, `java.lang.StringBuilder`
+**Please feel free to [raise issues][raise-issues] if you have any more exciting ideas.**
 
-### Date Time Types
+[bean-validation-2.0]: https://beanvalidation.org/2.0/spec/
 
-- Java 8 Date Time types `java.time.Instant` `java.time.LocalDate` `java.time.LocalTime`
-  `java.time.LocalDateTime` `java.time.ZonedDateTime`
-
-- Legacy Date Time types `java.util.Date` `java.sql.Date` `java.sql.Timestamp`
-
-### Generic Utils
-
-- Optional `java.util.Optional`
-
-### Collections
-
-- Lists `java.util.List` `java.util.ArrayList` `java.util.LinkedList`
-- Sets  `java.util.Set` `java.util.HashSet` `java.util.TreeSet`
-- Maps  `java.util.Map` `java.util.HastMap` `java.util.TreeMap`
-
-### Streams
-
-Stream and primitive streams `java.util.stream.Stream` `java.util.stream.IntStream`
-`java.util.stream.LongStream` `java.util.stream.DoubleStream`
-
-### Arrays
-
-Arrays of any primitive types and reference types listed here are supported, including multidimensional arrays,
-regardless of the number of dimensions. However, primitive arrays as type parameters are not supported.
-
-#### Primitive Array As Type Parameters Are Not Supported
-
-Primitive arrays as type parameters of any generic types will not be supported, which means any field typed as any
-generic type that holding primitive arrays, like `List<int[]>`, `Optional<double[]>`
-or `CompletableFuture<boolean[][]>`, will not be recognized so that it will always be set to `null` value. However,
-their corresponding boxed reference arrays as type parameters, like `List<Integer[]>`, `Optional<Double[]>`
-and `CompletableFuture<Boolean[][]>`, are, of course, well-supported.
+[raise-issues]: https://github.com/easymodeling/easy-modeling/issues/new?template=feature_request.md
 
 ## License
 
