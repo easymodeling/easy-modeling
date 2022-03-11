@@ -82,6 +82,79 @@ Employee employee = EmployeeModeler.builder().age(30).maritalStatus(SINGLE).buil
 ```
 [//]: # (@formatter:on)
 
+## Why EasyModeling?
+
+EasyModeling starts with the factory pattern and the builder pattern. The main purpose of EasyModeling is to make unit
+tests clearer and more readable. Let's assume we have a unit test for `annualLeave()` method of the `LeaveCalculator`
+whose responsibility is to calculate the *total days of annual leave* of an employee from their *length of service*
+at the company. The test could be written as follows:
+
+[//]: # (@formatter:off)
+```java
+@Test
+void should_get_28_days_for_employees_less_than_5_years_of_service() {
+
+    // given (mock up employee details)
+    Employee employee = new Employee(
+            23212,                             // id
+            "John",                            // first name
+            "Smith",                           // last name
+            LocalDate.of(1991, 1, 23),         // birthdate
+            MaritalStatus.SINGLE,              // marital status
+            Position.DEVELOPER,                // position
+            List.of(                           // dependents
+                    new Dependent(...),
+                    new Dependent(...)
+                    new Dependent(...)
+            ),
+            LocalDate.of(2017, 8, 9),          // date of joining    --> (1)
+            ...
+        );
+
+    // when
+    int annualLeave = leaveCalculator.annualLeave(employee);      // --> (2)
+
+    // then
+    assertEquals(annualLeave, 28);                                // --> (3)
+}
+```
+[//]: # (@formatter:on)
+
+Several pain points could be encountered when writing unit tests like above.
+
+1. The only codes that describe the test scenario are the lines of `(1)`, `(2)` and `(3)`. Others are just helping mock
+   up the context, which could not help us understand the test. In most cases, it's usual for these unnecessary mock-up
+   codes to become extremely long.
+2. Moreover, most of the mock-up would make the test harder to read. Even in a reasonably scaled system, developers will
+   find they have to create hundreds of verbose mock-up codes like above, which makes our tests neither readable nor
+   maintainable.
+3. Even if the constructor in the mock-up part could be replaced by some techniques like Builder Pattern, it won't help
+   reduce the complexity. And it also does not make too much sense to either allow some parameters of the constructor as
+   nullable or create a builder for the `Employee` class, only for the convenience of the tests.
+4. Regarding the maintainability, imagine we somehow changed any part of the parameter list of the constructor
+   of `Employee` class, we would have to change all the tests as well.
+
+**With the power of EasyModeling**, these problems could be solved significantly:
+
+[//]: # (@formatter:off)
+```java
+@Test
+void should_get_28_days_for_employees_less_than_5_years_of_service() {
+
+    // given (mock up employee details)
+    Employee employee = EmployeeModeler.builder()
+                            .dateOfJoining(LocalDate.of(2017, 8, 9))
+                            .build();
+
+    // when
+    int annualLeave = leaveCalculator.annualLeave(employee);
+
+    // then
+    assertEquals(annualLeave, 28);
+}
+```
+[//]: # (@formatter:on)
+
 ## Requirements
 
 Java 1.8 or later is required.
