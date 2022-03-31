@@ -59,7 +59,7 @@ a modeler configuration like this:
 
 ```java
 
-@Model(Employee.class)
+@Model(type = Employee.class)
 public class Modelers {
 }
 ```
