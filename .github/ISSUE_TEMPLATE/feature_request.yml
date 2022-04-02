@@ -1,0 +1,50 @@
+---
+name: "🚀 Feature Request"
+description: "Suggest an idea for this project"
+title: "(Short description of the feature)"
+labels: [ feature-request ]
+assignees: [ ]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the feature
+      description: Please description of the feature you are proposing.
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use Case
+      description: |
+        Why do we need this feature? Who could this feature be useful?
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Possible Solution / Additional Notes
+      description: |
+        Do you have any suggestions on how to implement this feature? Or any other notes?
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: ack
+    attributes:
+      label: Acknowledgements
+      options:
+        - label: I may be able to implement this feature
+          required: false
+        - label: This feature will introduce some breaking changes
+          required: false
+
+  - type: input
+    id: easy-modeling-version
+    attributes:
+      label: EasyModeling Version
+      description: On which EasyModeling version is this feature request based?
+    validations:
+      required: true

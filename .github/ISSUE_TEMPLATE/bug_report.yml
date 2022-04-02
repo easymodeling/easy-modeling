@@ -1,0 +1,77 @@
+---
+name: "🐛 Bug Report"
+description: "Report a bug"
+title: "(Short description of the bug)"
+labels: [ bug ]
+assignees: [ ]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: What is the problem?
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: Current Behavior
+      description: |
+        What actually happened?
+        Please include exceptions, stack traces, and relevant logs.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: |
+        What did you expect to happen?
+    validations:
+      required: false
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction Steps
+      description: |
+        Please provide a snippet of code that can be used to reproduce the issue.
+        For more complex issues provide a repo with the smallest sample that reproduces the bug.
+        Avoid including your business logic.
+    validations:
+      required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Possible Solution / Additional Notes
+      description: |
+        Do you have any suggestions on how to fix the problem? Or any other notes?
+    validations:
+      required: false
+
+  - type: input
+    id: easy-modeling-version
+    attributes:
+      label: EasyModeling Version
+      description: EasyModeling version that runs the issue.
+    validations:
+      required: true
+
+  - type: input
+    id: jdk-version
+    attributes:
+      label: JDK Version
+      description: Your JDK version.
+    validations:
+      required: true
+
+  - type: textarea
+    id: other
+    attributes:
+      label: Any other information
+      description: Any other detail you would like to share.
+    validations:
+      required: false
