@@ -2,8 +2,8 @@ name: TEST
 
 on:
   push:
-    branches:
-      - master
+  pull_request:
+    types: [ opened, reopened ]
 
 env:
   OSSRH_USERNAME: 'OSSRH_USERNAME'
