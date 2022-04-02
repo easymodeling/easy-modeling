@@ -10,7 +10,7 @@ public abstract class Modeler<T> {
         }
         final Class<T> clazz = type();
         if (modelCache.avoidInfinity(clazz)) {
-            return modelCache.first(clazz);
+            return modelCache.random(clazz);
         }
         return createModel(modelCache);
     }
@@ -20,7 +20,7 @@ public abstract class Modeler<T> {
         final T model = ReflectionUtil.createModelOf(clazz);
         modelCache.push(model);
         populate(model, modelCache);
-        modelCache.pop(clazz);
+//        modelCache.pop(clazz);
         return model;
     }
 

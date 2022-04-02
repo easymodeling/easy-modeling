@@ -2,6 +2,10 @@ package io.github.easymodeling.randomizer;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CustomTypeRandomizerTest {
@@ -30,18 +34,17 @@ class CustomTypeRandomizerTest {
     }
 
     @Test
-    void should_pick_stack_footer_as_next_model_when_enough_cached() {
+    void should_pick_randomly_from_the_stack_as_next_model_when_enough_cached() {
         final ModelCache modelCache = new ModelCache();
-        final SomeType someType1 = new SomeType(1);
-        modelCache.push(someType1);
-        modelCache.push(new SomeType(2));
-        modelCache.push(new SomeType(3));
-        modelCache.push(new SomeType(4));
-        modelCache.push(new SomeType(5));
+        final List<SomeType> modelList = IntStream.range(0, ModelCache.STACK_SIZE)
+                .mapToObj(SomeType::new)
+                .collect(Collectors.toList());
+        modelList.forEach(modelCache::push);
+
         final CustomTypeRandomizer<SomeType> randomizer = new CustomTypeRandomizer<>(new SomeTypeModeler(), modelCache);
 
         final SomeType someType = randomizer.next();
 
-        assertThat(someType).isNotNull().isEqualTo(someType1);
+        assertThat(someType).isNotNull().isNotNull().isIn(modelList);
     }
 }

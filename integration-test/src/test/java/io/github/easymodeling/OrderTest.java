@@ -18,12 +18,5 @@ class OrderTest {
         assertThat(order.getCreationTime()).isNotNull();
 
         assertThat(order.orderLines).isNotNull();
-        assertThat(order.orderLines.get(0)).isEqualTo(
-                order.orderLines.get(0)
-                        .order.orderLines.get(0)
-                        .order.orderLines.get(0)
-                        .order.orderLines.get(0)
-                        .order.orderLines.get(0)
-                        .order.orderLines.get(0));
     }
 }
