@@ -19,7 +19,7 @@ class TreeSetFieldTest extends FieldTest {
     @Override
     @BeforeEach
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).minSize(50).maxSize(100).build();
+        fieldPattern = FieldPatternFactory.one(FIELD_NAME).maxSize(100).build();
         integerField = new IntegerField().create(fieldPattern);
         typeName = ParameterizedTypeName.get(TreeSet.class, Integer.class);
         modelField = new TreeSetField().create(fieldPattern, integerField);
@@ -30,6 +30,6 @@ class TreeSetFieldTest extends FieldTest {
         final CodeBlock initializer = modelField.initializer();
 
         assertThat(initializer).hasToString(
-                "new " + $(TreeSetRandomizer.class) + "<>(" + integerField.initializer() + ", 50, 100)");
+                "new " + $(TreeSetRandomizer.class) + "<>(" + integerField.initializer() + ", 100)");
     }
 }

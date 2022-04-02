@@ -18,14 +18,10 @@ public abstract class AbstractMapField extends Container {
 
     @Override
     protected CodeBlock initializerParameter() {
-        return CodeBlock.of("$L, $L", minSize(), maxSize());
+        return CodeBlock.of("$L", maxSize());
     }
 
     private int maxSize() {
         return field.maxSize().orElse(20);
-    }
-
-    private int minSize() {
-        return field.minSize().orElse(1);
     }
 }

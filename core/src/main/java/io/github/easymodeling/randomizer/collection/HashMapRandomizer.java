@@ -7,8 +7,8 @@ import java.util.function.Supplier;
 
 public class HashMapRandomizer<K, V> extends AbstractMapRandomizer<HashMap<K, V>, K, V> {
 
-    public HashMapRandomizer(Randomizer<K> keyRandomizer, Randomizer<V> valueRandomizer, int minSize, int maxSize) {
-        super(keyRandomizer, valueRandomizer, minSize, maxSize);
+    public HashMapRandomizer(Randomizer<K> keyRandomizer, Randomizer<V> valueRandomizer, int maxSize) {
+        super(keyRandomizer, valueRandomizer, maxSize);
     }
 
     @Override

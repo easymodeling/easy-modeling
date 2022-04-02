@@ -7,8 +7,8 @@ import java.util.function.Supplier;
 
 public class TreeMapRandomizer<K, V> extends AbstractMapRandomizer<TreeMap<K, V>, K, V> {
 
-    public TreeMapRandomizer(Randomizer<K> keyRandomizer, Randomizer<V> valueRandomizer, int minSize, int maxSize) {
-        super(keyRandomizer, valueRandomizer, minSize, maxSize);
+    public TreeMapRandomizer(Randomizer<K> keyRandomizer, Randomizer<V> valueRandomizer, int maxSize) {
+        super(keyRandomizer, valueRandomizer, maxSize);
     }
 
     @Override

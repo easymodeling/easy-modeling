@@ -8,8 +8,8 @@ import java.util.function.Supplier;
 
 public class TreeSetRandomizer<E> extends AbstractSetRandomizer<Set<E>, E> {
 
-    public TreeSetRandomizer(Randomizer<E> elementRandomizer, int minSize, int maxSize) {
-        super(elementRandomizer, minSize, maxSize);
+    public TreeSetRandomizer(Randomizer<E> elementRandomizer, int maxSize) {
+        super(elementRandomizer, maxSize);
     }
 
     @Override
