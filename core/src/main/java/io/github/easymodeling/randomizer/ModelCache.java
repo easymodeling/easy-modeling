@@ -1,5 +1,6 @@
 package io.github.easymodeling.randomizer;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +13,7 @@ public class ModelCache {
 
     private final Map<Class<?>, List<?>> cache;
 
-    private final Random random = new Random();
+    private final Random random = new SecureRandom();
 
     public ModelCache() {
         this.cache = new HashMap<>();
