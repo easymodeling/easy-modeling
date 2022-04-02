@@ -33,10 +33,10 @@ A Java annotation processor that generates randomly populated objects for test u
 ## What is EasyModeling?
 
 EasyModeling is a Java [annotation processor][java-atp-link] that generates randomly populated objects for test use. It
-could save you from writing tedious code to prepare objects under test, making your unit tests clearer and more
-readable. The idea of EasyModeling comes from Martin Fowler's blog [ObjectMother][object-mother-link]. In addition to
-the concept of ObjectMother, EasyModeling also provides builders of your models so that you can easily customize
-generated objects for different test scenarios.
+could save you from writing tedious code to prepare objects for tests, making your unit tests clearer and more readable.
+The idea of EasyModeling comes from Martin Fowler's blog [ObjectMother][object-mother-link]. In addition to the concept
+of ObjectMother, EasyModeling also provides builders of your models so that you can easily customize generated objects
+for different test scenarios.
 
 [java-atp-link]: https://docs.oracle.com/javase/6/docs/technotes/guides/apt/index.html
 
@@ -54,8 +54,8 @@ EasyModeling provides a set of APIs to help you generate objects for your test, 
 
 ### Simple Example
 
-For example, if you have a class `Employee` under test so that you want to generate objects for it, you can firstly have
-a modeler configuration like this:
+For example, if you have a class `Employee` involved in your test so that you want to generate objects for it, you can
+firstly have a modeler configuration like this:
 
 ```java
 
@@ -166,6 +166,21 @@ integrate it into your projects.
 
 [search-maven]: https://search.maven.org/search?q=g:io.github.easymodeling
 
+### Gradle
+
+For Gradle users, put the following into your build.gradle file:
+
+[//]: # (@formatter:off)
+```groovy
+dependencies {
+    ...
+    testImplementation 'io.github.easymodeling:easy-modeling:0.1.0-Beta'
+    testAnnotationProcessor 'io.github.easymodeling:easy-modeling-processor:0.1.0-Beta'
+    ...
+}
+```
+[//]: # (@formatter:on)
+
 ### Maven
 
 For Maven-based projects, add the following to your POM file:
@@ -176,7 +191,7 @@ For Maven-based projects, add the following to your POM file:
     <dependency>
         <groupId>io.github.easymodeling</groupId>
         <artifactId>easy-modeling</artifactId>
-        <version>0.1.0-Alpha1</version>
+        <version>0.1.0-Beta</version>
         <scope>test</scope>
     </dependency>
 </dependencies>
@@ -194,7 +209,7 @@ For Maven-based projects, add the following to your POM file:
                 <path>
                     <groupId>io.github.easymodeling</groupId>
                     <artifactId>easy-modeling-processor</artifactId>
-                    <version>0.1.0-Alpha1</version>
+                    <version>0.1.0-Beta</version>
                 </path>
             </annotationProcessorPaths>
         </configuration>
@@ -202,21 +217,6 @@ For Maven-based projects, add the following to your POM file:
 </plugins>
 </build>
 ...
-```
-[//]: # (@formatter:on)
-
-### Gradle
-
-For Gradle users, put the following into your build.gradle file:
-
-[//]: # (@formatter:off)
-```groovy
-dependencies {
-    ...
-    testImplementation 'io.github.easymodeling:easy-modeling:0.1.0-Alpha1'
-    testAnnotationProcessor 'io.github.easymodeling:easy-modeling-processor:0.1.0-Alpha1'
-    ...
-}
 ```
 [//]: # (@formatter:on)
 
