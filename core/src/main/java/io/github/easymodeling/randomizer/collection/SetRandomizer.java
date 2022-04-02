@@ -8,8 +8,8 @@ import java.util.function.Supplier;
 
 public class SetRandomizer<E> extends AbstractSetRandomizer<Set<E>, E> {
 
-    public SetRandomizer(Randomizer<E> elementRandomizer, int minSize, int maxSize) {
-        super(elementRandomizer, minSize, maxSize);
+    public SetRandomizer(Randomizer<E> elementRandomizer, int maxSize) {
+        super(elementRandomizer, maxSize);
     }
 
     @Override

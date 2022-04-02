@@ -22,20 +22,13 @@ public abstract class CollectionRandomizer<C extends Collection<E>, E> extends G
         this.maxSize = maxSize;
     }
 
-    protected CollectionRandomizer() {
-    }
-
     @Override
     protected C random() {
         int size = doubleBetween(minSize, maxSize).intValue();
-        return upstream().limit(size).collect(Collectors.toCollection(collectionFactory()));
+        return Stream.generate(elementRandomizer::next)
+                .limit(size)
+                .collect(Collectors.toCollection(collectionFactory()));
     }
-
-    protected Stream<E> originalStream() {
-        return Stream.generate(elementRandomizer::next);
-    }
-
-    protected abstract Stream<E> upstream();
 
     protected abstract Supplier<C> collectionFactory();
 }

@@ -8,8 +8,8 @@ import java.util.function.Supplier;
 
 public class HashSetRandomizer<E> extends AbstractSetRandomizer<Set<E>, E> {
 
-    public HashSetRandomizer(Randomizer<E> elementRandomizer, int minSize, int maxSize) {
-        super(elementRandomizer, minSize, maxSize);
+    public HashSetRandomizer(Randomizer<E> elementRandomizer, int maxSize) {
+        super(elementRandomizer, maxSize);
     }
 
     @Override

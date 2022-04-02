@@ -21,7 +21,7 @@ public abstract class AbstractCollectionField extends Container {
         return CodeBlock.of("$L, $L", minSize(), maxSize());
     }
 
-    private int maxSize() {
+    protected int maxSize() {
         return field.maxSize().orElse(20);
     }
 

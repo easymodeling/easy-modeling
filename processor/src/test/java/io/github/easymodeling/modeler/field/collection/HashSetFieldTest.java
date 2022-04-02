@@ -19,7 +19,7 @@ class HashSetFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).minSize(50).maxSize(100).build();
+        fieldPattern = FieldPatternFactory.one(FIELD_NAME).maxSize(100).build();
         integerField = new IntegerField().create(fieldPattern);
         typeName = ParameterizedTypeName.get(HashSet.class, Integer.class);
         modelField = new HashSetField().create(fieldPattern, integerField);
@@ -30,6 +30,6 @@ class HashSetFieldTest extends FieldTest {
         final CodeBlock initializer = modelField.initializer();
 
         assertThat(initializer).hasToString(
-                "new " + $(HashSetRandomizer.class) + "<>(" + integerField.initializer() + ", 50, 100)");
+                "new " + $(HashSetRandomizer.class) + "<>(" + integerField.initializer() + ", 100)");
     }
 }

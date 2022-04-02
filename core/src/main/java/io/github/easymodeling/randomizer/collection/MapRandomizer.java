@@ -8,8 +8,8 @@ import java.util.function.Supplier;
 
 public class MapRandomizer<K, V> extends AbstractMapRandomizer<Map<K, V>, K, V> {
 
-    public MapRandomizer(Randomizer<K> keyRandomizer, Randomizer<V> valueRandomizer, int minSize, int maxSize) {
-        super(keyRandomizer, valueRandomizer, minSize, maxSize);
+    public MapRandomizer(Randomizer<K> keyRandomizer, Randomizer<V> valueRandomizer, int maxSize) {
+        super(keyRandomizer, valueRandomizer, maxSize);
     }
 
     @Override

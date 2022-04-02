@@ -23,9 +23,11 @@ public class SetField extends AbstractCollectionField {
 
     private SetField(FieldPattern field, ModelField nestedField) {
         super(TYPE, field, nestedField);
-        // TODO: 09.01.22 check elementType space size when constructing Field
-        //  for example, if elementType is Integer between 0 and 3, when the set size is greater than 5,
-        //  it will never generate the set.
+    }
+
+    @Override
+    protected CodeBlock initializerParameter() {
+        return CodeBlock.of("$L", maxSize());
     }
 
     @Override

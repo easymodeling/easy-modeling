@@ -26,6 +26,11 @@ public class TreeSetField extends AbstractCollectionField {
     }
 
     @Override
+    protected CodeBlock initializerParameter() {
+        return CodeBlock.of("$L", maxSize());
+    }
+
+    @Override
     protected CodeBlock initializerType() {
         return CodeBlock.of("$T", TreeSetRandomizer.class);
     }

@@ -22,7 +22,7 @@ class HashMapFieldTest extends FieldTest {
     @Override
     @BeforeEach
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(3.).max(8.).minSize(10).maxSize(20).build();
+        fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(3.).max(8.).maxSize(20).build();
         typeName = ParameterizedTypeName.get(HashMap.class, String.class, Integer.class);
         keyField = new StringField().create(fieldPattern);
         valueField = new IntegerField().create(fieldPattern);
@@ -34,6 +34,6 @@ class HashMapFieldTest extends FieldTest {
         final CodeBlock initializer = modelField.initializer();
 
         assertThat(initializer)
-                .hasToString("new " + $(HashMapRandomizer.class) + "<>(" + keyField.initializer() + ", " + valueField.initializer() + ", 10, 20)");
+                .hasToString("new " + $(HashMapRandomizer.class) + "<>(" + keyField.initializer() + ", " + valueField.initializer() + ", 20)");
     }
 }

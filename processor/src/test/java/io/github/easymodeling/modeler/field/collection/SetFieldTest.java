@@ -19,7 +19,7 @@ class SetFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).minSize(30).maxSize(50).build();
+        fieldPattern = FieldPatternFactory.one(FIELD_NAME).maxSize(50).build();
         typeName = ParameterizedTypeName.get(Set.class, String.class);
         stringField = new StringField().create(fieldPattern);
         modelField = new SetField().create(fieldPattern, stringField);
@@ -30,6 +30,6 @@ class SetFieldTest extends FieldTest {
         final CodeBlock initializer = modelField.initializer();
 
         assertThat(initializer)
-                .hasToString("new " + $(SetRandomizer.class) + "<>(" + stringField.initializer() + ", 30, 50)");
+                .hasToString("new " + $(SetRandomizer.class) + "<>(" + stringField.initializer() + ", 50)");
     }
 }

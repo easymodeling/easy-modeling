@@ -2,6 +2,10 @@ package io.github.easymodeling.randomizer;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ModelerTest {
@@ -14,16 +18,15 @@ class ModelerTest {
     }
 
     @Test
-    void should_return_footer_of_stack_to_avoid_infinity() {
+    void should_return_cached_model_randomly_of_pool_to_avoid_infinity() {
         final ModelCache modelCache = new ModelCache();
-        modelCache.push(new SomeType(1));
-        modelCache.push(new SomeType(2));
-        modelCache.push(new SomeType(3));
-        modelCache.push(new SomeType(4));
-        modelCache.push(new SomeType(5));
+        final List<SomeType> modelList = IntStream.range(0, ModelCache.POOL_SIZE)
+                .mapToObj(SomeType::new)
+                .collect(Collectors.toList());
+        modelList.forEach(modelCache::push);
 
-        final SomeType first = new SomeTypeModeler().next(modelCache);
+        final SomeType random = new SomeTypeModeler().next(modelCache);
 
-        assertThat(first.anInt).isEqualTo(1);
+        assertThat(random).isNotNull().isIn(modelList);
     }
 }
