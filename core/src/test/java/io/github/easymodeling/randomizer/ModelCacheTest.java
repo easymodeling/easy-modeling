@@ -101,32 +101,4 @@ class ModelCacheTest {
             assertThat(avoidInfinity).isTrue();
         }
     }
-
-    @Nested
-    class TestPopModel {
-
-        @Test
-        void should_pop_model() {
-            cache.push(new BigDecimal(1));
-            cache.push(new BigDecimal(2));
-            cache.push(new BigDecimal(3));
-            cache.push(new BigDecimal(4));
-            cache.push(new BigDecimal(5));
-
-            cache.pop(BigDecimal.class);
-
-            final boolean avoidInfinity = cache.avoidInfinity(BigDecimal.class);
-
-            assertThat(avoidInfinity).isFalse();
-        }
-
-        @Test
-        void should_throw_when_popping_non_existent_class() {
-            cache.push(new BigDecimal(1));
-
-            final Throwable throwable = catchThrowable(() -> cache.pop(String.class));
-
-            assertThat(throwable).isInstanceOf(IllegalStateException.class);
-        }
-    }
 }

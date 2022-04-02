@@ -23,10 +23,6 @@ public class ModelCache {
         stack.push(obj);
     }
 
-    public <T> void pop(Class<T> clazz) {
-        this.<T>stackOf(clazz).pop();
-    }
-
     public boolean avoidInfinity(Class<?> clazz) {
         return cache.containsKey(clazz) && cache.get(clazz).size() >= STACK_SIZE;
     }
