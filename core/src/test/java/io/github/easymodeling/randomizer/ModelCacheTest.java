@@ -23,7 +23,7 @@ class ModelCacheTest {
     class TestPushModel {
 
         @Test
-        void should_create_stack_and_append_model() {
+        void should_create_pool_and_append_model() {
             cache.push(new BigDecimal(1));
 
             final Object first = cache.random(BigDecimal.class);
@@ -32,7 +32,7 @@ class ModelCacheTest {
         }
 
         @Test
-        void should_create_stack_for_different_classes() {
+        void should_create_pool_for_different_classes() {
             cache.push(new BigDecimal(1));
             cache.push("abc");
 
@@ -44,7 +44,7 @@ class ModelCacheTest {
         }
 
         @Test
-        void should_append_to_existing_stack() {
+        void should_append_to_existing_pool() {
             cache.push(new BigDecimal(1));
             cache.push(new BigDecimal(2));
             cache.push(new BigDecimal(3));
@@ -58,7 +58,7 @@ class ModelCacheTest {
     }
 
     @Test
-    void should_throw_when_request_stack_footer_of_nonexistent_stack() {
+    void should_throw_when_request_pool_footer_of_nonexistent_pool() {
         cache.push(new BigDecimal(1));
 
         final Throwable throwable = catchThrowable(() -> cache.random(String.class));
@@ -79,7 +79,7 @@ class ModelCacheTest {
         }
 
         @Test
-        void should_not_avoid_infinity_for_stack_not_more_than_4_items_cached() {
+        void should_not_avoid_infinity_for_pool_not_more_than_4_items_cached() {
             cache.push(new BigDecimal(1));
             cache.push(new BigDecimal(2));
             cache.push(new BigDecimal(3));
@@ -91,8 +91,8 @@ class ModelCacheTest {
         }
 
         @Test
-        void should_avoid_infinity_when_stack_is_full() {
-            IntStream.range(0, ModelCache.STACK_SIZE)
+        void should_avoid_infinity_when_pool_is_full() {
+            IntStream.range(0, ModelCache.POOL_SIZE)
                     .mapToObj(BigDecimal::new)
                     .forEach(cache::push);
 

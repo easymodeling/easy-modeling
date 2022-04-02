@@ -34,9 +34,9 @@ class CustomTypeRandomizerTest {
     }
 
     @Test
-    void should_pick_randomly_from_the_stack_as_next_model_when_enough_cached() {
+    void should_pick_randomly_from_the_pool_as_next_model_when_enough_cached() {
         final ModelCache modelCache = new ModelCache();
-        final List<SomeType> modelList = IntStream.range(0, ModelCache.STACK_SIZE)
+        final List<SomeType> modelList = IntStream.range(0, ModelCache.POOL_SIZE)
                 .mapToObj(SomeType::new)
                 .collect(Collectors.toList());
         modelList.forEach(modelCache::push);

@@ -1,15 +1,16 @@
 package io.github.easymodeling.randomizer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Stack;
 
 public class ModelCache {
 
-    public final static int STACK_SIZE = 10;
+    public final static int POOL_SIZE = 10;
 
-    private final Map<Class<?>, Stack<?>> cache;
+    private final Map<Class<?>, List<?>> cache;
 
     private final Random random = new Random();
 
@@ -19,27 +20,24 @@ public class ModelCache {
 
     public <T> void push(T obj) {
         final Class<?> clazz = obj.getClass();
-        Stack<T> stack = (Stack<T>) cache.computeIfAbsent(clazz, k -> new Stack<>());
-        stack.push(obj);
+        List<T> pool = (List<T>) cache.computeIfAbsent(clazz, k -> new ArrayList<>());
+        pool.add(obj);
     }
 
     public boolean avoidInfinity(Class<?> clazz) {
-        return cache.containsKey(clazz) && cache.get(clazz).size() >= STACK_SIZE;
-    }
-
-    public <T> T first(Class<?> clazz) {
-        return this.<T>stackOf(clazz).firstElement();
+        return cache.containsKey(clazz) && cache.get(clazz).size() >= POOL_SIZE;
     }
 
     public <T> T random(Class<?> clazz) {
-        return this.<T>stackOf(clazz).get(random.nextInt(this.<T>stackOf(clazz).size()));
+        final List<T> pool = this.poolOf(clazz);
+        return pool.get(random.nextInt(pool.size()));
     }
 
-    private <T> Stack<T> stackOf(Class<?> clazz) {
-        Stack<T> stack = (Stack<T>) cache.get(clazz);
-        if (stack == null) {
-            throw new IllegalStateException("No stack for class " + clazz);
+    private <T> List<T> poolOf(Class<?> clazz) {
+        List<T> pool = (List<T>) cache.get(clazz);
+        if (pool == null) {
+            throw new IllegalStateException("No pool for class " + clazz);
         }
-        return stack;
+        return pool;
     }
 }

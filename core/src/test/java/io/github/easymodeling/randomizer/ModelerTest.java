@@ -18,9 +18,9 @@ class ModelerTest {
     }
 
     @Test
-    void should_return_cached_model_randomly_of_stack_to_avoid_infinity() {
+    void should_return_cached_model_randomly_of_pool_to_avoid_infinity() {
         final ModelCache modelCache = new ModelCache();
-        final List<SomeType> modelList = IntStream.range(0, ModelCache.STACK_SIZE)
+        final List<SomeType> modelList = IntStream.range(0, ModelCache.POOL_SIZE)
                 .mapToObj(SomeType::new)
                 .collect(Collectors.toList());
         modelList.forEach(modelCache::push);
