@@ -225,8 +225,6 @@ For Maven-based projects, add the following to your POM file:
 Please be aware that EasyModeling is designed for test use, so think twice before using it in production. Using
 EasyModeling in production will introduce a lot of side effects, such as:
 
-- Security risks: Since EasyModeling generates randoms by using `java.util.Random`, which is not secure enough compared
-  to more advanced random generators.
 - Performance: EasyModeling is not optimized for performance. It generates objects by using reflection to achieve the
   convenience and simplicity of writing tests, regardless of the runtime performance.
 - NPE risk: EasyModeling won't promise to populate all fields of the generated objects, although it always tries its
@@ -245,7 +243,7 @@ Some next steps are in consideration to improve EasyModeling:
 
 [bean-validation-2.0]: https://beanvalidation.org/2.0/spec/
 
-[raise-issues]: https://github.com/easymodeling/easy-modeling/issues/new?template=feature_request.md
+[raise-issues]: https://github.com/easymodeling/easy-modeling/issues/new?template=feature_request.yml
 
 ## License
 
