@@ -225,8 +225,10 @@ For Maven-based projects, add the following to your POM file:
 Please be aware that EasyModeling is designed for test use, so think twice before using it in production. Using
 EasyModeling in production will introduce a lot of side effects, such as:
 
-- Performance: EasyModeling is not optimized for performance. It generates objects by using reflection to achieve the
-  convenience and simplicity of writing tests, regardless of the runtime performance.
+- Security risks: Since EasyModeling generates randoms by using java.util.Random, which is not secure enough compared to
+  more advanced random generators.
+- Performance problem: EasyModeling is not optimized for performance. It generates objects by using reflection to
+  achieve the convenience and simplicity of writing tests, regardless of the runtime performance.
 - NPE risk: EasyModeling won't promise to populate all fields of the generated objects, although it always tries its
   best to do so. It's possible that some fields are not populated, which may cause NPE.
 
@@ -239,7 +241,7 @@ Some next steps are in consideration to improve EasyModeling:
 - Groovy support.
 - Support more widely used data types as basic types of objects population.
 
-**Please feel free to [raise issues][raise-issues] if you have any more exciting ideas.**
+**Please feel free to [create an issues][raise-issues] if you have any more exciting ideas.**
 
 [bean-validation-2.0]: https://beanvalidation.org/2.0/spec/
 
