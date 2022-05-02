@@ -18,6 +18,8 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
 
     protected String name;
 
+    protected String qualifiedName;
+
     protected FieldPattern field;
 
     protected ModelField() {
@@ -27,7 +29,8 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
 
     protected ModelField(TypeName type, FieldPattern field) {
         this.type = type;
-        this.name = field.name();
+        this.name = field.fieldName();
+        this.qualifiedName = field.qualifiedName();
         this.field = field;
     }
 
@@ -75,7 +78,7 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
     }
 
     private CodeBlock setFieldStatement(CodeBlock value) {
-        return CodeBlock.of("$T.setField(model, $S, $L)", ReflectionUtil.class, identity(), value);
+        return CodeBlock.of("$T.setField(model, $S, $L)", ReflectionUtil.class, this.qualifiedName, value);
     }
 
     @Override

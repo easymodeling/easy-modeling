@@ -36,7 +36,7 @@ public class ModelerGenerator {
     private List<ModelField> initBuilderFields() {
         final Map<String, FieldPattern> declaredFieldsMap;
         try {
-            declaredFieldsMap = model.getFields().stream().collect(Collectors.toMap(FieldPattern::name, Function.identity()));
+            declaredFieldsMap = model.getFields().stream().collect(Collectors.toMap(FieldPattern::qualifiedName, Function.identity()));
         } catch (IllegalStateException e) {
             // Do not support multiple declarations of the same field,
             // let's see if it is possible or necessary to support it in the future
@@ -46,9 +46,9 @@ public class ModelerGenerator {
         return model.getEnclosedFields()
                 .stream()
                 .map(element -> {
-                    final String fieldName = element.getFieldName();
                     final TypeMirror typeMirror = element.getTypeMirror();
-                    final FieldPattern fieldPattern = declaredFieldsMap.getOrDefault(fieldName, FieldPattern.of(fieldName));
+                    final FieldPattern emptyFieldPattern = FieldPattern.of(element.getClassName(), element.getFieldName());
+                    final FieldPattern fieldPattern = declaredFieldsMap.getOrDefault(emptyFieldPattern.qualifiedName(), emptyFieldPattern);
                     return new ModelFieldProvider().provide(typeMirror, fieldPattern);
                 })
                 .collect(Collectors.toList());

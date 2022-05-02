@@ -113,7 +113,7 @@ public class ModelsProcessor extends AbstractProcessor {
                 break;
             }
             TypeElement type = getTypeElementOf(namedModel.getCanonicalName());
-            final ModelWrapper modelWrapper = new ModelWrapper(namedModel.getModel(), type);
+            final ModelWrapper modelWrapper = new ModelWrapper(namedModel, type);
             processModel(modelWrapper);
         }
     }

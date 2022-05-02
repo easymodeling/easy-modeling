@@ -3,12 +3,14 @@ package io.github.easymodeling.modeler.helper;
 import io.github.easymodeling.modeler.FieldPattern;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
+import static io.github.easymodeling.modeler.field.FieldTest.CLASS_NAME;
+
 public class FieldPatternFactory {
 
     private final FieldPattern field;
 
-    private FieldPatternFactory(String name) {
-        this.field = FieldPattern.of(name);
+    private FieldPatternFactory(String className, String fieldName) {
+        this.field = FieldPattern.of(className, fieldName);
     }
 
     public FieldPatternFactory minSize(Object minSize) {
@@ -71,8 +73,8 @@ public class FieldPatternFactory {
         return FieldPatternFactory.one("field_name").build();
     }
 
-    public static FieldPatternFactory one(String name) {
-        return new FieldPatternFactory(name);
+    public static FieldPatternFactory one(String fieldName) {
+        return new FieldPatternFactory(CLASS_NAME, fieldName);
     }
 
     public FieldPattern build() {

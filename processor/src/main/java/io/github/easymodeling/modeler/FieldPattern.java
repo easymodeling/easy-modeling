@@ -8,7 +8,9 @@ import java.util.Optional;
 
 public class FieldPattern {
 
-    private final String name;
+    private final String fieldName;
+
+    private final String qualifiedFieldName;
 
     private Double max = Double.NaN;
 
@@ -44,20 +46,22 @@ public class FieldPattern {
 
     boolean allowEmpty = false;
 
-    public static FieldPattern of(String name) {
-        return new FieldPattern(name);
+    public static FieldPattern of(String className, String fieldName) {
+        return new FieldPattern(className, fieldName);
     }
 
-    private FieldPattern(String name) {
-        this.name = name;
+    private FieldPattern(String className, String fieldName) {
+        this.fieldName = fieldName;
+        this.qualifiedFieldName = nameOf(className, fieldName);
     }
 
-    public static FieldPattern of(Field field) {
-        return new FieldPattern(field);
+    public static FieldPattern of(String className, Field field) {
+        return new FieldPattern(className, field);
     }
 
-    private FieldPattern(Field annotation) {
-        this.name = annotation.name();
+    private FieldPattern(String className, Field annotation) {
+        this.fieldName = annotation.name();
+        this.qualifiedFieldName = nameOf(className, annotation.name());
         this.max = annotation.max();
         this.min = annotation.min();
         this.constant = annotation.constant();
@@ -77,8 +81,12 @@ public class FieldPattern {
         this.allowEmpty = annotation.allowEmpty();
     }
 
-    public String name() {
-        return name;
+    public String fieldName() {
+        return fieldName;
+    }
+
+    public String qualifiedName() {
+        return qualifiedFieldName;
     }
 
     public boolean alphanumeric() {
@@ -192,6 +200,10 @@ public class FieldPattern {
 
     private boolean isMaxSizeSet() {
         return maxSize != Integer.MAX_VALUE && maxSize >= 0;
+    }
+
+    private String nameOf(String className, String fieldName) {
+        return String.format("%s#%s", className, fieldName);
     }
 
 }

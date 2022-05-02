@@ -11,6 +11,8 @@ public @interface Field {
 
     String name();
 
+    Class<?> clazz() default void.class;
+
     double max() default Double.NaN;
 
     double min() default Double.NaN;

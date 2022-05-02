@@ -15,7 +15,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class FieldTest {
 
+    public static final String CLASS_NAME = "className";
+
     public static final String FIELD_NAME = "fieldName";
+
+    public static final String QUALIFIED_NAME = CLASS_NAME + "#" + FIELD_NAME;
 
     protected FieldPattern fieldPattern;
 
@@ -66,7 +70,7 @@ public abstract class FieldTest {
     void should_generate_populate_statement() {
         final CodeBlock codeBlock = modelField.populateStatement();
 
-        final String code = $(ReflectionUtil.class) + ".setField(model, \"" + FIELD_NAME + "\", " + modelField.initialValue() + ")";
+        final String code = $(ReflectionUtil.class) + ".setField(model, \"" + QUALIFIED_NAME + "\", " + modelField.initialValue() + ")";
         assertThat(codeBlock).hasToString(code);
     }
 
@@ -74,7 +78,7 @@ public abstract class FieldTest {
     void should_generate_build_statement() {
         final CodeBlock codeBlock = modelField.buildStatement();
 
-        final String code = $(ReflectionUtil.class) + ".setField(model, \"" + FIELD_NAME + "\", " + FIELD_NAME + ")";
+        final String code = $(ReflectionUtil.class) + ".setField(model, \"" + QUALIFIED_NAME + "\", " + FIELD_NAME + ")";
         assertThat(codeBlock).hasToString(code);
     }
 

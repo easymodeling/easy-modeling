@@ -5,6 +5,8 @@ import javax.lang.model.type.TypeMirror;
 
 public class FieldDeclaration {
 
+    private String className;
+
     private String fieldName;
 
     private TypeMirror typeMirror;
@@ -14,12 +16,17 @@ public class FieldDeclaration {
     }
 
     public FieldDeclaration(VariableElement element) {
+        this.className = element.getEnclosingElement().toString();
         this.fieldName = element.getSimpleName().toString();
         this.typeMirror = element.asType();
     }
 
     public String getFieldName() {
         return fieldName;
+    }
+
+    public String getClassName() {
+        return className;
     }
 
     public TypeMirror getTypeMirror() {

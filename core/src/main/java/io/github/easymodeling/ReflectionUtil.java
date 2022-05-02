@@ -11,13 +11,32 @@ public class ReflectionUtil {
     private ReflectionUtil() {
     }
 
-    public static void setField(Object model, String fieldName, Object value) {
+    public static void setField(Object model, String qualifiedFieldName, Object value) {
         try {
-            final Field field = model.getClass().getDeclaredField(fieldName);
+            final int splitter = qualifiedFieldName.lastIndexOf('#');
+            if (splitter == -1 || splitter == qualifiedFieldName.length() - 1 || splitter == 0) {
+                throw new NoSuchFieldException(qualifiedFieldName);
+            }
+            String className = qualifiedFieldName.substring(0, splitter);
+            String fieldName = qualifiedFieldName.substring(splitter + 1);
+
+            final Field field = declaredField(model.getClass(), className, fieldName);
             field.setAccessible(true);
             field.set(model, value);
         } catch (NoSuchFieldException | IllegalAccessException | IllegalArgumentException | SecurityException e) {
-            throw new EasyModelingException(String.format("Cannot set %s for %s", fieldName, model.getClass().getSimpleName()), e);
+            throw new EasyModelingException(String.format("Cannot set %s for %s", qualifiedFieldName, model.getClass().getSimpleName()), e);
+        }
+    }
+
+    private static Field declaredField(Class<?> clazz, String className, String fieldName) throws NoSuchFieldException {
+        if (clazz.getCanonicalName().equals(className)) {
+            return clazz.getDeclaredField(fieldName);
+        }
+        final Class<?> superclass = clazz.getSuperclass();
+        if (Object.class == superclass) {
+            throw new NoSuchFieldException(className + "#" + fieldName);
+        } else {
+            return declaredField(superclass, className, fieldName);
         }
     }
 

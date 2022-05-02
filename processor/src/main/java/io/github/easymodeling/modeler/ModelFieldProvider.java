@@ -33,7 +33,7 @@ public class ModelFieldProvider {
     public ModelField provide(TypeMirror typeMirror, FieldPattern fieldPattern) {
         try {
             final ModelField field = findField(typeMirror, fieldPattern);
-            log.debug("Model field created for [%s] is %s", fieldPattern.name(), field);
+            log.debug("Model field created for [%s] is %s", fieldPattern.qualifiedName(), field);
             return field;
         } catch (FieldNotSupportedException e) {
             return new UnknownField(TypeName.get(typeMirror), fieldPattern);
@@ -41,7 +41,7 @@ public class ModelFieldProvider {
     }
 
     private ModelField findField(TypeMirror typeMirror, FieldPattern fieldPattern) {
-        log.debug("field [%s] with type %s as %s", fieldPattern.name(), typeMirror, typeMirror.getKind());
+        log.debug("field [%s] with type %s as %s", fieldPattern.qualifiedName(), typeMirror, typeMirror.getKind());
 
         if (typeMirror.getKind().isPrimitive()) {
             return plainField(typeMirror, fieldPattern);
