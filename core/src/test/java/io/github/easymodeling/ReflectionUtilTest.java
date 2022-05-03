@@ -147,8 +147,9 @@ class ReflectionUtilTest {
             someClass.setAnInt(123);
             someClass.setBigDecimal(BigDecimal.valueOf(123));
 
-            final Object anInt = ReflectionUtil.getField(someClass, "anInt");
-            final Object bigDecimal = ReflectionUtil.getField(someClass, "bigDecimal");
+            final String className = SomeClass.class.getCanonicalName();
+            final Object anInt = ReflectionUtil.getField(someClass, className + "#anInt");
+            final Object bigDecimal = ReflectionUtil.getField(someClass, className + "#bigDecimal");
 
             assertThat(anInt).isEqualTo(123);
             assertThat(bigDecimal).isEqualTo(BigDecimal.valueOf(123));

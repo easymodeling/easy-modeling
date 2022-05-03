@@ -56,7 +56,7 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
 
     @Override
     public CodeBlock constructorStatement() {
-        return CodeBlock.of("this.$N = ($T) $T.getField(model, $S)", identity(), type(), ReflectionUtil.class, identity());
+        return CodeBlock.of("this.$N = ($T) $T.getField(model, $S)", identity(), type(), ReflectionUtil.class, this.qualifiedName);
     }
 
     @Override

@@ -62,7 +62,7 @@ public abstract class FieldTest {
     void should_generate_constructor_statement() {
         final CodeBlock codeBlock = modelField.constructorStatement();
 
-        final String code = "" + "this." + FIELD_NAME + " = (" + typeName.box() + ") " + $(ReflectionUtil.class) + ".getField(model, \"" + FIELD_NAME + "\")";
+        final String code = "" + "this." + FIELD_NAME + " = (" + typeName.box() + ") " + $(ReflectionUtil.class) + ".getField(model, \"" + QUALIFIED_NAME + "\")";
         assertThat(codeBlock).hasToString(code);
     }
 
