@@ -4,7 +4,6 @@ import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import io.github.easymodeling.ModelUniqueQueue;
-import io.github.easymodeling.NamedModel;
 import io.github.easymodeling.modeler.field.Container;
 import io.github.easymodeling.modeler.field.CustomField;
 import io.github.easymodeling.modeler.field.EnumField;
@@ -57,7 +56,7 @@ public class ModelFieldProvider {
             }
             final String typeCanonicalName = typeName.toString();
             if (!typeCanonicalName.startsWith("java.")) {
-                modelUniqueQueue.add(new NamedModel(typeCanonicalName));
+                modelUniqueQueue.add(typeCanonicalName);
                 return new CustomField(typeName, fieldPattern);
             }
             final List<? extends TypeMirror> typeArguments = declaredType.getTypeArguments();

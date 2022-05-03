@@ -29,6 +29,10 @@ public class ModelUniqueQueue {
         return modelToBeProcessed.poll();
     }
 
+    public void add(String typeCanonicalName) {
+        add(new NamedModel(typeCanonicalName));
+    }
+
     public void add(NamedModel namedModel) {
         if (modelAdded.add(namedModel)) {
             modelToBeProcessed.add(namedModel);

@@ -54,4 +54,29 @@ class ModelUniqueQueueTest {
         assertThat(repository.poll()).isEqualTo(optional);
         assertThat(repository.poll()).isNull();
     }
+
+    @Test
+    void should_add_element_to_the_queue_with_canonical_names() {
+        ModelUniqueQueue repository = ModelUniqueQueue.instance();
+
+        repository.add(String.class.getCanonicalName());
+        repository.add(Optional.class.getCanonicalName());
+
+        assertThat(repository.poll()).isEqualTo(new NamedModel(String.class.getCanonicalName()));
+        assertThat(repository.poll()).isEqualTo(new NamedModel(Optional.class.getCanonicalName()));
+        assertThat(repository.poll()).isNull();
+    }
+
+    @Test
+    void should_add_element_to_the_queue_with_canonical_names_and_void_duplication() {
+        ModelUniqueQueue repository = ModelUniqueQueue.instance();
+
+        repository.add(new NamedModel(String.class.getCanonicalName()));
+        repository.add(Optional.class.getCanonicalName());
+        repository.add(String.class.getCanonicalName());
+
+        assertThat(repository.poll()).isEqualTo(new NamedModel(String.class.getCanonicalName()));
+        assertThat(repository.poll()).isEqualTo(new NamedModel(Optional.class.getCanonicalName()));
+        assertThat(repository.poll()).isNull();
+    }
 }
