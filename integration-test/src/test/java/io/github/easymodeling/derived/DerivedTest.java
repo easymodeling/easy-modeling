@@ -11,7 +11,10 @@ class DerivedTest {
         final Derived derived = DerivedModeler.next();
 
         assertThat(derived).isNotNull();
-        assertThat(derived.derivedInt).isNotNull();
+        assertThat(derived.derivedInt).isNotZero();
+        assertThat(derived.derivedInteger).isNotNull();
+        assertThat(derived.derivedString).isNotBlank();
         assertThat(derived.baseInt).isNotNull();
+        assertThat(derived.baseString).isNotNull();
     }
 }
