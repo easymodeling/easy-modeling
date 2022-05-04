@@ -1,4 +1,6 @@
-package io.github.easymodeling;
+package io.github.easymodeling.processor;
+
+import io.github.easymodeling.Model;
 
 public class NamedModel {
 

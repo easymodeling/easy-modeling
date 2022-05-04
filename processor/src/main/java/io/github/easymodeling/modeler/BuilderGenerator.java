@@ -5,7 +5,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
-import io.github.easymodeling.GenerationPatterns;
+import io.github.easymodeling.processor.GenerationPatterns;
 import io.github.easymodeling.ReflectionUtil;
 import io.github.easymodeling.modeler.field.BuilderMember;
 import io.github.easymodeling.modeler.field.ModelField;

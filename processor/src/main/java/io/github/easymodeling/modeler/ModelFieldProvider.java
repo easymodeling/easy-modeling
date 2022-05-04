@@ -3,7 +3,7 @@ package io.github.easymodeling.modeler;
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.ModelUniqueQueue;
+import io.github.easymodeling.processor.ModelUniqueQueue;
 import io.github.easymodeling.modeler.field.Container;
 import io.github.easymodeling.modeler.field.CustomField;
 import io.github.easymodeling.modeler.field.EnumField;

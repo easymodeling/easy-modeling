@@ -1,10 +1,12 @@
-package io.github.easymodeling;
+package io.github.easymodeling.processor;
 
 import com.google.auto.service.AutoService;
 import com.google.common.collect.Sets;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import io.github.easymodeling.Model;
+import io.github.easymodeling.Models;
 import io.github.easymodeling.modeler.ModelWrapper;
 import io.github.easymodeling.modeler.ModelerGenerator;
 

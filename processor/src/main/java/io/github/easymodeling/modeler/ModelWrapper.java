@@ -1,7 +1,7 @@
 package io.github.easymodeling.modeler;
 
 import com.squareup.javapoet.ClassName;
-import io.github.easymodeling.NamedModel;
+import io.github.easymodeling.processor.NamedModel;
 
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;

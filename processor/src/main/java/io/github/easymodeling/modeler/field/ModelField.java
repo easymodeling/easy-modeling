@@ -10,7 +10,7 @@ import io.github.easymodeling.modeler.FieldPattern;
 
 import javax.lang.model.element.Modifier;
 
-import static io.github.easymodeling.GenerationPatterns.BUILDER_CLASS_NAME;
+import static io.github.easymodeling.processor.GenerationPatterns.BUILDER_CLASS_NAME;
 
 public abstract class ModelField implements Initializable, BuilderMember, StatementProvider {
 

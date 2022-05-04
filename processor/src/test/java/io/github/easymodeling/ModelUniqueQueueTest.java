@@ -1,5 +1,7 @@
 package io.github.easymodeling;
 
+import io.github.easymodeling.processor.ModelUniqueQueue;
+import io.github.easymodeling.processor.NamedModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package io.github.easymodeling;
+package io.github.easymodeling.processor;
 
 public class BasicTypeModelerException extends RuntimeException {
 
