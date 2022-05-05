@@ -1,16 +1,26 @@
 package io.github.easymodeling.modeler.helper;
 
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import org.apache.commons.lang3.reflect.FieldUtils;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 import static io.github.easymodeling.modeler.field.FieldTest.CLASS_NAME;
 
 public class FieldPatternFactory {
 
-    private final FieldPattern field;
+    private final FieldCustomization field;
 
     private FieldPatternFactory(String className, String fieldName) {
-        this.field = FieldPattern.of(className, fieldName);
+        try {
+            final Constructor<FieldCustomization> declaredConstructor = FieldCustomization.class.getDeclaredConstructor(String.class, String.class);
+            declaredConstructor.setAccessible(true);
+            this.field = declaredConstructor.newInstance(className, fieldName);
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
+                 InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public FieldPatternFactory minSize(Object minSize) {
@@ -69,7 +79,7 @@ public class FieldPatternFactory {
         return decorate("after", after);
     }
 
-    public static FieldPattern any() {
+    public static FieldCustomization any() {
         return FieldPatternFactory.one("field_name").build();
     }
 
@@ -77,7 +87,7 @@ public class FieldPatternFactory {
         return new FieldPatternFactory(CLASS_NAME, fieldName);
     }
 
-    public FieldPattern build() {
+    public FieldCustomization build() {
         return field;
     }
 

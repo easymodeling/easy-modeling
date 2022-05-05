@@ -1,16 +1,15 @@
 package io.github.easymodeling.modeler;
 
-import io.github.easymodeling.Field;
-
+import javax.lang.model.element.VariableElement;
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
 
-public class FieldPattern {
+public class FieldCustomization {
+
+    private final String className;
 
     private final String fieldName;
-
-    private final String qualifiedFieldName;
 
     private Double max = Double.NaN;
 
@@ -46,39 +45,45 @@ public class FieldPattern {
 
     boolean allowEmpty = false;
 
-    public static FieldPattern of(String className, String fieldName) {
-        return new FieldPattern(className, fieldName);
+    public static FieldCustomization of(VariableElement element) {
+        return new FieldCustomization(element.getEnclosingElement().toString(), element.getSimpleName().toString());
     }
 
-    private FieldPattern(String className, String fieldName) {
+    private FieldCustomization(String className, String fieldName) {
         this.fieldName = fieldName;
-        this.qualifiedFieldName = nameOf(className, fieldName);
+        this.className = className;
     }
 
-    public static FieldPattern of(String className, Field field) {
-        return new FieldPattern(className, field);
-    }
-
-    private FieldPattern(String className, Field annotation) {
-        this.fieldName = annotation.name();
-        this.qualifiedFieldName = nameOf(className, annotation.name());
-        this.max = annotation.max();
-        this.min = annotation.min();
-        this.constant = annotation.constant();
-        this.alphanumeric = annotation.alphanumeric();
-        this.alphabetic = annotation.alphabetic();
-        this.numeric = annotation.numeric();
-        this.string = annotation.string();
-        this.now = annotation.now();
-        this.before = annotation.before();
-        this.after = annotation.after();
-        this.future = annotation.future();
-        this.past = annotation.past();
-        this.datetime = annotation.datetime();
-        this.size = annotation.size();
-        this.minSize = annotation.minSize();
-        this.maxSize = annotation.maxSize();
-        this.allowEmpty = annotation.allowEmpty();
+    public FieldCustomization(
+            String className, String fieldName,
+            Double max, Double min, Double constant,
+            // For string related types
+            Boolean alphanumeric, Boolean alphabetic, Boolean numeric, String string,
+            // For dateTime related types
+            boolean now, String before, String after, boolean future, boolean past, String datetime,
+            // For collections and streams
+            Integer size, Integer minSize, Integer maxSize,
+            // For Optionals
+            boolean allowEmpty) {
+        this.className = className;
+        this.fieldName = fieldName;
+        this.max = max;
+        this.min = min;
+        this.constant = constant;
+        this.alphanumeric = alphanumeric;
+        this.alphabetic = alphabetic;
+        this.numeric = numeric;
+        this.string = string;
+        this.now = now;
+        this.before = before;
+        this.after = after;
+        this.future = future;
+        this.past = past;
+        this.datetime = datetime;
+        this.size = size;
+        this.minSize = minSize;
+        this.maxSize = maxSize;
+        this.allowEmpty = allowEmpty;
     }
 
     public String fieldName() {
@@ -86,7 +91,7 @@ public class FieldPattern {
     }
 
     public String qualifiedName() {
-        return qualifiedFieldName;
+        return String.format("%s#%s", className, fieldName);
     }
 
     public boolean alphanumeric() {
@@ -200,10 +205,6 @@ public class FieldPattern {
 
     private boolean isMaxSizeSet() {
         return maxSize != Integer.MAX_VALUE && maxSize >= 0;
-    }
-
-    private String nameOf(String className, String fieldName) {
-        return String.format("%s#%s", className, fieldName);
     }
 
 }

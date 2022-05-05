@@ -16,9 +16,9 @@ class SqlTimestampFieldTest extends FieldTest {
     @Override
     @BeforeEach
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).after("1991-01-23T00:00:00Z").before("1991-02-22T00:00:00Z").build();
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).after("1991-01-23T00:00:00Z").before("1991-02-22T00:00:00Z").build();
         typeName = ClassName.get(Timestamp.class);
-        modelField = new SqlTimestampField().create(fieldPattern);
+        modelField = new SqlTimestampField().create(fieldCustomization);
     }
 
     @Override

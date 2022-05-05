@@ -1,7 +1,7 @@
 package io.github.easymodeling.modeler.field.datetime;
 
 import com.squareup.javapoet.ClassName;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.randomizer.Randomizer;
 import io.github.easymodeling.randomizer.datetime.InstantRandomizer;
@@ -17,11 +17,11 @@ public class InstantField extends AbstractDateTimeField<Instant> {
     }
 
     @Override
-    public InstantField create(FieldPattern field, ModelField... valueFields) {
+    public InstantField create(FieldCustomization field, ModelField... valueFields) {
         return new InstantField(field);
     }
 
-    private InstantField(FieldPattern field) {
+    private InstantField(FieldCustomization field) {
         super(TYPE, field);
     }
 

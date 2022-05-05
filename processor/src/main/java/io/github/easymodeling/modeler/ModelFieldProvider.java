@@ -29,81 +29,81 @@ public class ModelFieldProvider {
         this.modelUniqueQueue = ModelUniqueQueue.instance();
     }
 
-    public ModelField provide(TypeMirror typeMirror, FieldPattern fieldPattern) {
+    public ModelField provide(TypeMirror typeMirror, FieldCustomization fieldCustomization) {
         try {
-            final ModelField field = findField(typeMirror, fieldPattern);
-            log.debug("Model field created for [%s] is %s", fieldPattern.qualifiedName(), field);
+            final ModelField field = findField(typeMirror, fieldCustomization);
+            log.debug("Model field created for [%s] is %s", fieldCustomization.qualifiedName(), field);
             return field;
         } catch (FieldNotSupportedException e) {
-            return new UnknownField(TypeName.get(typeMirror), fieldPattern);
+            return new UnknownField(TypeName.get(typeMirror), fieldCustomization);
         }
     }
 
-    private ModelField findField(TypeMirror typeMirror, FieldPattern fieldPattern) {
-        log.debug("field [%s] with type %s as %s", fieldPattern.qualifiedName(), typeMirror, typeMirror.getKind());
+    private ModelField findField(TypeMirror typeMirror, FieldCustomization fieldCustomization) {
+        log.debug("field [%s] with type %s as %s", fieldCustomization.qualifiedName(), typeMirror, typeMirror.getKind());
 
         if (typeMirror.getKind().isPrimitive()) {
-            return plainField(typeMirror, fieldPattern);
+            return plainField(typeMirror, fieldCustomization);
         }
         if (typeMirror.getKind().equals(TypeKind.ARRAY)) {
-            return arrayField((ArrayType) typeMirror, fieldPattern);
+            return arrayField((ArrayType) typeMirror, fieldCustomization);
         }
         if (typeMirror.getKind().equals(TypeKind.DECLARED)) {
             final DeclaredType declaredType = (DeclaredType) typeMirror;
             final TypeName typeName = TypeName.get(declaredType);
             if (declaredType.asElement().getKind().equals(ElementKind.ENUM)) {
-                return new EnumField(typeName, fieldPattern);
+                return new EnumField(typeName, fieldCustomization);
             }
             final String typeCanonicalName = typeName.toString();
             if (!typeCanonicalName.startsWith("java.")) {
                 modelUniqueQueue.add(typeCanonicalName);
-                return new CustomField(typeName, fieldPattern);
+                return new CustomField(typeName, fieldCustomization);
             }
             final List<? extends TypeMirror> typeArguments = declaredType.getTypeArguments();
             if (!typeArguments.isEmpty()) {
                 log.debug("nested types: %s", typeArguments);
-                return containerField(declaredType, fieldPattern);
+                return containerField(declaredType, fieldCustomization);
             }
-            return plainField(typeMirror, fieldPattern);
+            return plainField(typeMirror, fieldCustomization);
         }
         throw new FieldNotSupportedException();
     }
 
-    private ModelField nestedField(TypeMirror typeMirror, FieldPattern fieldPattern) {
-        final ModelField nestedField = findField(typeMirror, fieldPattern);
+    private ModelField nestedField(TypeMirror typeMirror, FieldCustomization fieldCustomization) {
+        final ModelField nestedField = findField(typeMirror, fieldCustomization);
         if (nestedField instanceof PrimitiveArrayField) {
             throw new FieldNotSupportedException();
         }
         return nestedField;
     }
 
-    private Container arrayField(ArrayType typeMirror, FieldPattern fieldPattern) {
+    private Container arrayField(ArrayType typeMirror, FieldCustomization fieldCustomization) {
         final ArrayTypeName arrayTypeName = ArrayTypeName.get(typeMirror);
         final TypeMirror rawType = rawType(typeMirror);
         if (rawType.getKind().isPrimitive()) {
-            return new PrimitiveArrayField(arrayTypeName, fieldPattern, plainField(rawType, fieldPattern));
+            return new PrimitiveArrayField(arrayTypeName, fieldCustomization, plainField(rawType, fieldCustomization));
         }
-        return new ArrayField(arrayTypeName, fieldPattern, nestedField(typeMirror.getComponentType(), fieldPattern));
+        return new ArrayField(arrayTypeName, fieldCustomization, nestedField(typeMirror.getComponentType(), fieldCustomization));
     }
 
-    private ModelField containerField(DeclaredType parameterizedTypeMirror, FieldPattern fieldPattern) {
+    private ModelField containerField(DeclaredType parameterizedTypeMirror, FieldCustomization fieldCustomization) {
         final TypeName rawType = ((ParameterizedTypeName) TypeName.get(parameterizedTypeMirror)).rawType;
         final ModelField[] modelFields = parameterizedTypeMirror.getTypeArguments().stream()
-                .map(typeMirror -> nestedField(typeMirror, fieldPattern))
+                .map(typeMirror -> nestedField(typeMirror, fieldCustomization))
                 .toArray(ModelField[]::new);
         try {
             return ModelFieldRegistry.container(rawType).orElseThrow(FieldNotSupportedException::new)
-                    .create(fieldPattern, modelFields);
+                    .create(fieldCustomization, modelFields);
         } catch (ArrayIndexOutOfBoundsException obe) {
             throw new FieldNotSupportedException();
         }
     }
 
-    private ModelField plainField(TypeMirror typeMirror, FieldPattern fieldPattern) {
+    private ModelField plainField(TypeMirror typeMirror, FieldCustomization fieldCustomization) {
         TypeName type = TypeName.get(typeMirror);
         return ModelFieldRegistry.plainField(type)
                 .orElseThrow(FieldNotSupportedException::new)
-                .create(fieldPattern);
+                .create(fieldCustomization);
     }
 
     private TypeMirror rawType(TypeMirror typeMirror) {

@@ -20,10 +20,10 @@ class StreamFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).minSize(2).maxSize(9).build();
-        integerField = new IntegerField().create(fieldPattern);
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).minSize(2).maxSize(9).build();
+        integerField = new IntegerField().create(fieldCustomization);
         typeName = ParameterizedTypeName.get(Stream.class, Integer.class);
-        modelField = new StreamField().create(fieldPattern, integerField);
+        modelField = new StreamField().create(fieldCustomization, integerField);
     }
 
     @Override

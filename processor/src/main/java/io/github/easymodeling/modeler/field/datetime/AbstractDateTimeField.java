@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.datetime;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.PlainField;
 
 import java.time.Instant;
@@ -13,7 +13,7 @@ public abstract class AbstractDateTimeField<T> extends PlainField<T> {
     protected AbstractDateTimeField() {
     }
 
-    protected AbstractDateTimeField(TypeName type, FieldPattern field) {
+    protected AbstractDateTimeField(TypeName type, FieldCustomization field) {
         super(type, field);
     }
 

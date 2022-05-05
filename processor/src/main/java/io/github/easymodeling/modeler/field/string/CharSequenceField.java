@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.string;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.PlainField;
 
 import java.util.Optional;
@@ -17,7 +17,7 @@ public abstract class CharSequenceField<T extends CharSequence> extends PlainFie
     protected CharSequenceField() {
     }
 
-    protected CharSequenceField(TypeName type, FieldPattern field) {
+    protected CharSequenceField(TypeName type, FieldCustomization field) {
         super(type, field);
     }
 

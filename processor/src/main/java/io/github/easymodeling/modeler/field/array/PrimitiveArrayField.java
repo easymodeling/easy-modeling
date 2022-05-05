@@ -3,14 +3,14 @@ package io.github.easymodeling.modeler.field.array;
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.Container;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.randomizer.array.PrimitiveArrayRandomizer;
 
 public class PrimitiveArrayField extends Container {
 
-    public PrimitiveArrayField(ArrayTypeName type, FieldPattern field, ModelField elementField) {
+    public PrimitiveArrayField(ArrayTypeName type, FieldCustomization field, ModelField elementField) {
         super(type, field, elementField);
     }
 
@@ -54,7 +54,7 @@ public class PrimitiveArrayField extends Container {
     }
 
     @Override
-    public Container create(FieldPattern field, ModelField... valueFields) {
+    public Container create(FieldCustomization field, ModelField... valueFields) {
         throw new UnsupportedOperationException("Create primitive array with constructor");
     }
 }

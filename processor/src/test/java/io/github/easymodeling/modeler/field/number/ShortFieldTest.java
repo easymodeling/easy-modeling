@@ -24,9 +24,9 @@ class ShortFieldTest {
         @Override
         @BeforeEach
         protected void setUp() {
-            fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(-2.).max(9.).build();
+            fieldCustomization = FieldPatternFactory.one(FIELD_NAME).min(-2.).max(9.).build();
             typeName = ClassName.get(Short.class);
-            modelField = new ShortField().create(fieldPattern);
+            modelField = new ShortField().create(fieldCustomization);
         }
 
         @Override
@@ -43,9 +43,9 @@ class ShortFieldTest {
         @Override
         @BeforeEach
         protected void setUp() {
-            fieldPattern = FieldPatternFactory.one(FIELD_NAME).constant(12.).build();
+            fieldCustomization = FieldPatternFactory.one(FIELD_NAME).constant(12.).build();
             typeName = ClassName.get(Short.class);
-            modelField = new ShortField().create(fieldPattern);
+            modelField = new ShortField().create(fieldCustomization);
         }
 
         @Override
@@ -62,9 +62,9 @@ class ShortFieldTest {
         @Override
         @BeforeEach
         protected void setUp() {
-            fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(0.).max(2.).build();
+            fieldCustomization = FieldPatternFactory.one(FIELD_NAME).min(0.).max(2.).build();
             typeName = TypeName.SHORT;
-            modelField = new ShortField().create(fieldPattern);
+            modelField = new ShortField().create(fieldCustomization);
         }
 
         @Override

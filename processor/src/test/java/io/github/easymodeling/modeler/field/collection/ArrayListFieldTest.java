@@ -20,10 +20,10 @@ class ArrayListFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).build();
-        integerField = new IntegerField().create(fieldPattern);
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).build();
+        integerField = new IntegerField().create(fieldCustomization);
         typeName = ParameterizedTypeName.get(ArrayList.class, Integer.class);
-        modelField = new ArrayListField().create(fieldPattern, integerField);
+        modelField = new ArrayListField().create(fieldCustomization, integerField);
     }
 
     @Override

@@ -13,9 +13,9 @@ class EnumFieldTest extends FieldTest {
     @Override
     @BeforeEach
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).build();
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).build();
         typeName = ClassName.get(SomeEnum.class);
-        modelField = new EnumField(typeName, fieldPattern);
+        modelField = new EnumField(typeName, fieldCustomization);
     }
 
     @Override

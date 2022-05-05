@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.string;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.FieldTest;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
@@ -20,9 +20,9 @@ class StringBuilderFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).string(STRING_CONSTANT).build();
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).string(STRING_CONSTANT).build();
         typeName = ClassName.get(StringBuilder.class);
-        modelField = new StringBuilderField().create(fieldPattern);
+        modelField = new StringBuilderField().create(fieldCustomization);
     }
 
     @Override
@@ -35,8 +35,8 @@ class StringBuilderFieldTest extends FieldTest {
 
     @Test
     void should_generate_initializer_with_min_max_and_char_range() {
-        FieldPattern fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(2.).max(40.).alphabetic(true).build();
-        ModelField modelField = new StringBuilderField().create(fieldPattern);
+        FieldCustomization fieldCustomization = FieldPatternFactory.one(FIELD_NAME).min(2.).max(40.).alphabetic(true).build();
+        ModelField modelField = new StringBuilderField().create(fieldCustomization);
         final CodeBlock initializer = modelField.initializer();
 
         assertThat(initializer)

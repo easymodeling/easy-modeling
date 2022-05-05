@@ -20,10 +20,10 @@ class LinkedListFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).minSize(2).maxSize(5).build();
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).minSize(2).maxSize(5).build();
         typeName = ParameterizedTypeName.get(LinkedList.class, Integer.class);
-        integerField = new IntegerField().create(fieldPattern);
-        modelField = new LinkedListField().create(fieldPattern, integerField);
+        integerField = new IntegerField().create(fieldCustomization);
+        modelField = new LinkedListField().create(fieldCustomization, integerField);
     }
 
     @Override

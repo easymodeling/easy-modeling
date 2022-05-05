@@ -24,9 +24,9 @@ class LongFieldTest {
         @Override
         @BeforeEach
         protected void setUp() {
-            fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(-2.).max(9.).build();
+            fieldCustomization = FieldPatternFactory.one(FIELD_NAME).min(-2.).max(9.).build();
             typeName = ClassName.get(Long.class);
-            modelField = new LongField().create(fieldPattern);
+            modelField = new LongField().create(fieldCustomization);
         }
 
         @Override
@@ -43,9 +43,9 @@ class LongFieldTest {
         @Override
         @BeforeEach
         protected void setUp() {
-            fieldPattern = FieldPatternFactory.one(FIELD_NAME).constant(12.).build();
+            fieldCustomization = FieldPatternFactory.one(FIELD_NAME).constant(12.).build();
             typeName = ClassName.get(Long.class);
-            modelField = new LongField().create(fieldPattern);
+            modelField = new LongField().create(fieldCustomization);
         }
 
         @Override
@@ -62,9 +62,9 @@ class LongFieldTest {
         @Override
         @BeforeEach
         protected void setUp() {
-            fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(0.).max(2.).build();
+            fieldCustomization = FieldPatternFactory.one(FIELD_NAME).min(0.).max(2.).build();
             typeName = TypeName.LONG;
-            modelField = new LongField().create(fieldPattern);
+            modelField = new LongField().create(fieldCustomization);
         }
 
         @Override

@@ -19,10 +19,10 @@ class ListFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).string("").min(3.).max(9.).minSize(20).maxSize(50).build();
-        this.stringField = new StringField().create(fieldPattern);
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).string("").min(3.).max(9.).minSize(20).maxSize(50).build();
+        this.stringField = new StringField().create(fieldCustomization);
         typeName = ParameterizedTypeName.get(List.class, String.class);
-        modelField = new ListField().create(fieldPattern, this.stringField);
+        modelField = new ListField().create(fieldCustomization, this.stringField);
     }
 
     @Override

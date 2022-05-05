@@ -14,9 +14,9 @@ class CharFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).build();
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).build();
         typeName = ClassName.get(Character.class);
-        modelField = new CharField().create(fieldPattern);
+        modelField = new CharField().create(fieldCustomization);
     }
 
     @Override

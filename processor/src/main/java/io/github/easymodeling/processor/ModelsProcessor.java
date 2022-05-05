@@ -7,7 +7,7 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import io.github.easymodeling.Model;
 import io.github.easymodeling.Models;
-import io.github.easymodeling.modeler.ModelWrapper;
+import io.github.easymodeling.modeler.ModeledClass;
 import io.github.easymodeling.modeler.ModelerGenerator;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -90,8 +90,8 @@ public class ModelsProcessor extends AbstractProcessor {
         try {
             final String canonicalName = classNameOf(model);
             avoidModelerFor(canonicalName);
-            final NamedModel namedModel = new NamedModel(canonicalName, model);
-            modelUniqueQueue.add(namedModel);
+            final AnnoModelWrapper annoModelWrapper = new AnnoModelWrapper(canonicalName, model);
+            modelUniqueQueue.add(annoModelWrapper);
         } catch (BasicTypeModelerException e) {
             log.warning(e.getMessage());
         }
@@ -110,21 +110,21 @@ public class ModelsProcessor extends AbstractProcessor {
 
     private void processModels() {
         while (true) {
-            NamedModel namedModel = modelUniqueQueue.poll();
-            if (null == namedModel) {
+            AnnoModelWrapper annoModelWrapper = modelUniqueQueue.poll();
+            if (null == annoModelWrapper) {
                 break;
             }
-            TypeElement type = getTypeElementOf(namedModel.getCanonicalName());
-            final ModelWrapper modelWrapper = new ModelWrapper(namedModel, type);
-            processModel(modelWrapper);
+            processModel(annoModelWrapper);
         }
     }
 
-    private void processModel(ModelWrapper modelWrapper) throws ProcessingException {
-        final ModelerGenerator modelFactory = new ModelerGenerator(modelWrapper);
+    private void processModel(AnnoModelWrapper annoModelWrapper) throws ProcessingException {
+        TypeElement type = getTypeElementOf(annoModelWrapper.getCanonicalName());
+        final ModeledClass modeledClass = new ModeledClass(annoModelWrapper, type);
+        final ModelerGenerator modelFactory = new ModelerGenerator(modeledClass);
         final TypeSpec factory = modelFactory.createType();
         try {
-            final String pkg = modelWrapper.getModelPackage();
+            final String pkg = modeledClass.getModelPackage();
             JavaFile.builder(pkg, factory).build()
                     .writeTo(filer);
         } catch (IOException e) {

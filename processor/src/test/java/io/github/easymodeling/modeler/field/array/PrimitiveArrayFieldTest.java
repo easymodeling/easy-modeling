@@ -19,10 +19,10 @@ class PrimitiveArrayFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).minSize(3).maxSize(8).build();
-        integerField = new IntegerField().create(fieldPattern);
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).minSize(3).maxSize(8).build();
+        integerField = new IntegerField().create(fieldCustomization);
         typeName = ArrayTypeName.of(int[].class);
-        modelField = new PrimitiveArrayField((ArrayTypeName) typeName, fieldPattern, integerField);
+        modelField = new PrimitiveArrayField((ArrayTypeName) typeName, fieldCustomization, integerField);
     }
 
     @Test

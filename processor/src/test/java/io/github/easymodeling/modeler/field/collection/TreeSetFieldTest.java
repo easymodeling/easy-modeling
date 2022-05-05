@@ -19,10 +19,10 @@ class TreeSetFieldTest extends FieldTest {
     @Override
     @BeforeEach
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).maxSize(100).build();
-        integerField = new IntegerField().create(fieldPattern);
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).maxSize(100).build();
+        integerField = new IntegerField().create(fieldCustomization);
         typeName = ParameterizedTypeName.get(TreeSet.class, Integer.class);
-        modelField = new TreeSetField().create(fieldPattern, integerField);
+        modelField = new TreeSetField().create(fieldCustomization, integerField);
     }
 
     @Override

@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.number;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.randomizer.Randomizer;
 import io.github.easymodeling.randomizer.number.DoubleRandomizer;
@@ -16,11 +16,11 @@ public class DoubleField extends NumericField<Double> {
     }
 
     @Override
-    public DoubleField create(FieldPattern field, ModelField... valueFields) {
+    public DoubleField create(FieldCustomization field, ModelField... valueFields) {
         return new DoubleField(field);
     }
 
-    private DoubleField(FieldPattern field) {
+    private DoubleField(FieldCustomization field) {
         super(TYPE, field);
     }
 

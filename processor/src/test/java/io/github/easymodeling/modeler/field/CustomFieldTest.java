@@ -13,9 +13,9 @@ class CustomFieldTest extends FieldTest {
     @Override
     @BeforeEach
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).build();
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).build();
         typeName = ClassName.get(SomeTest.class);
-        modelField = new CustomField(typeName, fieldPattern);
+        modelField = new CustomField(typeName, fieldCustomization);
     }
 
     @Override

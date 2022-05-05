@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.primitive;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.modeler.field.PlainField;
 import io.github.easymodeling.randomizer.Randomizer;
@@ -17,11 +17,11 @@ public class BooleanField extends PlainField<Boolean> {
     }
 
     @Override
-    public BooleanField create(FieldPattern field, ModelField... valueFields) {
+    public BooleanField create(FieldCustomization field, ModelField... valueFields) {
         return new BooleanField(field);
     }
 
-    private BooleanField(FieldPattern field) {
+    private BooleanField(FieldCustomization field) {
         super(TYPE, field);
     }
 

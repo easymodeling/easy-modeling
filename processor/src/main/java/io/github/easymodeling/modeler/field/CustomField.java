@@ -3,12 +3,12 @@ package io.github.easymodeling.modeler.field;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import io.github.easymodeling.processor.GenerationPatterns;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.randomizer.CustomTypeRandomizer;
 
 public class CustomField extends ModelField {
 
-    public CustomField(TypeName type, FieldPattern field) {
+    public CustomField(TypeName type, FieldCustomization field) {
         super(type, field);
     }
 
@@ -19,7 +19,7 @@ public class CustomField extends ModelField {
     }
 
     @Override
-    public ModelField create(FieldPattern field, ModelField... valueFields) {
+    public ModelField create(FieldCustomization field, ModelField... valueFields) {
         throw new UnsupportedOperationException("Create CustomerField with constructor");
     }
 }

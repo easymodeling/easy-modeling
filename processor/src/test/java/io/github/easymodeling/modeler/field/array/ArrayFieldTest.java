@@ -27,10 +27,10 @@ class ArrayFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).minSize(2).maxSize(5).min(1.).max(3.).build();
-        integerField = new IntegerField().create(fieldPattern);
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).minSize(2).maxSize(5).min(1.).max(3.).build();
+        integerField = new IntegerField().create(fieldCustomization);
         typeName = ArrayTypeName.of(Integer.class);
-        modelField = new ArrayField(typeName, fieldPattern, integerField);
+        modelField = new ArrayField(typeName, fieldCustomization, integerField);
     }
 
     @Override
@@ -43,7 +43,7 @@ class ArrayFieldTest extends FieldTest {
 
     @Test
     void should_not_invoke_create() {
-        final Throwable throwable = catchThrowable(() -> new ArrayField(typeName, fieldPattern, integerField).create(fieldPattern));
+        final Throwable throwable = catchThrowable(() -> new ArrayField(typeName, fieldCustomization, integerField).create(fieldCustomization));
 
         assertThat(throwable).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -53,8 +53,8 @@ class ArrayFieldTest extends FieldTest {
 
         @Test
         void should_generate_statement_of_array() {
-            final PlainField<Integer> integerField = new IntegerField().create(fieldPattern);
-            final Container arrayField = new ArrayField(ArrayTypeName.of(Integer.class), fieldPattern, integerField);
+            final PlainField<Integer> integerField = new IntegerField().create(fieldCustomization);
+            final Container arrayField = new ArrayField(ArrayTypeName.of(Integer.class), fieldCustomization, integerField);
 
             final CodeBlock initialValue = arrayField.initialValue();
 
@@ -64,9 +64,9 @@ class ArrayFieldTest extends FieldTest {
 
         @Test
         void should_generate_statement_of_matrix() {
-            final PlainField<Integer> integerField = new IntegerField().create(fieldPattern);
-            final Container arrayField = new ArrayField(ArrayTypeName.get(Integer[].class), fieldPattern, integerField);
-            final Container matrixField = new ArrayField(ArrayTypeName.get(Integer[][].class), fieldPattern, arrayField);
+            final PlainField<Integer> integerField = new IntegerField().create(fieldCustomization);
+            final Container arrayField = new ArrayField(ArrayTypeName.get(Integer[].class), fieldCustomization, integerField);
+            final Container matrixField = new ArrayField(ArrayTypeName.get(Integer[][].class), fieldCustomization, arrayField);
 
             final CodeBlock initialValue = matrixField.initialValue();
 
@@ -77,10 +77,10 @@ class ArrayFieldTest extends FieldTest {
 
         @Test
         void should_generate_statement_of_cube() {
-            final PlainField<Instant> instantField = new InstantField().create(fieldPattern);
-            final Container arrayField = new ArrayField(ArrayTypeName.get(Instant[].class), fieldPattern, instantField);
-            final Container matrixField = new ArrayField(ArrayTypeName.get(Instant[][].class), fieldPattern, arrayField);
-            final Container cubeField = new ArrayField(ArrayTypeName.get(Instant[][][].class), fieldPattern, matrixField);
+            final PlainField<Instant> instantField = new InstantField().create(fieldCustomization);
+            final Container arrayField = new ArrayField(ArrayTypeName.get(Instant[].class), fieldCustomization, instantField);
+            final Container matrixField = new ArrayField(ArrayTypeName.get(Instant[][].class), fieldCustomization, arrayField);
+            final Container cubeField = new ArrayField(ArrayTypeName.get(Instant[][][].class), fieldCustomization, matrixField);
 
             final CodeBlock initialValue = cubeField.initialValue();
 

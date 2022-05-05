@@ -19,10 +19,10 @@ class HashSetFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).maxSize(100).build();
-        integerField = new IntegerField().create(fieldPattern);
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).maxSize(100).build();
+        integerField = new IntegerField().create(fieldCustomization);
         typeName = ParameterizedTypeName.get(HashSet.class, Integer.class);
-        modelField = new HashSetField().create(fieldPattern, integerField);
+        modelField = new HashSetField().create(fieldCustomization, integerField);
     }
 
     @Override

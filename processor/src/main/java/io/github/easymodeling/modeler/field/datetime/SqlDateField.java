@@ -1,7 +1,7 @@
 package io.github.easymodeling.modeler.field.datetime;
 
 import com.squareup.javapoet.ClassName;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.randomizer.Randomizer;
 import io.github.easymodeling.randomizer.datetime.SqlDateRandomizer;
@@ -17,11 +17,11 @@ public class SqlDateField extends AbstractDateTimeField<Date> {
     }
 
     @Override
-    public SqlDateField create(FieldPattern field, ModelField... valueFields) {
+    public SqlDateField create(FieldCustomization field, ModelField... valueFields) {
         return new SqlDateField(field);
     }
 
-    private SqlDateField(FieldPattern field) {
+    private SqlDateField(FieldCustomization field) {
         super(TYPE, field);
     }
 

@@ -2,11 +2,11 @@ package io.github.easymodeling.modeler.field;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 
 public class UnknownField extends ModelField {
 
-    public UnknownField(TypeName type, FieldPattern field) {
+    public UnknownField(TypeName type, FieldCustomization field) {
         super(type, field);
     }
 
@@ -21,7 +21,7 @@ public class UnknownField extends ModelField {
     }
 
     @Override
-    public PlainField<Void> create(FieldPattern field, ModelField... valueFields) {
+    public PlainField<Void> create(FieldCustomization field, ModelField... valueFields) {
         throw new UnsupportedOperationException("Create UnknownField with constructor");
     }
 }

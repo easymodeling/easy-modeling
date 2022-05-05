@@ -6,7 +6,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import io.github.easymodeling.ReflectionUtil;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 
 import javax.lang.model.element.Modifier;
 
@@ -18,16 +18,17 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
 
     protected String name;
 
+    // TODO: 06.05.22 use field.qualifiedName
     protected String qualifiedName;
 
-    protected FieldPattern field;
+    protected FieldCustomization field;
 
     protected ModelField() {
     }
 
-    public abstract ModelField create(FieldPattern field, ModelField... valueFields);
+    public abstract ModelField create(FieldCustomization field, ModelField... valueFields);
 
-    protected ModelField(TypeName type, FieldPattern field) {
+    protected ModelField(TypeName type, FieldCustomization field) {
         this.type = type;
         this.name = field.fieldName();
         this.qualifiedName = field.qualifiedName();

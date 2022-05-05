@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.stream;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.PlainField;
 import io.github.easymodeling.modeler.field.number.NumericField;
 
@@ -13,7 +13,7 @@ public abstract class PrimitiveTypeStreamField<S extends BaseStream<E, S>, E ext
     protected PrimitiveTypeStreamField() {
     }
 
-    protected PrimitiveTypeStreamField(TypeName type, FieldPattern field) {
+    protected PrimitiveTypeStreamField(TypeName type, FieldCustomization field) {
         super(type, field);
     }
 

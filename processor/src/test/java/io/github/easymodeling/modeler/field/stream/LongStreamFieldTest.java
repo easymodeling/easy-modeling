@@ -17,9 +17,9 @@ class LongStreamFieldTest extends FieldTest {
     @Override
     @BeforeEach
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(2.).max(9.).minSize(10).maxSize(15).build();
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).min(2.).max(9.).minSize(10).maxSize(15).build();
         typeName = ClassName.get(LongStream.class);
-        modelField = new LongStreamField().create(fieldPattern);
+        modelField = new LongStreamField().create(fieldCustomization);
     }
 
     @Override
@@ -27,6 +27,6 @@ class LongStreamFieldTest extends FieldTest {
         final CodeBlock initializer = modelField.initializer();
 
         assertThat(initializer).hasToString(
-                "new " + $(LongStreamRandomizer.class) + "(" + new LongField().create(fieldPattern).initializer() + ", 10, 15)");
+                "new " + $(LongStreamRandomizer.class) + "(" + new LongField().create(fieldCustomization).initializer() + ", 10, 15)");
     }
 }

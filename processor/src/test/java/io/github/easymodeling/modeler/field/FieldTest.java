@@ -5,7 +5,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import io.github.easymodeling.ReflectionUtil;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +21,7 @@ public abstract class FieldTest {
 
     public static final String QUALIFIED_NAME = CLASS_NAME + "#" + FIELD_NAME;
 
-    protected FieldPattern fieldPattern;
+    protected FieldCustomization fieldCustomization;
 
     protected TypeName typeName;
 

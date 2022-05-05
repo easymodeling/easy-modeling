@@ -23,8 +23,8 @@ class ModelerGeneratorTest {
 
     @BeforeEach
     void setUp() {
-        final ModelWrapper modelWrapper = ModelWrapperFactory.create(SomeClass.class).build();
-        modelerGenerator = new ModelerGenerator(modelWrapper);
+        final ModeledClass modeledClass = ModelWrapperFactory.create(SomeClass.class).build();
+        modelerGenerator = new ModelerGenerator(modeledClass);
     }
 
     @Test

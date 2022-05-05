@@ -14,9 +14,9 @@ class BooleanFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).build();
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).build();
         typeName = ClassName.get(Boolean.class);
-        modelField = new BooleanField().create(fieldPattern);
+        modelField = new BooleanField().create(fieldCustomization);
     }
 
     @Override

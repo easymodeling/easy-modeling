@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.number;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.PlainField;
 
 import java.util.Optional;
@@ -12,7 +12,7 @@ public abstract class NumericField<T extends Number> extends PlainField<T> {
     protected NumericField() {
     }
 
-    protected NumericField(TypeName type, FieldPattern field) {
+    protected NumericField(TypeName type, FieldCustomization field) {
         super(type, field);
     }
 

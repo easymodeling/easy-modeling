@@ -1,7 +1,7 @@
 package io.github.easymodeling.modeler.provider;
 
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.modeler.field.datetime.InstantField;
 import io.github.easymodeling.modeler.field.number.DoubleField;
@@ -30,9 +30,9 @@ public class PlainFieldProviderTest extends ModelFieldProviderTest {
     @ParameterizedTest
     @MethodSource({"plainFields", "unboxedFields"})
     void should_provide_field(TypeMirror typeMirror, Class<? extends ModelField> fieldClass) {
-        final FieldPattern fieldPattern = FieldPatternFactory.any();
+        final FieldCustomization fieldCustomization = FieldPatternFactory.any();
 
-        final ModelField plainField = modelFieldProvider.provide(typeMirror, fieldPattern);
+        final ModelField plainField = modelFieldProvider.provide(typeMirror, fieldCustomization);
 
         assertThat(plainField).isInstanceOf(fieldClass);
     }

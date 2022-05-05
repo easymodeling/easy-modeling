@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.number;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.randomizer.Randomizer;
 import io.github.easymodeling.randomizer.number.ByteRandomizer;
@@ -16,11 +16,11 @@ public class ByteField extends NumericField<Byte> {
     }
 
     @Override
-    public ByteField create(FieldPattern field, ModelField... valueFields) {
+    public ByteField create(FieldCustomization field, ModelField... valueFields) {
         return new ByteField(field);
     }
 
-    private ByteField(FieldPattern field) {
+    private ByteField(FieldCustomization field) {
         super(TYPE, field);
     }
 

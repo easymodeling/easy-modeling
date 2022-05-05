@@ -17,9 +17,9 @@ class IntStreamFieldTest extends FieldTest {
     @Override
     @BeforeEach
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(2.).max(9.).minSize(10).maxSize(15).build();
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).min(2.).max(9.).minSize(10).maxSize(15).build();
         typeName = ClassName.get(IntStream.class);
-        modelField = new IntStreamField().create(fieldPattern);
+        modelField = new IntStreamField().create(fieldCustomization);
     }
 
     @Override
@@ -27,6 +27,6 @@ class IntStreamFieldTest extends FieldTest {
         final CodeBlock initializer = modelField.initializer();
 
         assertThat(initializer).hasToString(
-                "new " + $(IntStreamRandomizer.class) + "(" + new IntegerField().create(fieldPattern).initializer() + ", 10, 15)");
+                "new " + $(IntStreamRandomizer.class) + "(" + new IntegerField().create(fieldCustomization).initializer() + ", 10, 15)");
     }
 }

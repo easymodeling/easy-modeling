@@ -22,11 +22,11 @@ class TreeMapFieldTest extends FieldTest {
     @Override
     @BeforeEach
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(3.).max(8.).maxSize(20).build();
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).min(3.).max(8.).maxSize(20).build();
         typeName = ParameterizedTypeName.get(TreeMap.class, String.class, Integer.class);
-        keyField = new StringField().create(fieldPattern);
-        valueField = new IntegerField().create(fieldPattern);
-        modelField = new TreeMapField().create(fieldPattern, keyField, valueField);
+        keyField = new StringField().create(fieldCustomization);
+        valueField = new IntegerField().create(fieldCustomization);
+        modelField = new TreeMapField().create(fieldCustomization, keyField, valueField);
     }
 
     @Override

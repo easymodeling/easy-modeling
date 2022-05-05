@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.randomizer.Randomizer;
 
 public abstract class PlainField<T> extends ModelField {
@@ -10,7 +10,7 @@ public abstract class PlainField<T> extends ModelField {
     protected PlainField() {
     }
 
-    protected PlainField(TypeName type, FieldPattern field) {
+    protected PlainField(TypeName type, FieldCustomization field) {
         super(type, field);
     }
 

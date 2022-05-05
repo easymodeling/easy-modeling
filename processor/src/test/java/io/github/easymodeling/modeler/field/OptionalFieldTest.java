@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.string.StringField;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
 import io.github.easymodeling.randomizer.OptionalRandomizer;
@@ -21,18 +21,18 @@ class OptionalFieldTest extends FieldTest {
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(3.).max(9.).build();
-        stringField = new StringField().create(fieldPattern);
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).min(3.).max(9.).build();
+        stringField = new StringField().create(fieldCustomization);
         typeName = ParameterizedTypeName.get(Optional.class, String.class);
-        modelField = new OptionalField().create(fieldPattern, stringField);
+        modelField = new OptionalField().create(fieldCustomization, stringField);
     }
 
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
     void should_generate_init_value_based_on_field_wrapper(boolean allowEmpty) {
-        FieldPattern fieldPattern = FieldPatternFactory.one("field_name").allowEmpty(allowEmpty).build();
-        final PlainField<String> stringField = new StringField().create(fieldPattern);
-        final OptionalField optionalField = new OptionalField().create(fieldPattern, stringField);
+        FieldCustomization fieldCustomization = FieldPatternFactory.one("field_name").allowEmpty(allowEmpty).build();
+        final PlainField<String> stringField = new StringField().create(fieldCustomization);
+        final OptionalField optionalField = new OptionalField().create(fieldCustomization, stringField);
 
         final CodeBlock initialValue = optionalField.initialValue();
 

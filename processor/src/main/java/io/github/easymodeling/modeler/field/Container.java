@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -14,7 +14,7 @@ public abstract class Container extends ModelField {
     protected Container() {
     }
 
-    protected Container(TypeName type, FieldPattern field, ModelField... nestedFields) {
+    protected Container(TypeName type, FieldCustomization field, ModelField... nestedFields) {
         super(type, field);
         this.nestedFields = nestedFields;
     }
