@@ -2,8 +2,6 @@ package io.github.easymodeling.modeler;
 
 import com.squareup.javapoet.ClassName;
 import io.github.easymodeling.modeler.field.ModelField;
-import io.github.easymodeling.processor.AnnoModelWrapper;
-import io.github.easymodeling.processor.ProcessingException;
 
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
@@ -31,31 +29,25 @@ public class ModeledClass {
     public ModeledClass() {
     }
 
-    public ModeledClass(AnnoModelWrapper model, TypeElement typeElement) {
+    public ModeledClass(List<FieldCustomization> fieldCustomizations, TypeElement typeElement) {
         this.modelTypeName = ClassName.get(typeElement);
-        this.fields = initBuilderFields(model, typeElement);
+        this.fields = initBuilderFields(fieldCustomizations, typeElement);
     }
 
-    private List<ModelField> initBuilderFields(AnnoModelWrapper model, TypeElement typeElement) {
-        try {
-            final ModelFieldProvider fieldProvider = new ModelFieldProvider();
-            log.info("Create modeler for " + this.getModelTypeName());
-            final Map<String, FieldCustomization> customizedFields =
-                    model.getFieldCustomizations().stream().collect(Collectors.toMap(FieldCustomization::qualifiedName, Function.identity()));
-            return fieldsOf(typeElement)
-                    .stream()
-                    .map(element -> {
-                        final FieldCustomization emptyFieldCustomization = FieldCustomization.of(element);
-                        final FieldCustomization fieldCustomization = customizedFields.getOrDefault(emptyFieldCustomization.qualifiedName(), emptyFieldCustomization);
-                        // TODO: 06.05.22 try to remove the second argument
-                        return fieldProvider.provide(element.asType(), fieldCustomization);
-                    })
-                    .collect(Collectors.toList());
-        } catch (IllegalStateException e) {
-            // Do not support multiple declarations of the same field,
-            // let's see if it is possible or necessary to support it in the future
-            throw new ProcessingException("Duplicated fields declaration: " + e.getMessage());
-        }
+    private List<ModelField> initBuilderFields(List<FieldCustomization> fieldCustomizations, TypeElement typeElement) {
+        final ModelFieldProvider fieldProvider = new ModelFieldProvider();
+        log.info("Create modeler for " + this.getModelTypeName());
+        final Map<String, FieldCustomization> customizedFields =
+                fieldCustomizations.stream().distinct().collect(Collectors.toMap(FieldCustomization::qualifiedName, Function.identity()));
+        return fieldsOf(typeElement)
+                .stream()
+                .map(element -> {
+                    final FieldCustomization emptyFieldCustomization = FieldCustomization.of(element);
+                    final FieldCustomization fieldCustomization = customizedFields.getOrDefault(emptyFieldCustomization.qualifiedName(), emptyFieldCustomization);
+                    // TODO: 06.05.22 try to remove the second argument
+                    return fieldProvider.provide(element.asType(), fieldCustomization);
+                })
+                .collect(Collectors.toList());
     }
 
     private List<VariableElement> fieldsOf(TypeElement typeElement) {

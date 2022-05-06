@@ -6,6 +6,7 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import io.github.easymodeling.Model;
+import io.github.easymodeling.ModelUniqueQueue;
 import io.github.easymodeling.Models;
 import io.github.easymodeling.modeler.ModeledClass;
 import io.github.easymodeling.modeler.ModelerGenerator;
@@ -92,7 +93,7 @@ public class ModelsProcessor extends AbstractProcessor {
             avoidModelerFor(canonicalName);
             final AnnoModelWrapper annoModelWrapper = new AnnoModelWrapper(canonicalName, model);
             modelUniqueQueue.add(annoModelWrapper);
-        } catch (BasicTypeModelerException e) {
+        } catch (ProcessingException e) {
             log.warning(e.getMessage());
         }
     }
@@ -104,7 +105,7 @@ public class ModelsProcessor extends AbstractProcessor {
                 || typeElement.getKind().equals(ElementKind.INTERFACE)
                 || typeElement.getModifiers().contains(Modifier.ABSTRACT);
         if (abuseModeler) {
-            throw new BasicTypeModelerException(canonicalName);
+            throw new ProcessingException("Cannot generate modeler for " + canonicalName);
         }
     }
 
@@ -118,9 +119,9 @@ public class ModelsProcessor extends AbstractProcessor {
         }
     }
 
-    private void processModel(AnnoModelWrapper annoModelWrapper) throws ProcessingException {
+    private void processModel(AnnoModelWrapper annoModelWrapper) {
         TypeElement type = getTypeElementOf(annoModelWrapper.getCanonicalName());
-        final ModeledClass modeledClass = new ModeledClass(annoModelWrapper, type);
+        final ModeledClass modeledClass = new ModeledClass(annoModelWrapper.getFieldCustomizations(), type);
         final ModelerGenerator modelFactory = new ModelerGenerator(modeledClass);
         final TypeSpec factory = modelFactory.createType();
         try {
@@ -143,7 +144,7 @@ public class ModelsProcessor extends AbstractProcessor {
     private String classNameOf(MirroredTypeException mte) {
         final TypeMirror typeMirror = mte.getTypeMirror();
         if (!(typeMirror instanceof DeclaredType)) {
-            throw new BasicTypeModelerException(typeMirror.toString());
+            throw new ProcessingException(typeMirror.toString() + " is not a DeclaredType");
         }
         final DeclaredType declaredType = (DeclaredType) typeMirror;
         final TypeElement typeElement = (TypeElement) declaredType.asElement();

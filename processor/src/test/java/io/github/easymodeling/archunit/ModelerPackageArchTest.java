@@ -1,7 +1,6 @@
 package io.github.easymodeling.archunit;
 
 import com.tngtech.archunit.junit.AnalyzeClasses;
-import com.tngtech.archunit.junit.ArchIgnore;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
 import io.github.easymodeling.Field;
@@ -26,9 +25,8 @@ public class ModelerPackageArchTest {
                     .should().dependOnClassesThat().belongToAnyOf(Field.class);
 
     @ArchTest
-    @ArchIgnore
     private final ArchRule should_modeler_pkg_not_depends_on_processor_pkg =
             noClasses()
-                    .that().resideOutsideOfPackage("io.github.easymodeling.modeler")
+                    .that().resideInAPackage("io.github.easymodeling.modeler..")
                     .should().dependOnClassesThat().resideInAnyPackage("io.github.easymodeling.processor");
 }

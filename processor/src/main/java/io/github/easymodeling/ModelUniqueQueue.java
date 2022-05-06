@@ -1,4 +1,6 @@
-package io.github.easymodeling.processor;
+package io.github.easymodeling;
+
+import io.github.easymodeling.processor.AnnoModelWrapper;
 
 import java.util.Queue;
 import java.util.Set;
