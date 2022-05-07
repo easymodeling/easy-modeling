@@ -6,26 +6,29 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.modeler.field.StatementProvider;
 import io.github.easymodeling.processor.GenerationPatterns;
 import io.github.easymodeling.randomizer.ModelCache;
 import io.github.easymodeling.randomizer.Modeler;
 
 import javax.lang.model.element.Modifier;
+import java.util.List;
 
-public class ModelerGenerator {
+import static io.github.easymodeling.log.ProcessorLogger.log;
 
-    private final ModeledClass modeledClass;
+public class ModelerGenerator extends BuilderGenerator {
 
-    public ModelerGenerator(ModeledClass modeledClass) {
-        this.modeledClass = modeledClass;
+    public ModelerGenerator(ClassName className, List<ModelField> fields) {
+        super(className, fields);
     }
 
     public TypeSpec createType() {
+        log.info("Create modeler for " + className);
         final TypeSpec.Builder modeler = TypeSpec.classBuilder(modelerName())
                 .addModifiers(Modifier.PUBLIC)
-                .superclass(ParameterizedTypeName.get(ClassName.get(Modeler.class), modeledClass.getModelTypeName()));
-        final TypeSpec builder = new BuilderGenerator(modeledClass.getFields(), modeledClass.getModelTypeName()).createBuilder();
+                .superclass(ParameterizedTypeName.get(ClassName.get(Modeler.class), className));
+        final TypeSpec builder = createBuilder();
         modeler.addType(builder);
 
         modeler.addMethod(staticNextMethod());
@@ -39,7 +42,7 @@ public class ModelerGenerator {
     private MethodSpec staticNextMethod() {
         return MethodSpec.methodBuilder(GenerationPatterns.STATIC_NEXT_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .returns(modeledClass.getModelTypeName())
+                .returns(className)
                 .addStatement("return new $N().$N(null)", modelerName(), GenerationPatterns.BASE_MODELER_NEXT_METHOD_NAME)
                 .build();
     }
@@ -56,8 +59,8 @@ public class ModelerGenerator {
         return MethodSpec.methodBuilder(GenerationPatterns.TYPE_METHOD_NAME)
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PROTECTED)
-                .returns(ParameterizedTypeName.get(ClassName.get(Class.class), modeledClass.getModelTypeName()))
-                .addStatement("return $T.class", modeledClass.getModelTypeName())
+                .returns(ParameterizedTypeName.get(ClassName.get(Class.class), className))
+                .addStatement("return $T.class", className)
                 .build();
     }
 
@@ -66,14 +69,14 @@ public class ModelerGenerator {
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PROTECTED)
                 .returns(TypeName.VOID)
-                .addParameter(ParameterSpec.builder(modeledClass.getModelTypeName(), GenerationPatterns.MODEL_PARAMETER_NAME).build())
+                .addParameter(ParameterSpec.builder(className, GenerationPatterns.MODEL_PARAMETER_NAME).build())
                 .addParameter(ParameterSpec.builder(ModelCache.class, GenerationPatterns.MODEL_CACHE_PARAMETER_NAME).build());
-        modeledClass.getFields().stream().map(StatementProvider::populateStatement)
+        fields.stream().map(StatementProvider::populateStatement)
                 .forEach(builder::addStatement);
         return builder.build();
     }
 
     private String modelerName() {
-        return String.format(GenerationPatterns.MODELER_NAME_PATTERN, modeledClass.getModelTypeName().simpleName());
+        return String.format(GenerationPatterns.MODELER_NAME_PATTERN, className.simpleName());
     }
 }

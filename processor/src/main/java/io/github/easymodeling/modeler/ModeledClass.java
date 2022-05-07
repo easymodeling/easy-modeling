@@ -17,26 +17,23 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.github.easymodeling.log.ProcessorLogger.log;
-
 public class ModeledClass {
 
-    private ClassName modelTypeName;
+    private TypeElement typeElement;
 
-    private List<ModelField> fields;
+    private List<FieldCustomization> fieldCustomizations;
 
     @SuppressWarnings("unused")
     public ModeledClass() {
     }
 
-    public ModeledClass(List<FieldCustomization> fieldCustomizations, TypeElement typeElement) {
-        this.modelTypeName = ClassName.get(typeElement);
-        this.fields = initBuilderFields(fieldCustomizations, typeElement);
+    public ModeledClass(TypeElement typeElement, List<FieldCustomization> fieldCustomizations) {
+        this.typeElement = typeElement;
+        this.fieldCustomizations = fieldCustomizations;
     }
 
-    private List<ModelField> initBuilderFields(List<FieldCustomization> fieldCustomizations, TypeElement typeElement) {
+    public List<ModelField> fields() {
         final ModelFieldProvider fieldProvider = new ModelFieldProvider();
-        log.info("Create modeler for " + this.getModelTypeName());
         final Map<String, FieldCustomization> customizedFields =
                 fieldCustomizations.stream().distinct().collect(Collectors.toMap(FieldCustomization::qualifiedName, Function.identity()));
         return fieldsOf(typeElement)
@@ -66,15 +63,11 @@ public class ModeledClass {
                 .collect(Collectors.toList());
     }
 
-    public List<ModelField> getFields() {
-        return fields;
+    public String packageName() {
+        return className().packageName();
     }
 
-    public ClassName getModelTypeName() {
-        return modelTypeName;
-    }
-
-    public String getModelPackage() {
-        return modelTypeName.packageName();
+    public ClassName className() {
+        return ClassName.get(typeElement);
     }
 }

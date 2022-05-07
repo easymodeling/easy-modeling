@@ -7,13 +7,13 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import io.github.easymodeling.processor.GenerationPatterns;
-import io.github.easymodeling.modeler.helper.ModelWrapperFactory;
 import io.github.easymodeling.randomizer.ModelCache;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import javax.lang.model.element.Modifier;
+import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,8 +23,7 @@ class ModelerGeneratorTest {
 
     @BeforeEach
     void setUp() {
-        final ModeledClass modeledClass = ModelWrapperFactory.create(SomeClass.class).build();
-        modelerGenerator = new ModelerGenerator(modeledClass);
+        modelerGenerator = new ModelerGenerator(ClassName.get(SomeClass.class), new ArrayList<>());
     }
 
     @Test

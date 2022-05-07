@@ -120,13 +120,12 @@ public class ModelsProcessor extends AbstractProcessor {
     }
 
     private void processModel(AnnoModelWrapper annoModelWrapper) {
-        TypeElement type = getTypeElementOf(annoModelWrapper.getCanonicalName());
-        final ModeledClass modeledClass = new ModeledClass(annoModelWrapper.getFieldCustomizations(), type);
-        final ModelerGenerator modelFactory = new ModelerGenerator(modeledClass);
+        TypeElement typeElement = getTypeElementOf(annoModelWrapper.getCanonicalName());
+        final ModeledClass clazz = new ModeledClass(typeElement, annoModelWrapper.getFieldCustomizations());
+        final ModelerGenerator modelFactory = new ModelerGenerator(clazz.className(), clazz.fields());
         final TypeSpec factory = modelFactory.createType();
         try {
-            final String pkg = modeledClass.getModelPackage();
-            JavaFile.builder(pkg, factory).build()
+            JavaFile.builder(clazz.packageName(), factory).build()
                     .writeTo(filer);
         } catch (IOException e) {
             throw new ProcessingException("Error when generate factory: " + e.getMessage(), e);
