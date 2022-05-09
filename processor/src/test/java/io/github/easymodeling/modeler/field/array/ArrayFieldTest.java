@@ -3,7 +3,7 @@ package io.github.easymodeling.modeler.field.array;
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.CodeBlock;
 import io.github.easymodeling.modeler.field.Container;
-import io.github.easymodeling.modeler.field.FieldTest;
+import io.github.easymodeling.modeler.field.ModelFieldTest;
 import io.github.easymodeling.modeler.field.PlainField;
 import io.github.easymodeling.modeler.field.datetime.InstantField;
 import io.github.easymodeling.modeler.field.number.IntegerField;
@@ -20,7 +20,7 @@ import java.time.Instant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-class ArrayFieldTest extends FieldTest {
+class ArrayFieldTest extends ModelFieldTest {
 
     private PlainField<Integer> integerField;
 

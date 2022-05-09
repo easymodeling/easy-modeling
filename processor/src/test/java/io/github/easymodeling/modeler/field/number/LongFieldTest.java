@@ -5,7 +5,7 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.modeler.field.FieldTest;
+import io.github.easymodeling.modeler.field.ModelFieldTest;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
 import io.github.easymodeling.randomizer.number.LongRandomizer;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class LongFieldTest {
 
     @Nested
-    class RangedLongFieldTest extends FieldTest {
+    class RangedLongFieldTest extends ModelFieldTest {
 
         @Override
         @BeforeEach
@@ -38,7 +38,7 @@ class LongFieldTest {
     }
 
     @Nested
-    class ConstantLongFieldTest extends FieldTest {
+    class ConstantLongFieldTest extends ModelFieldTest {
 
         @Override
         @BeforeEach
@@ -57,7 +57,7 @@ class LongFieldTest {
     }
 
     @Nested
-    class UnboxedLongFieldTest extends FieldTest {
+    class UnboxedLongFieldTest extends ModelFieldTest {
 
         @Override
         @BeforeEach

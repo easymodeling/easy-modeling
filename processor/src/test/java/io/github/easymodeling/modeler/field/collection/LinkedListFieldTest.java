@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.collection;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
-import io.github.easymodeling.modeler.field.FieldTest;
+import io.github.easymodeling.modeler.field.ModelFieldTest;
 import io.github.easymodeling.modeler.field.PlainField;
 import io.github.easymodeling.modeler.field.number.IntegerField;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
@@ -13,7 +13,7 @@ import java.util.LinkedList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class LinkedListFieldTest extends FieldTest {
+class LinkedListFieldTest extends ModelFieldTest {
 
     private PlainField<Integer> integerField;
 

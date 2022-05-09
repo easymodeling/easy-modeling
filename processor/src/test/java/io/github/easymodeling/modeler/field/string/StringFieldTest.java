@@ -3,7 +3,7 @@ package io.github.easymodeling.modeler.field.string;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import io.github.easymodeling.modeler.FieldCustomization;
-import io.github.easymodeling.modeler.field.FieldTest;
+import io.github.easymodeling.modeler.field.ModelFieldTest;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
 import io.github.easymodeling.randomizer.string.StringRandomizer;
@@ -15,7 +15,7 @@ import static io.github.easymodeling.randomizer.string.CharSequenceRandomizer.NU
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-class StringFieldTest extends FieldTest {
+class StringFieldTest extends ModelFieldTest {
 
     public static final String STRING_CONSTANT = "some-string";
 

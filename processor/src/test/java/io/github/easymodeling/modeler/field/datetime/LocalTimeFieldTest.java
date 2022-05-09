@@ -3,7 +3,7 @@ package io.github.easymodeling.modeler.field.datetime;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import io.github.easymodeling.modeler.FieldCustomization;
-import io.github.easymodeling.modeler.field.FieldTest;
+import io.github.easymodeling.modeler.field.ModelFieldTest;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
 import io.github.easymodeling.randomizer.datetime.LocalTimeRandomizer;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +15,7 @@ import java.time.LocalTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class LocalTimeFieldTest extends FieldTest {
+class LocalTimeFieldTest extends ModelFieldTest {
 
     @Override
     @BeforeEach

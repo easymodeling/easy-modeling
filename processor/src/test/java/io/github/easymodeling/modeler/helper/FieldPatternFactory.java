@@ -6,7 +6,7 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import static io.github.easymodeling.modeler.field.FieldTest.CLASS_NAME;
+import static io.github.easymodeling.modeler.field.ModelFieldTest.CLASS_NAME;
 
 public class FieldPatternFactory {
 

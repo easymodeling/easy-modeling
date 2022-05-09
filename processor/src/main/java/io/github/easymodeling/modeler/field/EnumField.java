@@ -18,6 +18,6 @@ public class EnumField extends ModelField {
 
     @Override
     public ModelField create(FieldCustomization field, ModelField... valueFields) {
-        return null;
+        throw new UnsupportedOperationException("Create EnumField with constructor");
     }
 }

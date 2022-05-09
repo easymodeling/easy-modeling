@@ -5,7 +5,7 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.modeler.field.FieldTest;
+import io.github.easymodeling.modeler.field.ModelFieldTest;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
 import io.github.easymodeling.randomizer.number.IntegerRandomizer;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class IntegerFieldTest {
 
     @Nested
-    class RangedIntegerFieldTest extends FieldTest {
+    class RangedIntegerFieldTest extends ModelFieldTest {
 
         @Override
         @BeforeEach
@@ -38,7 +38,7 @@ class IntegerFieldTest {
     }
 
     @Nested
-    class ConstantIntegerFieldTest extends FieldTest {
+    class ConstantIntegerFieldTest extends ModelFieldTest {
 
         @Override
         @BeforeEach
@@ -57,7 +57,7 @@ class IntegerFieldTest {
     }
 
     @Nested
-    class UnboxedIntegerFieldTest extends FieldTest {
+    class UnboxedIntegerFieldTest extends ModelFieldTest {
 
         @Override
         @BeforeEach

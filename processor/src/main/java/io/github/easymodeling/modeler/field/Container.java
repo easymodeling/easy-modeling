@@ -34,9 +34,4 @@ public abstract class Container extends ModelField {
     protected abstract CodeBlock initializerType();
 
     protected abstract CodeBlock initializerParameter();
-
-    @Override
-    public String toString() {
-        return String.format("%s<%s>", this.getClass().getSimpleName(), Arrays.stream(nestedFields).map(ModelField::toString).collect(Collectors.joining(", ")));
-    }
 }

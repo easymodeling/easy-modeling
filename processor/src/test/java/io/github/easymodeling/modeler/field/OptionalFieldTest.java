@@ -14,7 +14,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class OptionalFieldTest extends FieldTest {
+class OptionalFieldTest extends ModelFieldTest {
 
     private StringField stringField;
 

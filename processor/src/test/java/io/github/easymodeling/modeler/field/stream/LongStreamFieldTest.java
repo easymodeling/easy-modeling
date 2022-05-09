@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.stream;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import io.github.easymodeling.modeler.field.FieldTest;
+import io.github.easymodeling.modeler.field.ModelFieldTest;
 import io.github.easymodeling.modeler.field.number.LongField;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
 import io.github.easymodeling.randomizer.stream.LongStreamRandomizer;
@@ -12,7 +12,7 @@ import java.util.stream.LongStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class LongStreamFieldTest extends FieldTest {
+class LongStreamFieldTest extends ModelFieldTest {
 
     @Override
     @BeforeEach

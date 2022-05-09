@@ -114,6 +114,6 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName();
+        return type.toString();
     }
 }

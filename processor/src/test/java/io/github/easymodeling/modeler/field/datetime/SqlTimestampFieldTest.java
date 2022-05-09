@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.datetime;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import io.github.easymodeling.modeler.field.FieldTest;
+import io.github.easymodeling.modeler.field.ModelFieldTest;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
 import io.github.easymodeling.randomizer.datetime.SqlTimestampRandomizer;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class SqlTimestampFieldTest extends FieldTest {
+class SqlTimestampFieldTest extends ModelFieldTest {
 
     @Override
     @BeforeEach

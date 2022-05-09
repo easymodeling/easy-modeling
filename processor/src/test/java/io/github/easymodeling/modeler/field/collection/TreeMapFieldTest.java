@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.collection;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
-import io.github.easymodeling.modeler.field.FieldTest;
+import io.github.easymodeling.modeler.field.ModelFieldTest;
 import io.github.easymodeling.modeler.field.number.IntegerField;
 import io.github.easymodeling.modeler.field.string.StringField;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
@@ -13,7 +13,7 @@ import java.util.TreeMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class TreeMapFieldTest extends FieldTest {
+class TreeMapFieldTest extends ModelFieldTest {
 
     private StringField keyField;
 

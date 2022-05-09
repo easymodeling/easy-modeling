@@ -6,12 +6,14 @@ import com.squareup.javapoet.MethodSpec;
 import io.github.easymodeling.ReflectionUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import javax.lang.model.element.Modifier;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public abstract class FieldTest extends AbstractFieldTest {
+public abstract class ModelFieldTest extends AbstractFieldTest {
 
     @BeforeEach
     protected abstract void setUp();
@@ -70,6 +72,30 @@ public abstract class FieldTest extends AbstractFieldTest {
         final CodeBlock initialValue = modelField.initialValue();
 
         assertThat(initialValue).isEqualTo(CodeBlock.of("$L.next()", initializer));
+    }
+
+    @Test
+    void should_get_field_name() {
+        final String fieldName = modelField.fieldName();
+
+        assertThat(fieldName).isEqualTo(FIELD_NAME);
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    void should_set_inherited(boolean inherited) {
+        modelField.setInherited(inherited);
+
+        assertThat(modelField.isInherited()).isEqualTo(inherited);
+    }
+
+    @Test
+    void should_set_hidden() {
+        assertThat(modelField.isHidden()).isEqualTo(false);
+
+        modelField.setHidden();
+
+        assertThat(modelField.isHidden()).isEqualTo(true);
     }
 
     @Test
