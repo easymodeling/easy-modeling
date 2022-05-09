@@ -16,12 +16,12 @@ public class ShortField extends NumericField<Short> {
     }
 
     @Override
-    public ShortField create(FieldCustomization field, ModelField... valueFields) {
-        return new ShortField(field);
+    public ShortField create(FieldCustomization customization, ModelField... valueFields) {
+        return new ShortField(customization);
     }
 
-    private ShortField(FieldCustomization field) {
-        super(TYPE, field);
+    private ShortField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

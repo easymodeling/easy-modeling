@@ -17,12 +17,12 @@ public class BooleanField extends PlainField<Boolean> {
     }
 
     @Override
-    public BooleanField create(FieldCustomization field, ModelField... valueFields) {
-        return new BooleanField(field);
+    public BooleanField create(FieldCustomization customization, ModelField... valueFields) {
+        return new BooleanField(customization);
     }
 
-    private BooleanField(FieldCustomization field) {
-        super(TYPE, field);
+    private BooleanField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

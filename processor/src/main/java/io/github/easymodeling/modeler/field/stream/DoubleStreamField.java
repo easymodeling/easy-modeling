@@ -20,12 +20,12 @@ public class DoubleStreamField extends PrimitiveTypeStreamField<DoubleStream, Do
     }
 
     @Override
-    public PlainField<DoubleStream> create(FieldCustomization field, ModelField... valueFields) {
-        return new DoubleStreamField(field);
+    public PlainField<DoubleStream> create(FieldCustomization customization, ModelField... valueFields) {
+        return new DoubleStreamField(customization);
     }
 
-    private DoubleStreamField(FieldCustomization field) {
-        super(TYPE, field);
+    private DoubleStreamField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

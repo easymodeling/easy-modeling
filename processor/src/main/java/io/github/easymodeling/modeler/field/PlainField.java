@@ -10,8 +10,8 @@ public abstract class PlainField<T> extends ModelField {
     protected PlainField() {
     }
 
-    protected PlainField(TypeName type, FieldCustomization field) {
-        super(type, field);
+    protected PlainField(TypeName type, FieldCustomization customization) {
+        super(type, customization);
     }
 
     @Override

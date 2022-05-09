@@ -17,12 +17,12 @@ public class LocalTimeField extends AbstractDateTimeField<LocalTime> {
     }
 
     @Override
-    public LocalTimeField create(FieldCustomization field, ModelField... valueFields) {
-        return new LocalTimeField(field);
+    public LocalTimeField create(FieldCustomization customization, ModelField... valueFields) {
+        return new LocalTimeField(customization);
     }
 
-    private LocalTimeField(FieldCustomization field) {
-        super(TYPE, field);
+    private LocalTimeField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

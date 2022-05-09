@@ -17,12 +17,12 @@ public class SqlDateField extends AbstractDateTimeField<Date> {
     }
 
     @Override
-    public SqlDateField create(FieldCustomization field, ModelField... valueFields) {
-        return new SqlDateField(field);
+    public SqlDateField create(FieldCustomization customization, ModelField... valueFields) {
+        return new SqlDateField(customization);
     }
 
-    private SqlDateField(FieldCustomization field) {
-        super(TYPE, field);
+    private SqlDateField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

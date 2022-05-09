@@ -20,12 +20,12 @@ public class IntStreamField extends PrimitiveTypeStreamField<IntStream, Integer>
     }
 
     @Override
-    public PlainField<IntStream> create(FieldCustomization field, ModelField... valueFields) {
-        return new IntStreamField(field);
+    public PlainField<IntStream> create(FieldCustomization customization, ModelField... valueFields) {
+        return new IntStreamField(customization);
     }
 
-    private IntStreamField(FieldCustomization field) {
-        super(TYPE, field);
+    private IntStreamField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

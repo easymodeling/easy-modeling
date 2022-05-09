@@ -17,12 +17,12 @@ public class ArrayListField extends AbstractCollectionField {
     }
 
     @Override
-    public ArrayListField create(FieldCustomization field, ModelField... nestedFields) {
-        return new ArrayListField(field, nestedFields[0]);
+    public ArrayListField create(FieldCustomization customization, ModelField... nestedFields) {
+        return new ArrayListField(customization, nestedFields[0]);
     }
 
-    private ArrayListField(FieldCustomization field, ModelField nestedField) {
-        super(TYPE, field, nestedField);
+    private ArrayListField(FieldCustomization customization, ModelField nestedField) {
+        super(TYPE, customization, nestedField);
     }
 
     @Override

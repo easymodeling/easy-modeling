@@ -16,12 +16,12 @@ public class IntegerField extends NumericField<Integer> {
     }
 
     @Override
-    public IntegerField create(FieldCustomization field, ModelField... valueFields) {
-        return new IntegerField(field);
+    public IntegerField create(FieldCustomization customization, ModelField... valueFields) {
+        return new IntegerField(customization);
     }
 
-    private IntegerField(FieldCustomization field) {
-        super(TYPE, field);
+    private IntegerField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

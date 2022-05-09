@@ -17,12 +17,12 @@ public class TreeSetField extends AbstractCollectionField {
     }
 
     @Override
-    public TreeSetField create(FieldCustomization field, ModelField... nestedFields) {
-        return new TreeSetField(field, nestedFields[0]);
+    public TreeSetField create(FieldCustomization customization, ModelField... nestedFields) {
+        return new TreeSetField(customization, nestedFields[0]);
     }
 
-    private TreeSetField(FieldCustomization field, ModelField nestedField) {
-        super(TYPE, field, nestedField);
+    private TreeSetField(FieldCustomization customization, ModelField nestedField) {
+        super(TYPE, customization, nestedField);
     }
 
     @Override

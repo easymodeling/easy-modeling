@@ -14,8 +14,8 @@ public abstract class Container extends ModelField {
     protected Container() {
     }
 
-    protected Container(TypeName type, FieldCustomization field, ModelField... nestedFields) {
-        super(type, field);
+    protected Container(TypeName type, FieldCustomization customization, ModelField... nestedFields) {
+        super(type, customization);
         this.nestedFields = nestedFields;
     }
 

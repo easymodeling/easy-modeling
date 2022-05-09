@@ -20,12 +20,12 @@ public class LongStreamField extends PrimitiveTypeStreamField<LongStream, Long> 
     }
 
     @Override
-    public PlainField<LongStream> create(FieldCustomization field, ModelField... valueFields) {
-        return new LongStreamField(field);
+    public PlainField<LongStream> create(FieldCustomization customization, ModelField... valueFields) {
+        return new LongStreamField(customization);
     }
 
-    private LongStreamField(FieldCustomization field) {
-        super(TYPE, field);
+    private LongStreamField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

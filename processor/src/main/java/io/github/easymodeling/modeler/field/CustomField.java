@@ -8,8 +8,8 @@ import io.github.easymodeling.randomizer.CustomTypeRandomizer;
 
 public class CustomField extends ModelField {
 
-    public CustomField(TypeName type, FieldCustomization field) {
-        super(type, field);
+    public CustomField(TypeName type, FieldCustomization customization) {
+        super(type, customization);
     }
 
     @Override
@@ -19,7 +19,7 @@ public class CustomField extends ModelField {
     }
 
     @Override
-    public ModelField create(FieldCustomization field, ModelField... valueFields) {
+    public ModelField create(FieldCustomization customization, ModelField... valueFields) {
         throw new UnsupportedOperationException("Create CustomerField with constructor");
     }
 }

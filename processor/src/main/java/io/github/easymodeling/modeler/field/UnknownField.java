@@ -6,8 +6,8 @@ import io.github.easymodeling.modeler.FieldCustomization;
 
 public class UnknownField extends ModelField {
 
-    public UnknownField(TypeName type, FieldCustomization field) {
-        super(type, field);
+    public UnknownField(TypeName type, FieldCustomization customization) {
+        super(type, customization);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class UnknownField extends ModelField {
     }
 
     @Override
-    public PlainField<Void> create(FieldCustomization field, ModelField... valueFields) {
+    public PlainField<Void> create(FieldCustomization customization, ModelField... valueFields) {
         throw new UnsupportedOperationException("Create UnknownField with constructor");
     }
 }

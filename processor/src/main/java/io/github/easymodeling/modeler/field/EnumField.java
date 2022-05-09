@@ -7,8 +7,8 @@ import io.github.easymodeling.randomizer.EnumRandomizer;
 
 public class EnumField extends ModelField {
 
-    public EnumField(TypeName type, FieldCustomization field) {
-        super(type, field);
+    public EnumField(TypeName type, FieldCustomization customization) {
+        super(type, customization);
     }
 
     @Override
@@ -17,7 +17,7 @@ public class EnumField extends ModelField {
     }
 
     @Override
-    public ModelField create(FieldCustomization field, ModelField... valueFields) {
+    public ModelField create(FieldCustomization customization, ModelField... valueFields) {
         throw new UnsupportedOperationException("Create EnumField with constructor");
     }
 }

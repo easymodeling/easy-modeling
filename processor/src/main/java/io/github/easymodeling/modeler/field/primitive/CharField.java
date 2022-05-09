@@ -17,12 +17,12 @@ public class CharField extends PlainField<Character> {
     }
 
     @Override
-    public CharField create(FieldCustomization field, ModelField... valueFields) {
-        return new CharField(field);
+    public CharField create(FieldCustomization customization, ModelField... valueFields) {
+        return new CharField(customization);
     }
 
-    private CharField(FieldCustomization field) {
-        super(TYPE, field);
+    private CharField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

@@ -17,12 +17,12 @@ public class MapField extends AbstractMapField {
     }
 
     @Override
-    public MapField create(FieldCustomization field, ModelField... nestedFields) {
-        return new MapField(field, nestedFields[0], nestedFields[1]);
+    public MapField create(FieldCustomization customization, ModelField... nestedFields) {
+        return new MapField(customization, nestedFields[0], nestedFields[1]);
     }
 
-    private MapField(FieldCustomization field, ModelField keyField, ModelField valueField) {
-        super(TYPE, field, keyField, valueField);
+    private MapField(FieldCustomization customization, ModelField keyField, ModelField valueField) {
+        super(TYPE, customization, keyField, valueField);
     }
 
     @Override

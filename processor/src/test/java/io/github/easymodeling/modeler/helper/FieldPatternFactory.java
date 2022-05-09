@@ -10,13 +10,13 @@ import static io.github.easymodeling.modeler.field.ModelFieldTest.CLASS_NAME;
 
 public class FieldPatternFactory {
 
-    private final FieldCustomization field;
+    private final FieldCustomization fieldCustomization;
 
     private FieldPatternFactory(String className, String fieldName) {
         try {
             final Constructor<FieldCustomization> declaredConstructor = FieldCustomization.class.getDeclaredConstructor(String.class, String.class);
             declaredConstructor.setAccessible(true);
-            this.field = declaredConstructor.newInstance(className, fieldName);
+            this.fieldCustomization = declaredConstructor.newInstance(className, fieldName);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
                  InvocationTargetException e) {
             throw new RuntimeException(e);
@@ -88,12 +88,12 @@ public class FieldPatternFactory {
     }
 
     public FieldCustomization build() {
-        return field;
+        return fieldCustomization;
     }
 
     public FieldPatternFactory decorate(String name, Object value) {
         try {
-            FieldUtils.writeField(field, name, value, true);
+            FieldUtils.writeField(fieldCustomization, name, value, true);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }

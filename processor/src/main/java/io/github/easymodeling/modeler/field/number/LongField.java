@@ -16,12 +16,12 @@ public class LongField extends NumericField<Long> {
     }
 
     @Override
-    public LongField create(FieldCustomization field, ModelField... valueFields) {
-        return new LongField(field);
+    public LongField create(FieldCustomization customization, ModelField... valueFields) {
+        return new LongField(customization);
     }
 
-    private LongField(FieldCustomization field) {
-        super(TYPE, field);
+    private LongField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

@@ -9,8 +9,8 @@ import io.github.easymodeling.randomizer.array.ArrayRandomizer;
 
 public class ArrayField extends Container {
 
-    public ArrayField(TypeName type, FieldCustomization field, ModelField elementField) {
-        super(type, field, elementField);
+    public ArrayField(TypeName type, FieldCustomization customization, ModelField elementField) {
+        super(type, customization, elementField);
     }
 
     @Override
@@ -24,15 +24,15 @@ public class ArrayField extends Container {
     }
 
     private int maxSize() {
-        return field.maxSize().orElse(20);
+        return customization.maxSize().orElse(20);
     }
 
     private int minSize() {
-        return field.minSize().orElse(1);
+        return customization.minSize().orElse(1);
     }
 
     @Override
-    public Container create(FieldCustomization field, ModelField... valueFields) {
+    public Container create(FieldCustomization customization, ModelField... valueFields) {
         throw new UnsupportedOperationException("Create ArrayField with constructor");
     }
 }

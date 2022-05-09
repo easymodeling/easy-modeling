@@ -16,12 +16,12 @@ public class ByteField extends NumericField<Byte> {
     }
 
     @Override
-    public ByteField create(FieldCustomization field, ModelField... valueFields) {
-        return new ByteField(field);
+    public ByteField create(FieldCustomization customization, ModelField... valueFields) {
+        return new ByteField(customization);
     }
 
-    private ByteField(FieldCustomization field) {
-        super(TYPE, field);
+    private ByteField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

@@ -17,12 +17,12 @@ public class InstantField extends AbstractDateTimeField<Instant> {
     }
 
     @Override
-    public InstantField create(FieldCustomization field, ModelField... valueFields) {
-        return new InstantField(field);
+    public InstantField create(FieldCustomization customization, ModelField... valueFields) {
+        return new InstantField(customization);
     }
 
-    private InstantField(FieldCustomization field) {
-        super(TYPE, field);
+    private InstantField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

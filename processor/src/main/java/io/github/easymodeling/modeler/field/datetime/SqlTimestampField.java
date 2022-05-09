@@ -17,12 +17,12 @@ public class SqlTimestampField extends AbstractDateTimeField<Timestamp> {
     }
 
     @Override
-    public SqlTimestampField create(FieldCustomization field, ModelField... valueFields) {
-        return new SqlTimestampField(field);
+    public SqlTimestampField create(FieldCustomization customization, ModelField... valueFields) {
+        return new SqlTimestampField(customization);
     }
 
-    private SqlTimestampField(FieldCustomization field) {
-        super(TYPE, field);
+    private SqlTimestampField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

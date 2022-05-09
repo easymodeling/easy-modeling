@@ -16,12 +16,12 @@ public class DoubleField extends NumericField<Double> {
     }
 
     @Override
-    public DoubleField create(FieldCustomization field, ModelField... valueFields) {
-        return new DoubleField(field);
+    public DoubleField create(FieldCustomization customization, ModelField... valueFields) {
+        return new DoubleField(customization);
     }
 
-    private DoubleField(FieldCustomization field) {
-        super(TYPE, field);
+    private DoubleField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

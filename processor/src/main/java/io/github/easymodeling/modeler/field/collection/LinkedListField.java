@@ -17,12 +17,12 @@ public class LinkedListField extends AbstractCollectionField {
     }
 
     @Override
-    public LinkedListField create(FieldCustomization field, ModelField... nestedFields) {
-        return new LinkedListField(field, nestedFields[0]);
+    public LinkedListField create(FieldCustomization customization, ModelField... nestedFields) {
+        return new LinkedListField(customization, nestedFields[0]);
     }
 
-    private LinkedListField(FieldCustomization field, ModelField nestedField) {
-        super(TYPE, field, nestedField);
+    private LinkedListField(FieldCustomization customization, ModelField nestedField) {
+        super(TYPE, customization, nestedField);
     }
 
     @Override

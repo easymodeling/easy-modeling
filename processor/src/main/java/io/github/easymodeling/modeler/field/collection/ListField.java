@@ -17,12 +17,12 @@ public class ListField extends AbstractCollectionField {
     }
 
     @Override
-    public ListField create(FieldCustomization field, ModelField... nestedFields) {
-        return new ListField(field, nestedFields[0]);
+    public ListField create(FieldCustomization customization, ModelField... nestedFields) {
+        return new ListField(customization, nestedFields[0]);
     }
 
-    private ListField(FieldCustomization field, ModelField nestedFields) {
-        super(TYPE, field, nestedFields);
+    private ListField(FieldCustomization customization, ModelField nestedFields) {
+        super(TYPE, customization, nestedFields);
     }
 
     @Override

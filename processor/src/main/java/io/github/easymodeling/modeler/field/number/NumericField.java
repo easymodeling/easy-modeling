@@ -12,8 +12,8 @@ public abstract class NumericField<T extends Number> extends PlainField<T> {
     protected NumericField() {
     }
 
-    protected NumericField(TypeName type, FieldCustomization field) {
-        super(type, field);
+    protected NumericField(TypeName type, FieldCustomization customization) {
+        super(type, customization);
     }
 
     @Override
@@ -26,18 +26,18 @@ public abstract class NumericField<T extends Number> extends PlainField<T> {
     }
 
     protected Optional<CodeBlock> constantParameter() {
-        return field.constant()
+        return customization.constant()
                 .filter(d -> d <= ceiling() && d >= floor())
                 .map(this::constantInit)
                 .map(init -> CodeBlock.of("$L", init));
     }
 
     private double min() {
-        return field.min().map(bound -> Math.max(bound, floor())).orElse(0.);
+        return customization.min().map(bound -> Math.max(bound, floor())).orElse(0.);
     }
 
     private double max() {
-        return field.max().map(bound -> Math.min(bound, ceiling())).orElse(ceiling());
+        return customization.max().map(bound -> Math.min(bound, ceiling())).orElse(ceiling());
     }
 
     protected abstract double ceiling();

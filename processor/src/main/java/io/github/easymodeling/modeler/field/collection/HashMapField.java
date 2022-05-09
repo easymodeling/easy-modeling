@@ -17,12 +17,12 @@ public class HashMapField extends AbstractMapField {
     }
 
     @Override
-    public HashMapField create(FieldCustomization field, ModelField... nestedFields) {
-        return new HashMapField(field, nestedFields[0], nestedFields[1]);
+    public HashMapField create(FieldCustomization customization, ModelField... nestedFields) {
+        return new HashMapField(customization, nestedFields[0], nestedFields[1]);
     }
 
-    private HashMapField(FieldCustomization field, ModelField keyField, ModelField valueField) {
-        super(TYPE, field, keyField, valueField);
+    private HashMapField(FieldCustomization customization, ModelField keyField, ModelField valueField) {
+        super(TYPE, customization, keyField, valueField);
     }
 
     @Override

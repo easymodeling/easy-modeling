@@ -19,12 +19,12 @@ public class StreamField extends Container {
     }
 
     @Override
-    public StreamField create(FieldCustomization field, ModelField... valueFields) {
-        return new StreamField(field, valueFields[0]);
+    public StreamField create(FieldCustomization customization, ModelField... valueFields) {
+        return new StreamField(customization, valueFields[0]);
     }
 
-    private StreamField(FieldCustomization field, ModelField nestedField) {
-        super(ParameterizedTypeName.get(TYPE, nestedField.type()), field, nestedField);
+    private StreamField(FieldCustomization customization, ModelField nestedField) {
+        super(ParameterizedTypeName.get(TYPE, nestedField.type()), customization, nestedField);
     }
 
     @Override
@@ -38,10 +38,10 @@ public class StreamField extends Container {
     }
 
     private int maxSize() {
-        return field.maxSize().orElse(20);
+        return customization.maxSize().orElse(20);
     }
 
     private int minSize() {
-        return field.minSize().orElse(1);
+        return customization.minSize().orElse(1);
     }
 }

@@ -17,12 +17,12 @@ public class ZonedDateTimeField extends AbstractDateTimeField<ZonedDateTime> {
     }
 
     @Override
-    public ZonedDateTimeField create(FieldCustomization field, ModelField... valueFields) {
-        return new ZonedDateTimeField(field);
+    public ZonedDateTimeField create(FieldCustomization customization, ModelField... valueFields) {
+        return new ZonedDateTimeField(customization);
     }
 
-    private ZonedDateTimeField(FieldCustomization field) {
-        super(TYPE, field);
+    private ZonedDateTimeField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

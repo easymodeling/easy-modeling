@@ -13,23 +13,23 @@ public abstract class PrimitiveTypeStreamField<S extends BaseStream<E, S>, E ext
     protected PrimitiveTypeStreamField() {
     }
 
-    protected PrimitiveTypeStreamField(TypeName type, FieldCustomization field) {
-        super(type, field);
+    protected PrimitiveTypeStreamField(TypeName type, FieldCustomization customization) {
+        super(type, customization);
     }
 
     @Override
     protected CodeBlock initializerParameter() {
-        final CodeBlock elementInitializer = element().create(field).initializer();
+        final CodeBlock elementInitializer = element().create(customization).initializer();
         return CodeBlock.of("$L, $L, $L", elementInitializer, minSize(), maxSize());
     }
 
     protected abstract NumericField<E> element();
 
     private int maxSize() {
-        return field.maxSize().orElse(20);
+        return customization.maxSize().orElse(20);
     }
 
     private int minSize() {
-        return field.minSize().orElse(1);
+        return customization.minSize().orElse(1);
     }
 }

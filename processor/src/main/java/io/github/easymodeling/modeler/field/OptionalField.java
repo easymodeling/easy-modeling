@@ -17,12 +17,12 @@ public class OptionalField extends Container {
     }
 
     @Override
-    public OptionalField create(FieldCustomization field, ModelField... valueFields) {
-        return new OptionalField(field, valueFields[0]);
+    public OptionalField create(FieldCustomization customization, ModelField... valueFields) {
+        return new OptionalField(customization, valueFields[0]);
     }
 
-    private OptionalField(FieldCustomization field, ModelField valueField) {
-        super(ParameterizedTypeName.get(TYPE, valueField.type()), field, valueField);
+    private OptionalField(FieldCustomization customization, ModelField valueField) {
+        super(ParameterizedTypeName.get(TYPE, valueField.type()), customization, valueField);
     }
 
     @Override
@@ -32,6 +32,6 @@ public class OptionalField extends Container {
 
     @Override
     protected CodeBlock initializerParameter() {
-        return CodeBlock.of("$L", field.allowEmpty());
+        return CodeBlock.of("$L", customization.allowEmpty());
     }
 }

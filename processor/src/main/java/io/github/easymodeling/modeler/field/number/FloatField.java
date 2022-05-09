@@ -16,12 +16,12 @@ public class FloatField extends NumericField<Float> {
     }
 
     @Override
-    public FloatField create(FieldCustomization field, ModelField... valueFields) {
-        return new FloatField(field);
+    public FloatField create(FieldCustomization customization, ModelField... valueFields) {
+        return new FloatField(customization);
     }
 
-    private FloatField(FieldCustomization field) {
-        super(TYPE, field);
+    private FloatField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

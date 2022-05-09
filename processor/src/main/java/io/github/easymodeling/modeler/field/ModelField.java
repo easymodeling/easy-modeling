@@ -21,8 +21,7 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
     // TODO: 06.05.22 use field.qualifiedName
     protected String qualifiedName;
 
-    // TODO: 07.05.22 rename
-    protected FieldCustomization field;
+    protected FieldCustomization customization;
 
     protected boolean inherited;
 
@@ -31,14 +30,13 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
     protected ModelField() {
     }
 
-    public abstract ModelField create(FieldCustomization field, ModelField... valueFields);
+    public abstract ModelField create(FieldCustomization customization, ModelField... valueFields);
 
-    // TODO: 08.05.22 rename `field` => `customization`
-    protected ModelField(TypeName type, FieldCustomization field) {
+    protected ModelField(TypeName type, FieldCustomization customization) {
         this.type = type;
-        this.name = field.fieldName();
-        this.qualifiedName = field.qualifiedName();
-        this.field = field;
+        this.name = customization.fieldName();
+        this.qualifiedName = customization.qualifiedName();
+        this.customization = customization;
     }
 
     public CodeBlock initialValue() {

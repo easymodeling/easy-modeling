@@ -17,12 +17,12 @@ public class TreeMapField extends AbstractMapField {
     }
 
     @Override
-    public TreeMapField create(FieldCustomization field, ModelField... nestedFields) {
-        return new TreeMapField(field, nestedFields[0], nestedFields[1]);
+    public TreeMapField create(FieldCustomization customization, ModelField... nestedFields) {
+        return new TreeMapField(customization, nestedFields[0], nestedFields[1]);
     }
 
-    private TreeMapField(FieldCustomization field, ModelField keyField, ModelField valueField) {
-        super(TYPE, field, keyField, valueField);
+    private TreeMapField(FieldCustomization customization, ModelField keyField, ModelField valueField) {
+        super(TYPE, customization, keyField, valueField);
     }
 
     @Override

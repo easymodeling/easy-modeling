@@ -17,12 +17,12 @@ public class SetField extends AbstractCollectionField {
     }
 
     @Override
-    public SetField create(FieldCustomization field, ModelField... nestedFields) {
-        return new SetField(field, nestedFields[0]);
+    public SetField create(FieldCustomization customization, ModelField... nestedFields) {
+        return new SetField(customization, nestedFields[0]);
     }
 
-    private SetField(FieldCustomization field, ModelField nestedField) {
-        super(TYPE, field, nestedField);
+    private SetField(FieldCustomization customization, ModelField nestedField) {
+        super(TYPE, customization, nestedField);
     }
 
     @Override

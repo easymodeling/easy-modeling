@@ -17,12 +17,12 @@ public class HashSetField extends AbstractCollectionField {
     }
 
     @Override
-    public HashSetField create(FieldCustomization field, ModelField... nestedFields) {
-        return new HashSetField(field, nestedFields[0]);
+    public HashSetField create(FieldCustomization customization, ModelField... nestedFields) {
+        return new HashSetField(customization, nestedFields[0]);
     }
 
-    private HashSetField(FieldCustomization field, ModelField nestedField) {
-        super(TYPE, field, nestedField);
+    private HashSetField(FieldCustomization customization, ModelField nestedField) {
+        super(TYPE, customization, nestedField);
     }
 
     @Override

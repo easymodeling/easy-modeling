@@ -15,12 +15,12 @@ public class StringField extends CharSequenceField<String> {
     }
 
     @Override
-    public StringField create(FieldCustomization field, ModelField... valueFields) {
-        return new StringField(field);
+    public StringField create(FieldCustomization customization, ModelField... valueFields) {
+        return new StringField(customization);
     }
 
-    private StringField(FieldCustomization field) {
-        super(TYPE, field);
+    private StringField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override
