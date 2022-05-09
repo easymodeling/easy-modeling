@@ -11,4 +11,6 @@ public class Derived extends Base {
     public String derivedString;
 
     public BigDecimal hiddenField;
+
+    public Long hidden;
 }

@@ -39,6 +39,7 @@ public class ModelFieldProvider {
         }
     }
 
+    // TODO: 06.05.22 try to remove the second argument
     private ModelField findField(TypeMirror typeMirror, FieldCustomization fieldCustomization) {
         log.debug("field [%s] with type %s as %s", fieldCustomization.qualifiedName(), typeMirror, typeMirror.getKind());
 

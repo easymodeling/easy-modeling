@@ -21,13 +21,19 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
     // TODO: 06.05.22 use field.qualifiedName
     protected String qualifiedName;
 
+    // TODO: 07.05.22 rename
     protected FieldCustomization field;
+
+    protected boolean inherited;
+
+    protected boolean hidden;
 
     protected ModelField() {
     }
 
     public abstract ModelField create(FieldCustomization field, ModelField... valueFields);
 
+    // TODO: 08.05.22 rename `field` => `customization`
     protected ModelField(TypeName type, FieldCustomization field) {
         this.type = type;
         this.name = field.fieldName();
@@ -70,12 +76,36 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
         return setFieldStatement(CodeBlock.of("$L", identity()));
     }
 
-    public String identity() {
+    private String identity() {
+        return hidden ? qualifiedIdentity() : name;
+    }
+
+    private String qualifiedIdentity() {
+        return qualifiedName.replace(".", "_").replace("#", "$");
+    }
+
+    public String fieldName() {
         return name;
     }
 
     public TypeName type() {
         return type;
+    }
+
+    public void setInherited(Boolean inherited) {
+        this.inherited = inherited;
+    }
+
+    public boolean isInherited() {
+        return inherited;
+    }
+
+    public void setHidden() {
+        this.hidden = true;
+    }
+
+    public boolean isHidden() {
+        return hidden;
     }
 
     private CodeBlock setFieldStatement(CodeBlock value) {

@@ -45,6 +45,7 @@ public class FieldCustomization {
 
     boolean allowEmpty = false;
 
+    // TODO: 08.05.22 Decouple from VariableElement
     public static FieldCustomization of(VariableElement element) {
         return new FieldCustomization(element.getEnclosingElement().toString(), element.getSimpleName().toString());
     }
@@ -52,6 +53,10 @@ public class FieldCustomization {
     private FieldCustomization(String className, String fieldName) {
         this.fieldName = fieldName;
         this.className = className;
+    }
+
+    public boolean matches(VariableElement element) {
+        return className.equals(element.getEnclosingElement().toString()) && fieldName.equals(element.getSimpleName().toString());
     }
 
     public FieldCustomization(

@@ -11,6 +11,7 @@ public class ReflectionUtil {
     private ReflectionUtil() {
     }
 
+    // TODO: 08.05.22 replace classname with class
     public static void setField(Object model, String qualifiedFieldName, Object value) {
         try {
             final QualifiedField qualifiedField = new QualifiedField(qualifiedFieldName);

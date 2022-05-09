@@ -65,6 +65,7 @@ public class BuilderGenerator {
 
     private List<MethodSpec> builderSetters() {
         return fields.stream()
+                .filter(modelField -> !modelField.isHidden())
                 .map(BuilderMember::setter)
                 .collect(Collectors.toList());
     }
