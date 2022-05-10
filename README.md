@@ -4,7 +4,7 @@
 [![maven][maven-badge]][search-maven]
 [![license][license-badge]][license-2.0]
 
-[![TEST][test-badge]][test-link]
+[![CI][ci-badge]][ci-link]
 [![Quality Gate Status][sonar-badge]][sonar-link]
 [![Coverage][coverage-badge]][coverage-link]
 
@@ -18,9 +18,9 @@ A Java annotation processor that generates randomly populated objects for test u
 
 [license-badge]: https://img.shields.io/github/license/easymodeling/easy-modeling?color=yellow
 
-[test-badge]: https://github.com/easymodeling/easy-modeling/actions/workflows/test.yml/badge.svg?branch=master
+[ci-badge]: https://github.com/easymodeling/easy-modeling/actions/workflows/ci.yml/badge.svg?branch=master
 
-[test-link]: https://github.com/easymodeling/easy-modeling/actions/workflows/test.yml
+[ci-link]: https://github.com/easymodeling/easy-modeling/actions/workflows/ci.yml
 
 [sonar-badge]: https://sonarcloud.io/api/project_badges/measure?project=easymodeling_easy-modeling&metric=alert_status
 

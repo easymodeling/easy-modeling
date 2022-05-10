@@ -1,0 +1,29 @@
+name: Publish Artifacts
+description: Publish artifacts to maven central
+
+inputs:
+  signing-secret-key-ring-b64:
+    required: true
+    description: The base64 encoded signing secret key ring
+  signing-key-id:
+    required: true
+    description: The signing key id
+  signing-key-password:
+    required: true
+    description: The signing key password
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 'Decode Secret'
+      shell: bash
+      run: |
+        echo "${{ inputs.signing-secret-key-ring-b64 }}" > ~/.gradle/secring.gpg.b64
+        base64 -d ~/.gradle/secring.gpg.b64 > ~/.gradle/secring.gpg
+    - name: 'Publish Artifact'
+      shell: bash
+      run: |
+        ./gradlew clean build publish \
+          -Psigning.keyId=${{ inputs.signing-key-id }} \
+          -Psigning.password="${{ inputs.signing-key-password }}" \
+          -Psigning.secretKeyRingFile=$(echo ~/.gradle/secring.gpg)

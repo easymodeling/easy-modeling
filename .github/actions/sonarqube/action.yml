@@ -1,0 +1,14 @@
+name: Sonarqube Scan
+description: Scan the project and report to SonarQube
+runs:
+  using: 'composite'
+  steps:
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v1
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+    - name: Build and analyze
+      shell: bash
+      run: ./gradlew jacocoTestReport sonarqube --info
