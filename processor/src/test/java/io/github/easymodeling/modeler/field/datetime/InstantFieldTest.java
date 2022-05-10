@@ -54,6 +54,4 @@ class InstantFieldTest extends ModelFieldTest {
             assertThat(initializer).hasToString("new " + $(InstantRandomizer.class) + "(" + $(Instant.class) + ".ofEpochMilli(946684800000L))");
         }
     }
-
-    // TODO: 16.01.22 more tests for field configurations
 }

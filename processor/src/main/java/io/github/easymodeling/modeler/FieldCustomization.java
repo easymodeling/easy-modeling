@@ -1,6 +1,5 @@
 package io.github.easymodeling.modeler;
 
-import javax.lang.model.element.VariableElement;
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
@@ -45,18 +44,13 @@ public class FieldCustomization {
 
     boolean allowEmpty = false;
 
-    // TODO: 08.05.22 Decouple from VariableElement
-    public static FieldCustomization of(VariableElement element) {
-        return new FieldCustomization(element.getEnclosingElement().toString(), element.getSimpleName().toString());
-    }
-
-    private FieldCustomization(String className, String fieldName) {
+    public FieldCustomization(String className, String fieldName) {
         this.fieldName = fieldName;
         this.className = className;
     }
 
-    public boolean matches(VariableElement element) {
-        return className.equals(element.getEnclosingElement().toString()) && fieldName.equals(element.getSimpleName().toString());
+    public boolean matches(String className, String fieldName) {
+        return this.className.equals(className) && this.fieldName.equals(fieldName);
     }
 
     public FieldCustomization(

@@ -67,6 +67,10 @@ public class FieldPatternFactory {
         return decorate("now", now);
     }
 
+    public FieldPatternFactory future(boolean future) {
+        return decorate("future", future);
+    }
+
     public FieldPatternFactory before(String before) {
         return decorate("before", before);
     }
