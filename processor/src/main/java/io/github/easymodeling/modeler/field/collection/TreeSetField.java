@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.collection;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.randomizer.collection.TreeSetRandomizer;
 
@@ -17,12 +17,12 @@ public class TreeSetField extends AbstractCollectionField {
     }
 
     @Override
-    public TreeSetField create(FieldPattern field, ModelField... nestedFields) {
-        return new TreeSetField(field, nestedFields[0]);
+    public TreeSetField create(FieldCustomization customization, ModelField... nestedFields) {
+        return new TreeSetField(customization, nestedFields[0]);
     }
 
-    private TreeSetField(FieldPattern field, ModelField nestedField) {
-        super(TYPE, field, nestedField);
+    private TreeSetField(FieldCustomization customization, ModelField nestedField) {
+        super(TYPE, customization, nestedField);
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.modeler.field.FieldTest;
+import io.github.easymodeling.modeler.field.ModelFieldTest;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
 import io.github.easymodeling.randomizer.number.DoubleRandomizer;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,14 +19,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class DoubleFieldTest {
 
     @Nested
-    class RangedDoubleFieldTest extends FieldTest {
+    class RangedDoubleFieldTest extends ModelFieldTest {
 
         @Override
         @BeforeEach
         protected void setUp() {
-            fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(-2.).max(9.).build();
+            fieldCustomization = FieldPatternFactory.one(FIELD_NAME).min(-2.).max(9.).build();
             typeName = ClassName.get(Double.class);
-            modelField = new DoubleField().create(fieldPattern);
+            modelField = new DoubleField().create(fieldCustomization);
         }
 
         @Override
@@ -38,14 +38,14 @@ class DoubleFieldTest {
     }
 
     @Nested
-    class ConstantDoubleFieldTest extends FieldTest {
+    class ConstantDoubleFieldTest extends ModelFieldTest {
 
         @Override
         @BeforeEach
         protected void setUp() {
-            fieldPattern = FieldPatternFactory.one(FIELD_NAME).constant(12.).build();
+            fieldCustomization = FieldPatternFactory.one(FIELD_NAME).constant(12.).build();
             typeName = ClassName.get(Double.class);
-            modelField = new DoubleField().create(fieldPattern);
+            modelField = new DoubleField().create(fieldCustomization);
         }
 
         @Override
@@ -57,14 +57,14 @@ class DoubleFieldTest {
     }
 
     @Nested
-    class UnboxedDoubleFieldTest extends FieldTest {
+    class UnboxedDoubleFieldTest extends ModelFieldTest {
 
         @Override
         @BeforeEach
         protected void setUp() {
-            fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(0.).max(2.).build();
+            fieldCustomization = FieldPatternFactory.one(FIELD_NAME).min(0.).max(2.).build();
             typeName = TypeName.DOUBLE;
-            modelField = new DoubleField().create(fieldPattern);
+            modelField = new DoubleField().create(fieldCustomization);
         }
 
         @Override

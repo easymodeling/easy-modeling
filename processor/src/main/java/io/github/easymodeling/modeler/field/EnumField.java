@@ -2,13 +2,13 @@ package io.github.easymodeling.modeler.field;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.randomizer.EnumRandomizer;
 
 public class EnumField extends ModelField {
 
-    public EnumField(TypeName type, FieldPattern field) {
-        super(type, field);
+    public EnumField(TypeName type, FieldCustomization customization) {
+        super(type, customization);
     }
 
     @Override
@@ -17,7 +17,7 @@ public class EnumField extends ModelField {
     }
 
     @Override
-    public ModelField create(FieldPattern field, ModelField... valueFields) {
-        return null;
+    public ModelField create(FieldCustomization customization, ModelField... valueFields) {
+        throw new UnsupportedOperationException("Create EnumField with constructor");
     }
 }

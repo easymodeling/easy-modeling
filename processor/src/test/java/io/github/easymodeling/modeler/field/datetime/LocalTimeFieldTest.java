@@ -2,8 +2,8 @@ package io.github.easymodeling.modeler.field.datetime;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import io.github.easymodeling.modeler.FieldPattern;
-import io.github.easymodeling.modeler.field.FieldTest;
+import io.github.easymodeling.modeler.FieldCustomization;
+import io.github.easymodeling.modeler.field.ModelFieldTest;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
 import io.github.easymodeling.randomizer.datetime.LocalTimeRandomizer;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,14 +15,14 @@ import java.time.LocalTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class LocalTimeFieldTest extends FieldTest {
+class LocalTimeFieldTest extends ModelFieldTest {
 
     @Override
     @BeforeEach
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).after("1991-01-23T00:00:00Z").before("1991-02-22T00:00:00Z").build();
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).after("1991-01-23T00:00:00Z").before("1991-02-22T00:00:00Z").build();
         typeName = ClassName.get(LocalTime.class);
-        modelField = new LocalTimeField().create(fieldPattern);
+        modelField = new LocalTimeField().create(fieldCustomization);
     }
 
     @Override
@@ -37,8 +37,8 @@ class LocalTimeFieldTest extends FieldTest {
 
         @Test
         void should_create_initializer_as_now() {
-            final FieldPattern fieldPattern = FieldPatternFactory.one(FIELD_NAME).now(true).build();
-            modelField = new LocalTimeField().create(fieldPattern);
+            final FieldCustomization fieldCustomization = FieldPatternFactory.one(FIELD_NAME).now(true).build();
+            modelField = new LocalTimeField().create(fieldCustomization);
 
             final CodeBlock initializer = modelField.initializer();
 
@@ -47,8 +47,8 @@ class LocalTimeFieldTest extends FieldTest {
 
         @Test
         void should_create_initializer_as_constant() {
-            final FieldPattern fieldPattern = FieldPatternFactory.one(FIELD_NAME).datetime("2000-01-01T00:00:00Z").build();
-            modelField = new LocalTimeField().create(fieldPattern);
+            final FieldCustomization fieldCustomization = FieldPatternFactory.one(FIELD_NAME).datetime("2000-01-01T00:00:00Z").build();
+            modelField = new LocalTimeField().create(fieldCustomization);
 
             final CodeBlock initializer = modelField.initializer();
 

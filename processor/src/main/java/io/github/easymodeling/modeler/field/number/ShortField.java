@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.number;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.randomizer.Randomizer;
 import io.github.easymodeling.randomizer.number.ShortRandomizer;
@@ -16,12 +16,12 @@ public class ShortField extends NumericField<Short> {
     }
 
     @Override
-    public ShortField create(FieldPattern field, ModelField... valueFields) {
-        return new ShortField(field);
+    public ShortField create(FieldCustomization customization, ModelField... valueFields) {
+        return new ShortField(customization);
     }
 
-    private ShortField(FieldPattern field) {
-        super(TYPE, field);
+    private ShortField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

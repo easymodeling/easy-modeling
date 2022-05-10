@@ -3,7 +3,7 @@ package io.github.easymodeling.modeler.field;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.randomizer.OptionalRandomizer;
 
 import java.util.Optional;
@@ -17,12 +17,12 @@ public class OptionalField extends Container {
     }
 
     @Override
-    public OptionalField create(FieldPattern field, ModelField... valueFields) {
-        return new OptionalField(field, valueFields[0]);
+    public OptionalField create(FieldCustomization customization, ModelField... valueFields) {
+        return new OptionalField(customization, valueFields[0]);
     }
 
-    private OptionalField(FieldPattern field, ModelField valueField) {
-        super(ParameterizedTypeName.get(TYPE, valueField.type()), field, valueField);
+    private OptionalField(FieldCustomization customization, ModelField valueField) {
+        super(ParameterizedTypeName.get(TYPE, valueField.type()), customization, valueField);
     }
 
     @Override
@@ -32,6 +32,6 @@ public class OptionalField extends Container {
 
     @Override
     protected CodeBlock initializerParameter() {
-        return CodeBlock.of("$L", field.allowEmpty());
+        return CodeBlock.of("$L", customization.allowEmpty());
     }
 }

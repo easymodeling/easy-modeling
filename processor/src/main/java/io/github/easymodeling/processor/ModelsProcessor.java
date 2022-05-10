@@ -1,11 +1,14 @@
-package io.github.easymodeling;
+package io.github.easymodeling.processor;
 
 import com.google.auto.service.AutoService;
 import com.google.common.collect.Sets;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import io.github.easymodeling.modeler.ModelWrapper;
+import io.github.easymodeling.Model;
+import io.github.easymodeling.ModelUniqueQueue;
+import io.github.easymodeling.Models;
+import io.github.easymodeling.modeler.ModeledClass;
 import io.github.easymodeling.modeler.ModelerGenerator;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -88,9 +91,9 @@ public class ModelsProcessor extends AbstractProcessor {
         try {
             final String canonicalName = classNameOf(model);
             avoidModelerFor(canonicalName);
-            final NamedModel namedModel = new NamedModel(canonicalName, model);
-            modelUniqueQueue.add(namedModel);
-        } catch (BasicTypeModelerException e) {
+            final AnnoModelWrapper annoModelWrapper = new AnnoModelWrapper(canonicalName, model);
+            modelUniqueQueue.add(annoModelWrapper);
+        } catch (ProcessingException e) {
             log.warning(e.getMessage());
         }
     }
@@ -102,28 +105,27 @@ public class ModelsProcessor extends AbstractProcessor {
                 || typeElement.getKind().equals(ElementKind.INTERFACE)
                 || typeElement.getModifiers().contains(Modifier.ABSTRACT);
         if (abuseModeler) {
-            throw new BasicTypeModelerException(canonicalName);
+            throw new ProcessingException("Cannot generate modeler for " + canonicalName);
         }
     }
 
     private void processModels() {
         while (true) {
-            NamedModel namedModel = modelUniqueQueue.poll();
-            if (null == namedModel) {
+            AnnoModelWrapper annoModelWrapper = modelUniqueQueue.poll();
+            if (null == annoModelWrapper) {
                 break;
             }
-            TypeElement type = getTypeElementOf(namedModel.getCanonicalName());
-            final ModelWrapper modelWrapper = new ModelWrapper(namedModel.getModel(), type);
-            processModel(modelWrapper);
+            processModel(annoModelWrapper);
         }
     }
 
-    private void processModel(ModelWrapper modelWrapper) throws ProcessingException {
-        final ModelerGenerator modelFactory = new ModelerGenerator(modelWrapper);
+    private void processModel(AnnoModelWrapper annoModelWrapper) {
+        TypeElement typeElement = getTypeElementOf(annoModelWrapper.getCanonicalName());
+        final ModeledClass clazz = new ModeledClass(typeElement, annoModelWrapper.getFieldCustomizations());
+        final ModelerGenerator modelFactory = new ModelerGenerator(clazz.className(), clazz.fields());
         final TypeSpec factory = modelFactory.createType();
         try {
-            final String pkg = modelWrapper.getModelPackage();
-            JavaFile.builder(pkg, factory).build()
+            JavaFile.builder(clazz.packageName(), factory).build()
                     .writeTo(filer);
         } catch (IOException e) {
             throw new ProcessingException("Error when generate factory: " + e.getMessage(), e);
@@ -141,7 +143,7 @@ public class ModelsProcessor extends AbstractProcessor {
     private String classNameOf(MirroredTypeException mte) {
         final TypeMirror typeMirror = mte.getTypeMirror();
         if (!(typeMirror instanceof DeclaredType)) {
-            throw new BasicTypeModelerException(typeMirror.toString());
+            throw new ProcessingException(typeMirror.toString() + " is not a DeclaredType");
         }
         final DeclaredType declaredType = (DeclaredType) typeMirror;
         final TypeElement typeElement = (TypeElement) declaredType.asElement();

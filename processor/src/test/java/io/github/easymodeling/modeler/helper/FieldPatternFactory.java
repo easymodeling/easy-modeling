@@ -1,14 +1,26 @@
 package io.github.easymodeling.modeler.helper;
 
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import org.apache.commons.lang3.reflect.FieldUtils;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
+import static io.github.easymodeling.modeler.field.ModelFieldTest.CLASS_NAME;
 
 public class FieldPatternFactory {
 
-    private final FieldPattern field;
+    private final FieldCustomization fieldCustomization;
 
-    private FieldPatternFactory(String name) {
-        this.field = FieldPattern.of(name);
+    private FieldPatternFactory(String className, String fieldName) {
+        try {
+            final Constructor<FieldCustomization> declaredConstructor = FieldCustomization.class.getDeclaredConstructor(String.class, String.class);
+            declaredConstructor.setAccessible(true);
+            this.fieldCustomization = declaredConstructor.newInstance(className, fieldName);
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
+                 InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public FieldPatternFactory minSize(Object minSize) {
@@ -55,6 +67,10 @@ public class FieldPatternFactory {
         return decorate("now", now);
     }
 
+    public FieldPatternFactory future(boolean future) {
+        return decorate("future", future);
+    }
+
     public FieldPatternFactory before(String before) {
         return decorate("before", before);
     }
@@ -67,21 +83,21 @@ public class FieldPatternFactory {
         return decorate("after", after);
     }
 
-    public static FieldPattern any() {
+    public static FieldCustomization any() {
         return FieldPatternFactory.one("field_name").build();
     }
 
-    public static FieldPatternFactory one(String name) {
-        return new FieldPatternFactory(name);
+    public static FieldPatternFactory one(String fieldName) {
+        return new FieldPatternFactory(CLASS_NAME, fieldName);
     }
 
-    public FieldPattern build() {
-        return field;
+    public FieldCustomization build() {
+        return fieldCustomization;
     }
 
     public FieldPatternFactory decorate(String name, Object value) {
         try {
-            FieldUtils.writeField(field, name, value, true);
+            FieldUtils.writeField(fieldCustomization, name, value, true);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }

@@ -1,7 +1,7 @@
 package io.github.easymodeling.modeler.field.stream;
 
 import com.squareup.javapoet.ClassName;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.modeler.field.PlainField;
 import io.github.easymodeling.modeler.field.number.LongField;
@@ -20,12 +20,12 @@ public class LongStreamField extends PrimitiveTypeStreamField<LongStream, Long> 
     }
 
     @Override
-    public PlainField<LongStream> create(FieldPattern field, ModelField... valueFields) {
-        return new LongStreamField(field);
+    public PlainField<LongStream> create(FieldCustomization customization, ModelField... valueFields) {
+        return new LongStreamField(customization);
     }
 
-    private LongStreamField(FieldPattern field) {
-        super(TYPE, field);
+    private LongStreamField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

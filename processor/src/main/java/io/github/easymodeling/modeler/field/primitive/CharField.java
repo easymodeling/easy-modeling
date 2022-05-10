@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.primitive;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.modeler.field.PlainField;
 import io.github.easymodeling.randomizer.Randomizer;
@@ -17,12 +17,12 @@ public class CharField extends PlainField<Character> {
     }
 
     @Override
-    public CharField create(FieldPattern field, ModelField... valueFields) {
-        return new CharField(field);
+    public CharField create(FieldCustomization customization, ModelField... valueFields) {
+        return new CharField(customization);
     }
 
-    private CharField(FieldPattern field) {
-        super(TYPE, field);
+    private CharField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

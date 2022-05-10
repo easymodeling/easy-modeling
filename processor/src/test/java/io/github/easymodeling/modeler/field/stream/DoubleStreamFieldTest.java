@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.stream;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import io.github.easymodeling.modeler.field.FieldTest;
+import io.github.easymodeling.modeler.field.ModelFieldTest;
 import io.github.easymodeling.modeler.field.number.DoubleField;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
 import io.github.easymodeling.randomizer.stream.DoubleStreamRandomizer;
@@ -12,14 +12,14 @@ import java.util.stream.DoubleStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DoubleStreamFieldTest extends FieldTest {
+class DoubleStreamFieldTest extends ModelFieldTest {
 
     @Override
     @BeforeEach
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(2.).max(9.).minSize(10).maxSize(15).build();
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).min(2.).max(9.).minSize(10).maxSize(15).build();
         typeName = ClassName.get(DoubleStream.class);
-        modelField = new DoubleStreamField().create(fieldPattern);
+        modelField = new DoubleStreamField().create(fieldCustomization);
     }
 
     @Override
@@ -27,6 +27,6 @@ class DoubleStreamFieldTest extends FieldTest {
         final CodeBlock initializer = modelField.initializer();
 
         assertThat(initializer).hasToString(
-                "new " + $(DoubleStreamRandomizer.class) + "(" + new DoubleField().create(fieldPattern).initializer() + ", 10, 15)");
+                "new " + $(DoubleStreamRandomizer.class) + "(" + new DoubleField().create(fieldCustomization).initializer() + ", 10, 15)");
     }
 }

@@ -1,6 +1,6 @@
 package io.github.easymodeling.modeler.provider;
 
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.modeler.field.OptionalField;
 import io.github.easymodeling.modeler.field.collection.ArrayListField;
@@ -34,12 +34,12 @@ public class ContainerFieldProviderTest extends ModelFieldProviderTest {
     @ParameterizedTest
     @MethodSource("containerFields")
     void should_provide_container_field_containing_plain_field(Class<?> clazz, Class<SetField> containerField) {
-        final FieldPattern fieldPattern = FieldPatternFactory.any();
+        final FieldCustomization fieldCustomization = FieldPatternFactory.any();
 
         plainFields().map(a -> a.get()[0])
                 .map(TypeMirror.class::cast)
                 .forEach(subType -> {
-                    final ModelField container = modelFieldProvider.provide(Factory.container(clazz, subType), fieldPattern);
+                    final ModelField container = modelFieldProvider.provide(Factory.container(clazz, subType), fieldCustomization);
                     assertThat(container).isInstanceOf(containerField);
                 });
     }

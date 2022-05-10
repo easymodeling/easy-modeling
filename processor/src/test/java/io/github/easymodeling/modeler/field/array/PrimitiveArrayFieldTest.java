@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.array;
 
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.CodeBlock;
-import io.github.easymodeling.modeler.field.FieldTest;
+import io.github.easymodeling.modeler.field.ModelFieldTest;
 import io.github.easymodeling.modeler.field.PlainField;
 import io.github.easymodeling.modeler.field.number.IntegerField;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
@@ -11,18 +11,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
-class PrimitiveArrayFieldTest extends FieldTest {
+class PrimitiveArrayFieldTest extends ModelFieldTest {
 
     private PlainField<Integer> integerField;
 
     @BeforeEach
     @Override
     protected void setUp() {
-        fieldPattern = FieldPatternFactory.one(FIELD_NAME).minSize(3).maxSize(8).build();
-        integerField = new IntegerField().create(fieldPattern);
+        fieldCustomization = FieldPatternFactory.one(FIELD_NAME).minSize(3).maxSize(8).build();
+        integerField = new IntegerField().create(fieldCustomization);
         typeName = ArrayTypeName.of(int[].class);
-        modelField = new PrimitiveArrayField((ArrayTypeName) typeName, fieldPattern, integerField);
+        modelField = new PrimitiveArrayField((ArrayTypeName) typeName, fieldCustomization, integerField);
     }
 
     @Test
@@ -39,5 +40,12 @@ class PrimitiveArrayFieldTest extends FieldTest {
 
         assertThat(initializer).hasToString(
                 "new " + $(PrimitiveArrayRandomizer.class) + "(" + integerField.initializer() + ", 2, 3, 8)");
+    }
+
+    @Test
+    void should_not_invoke_create() {
+        final Throwable throwable = catchThrowable(() -> modelField.create(fieldCustomization));
+
+        assertThat(throwable).isInstanceOf(UnsupportedOperationException.class);
     }
 }

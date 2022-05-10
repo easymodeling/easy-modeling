@@ -1,14 +1,14 @@
 package io.github.easymodeling.modeler;
 
-import io.github.easymodeling.Field;
-
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
 
-public class FieldPattern {
+public class FieldCustomization {
 
-    private final String name;
+    private final String className;
+
+    private final String fieldName;
 
     private Double max = Double.NaN;
 
@@ -44,41 +44,53 @@ public class FieldPattern {
 
     boolean allowEmpty = false;
 
-    public static FieldPattern of(String name) {
-        return new FieldPattern(name);
+    public FieldCustomization(String className, String fieldName) {
+        this.fieldName = fieldName;
+        this.className = className;
     }
 
-    private FieldPattern(String name) {
-        this.name = name;
+    public boolean matches(String className, String fieldName) {
+        return this.className.equals(className) && this.fieldName.equals(fieldName);
     }
 
-    public static FieldPattern of(Field field) {
-        return new FieldPattern(field);
+    public FieldCustomization(
+            String className, String fieldName,
+            Double max, Double min, Double constant,
+            // For string related types
+            Boolean alphanumeric, Boolean alphabetic, Boolean numeric, String string,
+            // For dateTime related types
+            boolean now, String before, String after, boolean future, boolean past, String datetime,
+            // For collections and streams
+            Integer size, Integer minSize, Integer maxSize,
+            // For Optionals
+            boolean allowEmpty) {
+        this.className = className;
+        this.fieldName = fieldName;
+        this.max = max;
+        this.min = min;
+        this.constant = constant;
+        this.alphanumeric = alphanumeric;
+        this.alphabetic = alphabetic;
+        this.numeric = numeric;
+        this.string = string;
+        this.now = now;
+        this.before = before;
+        this.after = after;
+        this.future = future;
+        this.past = past;
+        this.datetime = datetime;
+        this.size = size;
+        this.minSize = minSize;
+        this.maxSize = maxSize;
+        this.allowEmpty = allowEmpty;
     }
 
-    private FieldPattern(Field annotation) {
-        this.name = annotation.name();
-        this.max = annotation.max();
-        this.min = annotation.min();
-        this.constant = annotation.constant();
-        this.alphanumeric = annotation.alphanumeric();
-        this.alphabetic = annotation.alphabetic();
-        this.numeric = annotation.numeric();
-        this.string = annotation.string();
-        this.now = annotation.now();
-        this.before = annotation.before();
-        this.after = annotation.after();
-        this.future = annotation.future();
-        this.past = annotation.past();
-        this.datetime = annotation.datetime();
-        this.size = annotation.size();
-        this.minSize = annotation.minSize();
-        this.maxSize = annotation.maxSize();
-        this.allowEmpty = annotation.allowEmpty();
+    public String fieldName() {
+        return fieldName;
     }
 
-    public String name() {
-        return name;
+    public String qualifiedName() {
+        return String.format("%s#%s", className, fieldName);
     }
 
     public boolean alphanumeric() {
@@ -128,13 +140,13 @@ public class FieldPattern {
     }
 
     public Optional<Integer> minSize() {
-        final Optional<Integer> minSize = isMinSizeSet() ? Optional.of(this.minSize) : Optional.empty();
-        return isSizeSet() ? Optional.of(size) : minSize;
+        final Optional<Integer> optionalMinSize = isMinSizeSet() ? Optional.of(this.minSize) : Optional.empty();
+        return isSizeSet() ? Optional.of(size) : optionalMinSize;
     }
 
     public Optional<Integer> maxSize() {
-        final Optional<Integer> maxSize = isMaxSizeSet() ? Optional.of(this.maxSize) : Optional.empty();
-        return isSizeSet() ? Optional.of(size) : maxSize;
+        final Optional<Integer> optionalMaxSize = isMaxSizeSet() ? Optional.of(this.maxSize) : Optional.empty();
+        return isSizeSet() ? Optional.of(size) : optionalMaxSize;
     }
 
     public Optional<Instant> datetime() {
@@ -194,4 +206,16 @@ public class FieldPattern {
         return maxSize != Integer.MAX_VALUE && maxSize >= 0;
     }
 
+    @Override
+    public int hashCode() {
+        return this.qualifiedName().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        if (getClass() != o.getClass()) return false;
+        return this.qualifiedName().equals(((FieldCustomization) o).qualifiedName());
+    }
 }

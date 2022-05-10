@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.datetime;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.PlainField;
 
 import java.time.Instant;
@@ -13,8 +13,8 @@ public abstract class AbstractDateTimeField<T> extends PlainField<T> {
     protected AbstractDateTimeField() {
     }
 
-    protected AbstractDateTimeField(TypeName type, FieldPattern field) {
-        super(type, field);
+    protected AbstractDateTimeField(TypeName type, FieldCustomization customization) {
+        super(type, customization);
     }
 
     @Override
@@ -23,10 +23,10 @@ public abstract class AbstractDateTimeField<T> extends PlainField<T> {
     }
 
     protected Optional<CodeBlock> constantParameter() {
-        if (field.now()) {
+        if (customization.now()) {
             return Optional.of(CodeBlock.of("$T.now()", Instant.class));
         } else {
-            return field.datetime().map(datetime -> CodeBlock.of("$T.ofEpochMilli($LL)", Instant.class, datetime.toEpochMilli()));
+            return customization.datetime().map(datetime -> CodeBlock.of("$T.ofEpochMilli($LL)", Instant.class, datetime.toEpochMilli()));
         }
     }
 
@@ -35,11 +35,11 @@ public abstract class AbstractDateTimeField<T> extends PlainField<T> {
     }
 
     private long min() {
-        return field.after().map(Instant::toEpochMilli).orElse(0L);
+        return customization.after().map(Instant::toEpochMilli).orElse(0L);
     }
 
     private long max() {
-        return field.before().map(Instant::toEpochMilli).orElse(ceiling());
+        return customization.before().map(Instant::toEpochMilli).orElse(ceiling());
     }
 
     private long ceiling() {

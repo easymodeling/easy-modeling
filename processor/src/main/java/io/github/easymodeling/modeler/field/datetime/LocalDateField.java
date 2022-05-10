@@ -1,7 +1,7 @@
 package io.github.easymodeling.modeler.field.datetime;
 
 import com.squareup.javapoet.ClassName;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.randomizer.Randomizer;
 import io.github.easymodeling.randomizer.datetime.LocalDateRandomizer;
@@ -17,12 +17,12 @@ public class LocalDateField extends AbstractDateTimeField<LocalDate> {
     }
 
     @Override
-    public LocalDateField create(FieldPattern field, ModelField... valueFields) {
-        return new LocalDateField(field);
+    public LocalDateField create(FieldCustomization customization, ModelField... valueFields) {
+        return new LocalDateField(customization);
     }
 
-    private LocalDateField(FieldPattern field) {
-        super(TYPE, field);
+    private LocalDateField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

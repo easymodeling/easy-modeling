@@ -1,5 +1,7 @@
 package io.github.easymodeling;
 
+import io.github.easymodeling.processor.AnnoModelWrapper;
+
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -9,11 +11,11 @@ public class ModelUniqueQueue {
 
     private static ModelUniqueQueue instance;
 
-    private final Queue<NamedModel> modelToBeProcessed;
+    private final Queue<AnnoModelWrapper> modelToBeProcessed;
 
-    private final Set<NamedModel> modelAdded;
+    private final Set<AnnoModelWrapper> modelAdded;
 
-    private ModelUniqueQueue(Queue<NamedModel> modelToBeProcessed, Set<NamedModel> modelAdded) {
+    private ModelUniqueQueue(Queue<AnnoModelWrapper> modelToBeProcessed, Set<AnnoModelWrapper> modelAdded) {
         this.modelToBeProcessed = modelToBeProcessed;
         this.modelAdded = modelAdded;
     }
@@ -25,13 +27,17 @@ public class ModelUniqueQueue {
         return instance;
     }
 
-    public NamedModel poll() {
+    public AnnoModelWrapper poll() {
         return modelToBeProcessed.poll();
     }
 
-    public void add(NamedModel namedModel) {
-        if (modelAdded.add(namedModel)) {
-            modelToBeProcessed.add(namedModel);
+    public void add(String typeCanonicalName) {
+        add(new AnnoModelWrapper(typeCanonicalName));
+    }
+
+    public void add(AnnoModelWrapper annoModelWrapper) {
+        if (modelAdded.add(annoModelWrapper)) {
+            modelToBeProcessed.add(annoModelWrapper);
         }
     }
 }

@@ -6,59 +6,28 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import io.github.easymodeling.GenerationPatterns;
-import io.github.easymodeling.ProcessingException;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.modeler.field.StatementProvider;
 import io.github.easymodeling.randomizer.ModelCache;
 import io.github.easymodeling.randomizer.Modeler;
 
 import javax.lang.model.element.Modifier;
-import javax.lang.model.type.TypeMirror;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static io.github.easymodeling.log.ProcessorLogger.log;
 
-public class ModelerGenerator {
+public class ModelerGenerator extends BuilderGenerator {
 
-    private final ModelWrapper model;
-
-    private final List<ModelField> fields;
-
-    public ModelerGenerator(ModelWrapper model) {
-        this.model = model;
-        this.fields = initBuilderFields();
-    }
-
-    private List<ModelField> initBuilderFields() {
-        final Map<String, FieldPattern> declaredFieldsMap;
-        try {
-            declaredFieldsMap = model.getFields().stream().collect(Collectors.toMap(FieldPattern::name, Function.identity()));
-        } catch (IllegalStateException e) {
-            // Do not support multiple declarations of the same field,
-            // let's see if it is possible or necessary to support it in the future
-            throw new ProcessingException("Duplicated fields declaration: " + e.getMessage());
-        }
-        log.info("Create modeler for " + model.getModelTypeName());
-        return model.getEnclosedFields()
-                .stream()
-                .map(element -> {
-                    final String fieldName = element.getFieldName();
-                    final TypeMirror typeMirror = element.getTypeMirror();
-                    final FieldPattern fieldPattern = declaredFieldsMap.getOrDefault(fieldName, FieldPattern.of(fieldName));
-                    return new ModelFieldProvider().provide(typeMirror, fieldPattern);
-                })
-                .collect(Collectors.toList());
+    public ModelerGenerator(ClassName className, List<ModelField> fields) {
+        super(className, fields);
     }
 
     public TypeSpec createType() {
+        log.info("Create modeler for " + className);
         final TypeSpec.Builder modeler = TypeSpec.classBuilder(modelerName())
                 .addModifiers(Modifier.PUBLIC)
-                .superclass(ParameterizedTypeName.get(ClassName.get(Modeler.class), model.getModelTypeName()));
-        final TypeSpec builder = new BuilderGenerator(fields, model.getModelTypeName()).createBuilder();
+                .superclass(ParameterizedTypeName.get(ClassName.get(Modeler.class), className));
+        final TypeSpec builder = createBuilder();
         modeler.addType(builder);
 
         modeler.addMethod(staticNextMethod());
@@ -72,7 +41,7 @@ public class ModelerGenerator {
     private MethodSpec staticNextMethod() {
         return MethodSpec.methodBuilder(GenerationPatterns.STATIC_NEXT_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .returns(model.getModelTypeName())
+                .returns(className)
                 .addStatement("return new $N().$N(null)", modelerName(), GenerationPatterns.BASE_MODELER_NEXT_METHOD_NAME)
                 .build();
     }
@@ -89,8 +58,8 @@ public class ModelerGenerator {
         return MethodSpec.methodBuilder(GenerationPatterns.TYPE_METHOD_NAME)
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PROTECTED)
-                .returns(ParameterizedTypeName.get(ClassName.get(Class.class), model.getModelTypeName()))
-                .addStatement("return $T.class", model.getModelTypeName())
+                .returns(ParameterizedTypeName.get(ClassName.get(Class.class), className))
+                .addStatement("return $T.class", className)
                 .build();
     }
 
@@ -99,7 +68,7 @@ public class ModelerGenerator {
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PROTECTED)
                 .returns(TypeName.VOID)
-                .addParameter(ParameterSpec.builder(model.getModelTypeName(), GenerationPatterns.MODEL_PARAMETER_NAME).build())
+                .addParameter(ParameterSpec.builder(className, GenerationPatterns.MODEL_PARAMETER_NAME).build())
                 .addParameter(ParameterSpec.builder(ModelCache.class, GenerationPatterns.MODEL_CACHE_PARAMETER_NAME).build());
         fields.stream().map(StatementProvider::populateStatement)
                 .forEach(builder::addStatement);
@@ -107,6 +76,6 @@ public class ModelerGenerator {
     }
 
     private String modelerName() {
-        return String.format(GenerationPatterns.MODELER_NAME_PATTERN, model.getModelTypeName().simpleName());
+        return String.format(GenerationPatterns.MODELER_NAME_PATTERN, className.simpleName());
     }
 }

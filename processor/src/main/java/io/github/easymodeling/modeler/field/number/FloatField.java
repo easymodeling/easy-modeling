@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.number;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.randomizer.Randomizer;
 import io.github.easymodeling.randomizer.number.FloatRandomizer;
@@ -16,12 +16,12 @@ public class FloatField extends NumericField<Float> {
     }
 
     @Override
-    public FloatField create(FieldPattern field, ModelField... valueFields) {
-        return new FloatField(field);
+    public FloatField create(FieldCustomization customization, ModelField... valueFields) {
+        return new FloatField(customization);
     }
 
-    private FloatField(FieldPattern field) {
-        super(TYPE, field);
+    private FloatField(FieldCustomization customization) {
+        super(TYPE, customization);
     }
 
     @Override

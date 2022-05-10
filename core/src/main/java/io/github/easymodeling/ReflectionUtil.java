@@ -11,23 +11,37 @@ public class ReflectionUtil {
     private ReflectionUtil() {
     }
 
-    public static void setField(Object model, String fieldName, Object value) {
+    // TODO: 08.05.22 replace classname with class
+    public static void setField(Object model, String qualifiedFieldName, Object value) {
         try {
-            final Field field = model.getClass().getDeclaredField(fieldName);
+            final QualifiedField qualifiedField = new QualifiedField(qualifiedFieldName);
+            final Field field = declaredField(model.getClass(), qualifiedField);
             field.setAccessible(true);
             field.set(model, value);
         } catch (NoSuchFieldException | IllegalAccessException | IllegalArgumentException | SecurityException e) {
-            throw new EasyModelingException(String.format("Cannot set %s for %s", fieldName, model.getClass().getSimpleName()), e);
+            throw new EasyModelingException(String.format("Cannot set %s for %s", qualifiedFieldName, model.getClass().getSimpleName()), e);
         }
     }
 
-    public static Object getField(Object model, String fieldName) {
+    public static Object getField(Object model, String qualifiedField) {
         try {
-            final Field field = model.getClass().getDeclaredField(fieldName);
+            final Field field = declaredField(model.getClass(), new QualifiedField(qualifiedField));
             field.setAccessible(true);
             return field.get(model);
         } catch (NoSuchFieldException | IllegalAccessException | IllegalArgumentException | SecurityException e) {
-            throw new EasyModelingException(String.format("Cannot get %s from %s", fieldName, model.getClass().getSimpleName()), e);
+            throw new EasyModelingException(String.format("Cannot get %s from %s", qualifiedField, model.getClass().getSimpleName()), e);
+        }
+    }
+
+    private static Field declaredField(Class<?> clazz, QualifiedField qualifiedField) throws NoSuchFieldException {
+        if (clazz.getCanonicalName().equals(qualifiedField.className)) {
+            return clazz.getDeclaredField(qualifiedField.fieldName);
+        }
+        final Class<?> superclass = clazz.getSuperclass();
+        if (Object.class == superclass) {
+            throw new NoSuchFieldException(qualifiedField.toString());
+        } else {
+            return declaredField(superclass, qualifiedField);
         }
     }
 
@@ -54,5 +68,28 @@ public class ReflectionUtil {
             return 0;
         }
         return null;
+    }
+
+    private static class QualifiedField {
+
+        private static final String SPLITTER = "#";
+
+        private final String className;
+
+        private final String fieldName;
+
+        private QualifiedField(String qualifiedFieldName) throws NoSuchFieldException {
+            final int splitter = qualifiedFieldName.lastIndexOf('#');
+            if (splitter == -1 || splitter == qualifiedFieldName.length() - 1 || splitter == 0) {
+                throw new NoSuchFieldException(qualifiedFieldName);
+            }
+            this.className = qualifiedFieldName.substring(0, splitter);
+            this.fieldName = qualifiedFieldName.substring(splitter + 1);
+        }
+
+        @Override
+        public String toString() {
+            return className + SPLITTER + fieldName;
+        }
     }
 }

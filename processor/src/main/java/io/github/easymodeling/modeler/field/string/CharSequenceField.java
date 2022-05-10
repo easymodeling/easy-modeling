@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.string;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.PlainField;
 
 import java.util.Optional;
@@ -17,8 +17,8 @@ public abstract class CharSequenceField<T extends CharSequence> extends PlainFie
     protected CharSequenceField() {
     }
 
-    protected CharSequenceField(TypeName type, FieldPattern field) {
-        super(type, field);
+    protected CharSequenceField(TypeName type, FieldCustomization customization) {
+        super(type, customization);
     }
 
     @Override
@@ -39,32 +39,32 @@ public abstract class CharSequenceField<T extends CharSequence> extends PlainFie
     }
 
     private long min() {
-        return field.min()
+        return customization.min()
                 .map(Double::longValue)
                 .filter(min -> min >= 1)
                 .orElse(6L);
     }
 
     private long max() {
-        return field.max()
+        return customization.max()
                 .map(Double::longValue)
                 .filter(max -> max < Integer.MAX_VALUE)
                 .orElse(20L);
     }
 
     private int alphabetic() {
-        return field.alphabetic() ? ALPHABETIC : ANY;
+        return customization.alphabetic() ? ALPHABETIC : ANY;
     }
 
     private int numeric() {
-        return field.numeric() ? NUMERIC : ANY;
+        return customization.numeric() ? NUMERIC : ANY;
     }
 
     private int alphaNumeric() {
-        return field.alphanumeric() ? ALPHANUMERIC : ANY;
+        return customization.alphanumeric() ? ALPHANUMERIC : ANY;
     }
 
     private Optional<String> string() {
-        return field.string();
+        return customization.string();
     }
 }

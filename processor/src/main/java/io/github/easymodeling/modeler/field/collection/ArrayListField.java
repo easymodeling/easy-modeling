@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.collection;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.randomizer.collection.ArrayListRandomizer;
 
@@ -17,12 +17,12 @@ public class ArrayListField extends AbstractCollectionField {
     }
 
     @Override
-    public ArrayListField create(FieldPattern field, ModelField... nestedFields) {
-        return new ArrayListField(field, nestedFields[0]);
+    public ArrayListField create(FieldCustomization customization, ModelField... nestedFields) {
+        return new ArrayListField(customization, nestedFields[0]);
     }
 
-    private ArrayListField(FieldPattern field, ModelField nestedField) {
-        super(TYPE, field, nestedField);
+    private ArrayListField(FieldCustomization customization, ModelField nestedField) {
+        super(TYPE, customization, nestedField);
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.modeler.field.FieldTest;
+import io.github.easymodeling.modeler.field.ModelFieldTest;
 import io.github.easymodeling.modeler.helper.FieldPatternFactory;
 import io.github.easymodeling.randomizer.number.LongRandomizer;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,14 +19,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class LongFieldTest {
 
     @Nested
-    class RangedLongFieldTest extends FieldTest {
+    class RangedLongFieldTest extends ModelFieldTest {
 
         @Override
         @BeforeEach
         protected void setUp() {
-            fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(-2.).max(9.).build();
+            fieldCustomization = FieldPatternFactory.one(FIELD_NAME).min(-2.).max(9.).build();
             typeName = ClassName.get(Long.class);
-            modelField = new LongField().create(fieldPattern);
+            modelField = new LongField().create(fieldCustomization);
         }
 
         @Override
@@ -38,14 +38,14 @@ class LongFieldTest {
     }
 
     @Nested
-    class ConstantLongFieldTest extends FieldTest {
+    class ConstantLongFieldTest extends ModelFieldTest {
 
         @Override
         @BeforeEach
         protected void setUp() {
-            fieldPattern = FieldPatternFactory.one(FIELD_NAME).constant(12.).build();
+            fieldCustomization = FieldPatternFactory.one(FIELD_NAME).constant(12.).build();
             typeName = ClassName.get(Long.class);
-            modelField = new LongField().create(fieldPattern);
+            modelField = new LongField().create(fieldCustomization);
         }
 
         @Override
@@ -57,14 +57,14 @@ class LongFieldTest {
     }
 
     @Nested
-    class UnboxedLongFieldTest extends FieldTest {
+    class UnboxedLongFieldTest extends ModelFieldTest {
 
         @Override
         @BeforeEach
         protected void setUp() {
-            fieldPattern = FieldPatternFactory.one(FIELD_NAME).min(0.).max(2.).build();
+            fieldCustomization = FieldPatternFactory.one(FIELD_NAME).min(0.).max(2.).build();
             typeName = TypeName.LONG;
-            modelField = new LongField().create(fieldPattern);
+            modelField = new LongField().create(fieldCustomization);
         }
 
         @Override

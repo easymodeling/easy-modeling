@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.collection;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.randomizer.collection.LinkedListRandomizer;
 
@@ -17,12 +17,12 @@ public class LinkedListField extends AbstractCollectionField {
     }
 
     @Override
-    public LinkedListField create(FieldPattern field, ModelField... nestedFields) {
-        return new LinkedListField(field, nestedFields[0]);
+    public LinkedListField create(FieldCustomization customization, ModelField... nestedFields) {
+        return new LinkedListField(customization, nestedFields[0]);
     }
 
-    private LinkedListField(FieldPattern field, ModelField nestedField) {
-        super(TYPE, field, nestedField);
+    private LinkedListField(FieldCustomization customization, ModelField nestedField) {
+        super(TYPE, customization, nestedField);
     }
 
     @Override

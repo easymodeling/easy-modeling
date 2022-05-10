@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field.collection;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.randomizer.collection.MapRandomizer;
 
@@ -17,12 +17,12 @@ public class MapField extends AbstractMapField {
     }
 
     @Override
-    public MapField create(FieldPattern field, ModelField... nestedFields) {
-        return new MapField(field, nestedFields[0], nestedFields[1]);
+    public MapField create(FieldCustomization customization, ModelField... nestedFields) {
+        return new MapField(customization, nestedFields[0], nestedFields[1]);
     }
 
-    private MapField(FieldPattern field, ModelField keyField, ModelField valueField) {
-        super(TYPE, field, keyField, valueField);
+    private MapField(FieldCustomization customization, ModelField keyField, ModelField valueField) {
+        super(TYPE, customization, keyField, valueField);
     }
 
     @Override

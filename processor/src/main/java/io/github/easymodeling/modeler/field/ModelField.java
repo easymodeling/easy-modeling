@@ -6,29 +6,30 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import io.github.easymodeling.ReflectionUtil;
-import io.github.easymodeling.modeler.FieldPattern;
+import io.github.easymodeling.modeler.FieldCustomization;
 
 import javax.lang.model.element.Modifier;
 
-import static io.github.easymodeling.GenerationPatterns.BUILDER_CLASS_NAME;
+import static io.github.easymodeling.modeler.GenerationPatterns.BUILDER_CLASS_NAME;
 
 public abstract class ModelField implements Initializable, BuilderMember, StatementProvider {
 
     protected TypeName type;
 
-    protected String name;
+    protected FieldCustomization customization;
 
-    protected FieldPattern field;
+    protected boolean inherited;
+
+    protected boolean hidden;
 
     protected ModelField() {
     }
 
-    public abstract ModelField create(FieldPattern field, ModelField... valueFields);
+    public abstract ModelField create(FieldCustomization customization, ModelField... valueFields);
 
-    protected ModelField(TypeName type, FieldPattern field) {
+    protected ModelField(TypeName type, FieldCustomization customization) {
         this.type = type;
-        this.name = field.name();
-        this.field = field;
+        this.customization = customization;
     }
 
     public CodeBlock initialValue() {
@@ -42,7 +43,7 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
 
     @Override
     public MethodSpec setter() {
-        return MethodSpec.methodBuilder(name)
+        return MethodSpec.methodBuilder(fieldName())
                 .addModifiers(Modifier.PUBLIC)
                 .returns(ClassName.get("", BUILDER_CLASS_NAME))
                 .addParameter(type, identity())
@@ -53,7 +54,7 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
 
     @Override
     public CodeBlock constructorStatement() {
-        return CodeBlock.of("this.$N = ($T) $T.getField(model, $S)", identity(), type(), ReflectionUtil.class, identity());
+        return CodeBlock.of("this.$N = ($T) $T.getField(model, $S)", identity(), type(), ReflectionUtil.class, qualifiedName());
     }
 
     @Override
@@ -66,20 +67,48 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
         return setFieldStatement(CodeBlock.of("$L", identity()));
     }
 
-    public String identity() {
-        return name;
+    private String identity() {
+        return hidden ? qualifiedIdentity() : fieldName();
+    }
+
+    private String qualifiedIdentity() {
+        return qualifiedName().replace(".", "_").replace("#", "$");
+    }
+
+    private String qualifiedName() {
+        return customization.qualifiedName();
+    }
+
+    public String fieldName() {
+        return customization.fieldName();
     }
 
     public TypeName type() {
         return type;
     }
 
+    public void setInherited(Boolean inherited) {
+        this.inherited = inherited;
+    }
+
+    public boolean isInherited() {
+        return inherited;
+    }
+
+    public void setHidden() {
+        this.hidden = true;
+    }
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
     private CodeBlock setFieldStatement(CodeBlock value) {
-        return CodeBlock.of("$T.setField(model, $S, $L)", ReflectionUtil.class, identity(), value);
+        return CodeBlock.of("$T.setField(model, $S, $L)", ReflectionUtil.class, qualifiedName(), value);
     }
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName();
+        return type.toString();
     }
 }
