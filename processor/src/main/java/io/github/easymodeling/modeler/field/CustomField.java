@@ -2,7 +2,7 @@ package io.github.easymodeling.modeler.field;
 
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import io.github.easymodeling.processor.GenerationPatterns;
+import io.github.easymodeling.modeler.GenerationPatterns;
 import io.github.easymodeling.modeler.FieldCustomization;
 import io.github.easymodeling.randomizer.CustomTypeRandomizer;
 

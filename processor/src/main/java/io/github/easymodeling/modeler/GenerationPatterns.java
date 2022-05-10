@@ -1,4 +1,4 @@
-package io.github.easymodeling.processor;
+package io.github.easymodeling.modeler;
 
 public class GenerationPatterns {
 

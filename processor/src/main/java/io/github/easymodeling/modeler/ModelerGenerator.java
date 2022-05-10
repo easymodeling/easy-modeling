@@ -8,7 +8,6 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.modeler.field.StatementProvider;
-import io.github.easymodeling.processor.GenerationPatterns;
 import io.github.easymodeling.randomizer.ModelCache;
 import io.github.easymodeling.randomizer.Modeler;
 

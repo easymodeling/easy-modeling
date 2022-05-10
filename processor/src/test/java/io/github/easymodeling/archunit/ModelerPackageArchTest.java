@@ -28,5 +28,5 @@ public class ModelerPackageArchTest {
     private final ArchRule should_modeler_pkg_not_depends_on_processor_pkg =
             noClasses()
                     .that().resideInAPackage("io.github.easymodeling.modeler..")
-                    .should().dependOnClassesThat().resideInAnyPackage("io.github.easymodeling.processor");
+                    .should().dependOnClassesThat().resideInAnyPackage("io.github.easymodeling.processor..");
 }

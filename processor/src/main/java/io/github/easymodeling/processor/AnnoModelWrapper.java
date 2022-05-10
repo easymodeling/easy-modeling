@@ -4,9 +4,10 @@ import io.github.easymodeling.Model;
 import io.github.easymodeling.modeler.FieldCustomization;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AnnoModelWrapper {
 
@@ -14,26 +15,18 @@ public class AnnoModelWrapper {
 
     private final Model model;
 
-    private final List<AnnoFieldWrapper> fields;
-
     public AnnoModelWrapper(String canonicalName) {
         this.canonicalName = canonicalName;
         this.model = null;
-        this.fields = Collections.emptyList();
     }
 
     public AnnoModelWrapper(String canonicalName, Model model) {
         this.canonicalName = canonicalName;
         this.model = model;
-        this.fields = fieldsOf(model);
     }
 
     public String getCanonicalName() {
         return canonicalName;
-    }
-
-    public Model getModel() {
-        return model;
     }
 
     @Override
@@ -49,13 +42,13 @@ public class AnnoModelWrapper {
         return canonicalName.equals(((AnnoModelWrapper) o).canonicalName);
     }
 
-    private List<AnnoFieldWrapper> fieldsOf(Model model) {
-        return Arrays.stream(model.fields())
-                .map(field -> new AnnoFieldWrapper(this, field))
+    public List<FieldCustomization> getFieldCustomizations() {
+        return Optional.ofNullable(model).map(this::fieldsOf).orElse(Stream.empty())
+                .map(AnnoFieldWrapper::toFieldCustomization)
                 .collect(Collectors.toList());
     }
 
-    public List<FieldCustomization> getFieldCustomizations() {
-        return fields.stream().map(AnnoFieldWrapper::toFieldCustomization).collect(Collectors.toList());
+    private Stream<AnnoFieldWrapper> fieldsOf(Model model) {
+        return Arrays.stream(model.fields()).map(field -> new AnnoFieldWrapper(this, field));
     }
 }

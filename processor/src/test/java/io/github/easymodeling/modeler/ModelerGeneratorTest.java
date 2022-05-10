@@ -6,7 +6,6 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import io.github.easymodeling.processor.GenerationPatterns;
 import io.github.easymodeling.randomizer.ModelCache;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;

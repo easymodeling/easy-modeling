@@ -9,7 +9,6 @@ import io.github.easymodeling.ReflectionUtil;
 import io.github.easymodeling.modeler.field.BuilderMember;
 import io.github.easymodeling.modeler.field.ModelField;
 import io.github.easymodeling.modeler.field.StatementProvider;
-import io.github.easymodeling.processor.GenerationPatterns;
 
 import javax.lang.model.element.Modifier;
 import java.util.List;
