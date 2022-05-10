@@ -13,7 +13,7 @@ import javax.lang.model.element.Modifier;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HiddenFieldTest extends AbstractFieldTest {
+class HiddenFieldTest extends AbstractFieldTest {
 
     public static final String QUALIFIED_FIELD_NAME_AS_VARIABLE = QUALIFIED_NAME.replace(".", "_").replace("#", "$");
 

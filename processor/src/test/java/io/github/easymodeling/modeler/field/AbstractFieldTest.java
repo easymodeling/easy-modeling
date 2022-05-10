@@ -3,7 +3,7 @@ package io.github.easymodeling.modeler.field;
 import com.squareup.javapoet.TypeName;
 import io.github.easymodeling.modeler.FieldCustomization;
 
-public class AbstractFieldTest {
+public abstract class AbstractFieldTest {
 
     public static final String CLASS_NAME = "packageName.className";
 

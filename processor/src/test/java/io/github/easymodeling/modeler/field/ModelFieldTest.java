@@ -91,11 +91,11 @@ public abstract class ModelFieldTest extends AbstractFieldTest {
 
     @Test
     void should_set_hidden() {
-        assertThat(modelField.isHidden()).isEqualTo(false);
+        assertThat(modelField.isHidden()).isFalse();
 
         modelField.setHidden();
 
-        assertThat(modelField.isHidden()).isEqualTo(true);
+        assertThat(modelField.isHidden()).isTrue();
     }
 
     @Test

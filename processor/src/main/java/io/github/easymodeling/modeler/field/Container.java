@@ -5,7 +5,6 @@ import com.squareup.javapoet.TypeName;
 import io.github.easymodeling.modeler.FieldCustomization;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public abstract class Container extends ModelField {
 

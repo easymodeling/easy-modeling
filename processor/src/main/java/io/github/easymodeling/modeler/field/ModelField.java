@@ -16,11 +16,6 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
 
     protected TypeName type;
 
-    protected String name;
-
-    // TODO: 06.05.22 use field.qualifiedName
-    protected String qualifiedName;
-
     protected FieldCustomization customization;
 
     protected boolean inherited;
@@ -34,8 +29,6 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
 
     protected ModelField(TypeName type, FieldCustomization customization) {
         this.type = type;
-        this.name = customization.fieldName();
-        this.qualifiedName = customization.qualifiedName();
         this.customization = customization;
     }
 
@@ -50,7 +43,7 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
 
     @Override
     public MethodSpec setter() {
-        return MethodSpec.methodBuilder(name)
+        return MethodSpec.methodBuilder(fieldName())
                 .addModifiers(Modifier.PUBLIC)
                 .returns(ClassName.get("", BUILDER_CLASS_NAME))
                 .addParameter(type, identity())
@@ -61,7 +54,7 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
 
     @Override
     public CodeBlock constructorStatement() {
-        return CodeBlock.of("this.$N = ($T) $T.getField(model, $S)", identity(), type(), ReflectionUtil.class, this.qualifiedName);
+        return CodeBlock.of("this.$N = ($T) $T.getField(model, $S)", identity(), type(), ReflectionUtil.class, qualifiedName());
     }
 
     @Override
@@ -75,15 +68,19 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
     }
 
     private String identity() {
-        return hidden ? qualifiedIdentity() : name;
+        return hidden ? qualifiedIdentity() : fieldName();
     }
 
     private String qualifiedIdentity() {
-        return qualifiedName.replace(".", "_").replace("#", "$");
+        return qualifiedName().replace(".", "_").replace("#", "$");
+    }
+
+    private String qualifiedName() {
+        return customization.qualifiedName();
     }
 
     public String fieldName() {
-        return name;
+        return customization.fieldName();
     }
 
     public TypeName type() {
@@ -107,7 +104,7 @@ public abstract class ModelField implements Initializable, BuilderMember, Statem
     }
 
     private CodeBlock setFieldStatement(CodeBlock value) {
-        return CodeBlock.of("$T.setField(model, $S, $L)", ReflectionUtil.class, this.qualifiedName, value);
+        return CodeBlock.of("$T.setField(model, $S, $L)", ReflectionUtil.class, qualifiedName(), value);
     }
 
     @Override

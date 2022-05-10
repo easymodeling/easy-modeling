@@ -140,13 +140,13 @@ public class FieldCustomization {
     }
 
     public Optional<Integer> minSize() {
-        final Optional<Integer> minSize = isMinSizeSet() ? Optional.of(this.minSize) : Optional.empty();
-        return isSizeSet() ? Optional.of(size) : minSize;
+        final Optional<Integer> optionalMinSize = isMinSizeSet() ? Optional.of(this.minSize) : Optional.empty();
+        return isSizeSet() ? Optional.of(size) : optionalMinSize;
     }
 
     public Optional<Integer> maxSize() {
-        final Optional<Integer> maxSize = isMaxSizeSet() ? Optional.of(this.maxSize) : Optional.empty();
-        return isSizeSet() ? Optional.of(size) : maxSize;
+        final Optional<Integer> optionalMaxSize = isMaxSizeSet() ? Optional.of(this.maxSize) : Optional.empty();
+        return isSizeSet() ? Optional.of(size) : optionalMaxSize;
     }
 
     public Optional<Instant> datetime() {

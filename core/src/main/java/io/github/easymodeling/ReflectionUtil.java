@@ -72,7 +72,7 @@ public class ReflectionUtil {
 
     private static class QualifiedField {
 
-        private final static String SPLITTER = "#";
+        private static final String SPLITTER = "#";
 
         private final String className;
 
