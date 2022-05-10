@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 class PrimitiveArrayFieldTest extends ModelFieldTest {
 
@@ -39,5 +40,12 @@ class PrimitiveArrayFieldTest extends ModelFieldTest {
 
         assertThat(initializer).hasToString(
                 "new " + $(PrimitiveArrayRandomizer.class) + "(" + integerField.initializer() + ", 2, 3, 8)");
+    }
+
+    @Test
+    void should_not_invoke_create() {
+        final Throwable throwable = catchThrowable(() -> modelField.create(fieldCustomization));
+
+        assertThat(throwable).isInstanceOf(UnsupportedOperationException.class);
     }
 }

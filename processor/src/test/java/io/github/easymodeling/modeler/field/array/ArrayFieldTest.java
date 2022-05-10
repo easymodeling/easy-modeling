@@ -43,7 +43,7 @@ class ArrayFieldTest extends ModelFieldTest {
 
     @Test
     void should_not_invoke_create() {
-        final Throwable throwable = catchThrowable(() -> new ArrayField(typeName, fieldCustomization, integerField).create(fieldCustomization));
+        final Throwable throwable = catchThrowable(() -> modelField.create(fieldCustomization));
 
         assertThat(throwable).isInstanceOf(UnsupportedOperationException.class);
     }
