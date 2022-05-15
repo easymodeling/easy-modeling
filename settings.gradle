@@ -1,5 +1,11 @@
 rootProject.name = 'easy-modeling'
-include 'core'
-include 'processor'
-include 'integration-test'
+include 'core', 'processor', 'integration-test'
+
+if (startParameter.projectProperties.get('artifact-verification') != null) {
+    include 'artifact-verification'
+
+    def artifactVerification = project(':artifact-verification')
+    artifactVerification.projectDir = file('integration-test')
+    artifactVerification.buildFileName = 'artifact-verification.build.gradle'
+}
 
