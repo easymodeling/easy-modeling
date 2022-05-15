@@ -6,6 +6,7 @@ on:
       - '*'
   pull_request:
     types: [ opened, synchronize, reopened ]
+  workflow_call: 
 
 env:
   OSSRH_USERNAME: 'OSSRH_USERNAME'
@@ -30,6 +31,7 @@ jobs:
   sonarqube:
     name: Sonarqube Report
     runs-on: ubuntu-latest
+    timeout-minutes: 3
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/set-up-jdk
@@ -50,7 +52,7 @@ jobs:
         os: [ 'ubuntu-22.04', 'macos-12', 'windows-2022' ]
         java: [ '8', '11', '17', '18' ]
     runs-on: '${{ matrix.os }}'
-    timeout-minutes: 3
+    timeout-minutes: 15
     steps:
       - name: 'Checkout repository'
         uses: actions/checkout@v2
