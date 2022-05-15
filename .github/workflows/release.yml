@@ -3,56 +3,68 @@ name: RELEASE
 on:
   push:
     tags:
-      - '*'
+      - '[0-9]+.[0-9]+.[0-9]+-SNAPSHOT'
+      - '[0-9]+.[0-9]+.[0-9]+'
 
 env:
   OSSRH_USERNAME: 'OSSRH_USERNAME'
   OSSRH_PASSWORD: 'OSSRH_PASSWORD'
 
 jobs:
-  ci:
-    uses: ./.github/workflows/ci.yml
-    secrets: inherit
+  cross-env-verify:
+    name: "Test on ${{ matrix.os }} with JDK ${{ matrix.java }}"
+    strategy:
+      matrix:
+        os: [ 'ubuntu-22.04', 'macos-12', 'windows-2022' ]
+        java: [ '8', '11', '17', '18' ]
+    runs-on: '${{ matrix.os }}'
+    timeout-minutes: 15
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v2
+      - uses: ./.github/actions/set-up-jdk
+        with:
+          jdk-version: '${{ matrix.java }}'
+      - name: 'Run test'
+        run: ./gradlew clean test
+
+  sonarqube:
+    name: Sonarqube Report
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/set-up-jdk
+        with:
+          jdk-version: '11'
+      - uses: ./.github/actions/sonarqube
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   version:
     name: Check Artifacts Version
     runs-on: ubuntu-latest
     needs:
-      - ci
+      - cross-env-verify
+      - sonarqube
     steps:
       - name: 'Checkout repository'
         uses: actions/checkout@v2
       - uses: ./.github/actions/set-up-jdk
-      - name: 'Compare gradle version to git tag'
-        shell: bash
+      - name: 'Artifact and Release Version'
+        id: artifact-release-version
         run: |
           GRADLE_VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')
           GIT_TAG=${GITHUB_REF#refs/*/}
-          [[ "${GRADLE_VERSION}" == "${GIT_TAG}" ]]
-      - name: 'Release version'
-        id: release-version
-        run: echo "::set-output name=RELEASE_VERSION::${GITHUB_REF#refs/*/}"
+          [[ "$GRADLE_VERSION" == "$GIT_TAG" ]]
+          echo "::set-output name=RELEASE_VERSION::${GIT_TAG}"
     outputs:
-      RELEASE_VERSION: ${{ steps.release-version.outputs.RELEASE_VERSION }}
+      RELEASE_VERSION: ${{ steps.artifact-release-version.outputs.RELEASE_VERSION }}
 
-  release-draft:
-    name: "Release Draft"
+  publish:
+    name: Publish Artifact
     runs-on: ubuntu-latest
-    needs:
-      - version
-    if: ${{ !endsWith(needs.version.outputs.RELEASE_VERSION, '-SNAPSHOT') }}
-    steps:
-      - name: 'Create release draft'
-        uses: ncipollo/release-action@v1
-        with:
-          draft: true
-          prerelease: true
-          token: ${{ github.token }}
-
-  snapshot:
-    name: Publish Snapshot Artifact
-    runs-on: ubuntu-latest
-    environment: maven-central-snapshot
     timeout-minutes: 10
     needs:
       - version
@@ -70,12 +82,14 @@ jobs:
           signing-key-id: ${{ secrets.SIGNING_KEY_ID }}
           signing-key-password: ${{ secrets.SIGNING_KEY_PASSWORD }}
 
-  verify-snapshot-artifact:
-    name: Verify Snapshot Artifact
+  snapshot:
+    name: "SNAPSHOT: Verify Artifact"
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs:
-      - snapshot
+      - publish
+      - version
+    if: ${{ endsWith(needs.version.outputs.RELEASE_VERSION, '-SNAPSHOT') }}
     steps:
       - name: 'Checkout repository'
         uses: actions/checkout@v2
@@ -86,24 +100,32 @@ jobs:
       - name: 'Run test with new released artifact snapshot'
         run: ./gradlew clean -Partifact-verification :artifact-verification:build
 
-  release:
-    name: Publish Release Artifact
+  release-branch:
+    name: "Create Release Branch"
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    environment: maven-central-release
     needs:
+      - snapshot
       - version
-    if: ${{ !endsWith(needs.version.outputs.RELEASE_VERSION, '-SNAPSHOT') }}
-    env:
-      OSSRH_USERNAME: ${{secrets.OSSRH_USERNAME}}
-      OSSRH_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
-      OSSRH_URL: ${{secrets.OSSRH_URL}}
     steps:
       - name: 'Checkout repository'
         uses: actions/checkout@v2
-      - uses: ./.github/actions/set-up-jdk
-      - uses: ./.github/actions/publish-artifact
+      - name: 'Branch'
+        run: |
+          BRANCH="release/${{needs.version.outputs.RELEASE_VERSION}}"
+          git branch ${BRANCH}
+          git push origin ${BRANCH}
+
+  release:
+    name: "RELEASE: Draft"
+    runs-on: ubuntu-latest
+    needs:
+      - publish
+      - version
+    if: ${{ !endsWith(needs.version.outputs.RELEASE_VERSION, '-SNAPSHOT') }}
+    steps:
+      - name: 'Create release draft'
+        uses: ncipollo/release-action@v1
         with:
-          signing-secret-key-ring-b64: ${{ secrets.SIGNING_SECRET_KEY_RING_B64 }}
-          signing-key-id: ${{ secrets.SIGNING_KEY_ID }}
-          signing-key-password: ${{ secrets.SIGNING_KEY_PASSWORD }}
+          draft: true
+          prerelease: true
+          token: ${{ github.token }}

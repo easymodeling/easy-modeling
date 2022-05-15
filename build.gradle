@@ -30,9 +30,9 @@ ext {
     }
 
     mavenCentral = {
-//        def releasesRepoUrl = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+        def releasesRepoUrl = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
         def snapshotsRepoUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
-        url = System.getenv("OSSRH_URL") ?: snapshotsRepoUrl
+        url = project.version.endsWith("-SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
         credentials {
             username System.getenv("OSSRH_USERNAME") ?: ossrhUsername
             password System.getenv("OSSRH_PASSWORD") ?: ossrhPassword
