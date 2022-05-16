@@ -174,8 +174,8 @@ For Gradle users, put the following into your build.gradle file:
 ```groovy
 dependencies {
     ...
-    testImplementation 'io.github.easymodeling:easy-modeling:0.1.0-Beta'
-    testAnnotationProcessor 'io.github.easymodeling:easy-modeling-processor:0.1.0-Beta'
+    testImplementation 'io.github.easymodeling:easy-modeling:0.1.2'
+    testAnnotationProcessor 'io.github.easymodeling:easy-modeling-processor:0.1.2'
     ...
 }
 ```
@@ -191,7 +191,7 @@ For Maven-based projects, add the following to your POM file:
     <dependency>
         <groupId>io.github.easymodeling</groupId>
         <artifactId>easy-modeling</artifactId>
-        <version>0.1.0-Beta</version>
+        <version>0.1.2</version>
         <scope>test</scope>
     </dependency>
 </dependencies>
@@ -209,7 +209,7 @@ For Maven-based projects, add the following to your POM file:
                 <path>
                     <groupId>io.github.easymodeling</groupId>
                     <artifactId>easy-modeling-processor</artifactId>
-                    <version>0.1.0-Beta</version>
+                    <version>0.1.2</version>
                 </path>
             </annotationProcessorPaths>
         </configuration>
