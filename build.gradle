@@ -6,7 +6,7 @@ plugins {
 
 ext {
     projectGroup = 'io.github.easymodeling'
-    projectVersion = '0.1.2-SNAPSHOT'
+    projectVersion = '0.1.2'
 
     publicationPom = {
         name = 'Easy Modeling'
