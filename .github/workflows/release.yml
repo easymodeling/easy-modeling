@@ -21,7 +21,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: 'Checkout repository'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - uses: ./.github/actions/set-up-jdk
         with:
           jdk-version: '${{ matrix.java }}'
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/set-up-jdk
         with:
           jdk-version: '11'
@@ -50,7 +50,7 @@ jobs:
       - sonarqube
     steps:
       - name: 'Checkout repository'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - uses: ./.github/actions/set-up-jdk
       - name: 'Artifact and Release Version'
         id: artifact-release-version
@@ -74,7 +74,7 @@ jobs:
       OSSRH_URL: ${{secrets.OSSRH_URL}}
     steps:
       - name: 'Checkout repository'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - uses: ./.github/actions/set-up-jdk
       - uses: ./.github/actions/publish-artifact
         with:
@@ -92,7 +92,7 @@ jobs:
     if: ${{ endsWith(needs.version.outputs.RELEASE_VERSION, '-SNAPSHOT') }}
     steps:
       - name: 'Checkout repository'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - uses: actions/setup-java@v2
         with:
           java-version: '8'
@@ -108,7 +108,7 @@ jobs:
       - version
     steps:
       - name: 'Checkout repository'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: 'Branch'
         run: |
           BRANCH="release/${{needs.version.outputs.RELEASE_VERSION}}"
