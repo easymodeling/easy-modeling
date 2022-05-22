@@ -1,12 +1,8 @@
-name: CI
+name: Test
 
 on:
-  push:
-    branches:
-      - 'master'
-      - 'release/*'
   pull_request:
-    types: [ assigned ]
+    types: [ opened, synchronize, reopened ]
 
 env:
   OSSRH_USERNAME: 'OSSRH_USERNAME'
@@ -32,17 +28,3 @@ jobs:
           jdk-version: '${{ matrix.java }}'
       - name: 'Run test'
         run: ./gradlew clean test
-
-  sonarqube:
-    name: Sonarqube Report
-    runs-on: ubuntu-latest
-    timeout-minutes: 3
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ./.github/actions/set-up-jdk
-        with:
-          jdk-version: '11'
-      - uses: ./.github/actions/sonarqube
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
