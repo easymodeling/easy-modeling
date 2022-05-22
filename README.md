@@ -1,4 +1,4 @@
-# EasyModeling
+# NotTooEasyModeling
 
 [![version][release-badge]][release-link]
 [![maven][maven-badge]][search-maven]
