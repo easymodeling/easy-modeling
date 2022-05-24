@@ -1,6 +1,7 @@
 package io.github.easymodeling;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public class NumericalTypeModel {
 
@@ -17,6 +18,8 @@ public class NumericalTypeModel {
     private Double aDouble;
 
     public BigDecimal aBigDecimal;
+
+    public BigInteger aBigInteger;
 
     public Integer getAnInt() {
         return anInt;
