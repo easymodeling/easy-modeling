@@ -1,5 +1,6 @@
 package io.github.easymodeling;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Optional;
 
@@ -34,4 +35,6 @@ public class OptionalModel {
     public Optional<Instant[]>[] arrayOfOptionalArrayOfInstant;
 
     public Optional<Instant[][]>[] arrayOfOptionalMatrixOfInstant;
+
+    public Optional<BigDecimal> optionalBigDecimal;
 }

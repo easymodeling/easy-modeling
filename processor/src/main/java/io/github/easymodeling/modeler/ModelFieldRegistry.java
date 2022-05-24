@@ -22,6 +22,7 @@ import io.github.easymodeling.modeler.field.datetime.LocalTimeField;
 import io.github.easymodeling.modeler.field.datetime.SqlDateField;
 import io.github.easymodeling.modeler.field.datetime.SqlTimestampField;
 import io.github.easymodeling.modeler.field.datetime.ZonedDateTimeField;
+import io.github.easymodeling.modeler.field.number.BigDecimalField;
 import io.github.easymodeling.modeler.field.number.ByteField;
 import io.github.easymodeling.modeler.field.number.DoubleField;
 import io.github.easymodeling.modeler.field.number.FloatField;
@@ -71,6 +72,9 @@ public class ModelFieldRegistry {
             new DoubleField(),
             new BooleanField(),
             new CharField(),
+
+            // big number
+            new BigDecimalField(),
 
             // string
             new StringField(),
