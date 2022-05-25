@@ -14,6 +14,7 @@ import io.github.easymodeling.randomizer.Modeler;
 
 import javax.lang.model.element.Modifier;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -35,7 +36,8 @@ public class ModelerGenerator extends BuilderGenerator {
 
         modeler.addMethod(staticNextMethod());
         modeler.addMethod(staticStreamMethod());
-        modeler.addMethod(staticParameterizedListMethod());
+        modeler.addMethod(staticSizedListMethod());
+        modeler.addMethod(staticListMethod());
         modeler.addMethod(staticBuilderMethod());
         modeler.addMethod(populateMethod());
         modeler.addMethod(typeMethod());
@@ -59,7 +61,7 @@ public class ModelerGenerator extends BuilderGenerator {
                 .build();
     }
 
-    private MethodSpec staticParameterizedListMethod() {
+    private MethodSpec staticSizedListMethod() {
         final String parameterName = "size";
         final CodeBlock statement = CodeBlock.of("return $N().limit($N).collect($T.toList())",
                 GenerationPatterns.STATIC_STREAM_METHOD_NAME, parameterName, Collectors.class);
@@ -68,6 +70,14 @@ public class ModelerGenerator extends BuilderGenerator {
                 .returns(ParameterizedTypeName.get(ClassName.get(List.class), className))
                 .addParameter(ParameterSpec.builder(TypeName.INT, parameterName).build())
                 .addStatement(statement)
+                .build();
+    }
+
+    private MethodSpec staticListMethod() {
+        return MethodSpec.methodBuilder(GenerationPatterns.STATIC_LIST_METHOD_NAME)
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .returns(ParameterizedTypeName.get(ClassName.get(List.class), className))
+                .addStatement("return list(new $T().nextInt(7) + 1)", Random.class)
                 .build();
     }
 

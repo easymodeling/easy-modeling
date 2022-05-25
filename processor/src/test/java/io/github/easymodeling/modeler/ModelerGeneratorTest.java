@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import javax.lang.model.element.Modifier;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -40,7 +41,7 @@ class ModelerGeneratorTest {
     void should_generate_modeler_methods() {
         final TypeSpec type = modelerGenerator.createType();
 
-        assertThat(type.methodSpecs).hasSize(6);
+        assertThat(type.methodSpecs).hasSize(7);
     }
 
     @Test
@@ -144,7 +145,7 @@ class ModelerGeneratorTest {
     }
 
     @Nested
-    class StaticParameterizedListMethodTest {
+    class StaticSizedListMethodTest {
 
         private MethodSpec streamMethod;
 
@@ -153,8 +154,9 @@ class ModelerGeneratorTest {
             final TypeSpec type = modelerGenerator.createType();
             streamMethod = type.methodSpecs.stream()
                     .filter(methodSpec -> methodSpec.name.equals(GenerationPatterns.STATIC_LIST_METHOD_NAME))
+                    .filter(methodSpec -> methodSpec.parameters.size() == 1)
                     .findFirst()
-                    .orElseThrow(() -> new RuntimeException("static parameterized list method not found"));
+                    .orElseThrow(() -> new RuntimeException("static sized list method not found"));
         }
 
         @Test
@@ -177,6 +179,40 @@ class ModelerGeneratorTest {
                     "return stream()" +
                     ".limit(size)" +
                     ".collect(" + Collectors.class.getCanonicalName() + ".toList());\n");
+        }
+    }
+
+    @Nested
+    class StaticListMethodTest {
+
+        private MethodSpec streamMethod;
+
+        @BeforeEach
+        void setUp() {
+            final TypeSpec type = modelerGenerator.createType();
+            streamMethod = type.methodSpecs.stream()
+                    .filter(methodSpec -> methodSpec.name.equals(GenerationPatterns.STATIC_LIST_METHOD_NAME))
+                    .filter(methodSpec -> methodSpec.parameters.isEmpty())
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("static list method not found"));
+        }
+
+        @Test
+        void should_be_public_static_and_named_as_list() {
+            assertThat(streamMethod.modifiers).containsExactly(Modifier.PUBLIC, Modifier.STATIC);
+            assertThat(streamMethod.name).isEqualTo(GenerationPatterns.STATIC_LIST_METHOD_NAME);
+        }
+
+        @Test
+        void should_return_list_of_given_type_and_take_no_parameter() {
+            assertThat(streamMethod.returnType)
+                    .isEqualTo(ParameterizedTypeName.get(ClassName.get(List.class), ClassName.get(SomeClass.class)));
+            assertThat(streamMethod.parameters).hasSize(0);
+        }
+
+        @Test
+        void should_generate_list_from_sized_list_method() {
+            assertThat(streamMethod.code).hasToString("return list(new " + Random.class.getCanonicalName() + "().nextInt(7) + 1);\n");
         }
     }
 
