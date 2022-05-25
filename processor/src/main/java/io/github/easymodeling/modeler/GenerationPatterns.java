@@ -9,6 +9,8 @@ public class GenerationPatterns {
 
     public static final String STATIC_BUILDER_METHOD_NAME = "builder";
 
+    public static final String STATIC_LIST_METHOD_NAME = "list";
+
     public static final String STATIC_NEXT_METHOD_NAME = "next";
 
     public static final String STATIC_STREAM_METHOD_NAME = "stream";
