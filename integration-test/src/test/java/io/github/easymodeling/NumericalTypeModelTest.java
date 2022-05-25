@@ -12,5 +12,8 @@ class NumericalTypeModelTest {
 
         assertThat(model.getAnInt()).isEqualTo(11);
         assertThat(model.getaShort()).isEqualTo((short) 11);
+
+        assertThat(model.aBigDecimal).isNotNull();
+        assertThat(model.aBigInteger).isNotNull();
     }
 }

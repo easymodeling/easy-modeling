@@ -12,5 +12,7 @@ class OptionalModelTest {
 
         assertThat(model).isNotNull();
         assertThat(model.optionalInteger).isNotNull().isNotEmpty();
+        assertThat(model.optionalBigInteger).isNotNull().isNotEmpty();
+        assertThat(model.optionalBigDecimal).isNotNull().isNotEmpty();
     }
 }
