@@ -13,6 +13,7 @@ import io.github.easymodeling.randomizer.Modeler;
 
 import javax.lang.model.element.Modifier;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static io.github.easymodeling.log.ProcessorLogger.log;
 
@@ -31,6 +32,7 @@ public class ModelerGenerator extends BuilderGenerator {
         modeler.addType(builder);
 
         modeler.addMethod(staticNextMethod());
+        modeler.addMethod(staticStreamMethod());
         modeler.addMethod(staticBuilderMethod());
         modeler.addMethod(populateMethod());
         modeler.addMethod(typeMethod());
@@ -43,6 +45,14 @@ public class ModelerGenerator extends BuilderGenerator {
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(className)
                 .addStatement("return new $N().$N(null)", modelerName(), GenerationPatterns.BASE_MODELER_NEXT_METHOD_NAME)
+                .build();
+    }
+
+    private MethodSpec staticStreamMethod() {
+        return MethodSpec.methodBuilder(GenerationPatterns.STATIC_STREAM_METHOD_NAME)
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .returns(ParameterizedTypeName.get(ClassName.get(Stream.class), className))
+                .addStatement("return $T.generate(() -> $N())", Stream.class, GenerationPatterns.STATIC_NEXT_METHOD_NAME)
                 .build();
     }
 

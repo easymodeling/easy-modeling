@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.lang.model.element.Modifier;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,7 +37,7 @@ class ModelerGeneratorTest {
     void should_generate_modeler_methods() {
         final TypeSpec type = modelerGenerator.createType();
 
-        assertThat(type.methodSpecs).hasSize(4);
+        assertThat(type.methodSpecs).hasSize(5);
     }
 
     @Test
@@ -105,6 +106,37 @@ class ModelerGeneratorTest {
         @Test
         void should_invoke_constructor_of_builder() {
             assertThat(nextMethod.code).hasToString("return new SomeClassModeler.Builder(next());\n");
+        }
+    }
+
+    @Nested
+    class StaticStreamMethodTest {
+
+        private MethodSpec streamMethod;
+
+        @BeforeEach
+        void setUp() {
+            final TypeSpec type = modelerGenerator.createType();
+            streamMethod = type.methodSpecs.stream()
+                    .filter(methodSpec -> methodSpec.name.equals(GenerationPatterns.STATIC_STREAM_METHOD_NAME))
+                    .findFirst().orElseThrow(() -> new RuntimeException("static stream method not found"));
+        }
+
+        @Test
+        void should_be_public_static_and_named_as_stream() {
+            assertThat(streamMethod.modifiers).containsExactly(Modifier.PUBLIC, Modifier.STATIC);
+            assertThat(streamMethod.name).isEqualTo(GenerationPatterns.STATIC_STREAM_METHOD_NAME);
+        }
+
+        @Test
+        void should_return_stream_of_given_type_and_take_no_parameter() {
+            assertThat(streamMethod.returnType).isEqualTo(ParameterizedTypeName.get(ClassName.get(Stream.class), ClassName.get(SomeClass.class)));
+            assertThat(streamMethod.parameters).isEmpty();
+        }
+
+        @Test
+        void should_generate_stream_from_static_next_method() {
+            assertThat(streamMethod.code).hasToString("return " + Stream.class.getCanonicalName() + ".generate(() -> next());\n");
         }
     }
 

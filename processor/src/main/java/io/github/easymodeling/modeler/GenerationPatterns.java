@@ -11,6 +11,8 @@ public class GenerationPatterns {
 
     public static final String STATIC_NEXT_METHOD_NAME = "next";
 
+    public static final String STATIC_STREAM_METHOD_NAME = "stream";
+
     public static final String BASE_MODELER_NEXT_METHOD_NAME = "next";
 
     public static final String TYPE_METHOD_NAME = "type";

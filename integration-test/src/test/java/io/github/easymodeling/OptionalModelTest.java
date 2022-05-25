@@ -2,6 +2,8 @@ package io.github.easymodeling;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.Stream;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class OptionalModelTest {
@@ -14,5 +16,16 @@ class OptionalModelTest {
         assertThat(model.optionalInteger).isNotNull().isNotEmpty();
         assertThat(model.optionalBigInteger).isNotNull().isNotEmpty();
         assertThat(model.optionalBigDecimal).isNotNull().isNotEmpty();
+    }
+
+    @Test
+    void should_provide_stream_of_models() {
+        final Stream<OptionalModel> models = OptionalModelModeler.stream().limit(5);
+
+        models.forEach(model -> {
+            assertThat(model.optionalInteger).isNotNull().isNotEmpty();
+            assertThat(model.optionalBigInteger).isNotNull().isNotEmpty();
+            assertThat(model.optionalBigDecimal).isNotNull().isNotEmpty();
+        });
     }
 }
