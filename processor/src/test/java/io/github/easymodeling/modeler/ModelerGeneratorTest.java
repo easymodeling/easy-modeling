@@ -207,7 +207,7 @@ class ModelerGeneratorTest {
         void should_return_list_of_given_type_and_take_no_parameter() {
             assertThat(streamMethod.returnType)
                     .isEqualTo(ParameterizedTypeName.get(ClassName.get(List.class), ClassName.get(SomeClass.class)));
-            assertThat(streamMethod.parameters).hasSize(0);
+            assertThat(streamMethod.parameters).isEmpty();
         }
 
         @Test
