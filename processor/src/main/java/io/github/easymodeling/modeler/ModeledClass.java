@@ -11,6 +11,7 @@ import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -29,11 +30,10 @@ public class ModeledClass {
     }
 
     public List<ModelField> fields() {
-        final List<ModelField> modelFields = declaredFieldsOf(typeElement)
+        return declaredFieldsOf(typeElement)
                 .map(this::toModelField)
-                .collect(Collectors.toList());
-        return FieldsNamingGroup.grouping(modelFields)
-                .flatMap(FieldsNamingGroup::getFields)
+                .collect(HidingFieldsGrouper.GROUPER)
+                .values().stream().flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }
 
