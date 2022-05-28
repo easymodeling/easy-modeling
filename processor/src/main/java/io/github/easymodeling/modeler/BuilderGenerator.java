@@ -14,6 +14,8 @@ import javax.lang.model.element.Modifier;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static io.github.easymodeling.modeler.GenerationPatterns.BUILDER_CLASS_NAME;
+
 public class BuilderGenerator {
 
     protected final ClassName className;
@@ -26,7 +28,7 @@ public class BuilderGenerator {
     }
 
     protected TypeSpec createBuilder() {
-        final TypeSpec.Builder builder = TypeSpec.classBuilder(GenerationPatterns.BUILDER_CLASS_NAME)
+        final TypeSpec.Builder builder = TypeSpec.classBuilder(BUILDER_CLASS_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addMethod(builderConstructor())
                 .addMethod(buildMethod())
