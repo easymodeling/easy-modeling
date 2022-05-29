@@ -14,6 +14,7 @@ import javax.lang.model.element.Modifier;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static io.github.easymodeling.modeler.GenerationPatterns.BUILDER_CLASS_JAVADOC;
 import static io.github.easymodeling.modeler.GenerationPatterns.BUILDER_CLASS_NAME;
 
 public class BuilderGenerator {
@@ -34,7 +35,9 @@ public class BuilderGenerator {
                 .addMethod(buildMethod())
                 .addFields(builderFields())
                 .addMethods(builderSetters());
-        return builder.build();
+        return builder
+                .addJavadoc(BUILDER_CLASS_JAVADOC(className))
+                .build();
     }
 
     private MethodSpec builderConstructor() {
