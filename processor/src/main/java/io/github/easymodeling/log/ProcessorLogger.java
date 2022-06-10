@@ -38,8 +38,11 @@ public class ProcessorLogger {
     }
 
     private void log(Diagnostic.Kind kind, LogLevel logLevel, String msg, Object... args) {
-        if (logLevel.meets(allowedLevel)) {
-            messager.get().printMessage(kind, String.format(msg, args));
+        try {
+            if (logLevel.meets(allowedLevel)) {
+                messager.get().printMessage(kind, String.format(msg, args));
+            }
+        } catch (Exception ignored) {
         }
     }
 }
