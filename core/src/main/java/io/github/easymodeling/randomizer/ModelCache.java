@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class ModelCache {
 
-    public final static int POOL_SIZE = 10;
+    public static final int POOL_SIZE = 10;
 
     private final Map<Class<?>, List<?>> cache;
 

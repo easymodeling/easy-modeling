@@ -60,7 +60,7 @@ public class ModelerGenerator extends BuilderGenerator {
         modeler.addMethod(typeMethod());
 
         return modeler
-                .addJavadoc(MODELER_JAVADOC())
+                .addJavadoc(MODELER_JAVADOC.get())
                 .build();
     }
 
@@ -69,7 +69,7 @@ public class ModelerGenerator extends BuilderGenerator {
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(className)
                 .addStatement("return new $N().$N(null)", modelerName(), BASE_MODELER_NEXT_METHOD_NAME)
-                .addJavadoc(STATIC_NEXT_METHOD_JAVADOC(className))
+                .addJavadoc(STATIC_NEXT_METHOD_JAVADOC.apply(className))
                 .build();
     }
 
@@ -78,7 +78,7 @@ public class ModelerGenerator extends BuilderGenerator {
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(ParameterizedTypeName.get(ClassName.get(Stream.class), className))
                 .addStatement("return $T.generate(() -> $N())", Stream.class, STATIC_NEXT_METHOD_NAME)
-                .addJavadoc(STATIC_STREAM_METHOD_JAVADOC(className))
+                .addJavadoc(STATIC_STREAM_METHOD_JAVADOC.apply(className))
                 .build();
     }
 
@@ -91,7 +91,7 @@ public class ModelerGenerator extends BuilderGenerator {
                 .returns(ParameterizedTypeName.get(ClassName.get(List.class), className))
                 .addParameter(ParameterSpec.builder(TypeName.INT, parameterName).build())
                 .addStatement(statement)
-                .addJavadoc(STATIC_SIZED_LIST_METHOD_JAVADOC(className))
+                .addJavadoc(STATIC_SIZED_LIST_METHOD_JAVADOC.apply(className))
                 .build();
     }
 
@@ -100,7 +100,7 @@ public class ModelerGenerator extends BuilderGenerator {
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(ParameterizedTypeName.get(ClassName.get(List.class), className))
                 .addStatement("return list(new $T().nextInt(7) + 1)", Random.class)
-                .addJavadoc(STATIC_LIST_METHOD_JAVADOC(className))
+                .addJavadoc(STATIC_LIST_METHOD_JAVADOC.apply(className))
                 .build();
     }
 
@@ -109,7 +109,7 @@ public class ModelerGenerator extends BuilderGenerator {
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(ClassName.get("", BUILDER_CLASS_NAME))
                 .addStatement("return new $N.$N($N())", modelerName(), BUILDER_CLASS_NAME, STATIC_NEXT_METHOD_NAME)
-                .addJavadoc(STATIC_BUILDER_METHOD_JAVADOC(className))
+                .addJavadoc(STATIC_BUILDER_METHOD_JAVADOC.apply(className))
                 .build();
     }
 

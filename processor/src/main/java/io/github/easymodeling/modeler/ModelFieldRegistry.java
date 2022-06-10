@@ -49,7 +49,7 @@ public class ModelFieldRegistry {
     private ModelFieldRegistry() {
     }
 
-    static Optional<PlainField<?>> plainField(TypeName type) {
+    static Optional<ModelField> plainField(TypeName type) {
         return Optional.ofNullable(ModelFieldRegistry.PLAIN_FIELDS.get(type.box()));
     }
 

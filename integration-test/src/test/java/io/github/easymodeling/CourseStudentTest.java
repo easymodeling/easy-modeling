@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CourseStudentTest {
+class CourseStudentTest {
 
     @Test
     void should_generate_course() {

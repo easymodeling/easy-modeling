@@ -36,7 +36,7 @@ public class BuilderGenerator {
                 .addFields(builderFields())
                 .addMethods(builderSetters());
         return builder
-                .addJavadoc(BUILDER_CLASS_JAVADOC(className))
+                .addJavadoc(BUILDER_CLASS_JAVADOC.apply(className))
                 .build();
     }
 

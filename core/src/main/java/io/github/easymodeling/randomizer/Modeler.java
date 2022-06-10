@@ -20,7 +20,6 @@ public abstract class Modeler<T> {
         final T model = ReflectionUtil.createModelOf(clazz);
         modelCache.push(model);
         populate(model, modelCache);
-//        modelCache.pop(clazz);
         return model;
     }
 
