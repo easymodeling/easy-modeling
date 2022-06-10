@@ -11,7 +11,6 @@ public class ReflectionUtil {
     private ReflectionUtil() {
     }
 
-    // TODO: 08.05.22 replace classname with class
     public static void setField(Object model, String qualifiedFieldName, Object value) {
         try {
             final QualifiedField qualifiedField = new QualifiedField(qualifiedFieldName);
@@ -34,8 +33,8 @@ public class ReflectionUtil {
     }
 
     private static Field declaredField(Class<?> clazz, QualifiedField qualifiedField) throws NoSuchFieldException {
-        if (clazz.getCanonicalName().equals(qualifiedField.className)) {
-            return clazz.getDeclaredField(qualifiedField.fieldName);
+        if (clazz.getCanonicalName().equals(qualifiedField.getClassName())) {
+            return clazz.getDeclaredField(qualifiedField.getFieldName());
         }
         final Class<?> superclass = clazz.getSuperclass();
         if (Object.class == superclass) {
@@ -68,28 +67,5 @@ public class ReflectionUtil {
             return 0;
         }
         return null;
-    }
-
-    private static class QualifiedField {
-
-        private static final String SPLITTER = "#";
-
-        private final String className;
-
-        private final String fieldName;
-
-        private QualifiedField(String qualifiedFieldName) throws NoSuchFieldException {
-            final int splitter = qualifiedFieldName.lastIndexOf('#');
-            if (splitter == -1 || splitter == qualifiedFieldName.length() - 1 || splitter == 0) {
-                throw new NoSuchFieldException(qualifiedFieldName);
-            }
-            this.className = qualifiedFieldName.substring(0, splitter);
-            this.fieldName = qualifiedFieldName.substring(splitter + 1);
-        }
-
-        @Override
-        public String toString() {
-            return className + SPLITTER + fieldName;
-        }
     }
 }

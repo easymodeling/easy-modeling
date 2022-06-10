@@ -1,5 +1,6 @@
 package io.github.easymodeling.modeler;
 
+import io.github.easymodeling.QualifiedField;
 import io.github.easymodeling.log.ProcessorLogger;
 
 import java.time.Instant;
@@ -92,7 +93,7 @@ public class FieldCustomization {
     }
 
     public String qualifiedName() {
-        return String.format("%s#%s", className, fieldName);
+        return QualifiedField.toQualifiedFieldName(className, fieldName);
     }
 
     public boolean alphanumeric() {
