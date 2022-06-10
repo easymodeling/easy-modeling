@@ -1,5 +1,7 @@
 package io.github.easymodeling.modeler;
 
+import io.github.easymodeling.log.ProcessorLogger;
+
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
@@ -161,8 +163,8 @@ public class FieldCustomization {
         try {
             return Optional.of(datetime).map(Instant::parse);
         } catch (DateTimeParseException e) {
-            // TODO: 29.12.21 ignore (return Optional.empty()) or throw more specific exception
-            throw new IllegalArgumentException("datetime format error", e);
+            ProcessorLogger.log.warning("Failed to parse datetime: " + datetime);
+            return Optional.empty();
         }
     }
 
@@ -190,7 +192,7 @@ public class FieldCustomization {
         return !after.isEmpty();
     }
 
-    public boolean isDatetimeSet() {
+    private boolean isDatetimeSet() {
         return !datetime.isEmpty();
     }
 
