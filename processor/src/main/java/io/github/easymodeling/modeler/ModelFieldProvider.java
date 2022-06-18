@@ -55,7 +55,10 @@ public class ModelFieldProvider {
                 return new EnumField(typeName, customization);
             }
             final String typeCanonicalName = typeName.toString();
-            if (!typeCanonicalName.startsWith("java.")) {
+            if (!typeCanonicalName.startsWith("java.") &&
+                    declaredType.asElement().getKind().equals(ElementKind.CLASS) &&
+                    declaredType.asElement().getEnclosingElement().getKind().equals(ElementKind.PACKAGE)
+            ) {
                 modelUniqueQueue.add(typeCanonicalName);
                 return new CustomField(typeName, customization);
             }
