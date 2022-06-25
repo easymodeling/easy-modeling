@@ -13,6 +13,7 @@ import io.github.easymodeling.modeler.field.array.ArrayField;
 import io.github.easymodeling.modeler.field.array.PrimitiveArrayField;
 
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
@@ -61,6 +62,14 @@ public class ModelFieldProvider {
             ) {
                 modelUniqueQueue.add(typeCanonicalName);
                 return new CustomField(typeName, customization);
+            }
+            if (!typeCanonicalName.startsWith("java.") &&
+                    declaredType.asElement().getKind().equals(ElementKind.CLASS) &&
+                    declaredType.asElement().getEnclosingElement().getKind().equals(ElementKind.CLASS) &&
+                    declaredType.asElement().getModifiers().contains(Modifier.PUBLIC) &&
+                    declaredType.asElement().getModifiers().contains(Modifier.STATIC)
+            ) {
+                modelUniqueQueue.add(typeCanonicalName);
             }
             final List<? extends TypeMirror> typeArguments = declaredType.getTypeArguments();
             if (!typeArguments.isEmpty()) {

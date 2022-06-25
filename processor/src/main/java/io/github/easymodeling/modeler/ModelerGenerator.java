@@ -13,6 +13,7 @@ import io.github.easymodeling.randomizer.ModelCache;
 import io.github.easymodeling.randomizer.Modeler;
 
 import javax.lang.model.element.Modifier;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -39,17 +40,42 @@ import static io.github.easymodeling.modeler.GenerationPatterns.TYPE_METHOD_NAME
 
 public class ModelerGenerator extends BuilderGenerator {
 
+    private final List<ModeledClass> innerModeledClasses;
+
     public ModelerGenerator(ClassName className, List<ModelField> fields) {
         super(className, fields);
+        this.innerModeledClasses = new ArrayList<>();
+    }
+
+    public ModelerGenerator(ModeledClass modeledClass) {
+        super(modeledClass.className(), modeledClass.fields());
+        this.innerModeledClasses = modeledClass.innerClasses();
     }
 
     public TypeSpec createType() {
+        final TypeSpec.Builder typeSpecBuilder = createTypeBuilder();
+        return typeSpecBuilder.build();
+    }
+
+    public TypeSpec createInnerType() {
+        final TypeSpec.Builder typeSpecBuilder = createTypeBuilder();
+        return typeSpecBuilder.addModifiers(Modifier.STATIC).build();
+    }
+
+    private TypeSpec.Builder createTypeBuilder() {
         log.info("Create modeler for " + className);
+        // TODO: 22.06.22 move `modeler` to field
         final TypeSpec.Builder modeler = TypeSpec.classBuilder(modelerName())
                 .addModifiers(Modifier.PUBLIC)
                 .superclass(ParameterizedTypeName.get(ClassName.get(Modeler.class), className));
         final TypeSpec builder = createBuilder();
         modeler.addType(builder);
+
+        final List<TypeSpec> innerTypeModelers = innerModeledClasses.stream()
+                .map(ModelerGenerator::new)
+                .map(ModelerGenerator::createInnerType)
+                .collect(Collectors.toList());
+        modeler.addTypes(innerTypeModelers);
 
         modeler.addMethod(staticNextMethod());
         modeler.addMethod(staticStreamMethod());
@@ -60,8 +86,7 @@ public class ModelerGenerator extends BuilderGenerator {
         modeler.addMethod(typeMethod());
 
         return modeler
-                .addJavadoc(MODELER_JAVADOC.get())
-                .build();
+                .addJavadoc(MODELER_JAVADOC.get());
     }
 
     private MethodSpec staticNextMethod() {

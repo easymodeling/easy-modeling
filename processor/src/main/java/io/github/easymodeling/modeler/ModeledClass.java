@@ -11,6 +11,7 @@ import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +36,20 @@ public class ModeledClass {
                 .collect(HidingFieldsGrouper.GROUPER)
                 .values().stream().flatMap(Collection::stream)
                 .collect(Collectors.toList());
+    }
+
+    public List<ModeledClass> innerClasses() {
+        return typeElement.getEnclosedElements().stream()
+                .filter(this::isModeledInnerClass)
+                .map(TypeElement.class::cast)
+                .map(element -> new ModeledClass(element, new ArrayList<>()))
+                .collect(Collectors.toList());
+    }
+
+    private boolean isModeledInnerClass(Element element) {
+        return element.getKind().equals(ElementKind.CLASS) &&
+                element.getModifiers().contains(Modifier.PUBLIC) &&
+                element.getModifiers().contains(Modifier.STATIC);
     }
 
     private Stream<VariableElement> declaredFieldsOf(TypeElement typeElement) {

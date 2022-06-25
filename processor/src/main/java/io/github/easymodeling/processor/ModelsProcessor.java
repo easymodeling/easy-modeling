@@ -122,7 +122,7 @@ public class ModelsProcessor extends AbstractProcessor {
     private void processModel(AnnoModelWrapper annoModelWrapper) {
         TypeElement typeElement = getTypeElementOf(annoModelWrapper.getCanonicalName());
         final ModeledClass clazz = new ModeledClass(typeElement, annoModelWrapper.getFieldCustomizations());
-        final ModelerGenerator modelFactory = new ModelerGenerator(clazz.className(), clazz.fields());
+        final ModelerGenerator modelFactory = new ModelerGenerator(clazz);
         final TypeSpec factory = modelFactory.createType();
         try {
             JavaFile.builder(clazz.packageName(), factory).build()
