@@ -21,6 +21,7 @@ import javax.lang.model.type.TypeMirror;
 import java.util.List;
 
 import static io.github.easymodeling.log.ProcessorLogger.log;
+import static io.github.easymodeling.modeler.GenerationPatterns.MODELER_NAME_PATTERN;
 
 public class ModelFieldProvider {
 
@@ -70,6 +71,8 @@ public class ModelFieldProvider {
                     declaredType.asElement().getModifiers().contains(Modifier.STATIC)
             ) {
                 modelUniqueQueue.add(typeCanonicalName);
+                final String modelerName = nestedModelerName(declaredType);
+                return new CustomField(typeName, modelerName, customization);
             }
             final List<? extends TypeMirror> typeArguments = declaredType.getTypeArguments();
             if (!typeArguments.isEmpty()) {
@@ -77,6 +80,19 @@ public class ModelFieldProvider {
                 return containerField(declaredType, customization);
             }
             return plainField(typeMirror, customization);
+        }
+        throw new FieldNotSupportedException();
+    }
+
+    private String nestedModelerName(DeclaredType declaredType) {
+        final ElementKind enclosingElementKind = declaredType.asElement().getEnclosingElement().getKind();
+        if (enclosingElementKind.equals(ElementKind.PACKAGE)) {
+            return String.format(MODELER_NAME_PATTERN, TypeName.get(declaredType));
+        }
+        if (enclosingElementKind.equals(ElementKind.CLASS)) {
+            final DeclaredType superClass = (DeclaredType) declaredType.asElement().getEnclosingElement().asType();
+            return nestedModelerName(superClass) + "." +
+                    String.format(MODELER_NAME_PATTERN, declaredType.asElement().getSimpleName());
         }
         throw new FieldNotSupportedException();
     }

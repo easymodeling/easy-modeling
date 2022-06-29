@@ -10,14 +10,21 @@ import static io.github.easymodeling.modeler.GenerationPatterns.MODEL_CACHE_PARA
 
 public class CustomField extends ModelField {
 
+    private final String modelerName;
+
     public CustomField(TypeName type, FieldCustomization customization) {
         super(type, customization);
+        this.modelerName = String.format(MODELER_NAME_PATTERN, type);
+    }
+
+    public CustomField(TypeName type, String modelerName, FieldCustomization customization) {
+        super(type, customization);
+        this.modelerName = modelerName;
     }
 
     @Override
     public CodeBlock initializer() {
-        final String factoryTypeName = String.format(MODELER_NAME_PATTERN, type);
-        return CodeBlock.of("new $T<>(new $L(), $L)", CustomTypeRandomizer.class, factoryTypeName, MODEL_CACHE_PARAMETER_NAME);
+        return CodeBlock.of("new $T<>(new $L(), $L)", CustomTypeRandomizer.class, this.modelerName, MODEL_CACHE_PARAMETER_NAME);
     }
 
     @Override
