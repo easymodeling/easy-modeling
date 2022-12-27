@@ -11,8 +11,10 @@ public class ModelerStreamTest {
 
     @Test
     void should_stream_be_infinite() {
+        final long aBigInteger = 1_000L;
+
         final Stream<Student> studentStream = StudentModeler.stream();
 
-        assertThat(studentStream.spliterator().estimateSize()).isEqualTo(Long.MAX_VALUE);
+        assertThat(studentStream.limit(aBigInteger).count()).isEqualTo(aBigInteger);
     }
 }
