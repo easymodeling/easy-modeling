@@ -33,6 +33,7 @@ import static io.github.easymodeling.modeler.GenerationPatterns.STATIC_LIST_METH
 import static io.github.easymodeling.modeler.GenerationPatterns.STATIC_NEXT_METHOD_JAVADOC;
 import static io.github.easymodeling.modeler.GenerationPatterns.STATIC_NEXT_METHOD_NAME;
 import static io.github.easymodeling.modeler.GenerationPatterns.STATIC_SIZED_LIST_METHOD_JAVADOC;
+import static io.github.easymodeling.modeler.GenerationPatterns.STATIC_SIZED_STREAM_METHOD_JAVADOC;
 import static io.github.easymodeling.modeler.GenerationPatterns.STATIC_STREAM_METHOD_JAVADOC;
 import static io.github.easymodeling.modeler.GenerationPatterns.STATIC_STREAM_METHOD_NAME;
 import static io.github.easymodeling.modeler.GenerationPatterns.TYPE_METHOD_NAME;
@@ -50,14 +51,15 @@ public class ModelerGenerator extends BuilderGenerator {
                 .superclass(ParameterizedTypeName.get(ClassName.get(Modeler.class), className));
         final TypeSpec builder = createBuilder();
         modeler.addType(builder);
-
-        modeler.addMethod(staticNextMethod());
-        modeler.addMethod(staticStreamMethod());
-        modeler.addMethod(staticSizedListMethod());
-        modeler.addMethod(staticListMethod());
-        modeler.addMethod(staticBuilderMethod());
-        modeler.addMethod(populateMethod());
-        modeler.addMethod(typeMethod());
+        modeler
+                .addMethod(staticNextMethod())
+                .addMethod(staticSizedStreamMethod())
+                .addMethod(staticStreamMethod())
+                .addMethod(staticSizedListMethod())
+                .addMethod(staticListMethod())
+                .addMethod(staticBuilderMethod())
+                .addMethod(populateMethod())
+                .addMethod(typeMethod());
 
         return modeler
                 .addJavadoc(MODELER_JAVADOC.get())
@@ -73,18 +75,31 @@ public class ModelerGenerator extends BuilderGenerator {
                 .build();
     }
 
+    private MethodSpec staticSizedStreamMethod() {
+        final String parameterName = "size";
+        final CodeBlock statement = CodeBlock.of("return $T.generate(() -> $N()).limit($N)",
+                Stream.class, STATIC_NEXT_METHOD_NAME, parameterName);
+        return MethodSpec.methodBuilder(STATIC_STREAM_METHOD_NAME)
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .returns(ParameterizedTypeName.get(ClassName.get(Stream.class), className))
+                .addParameter(ParameterSpec.builder(TypeName.INT, parameterName).build())
+                .addStatement(statement)
+                .addJavadoc(STATIC_SIZED_STREAM_METHOD_JAVADOC.apply(className))
+                .build();
+    }
+
     private MethodSpec staticStreamMethod() {
         return MethodSpec.methodBuilder(STATIC_STREAM_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(ParameterizedTypeName.get(ClassName.get(Stream.class), className))
-                .addStatement("return $T.generate(() -> $N())", Stream.class, STATIC_NEXT_METHOD_NAME)
+                .addStatement("return stream(new $T().nextInt(7) + 1)", Random.class)
                 .addJavadoc(STATIC_STREAM_METHOD_JAVADOC.apply(className))
                 .build();
     }
 
     private MethodSpec staticSizedListMethod() {
         final String parameterName = "size";
-        final CodeBlock statement = CodeBlock.of("return $N().limit($N).collect($T.toList())",
+        final CodeBlock statement = CodeBlock.of("return $N($N).collect($T.toList())",
                 STATIC_STREAM_METHOD_NAME, parameterName, Collectors.class);
         return MethodSpec.methodBuilder(STATIC_LIST_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
@@ -99,7 +114,7 @@ public class ModelerGenerator extends BuilderGenerator {
         return MethodSpec.methodBuilder(STATIC_LIST_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(ParameterizedTypeName.get(ClassName.get(List.class), className))
-                .addStatement("return list(new $T().nextInt(7) + 1)", Random.class)
+                .addStatement("return $N(new $T().nextInt(7) + 1)", STATIC_LIST_METHOD_NAME, Random.class)
                 .addJavadoc(STATIC_LIST_METHOD_JAVADOC.apply(className))
                 .build();
     }

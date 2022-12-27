@@ -51,6 +51,8 @@ public class GenerationPatterns {
 
     public static final String STATIC_LIST_METHOD_NAME = "list";
 
+    public static final String STATIC_STREAM_METHOD_NAME = "stream";
+
     public static final Function<ClassName, String> STATIC_LIST_METHOD_JAVADOC = className -> "" +
             "Returns a {@code List} of randomly populated instance of \n" +
             "{@link " + classReference(className) + "} \n" +
@@ -76,6 +78,16 @@ public class GenerationPatterns {
             "\n" +
             "@see #" + STATIC_LIST_METHOD_NAME + "(int)";
 
+    public static final Function<ClassName, String> STATIC_SIZED_STREAM_METHOD_JAVADOC = className -> "" +
+            "Returns a {@code Stream} of randomly populated instance of \n" +
+            "{@link " + classReference(className) + "} with given size. \n" +
+            "\n" +
+            "@param size the number of items in generated stream \n" +
+            "@return a {@code Stream} of randomly populated \n" +
+            "        {@link " + classReference(className) + "} \n" +
+            "\n" +
+            "@see #" + STATIC_STREAM_METHOD_NAME + "(int)";
+
     public static final String STATIC_NEXT_METHOD_NAME = "next";
 
     public static final Function<ClassName, String> STATIC_NEXT_METHOD_JAVADOC = className -> "" +
@@ -83,8 +95,6 @@ public class GenerationPatterns {
             "\n" +
             "@return a randomly populated instance of \n" +
             "        {@link " + classReference(className) + "} \n";
-
-    public static final String STATIC_STREAM_METHOD_NAME = "stream";
 
     public static final Function<ClassName, String> STATIC_STREAM_METHOD_JAVADOC = className -> "" +
             "Returns a {@link java.util.stream.Stream stream} of randomly \n" +

@@ -41,7 +41,7 @@ class ModelerGeneratorTest {
     void should_generate_modeler_methods() {
         final TypeSpec type = modelerGenerator.createType();
 
-        assertThat(type.methodSpecs).hasSize(7);
+        assertThat(type.methodSpecs).hasSize(8);
     }
 
     @Test
@@ -114,6 +114,41 @@ class ModelerGeneratorTest {
     }
 
     @Nested
+    class StaticSizedStreamMethodTest {
+
+        private MethodSpec streamMethod;
+
+        @BeforeEach
+        void setUp() {
+            final TypeSpec type = modelerGenerator.createType();
+            streamMethod = type.methodSpecs.stream()
+                    .filter(methodSpec -> methodSpec.name.equals(GenerationPatterns.STATIC_STREAM_METHOD_NAME))
+                    .filter(methodSpec -> methodSpec.parameters.size() == 1)
+                    .findFirst().orElseThrow(() -> new RuntimeException("static sized stream method not found"));
+        }
+
+        @Test
+        void should_be_public_static_and_named_as_stream() {
+            assertThat(streamMethod.modifiers).containsExactly(Modifier.PUBLIC, Modifier.STATIC);
+            assertThat(streamMethod.name).isEqualTo(GenerationPatterns.STATIC_STREAM_METHOD_NAME);
+        }
+
+        @Test
+        void should_return_stream_of_given_type_and_take_no_parameter() {
+            assertThat(streamMethod.returnType)
+                    .isEqualTo(ParameterizedTypeName.get(ClassName.get(Stream.class), ClassName.get(SomeClass.class)));
+            assertThat(streamMethod.parameters)
+                    .hasSize(1).containsOnly(ParameterSpec.builder(int.class, "size").build());
+        }
+
+        @Test
+        void should_generate_stream_from_static_next_method() {
+            assertThat(streamMethod.code)
+                    .hasToString("return " + Stream.class.getCanonicalName() + ".generate(() -> next()).limit(size);\n");
+        }
+    }
+
+    @Nested
     class StaticStreamMethodTest {
 
         private MethodSpec streamMethod;
@@ -123,6 +158,7 @@ class ModelerGeneratorTest {
             final TypeSpec type = modelerGenerator.createType();
             streamMethod = type.methodSpecs.stream()
                     .filter(methodSpec -> methodSpec.name.equals(GenerationPatterns.STATIC_STREAM_METHOD_NAME))
+                    .filter(methodSpec -> methodSpec.parameters.isEmpty())
                     .findFirst().orElseThrow(() -> new RuntimeException("static stream method not found"));
         }
 
@@ -140,7 +176,8 @@ class ModelerGeneratorTest {
 
         @Test
         void should_generate_stream_from_static_next_method() {
-            assertThat(streamMethod.code).hasToString("return " + Stream.class.getCanonicalName() + ".generate(() -> next());\n");
+            assertThat(streamMethod.code)
+                    .hasToString("return stream(new " + Random.class.getCanonicalName() + "().nextInt(7) + 1);\n");
         }
     }
 
@@ -176,8 +213,7 @@ class ModelerGeneratorTest {
         @Test
         void should_generate_list_collected_from_stream_method() {
             assertThat(streamMethod.code).hasToString("" +
-                    "return stream()" +
-                    ".limit(size)" +
+                    "return stream(size)" +
                     ".collect(" + Collectors.class.getCanonicalName() + ".toList());\n");
         }
     }
