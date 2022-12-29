@@ -6,4 +6,7 @@ public class EasyModelingException extends RuntimeException {
         super(message, cause);
     }
 
+    public EasyModelingException(String message) {
+        super(message);
+    }
 }

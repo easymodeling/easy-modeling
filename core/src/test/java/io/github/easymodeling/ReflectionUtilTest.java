@@ -167,59 +167,6 @@ class ReflectionUtilTest {
         }
     }
 
-    @Nested
-    class TestCreateModel {
-
-        @Test
-        void should_create_model_and_set_default_values() {
-            final SomeClass someClass = ReflectionUtil.createModelOf(SomeClass.class);
-
-            assertThat(someClass.getAnInt()).isEqualTo(0);
-            assertThat(someClass.getALong()).isEqualTo(0);
-            assertThat(someClass.getADouble()).isEqualTo(0);
-            assertThat(someClass.getAFloat()).isEqualTo(0);
-            assertThat(someClass.getAShort()).isEqualTo((short) 0);
-            assertThat(someClass.getAByte()).isEqualTo((byte) 0);
-            assertThat(someClass.isABoolean()).isEqualTo(false);
-            assertThat(someClass.getAChar()).isEqualTo('\u0000');
-            assertThat(someClass.getBigDecimal()).isNull();
-        }
-
-        @Test
-        void should_create_model_with_only_private_constructor() {
-            final ClassWithPrivateConstructor model = ReflectionUtil.createModelOf(ClassWithPrivateConstructor.class);
-
-            assertThat(model).isNotNull();
-        }
-
-        @Test
-        void should_throw_specific_exception() {
-            final Throwable throwable = catchThrowable(() -> ReflectionUtil.createModelOf(AbstractClass.class));
-
-            assertThat(throwable).isInstanceOf(EasyModelingException.class);
-        }
-    }
-
-    public static abstract class AbstractClass {
-
-        private AbstractClass(int anInt) {
-            this.anInt = anInt;
-        }
-
-        private int anInt;
-
-    }
-
-    public static class ClassWithPrivateConstructor {
-
-        private ClassWithPrivateConstructor(int anInt) {
-            this.anInt = anInt;
-        }
-
-        private int anInt;
-
-    }
-
     public static class SomeClass {
 
         private int anInt;

@@ -2,9 +2,10 @@ package io.github.easymodeling;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReflectionUtil {
 
@@ -44,19 +45,28 @@ public class ReflectionUtil {
         }
     }
 
-    public static <T> T createModelOf(Class<T> clazz) {
-        try {
-            final Constructor<?> constructor = Arrays.stream(clazz.getDeclaredConstructors())
-                    .min(Comparator.comparingInt(Constructor::getParameterCount))
-                    .orElseThrow(() -> new IllegalAccessException("No constructor found for " + clazz.getName()));
-            constructor.setAccessible(true);
-            final Object[] parameters = Arrays.stream(constructor.getParameters())
-                    .map(p -> defaultValue(p.getType()))
-                    .toArray();
-            return (T) constructor.newInstance(parameters);
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
-            throw new EasyModelingException(String.format("cannot create model for %s", clazz.getSimpleName()), e);
+    public static <T> T createModelOf(Class<T> clazz) throws EasyModelingException {
+        final List<Constructor<?>> constructors = Arrays.stream(clazz.getDeclaredConstructors())
+                .sorted(Comparator.comparingInt(Constructor::getParameterCount))
+                .collect(Collectors.toList());
+        for (Constructor<?> constructor : constructors) {
+            try {
+                return createNewInstance(constructor);
+            } catch (ReflectiveOperationException | IllegalArgumentException ignored) {
+                /* Try with the next available constructor */
+            }
         }
+        throw new EasyModelingException(String.format("cannot create model for %s", clazz.getSimpleName()));
+    }
+
+    private static <T> T createNewInstance(Constructor<?> constructor)
+            throws SecurityException, ReflectiveOperationException, IllegalArgumentException {
+        constructor.setAccessible(true);
+        final Object[] parameters = Arrays.stream(constructor.getParameters())
+                .map(p -> defaultValue(p.getType()))
+                .toArray();
+        @SuppressWarnings("unchecked") final T newInstance = (T) constructor.newInstance(parameters);
+        return newInstance;
     }
 
     private static Object defaultValue(Class<?> type) {
