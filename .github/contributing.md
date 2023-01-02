@@ -43,7 +43,11 @@ For example:
 - `0.1.0-Alpha1`
 - `0.1.3`
 
-[maven snapshot repo]: https://s01.oss.sonatype.org/content/repositories/snapshots/
+Successfully deployed snapshot versions will be found in [release repository][maven release repo].
+
+[maven snapshot repo]: https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/easymodeling/
+
+[maven release repo]: https://s01.oss.sonatype.org/content/repositories/releases/io/github/easymodeling/
 
 ### publish from local (Not Recommended)
 
