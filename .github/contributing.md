@@ -14,7 +14,7 @@ JDK 1.8 or above
 
 ## Publish to Maven Central Repository
 
-### publish from pipeline
+### Publish from pipeline
 
 GitHub [workflow][publish-workflow] `publish` will automatically publish artifacts
 to [Maven Central Repository][maven-central-repository] for both snapshot deployment and release deployment.
@@ -48,6 +48,25 @@ Successfully deployed snapshot versions will be found in [release repository][ma
 [maven snapshot repo]: https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/easymodeling/
 
 [maven release repo]: https://s01.oss.sonatype.org/content/repositories/releases/io/github/easymodeling/
+
+#### Verify deployed artifacts
+
+To verify deployed artifact, run
+
+```shell
+./gradlew clean -Partifact-verification :artifact-verification:build
+```
+
+The verified artifact version will be printed
+
+```text
+> Configure project :artifact-verification
+===========================================
+artifact-verification.build.gradle
+
+Test on artifact Version: 0.1.4-SNAPSHOT
+===========================================
+```
 
 ### publish from local (Not Recommended)
 

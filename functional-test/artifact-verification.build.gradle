@@ -22,5 +22,10 @@ dependencies {
 }
 
 test {
+    def liner = '==========================================='
+    println "\n" + liner + "\n" +
+            "artifact-verification.build.gradle\n\n" +
+            "Test on artifact Version: ${projectVersion}\n" +
+            liner + "\n"
     useJUnitPlatform()
 }
