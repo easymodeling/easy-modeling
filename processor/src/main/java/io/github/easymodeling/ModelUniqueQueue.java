@@ -10,7 +10,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class ModelUniqueQueue {
 
     /**
-     * The singleton of <code>ModelUniqueQueue</code>
+     * The singleton of {@code ModelUniqueQueue}
      */
     private static ModelUniqueQueue instance;
 
@@ -30,10 +30,10 @@ public class ModelUniqueQueue {
     }
 
     /**
-     * Get the singleton of <code>ModelUniqueQueue</code>, should create
+     * Get the singleton of {@code ModelUniqueQueue}, should create
      * one if the singleton has not been created yet.
      *
-     * @return the instance of <code>ModelUniqueQueue</code>
+     * @return the instance of {@code ModelUniqueQueue}
      */
     public static ModelUniqueQueue instance() {
         if (instance == null) {
@@ -45,7 +45,7 @@ public class ModelUniqueQueue {
     /**
      * Retrieve and remove the head of the queue.
      *
-     * @return the head of the queue, <code>null</code> if the queue is empty.
+     * @return the head of the queue, {@literal null} if the queue is empty.
      */
     public AnnoModelWrapper poll() {
         return modelToBeProcessed.poll();
@@ -66,10 +66,10 @@ public class ModelUniqueQueue {
      * Insert a class to the end of the queue if it is not registered yet.
      * Will do nothing if the class is already registered.
      * <p>This will not only register a class with its name, but also the
-     * instance of <code>Model</code> associated with it, which contains
+     * instance of {@code Model} associated with it, which contains
      * the customization of the modeler.
      *
-     * @param annoModelWrapper a wrapper of <code>Model</code>
+     * @param annoModelWrapper a wrapper of {@code Model}
      * @see #add(String)
      */
     public void add(AnnoModelWrapper annoModelWrapper) {
